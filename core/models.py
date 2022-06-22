@@ -6,3 +6,7 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+
+
+class Employee(models.Model):
+    pass
