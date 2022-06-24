@@ -1,5 +1,5 @@
 name: Pre-commit
-on: 
+on:
   pull_request:
     branches: 'master'
 jobs:
