@@ -60,7 +60,7 @@
     },
     "import/resolver": {
       "webpack": {
-        "config": "./frontend/webpack/webpack.dev.config.js"
+        "config": "./frontend/webpack/webpack.config.js"
       }
     }
   }
