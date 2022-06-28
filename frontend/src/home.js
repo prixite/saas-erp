@@ -20,7 +20,6 @@ export default class HomePage extends Component {
           <Route exact path="/">
             <p>This is the home page</p>
           </Route>
-         
         </Switch>
       </Router>
     );
