@@ -6,3 +6,4 @@ node_modules
 frontend/dist
 *.pyc
 dist
+__pycache__
