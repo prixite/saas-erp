@@ -21,7 +21,7 @@ jobs:
     - name: Run Tests
       run: |
         coverage run manage.py test
-        coverge xml
+        coverage xml
     - name: Show report
       uses: 5monkeys/cobertura-action@v12
       with:
