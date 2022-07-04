@@ -20,4 +20,25 @@ jobs:
         pip install -r requirements-dev.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        coverage run manage.py test
+        coverge xml
+    - name: Show report
+      uses: 5monkeys/cobertura-action@v12
+      with:
+        repo_token: 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
+        minimum_coverage: 80
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          cache: pip
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "17"
+          cache: npm
+      - run: npm install
+      - uses: pre-commit/action@v2.0.3
