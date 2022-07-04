@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from core.views import HomeView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("core.urls")),
@@ -26,5 +28,6 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="open-api",
     ),
+    path("", HomeView.as_view(), name="home")
     # Add home view
 ]
