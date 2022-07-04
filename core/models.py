@@ -1,11 +1,17 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
 
 class User(AbstractUser):
+    email = models.EmailField(_("email address"), unique=True)
+
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
 
 class Organization(models.Model):
@@ -13,8 +19,10 @@ class Organization(models.Model):
     address = models.CharField(max_length=200)
 
 
-class History(models.Model):
-    employee = models.ForeignKey("")
+class SalaryHistory(models.Model):
+    salary = models.ForeignKey("Salary", on_delete=models.CASCADE)
+    amount = models.FloatField()
+    action = models.CharField(max_length=5)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -22,6 +30,7 @@ class Salary(models.Model):
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
     amount = models.FloatField()
     currency = models.CharField(max_length=5)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Salaries"
