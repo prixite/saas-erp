@@ -7,3 +7,4 @@ frontend/dist
 *.pyc
 dist
 __pycache__
+.coverage
