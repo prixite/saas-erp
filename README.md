@@ -2,7 +2,7 @@
 
 ## Technology Stack
   - Python 3.10
-  - Node v
+  - Node v17.7.0
 
 ## Project Setup
   After succesful installtion of required technologies and mentioned versions do following in specified sequence.
