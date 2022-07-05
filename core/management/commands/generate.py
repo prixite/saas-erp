@@ -10,7 +10,7 @@ class Command(BaseCommand):
         factories.UserFactory(
             is_superuser=True,
             is_staff=True,
-            username="super-admin@example.com",
+            email="super-admin@example.com",
         )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
