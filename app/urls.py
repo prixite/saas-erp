@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.decorators import login_required
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from core.views import HomeView
@@ -22,12 +23,12 @@ from core.views import HomeView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("core.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "openapi/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="open-api",
     ),
-    path("", HomeView.as_view(), name="home")
-    # Add home view
+    path("", login_required(HomeView.as_view()), name="home")
 ]

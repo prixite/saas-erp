@@ -7,7 +7,7 @@ from core import models, serializers
 
 
 class HomeView(TemplateView):
-    template_name = "core/index.html"
+    template_name = "core/home.html"
 
 
 class UserViewSet(ModelViewSet):
