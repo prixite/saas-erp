@@ -10,5 +10,14 @@ urlpatterns = [
                 "get": "list",
             }
         ),
-    )
+    ),
+    path(
+        "employees/",
+        api.EmployeeViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
 ]

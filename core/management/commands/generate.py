@@ -13,4 +13,9 @@ class Command(BaseCommand):
             email="super-admin@example.com",
         )
 
+        factories.OrganizationFactory()
+        factories.EmployeeFactory.create_batch(
+            size=10,
+        )
+
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
