@@ -1,13 +1,6 @@
-from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
 from core import models, serializers
-
-# Create your views here.
-
-
-class HomeView(TemplateView):
-    template_name = "core/index.html"
 
 
 class UserViewSet(ModelViewSet):

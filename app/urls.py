@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from core.views import HomeView
+from core.views.site import HomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
