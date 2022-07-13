@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
 from django.contrib.auth.decorators import login_required
+from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from core.views import HomeView
@@ -30,5 +30,5 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="open-api",
     ),
-    path("", login_required(HomeView.as_view()), name="home")
+    path("", login_required(HomeView.as_view()), name="home"),
 ]

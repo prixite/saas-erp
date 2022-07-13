@@ -16,28 +16,28 @@
             {% csrf_token %}
             <div class="mb-3">
               <label for="id_username" class="form-label">Username</label>
-              <input type="text" 
-                     class="form-control form-control-lg" 
-                     placeholder="Enter your username" 
+              <input type="text"
+                     class="form-control form-control-lg"
+                     placeholder="Enter your username"
                      name="username"
-                     autocapitalize="none" 
-                     autocomplete="Username" 
-                     maxlength="150" 
-                     id="id_username" 
+                     autocapitalize="none"
+                     autocomplete="Username"
+                     maxlength="150"
+                     id="id_username"
                      required autofocus>
               {{ form.username.errors }}
             </div>
-    
+
             <div class="mb-3">
               <label for="id_password" class="form-label">Password</label>
               <div class="input-group input-group-lg mb-3">
-                <input type="password" 
-                       class="form-control" 
+                <input type="password"
+                       class="form-control"
                        placeholder="Enter your password"
-                  
-                       aria-describedby="basic-addon1" 
-                       name="password" 
-                       autocomplete="current-password" 
+
+                       aria-describedby="basic-addon1"
+                       name="password"
+                       autocomplete="current-password"
                        id="id_password"
                        required />
               </div>
