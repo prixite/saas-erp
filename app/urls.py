@@ -21,13 +21,14 @@ from core.views import HomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("core.urls")),
+    path("api/", include("core.urls.api")),
+    path("html/", include("core.urls.html")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "openapi/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="open-api",
     ),
-    path("", HomeView.as_view(), name="home")
+    path("", HomeView.as_view(), name="home"),
     # Add home view
 ]
