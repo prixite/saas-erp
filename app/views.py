@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from app import models, serializers
 
+
 @method_decorator(login_required, name="dispatch")
 class HomeView(TemplateView):
     template_name = "app/home.html"
