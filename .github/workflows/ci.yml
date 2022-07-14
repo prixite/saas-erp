@@ -10,6 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      env:
+        SECRET_KEY: fake_key
+        DEBUG: True
     - name: Set up Python 3.10
       uses: actions/setup-python@v4.0.0
       with:
