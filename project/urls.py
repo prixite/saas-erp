@@ -21,7 +21,8 @@ from app.views import HomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("app.urls")),
+    path("api/", include("app.urls.api")),
+    path("html/", include("app.urls.html")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
