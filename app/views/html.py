@@ -1,12 +1,14 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+from app import models
 
 
 class Home(TemplateView):
     template_name = "app/html/home.html"
 
 
-class Users(TemplateView):
+class Users(ListView):
     template_name = "app/html/users.html"
+    model = models.User
 
 
 class Employees(TemplateView):
