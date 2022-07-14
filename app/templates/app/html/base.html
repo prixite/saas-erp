@@ -25,10 +25,11 @@
     </div>
     <div class="collapse navbar-collapse" id="topbar">
       <ul class="nav navbar-nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">People</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Account</a></li>
+        <li><a href="{% url "html:home" %}">Home</a></li>
+        <li><a href="{% url "html:users" %}">Users</a></li>
+        <li><a href="{% url "html:employees" %}">Employees</a></li>
+        <li><a href="{% url "html:settings" %}">Settings</a></li>
+        <li><a href="{% url "html:account" %}">Account</a></li>
       </ul>
     </div>
   </div>
