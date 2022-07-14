@@ -1,8 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'app/api/home.html' %}
 {% load static %}
 
-{% block content %}
-<div class="container-fluid">
+{% block page %}
   <div class="row">
     <div class="col-8">
       Page details #TODO
@@ -46,12 +45,11 @@
             {% if form.errors %}
             {% include 'partials/error.html' with form=form%}
             {%endif%}
-            <p><a class='brand-color' href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <p><a class='brand-color' href="#">Forgot your password?</a></p>
             <div class="d-grid"><button type="submit" class="btn btn-primary btn-lg mb-3">Login</button></div>
           </form>
         </div>
       </div>
     </div>
   </div>
-</div>
 {% endblock %}
