@@ -10,7 +10,7 @@ class BaseTestCase(TestCase):
         self.client = Client()
 
         self.super_user = factories.UserFactory(is_superuser=True)
-        organization = factories.OrganizationFactory()
-        self.org_user = factories.UserFactory(organization=organization)
+        self.organization = factories.OrganizationFactory()
+        self.org_user = factories.UserFactory(organization=self.organization)
         self.employee = factories.EmployeeFactory()
         factories.EmployeeFactory.create_batch(size=10)

@@ -19,4 +19,5 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "emergency_contact_number",
             "date_of_joining",
             "last_employer_salary_slip",
+            "organization",
         ]
