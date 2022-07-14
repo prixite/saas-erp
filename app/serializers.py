@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core import models
+from app import models
 
 
 class UserSerializer(serializers.ModelSerializer):

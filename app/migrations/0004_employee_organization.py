@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core", "0003_salary_updated_at_alter_user_organization"),
+        ("app", "0003_salary_updated_at_alter_user_organization"),
     ]
 
     operations = [
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 default=1,
                 on_delete=django.db.models.deletion.PROTECT,
-                to="core.organization",
+                to="app.organization",
             ),
             preserve_default=False,
         ),

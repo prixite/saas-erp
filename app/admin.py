@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from core import models
+from app import models
 
 # Register your models here.
 

@@ -17,17 +17,18 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from core.views.site import HomeView
+from app.views import HomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("core.urls")),
+    path("api/", include("app.urls.api")),
+    path("html/", include("app.urls.html")),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "openapi/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="open-api",
     ),
-    path("", HomeView.as_view(), name="home")
-    # Add home view
+    path("", HomeView.as_view(), name="home"),
 ]

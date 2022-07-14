@@ -1,11 +1,11 @@
 from django.urls import path
 
-from core.views import api
+from app import views
 
 urlpatterns = [
     path(
         "users/",
-        api.UserViewSet.as_view(
+        views.UserViewSet.as_view(
             {
                 "get": "list",
             }
@@ -13,7 +13,7 @@ urlpatterns = [
     ),
     path(
         "employees/",
-        api.EmployeeViewSet.as_view(
+        views.EmployeeViewSet.as_view(
             {
                 "get": "list",
                 "post": "create",

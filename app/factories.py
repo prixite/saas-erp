@@ -1,7 +1,7 @@
 import factory
 from faker import Faker
 
-from core import models
+from app import models
 
 fake = Faker()
 fake.seed_instance(1234)
