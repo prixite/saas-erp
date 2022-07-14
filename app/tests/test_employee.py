@@ -1,8 +1,8 @@
 from django.utils import timezone
 from rest_framework import status
 
-from core import models
-from core.tests.base import BaseTestCase
+from app import models
+from app.tests.base import BaseTestCase
 
 
 class EmployeeTestCase(BaseTestCase):

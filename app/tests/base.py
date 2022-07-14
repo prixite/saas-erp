@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from core import factories
-from core.tests.client import Client
+from app import factories
+from app.tests.client import Client
 
 
 # Create your tests here.
