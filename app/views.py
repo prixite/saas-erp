@@ -10,7 +10,7 @@ from app import models, serializers
 
 @method_decorator(login_required, name="dispatch")
 class HomeView(TemplateView):
-    template_name = "core/home.html"
+    template_name = "app/home.html"
 
 
 class UserViewSet(ModelViewSet):
