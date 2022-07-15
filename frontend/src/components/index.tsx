@@ -1,7 +1,7 @@
 import Employee from "./employee";
 
-const Components = {
+const allComponents = {
   Employee,
 };
 
-export default Components;
+export default allComponents;

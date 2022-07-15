@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import Components from "../components";
+import allComponents from "../components";
 import ROUTES from "../constants/routes";
 import ProtectedRoute from "../routes/ProtectedRoutes";
 import { objectToArray } from "../utils/objectToArray";
@@ -8,12 +8,12 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <>
-        {objectToArray(ROUTES).map(({ name, path, Component }) => {
+        {objectToArray(ROUTES).map(({ name, path, component }) => {
           return (
             <ProtectedRoute
               key={name}
               path={path}
-              MatchComponent={Components[Component]}
+              MatchComponent={allComponents[component]}
             />
           );
         })}

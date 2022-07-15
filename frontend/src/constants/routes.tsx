@@ -1,9 +1,9 @@
-const Routes = {
-  USER_CREATION: {
+const routes = {
+  employeeCreation: {
     name: "employee-creation",
     path: "/",
-    Component: "Employee",
+    component: "Employee",
   },
 };
 
-export default Routes;
+export default routes;
