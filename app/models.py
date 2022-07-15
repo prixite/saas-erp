@@ -44,6 +44,7 @@ class Employee(models.Model):
     nic = models.CharField(max_length=25)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
+    organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
 
     last_employer_experience_letter = models.BooleanField(default=False)
     last_employer_salary_slip = models.BooleanField()

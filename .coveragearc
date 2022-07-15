@@ -1,6 +1,6 @@
 [run]
 omit =
-    core/migrations/*
+    app/migrations/*
     admin.py
     apps.py
     manage.py
