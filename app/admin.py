@@ -19,3 +19,8 @@ class EmployeeAdmin(admin.ModelAdmin):
 @admin.register(models.Salary)
 class SalaryAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    pass
