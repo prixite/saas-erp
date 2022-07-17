@@ -18,7 +18,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from app.views import HomeView
+from app.views.api import HomeView
 
 accounts = [
     path(
