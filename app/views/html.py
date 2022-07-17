@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView, TemplateView
+
 from app import models
 
 

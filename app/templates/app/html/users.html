@@ -1,18 +1,21 @@
 {% extends "app/html/base.html" %}
 
 {% block page %}
-<h3>Users</h3>
+
+<h1>Users</h1>
 
 <table class="table">
   <thead>
     <tr>
       <th scope="col">Email</th>
+      <th scope="col">Name</th>
     </tr>
   </thead>
   <tbody>
     {% for user in object_list %}
     <tr>
       <td>{{ user.email }}</td>
+      <td>{{ user.get_full_name }}</td>
     </tr>
     {% endfor %}
   </tbody>
