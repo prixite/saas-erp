@@ -2,6 +2,9 @@ from django.db import models
 
 
 class CompensationHistory(models.Model):
+    """
+    All the compensations given to an employee.
+    """
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     amount = models.FloatField()
     tax = models.FloatField()
@@ -12,10 +15,13 @@ class CompensationHistory(models.Model):
 
 
 class Compensation(models.Model):
+    """
+    Current compensation according to the contract.
+    """
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
     rate = models.FloatField()
-    hourly_limit_per_week = models.SmallIntegerField(null=True)
-    hourly_limit_per_month = models.SmallIntegerField(null=True)
+    max_hours_per_week = models.SmallIntegerField(null=True)
+    expected_hours_per_week = models.SmallIntegerField(null=True)
     compensation_type = models.ForeignKey("CompensationType", on_delete=models.PROTECT)
     compensation_schedule = models.ForeignKey(
         "CompensationSchedule", on_delete=models.PROTECT
@@ -25,6 +31,9 @@ class Compensation(models.Model):
 
 
 class CompensationChange(models.Model):
+    """
+    Change in compensation. A change can be due to increment for example.
+    """
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
     amount = models.FloatField()
     reason = models.ForeignKey("CompensationChangeReason", on_delete=models.PROTECT)
@@ -33,6 +42,11 @@ class CompensationChange(models.Model):
 
 
 class CompensationChangeReason(models.Model):
+    """
+    Currently we support the following:
+    - Increment
+    - Change in status
+    """
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,6 +54,9 @@ class CompensationChangeReason(models.Model):
 
 
 class CompensationSchedule(models.Model):
+    """
+    Represents when compensation is to be disbursed.
+    """
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     is_weekly = models.BooleanField(default=False)
@@ -49,6 +66,9 @@ class CompensationSchedule(models.Model):
 
 
 class CompensationType(models.Model):
+    """
+    Hourly, monthly, milestone based etc.
+    """
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     is_hourly = models.BooleanField(default=False)
