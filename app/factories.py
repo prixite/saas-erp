@@ -1,3 +1,5 @@
+from datetime import datetime
+from unicodedata import name
 import factory
 from faker import Faker
 
@@ -37,7 +39,26 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
     organization = factory.iterator(models.Organization.objects.all)
-    last_employer_salary_slip = False
 
     class Meta:
         model = models.Employee
+
+
+class DepartmentFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    created_at = factory.LazyFunction(datetime.now)
+    updated_at = factory.LazyFunction(datetime.now)
+
+    class Meta:
+        model = models.Department
+
+
+class EmploymentType(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    created_at = factory.LazyFunction(datetime.now)
+    updated_at = factory.LazyFunction(datetime.now)
+
+    class Meta:
+        model = models.EmploymentType

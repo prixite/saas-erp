@@ -16,6 +16,7 @@ from app.models.employee import (
     Institute,
     Program,
     Team,
+    EmploymentType
 )
 from app.models.inventory import Asset, AssetType
 from app.models.payroll import (
@@ -51,4 +52,5 @@ __all__ = [
     "Role",
     "Team",
     "User",
+    "EmploymentType"
 ]
