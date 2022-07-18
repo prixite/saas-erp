@@ -20,11 +20,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="{% url "html:home" %}">Home</a>
-        <a class="nav-link" href="{% url "html:users" %}">Users</a>
-        <a class="nav-link" href="{% url "html:employees" %}">Employees</a>
-        <a class="nav-link" href="{% url "html:settings" %}">Settings</a>
-        <a class="nav-link" href="{% url "html:account" %}">Account</a>
+        {% url "html:home" as home_url %}
+        <a class="nav-link {% if request.path == home_url %}active{% endif %}" href="{{ home_url }}">Home</a>
+
+        {% url "html:users" as users_url %}
+        <a class="nav-link {% if request.path == users_url %}active{% endif %}" href="{{ users_url }}">Users</a>
+
+        {% url "html:employees" as employees_url %}
+        <a class="nav-link {% if request.path == employees_url %}active{% endif %}" href="{{ employees_url }}">Employees</a>
+
+        {% url "html:settings" as settings_url %}
+        <a class="nav-link {% if request.path == settings_url %}active{% endif %}" href="{{ settings_url }}">Settings</a>
+
+        {% url "html:account" as account_url %}
+        <a class="nav-link {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Account</a>
       </div>
     </div>
   </div>

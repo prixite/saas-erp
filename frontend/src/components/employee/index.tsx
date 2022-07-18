@@ -1,4 +1,5 @@
+import Layout from "../shared/layout";
 const Employee = () => {
-  return <div>Employee Component testing....</div>;
+  return <Layout>Employee Component testing....</Layout>;
 };
 export default Employee;
