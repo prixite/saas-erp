@@ -6,10 +6,23 @@ class CompensationHistory(models.Model):
     All the compensations given to an employee.
     """
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
+    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE)
     amount = models.FloatField()
     tax = models.FloatField()
     bonus = models.FloatField(default=0)
     action = models.CharField(max_length=5)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Payroll(models.Model):
+    """
+    Monthly payroll.
+    """
+    amount = models.FloatField()
+    currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
+    tax = models.FloatField()
+    currency_convesion_rates = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
