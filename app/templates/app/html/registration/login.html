@@ -46,7 +46,7 @@
               {% if form.errors %}
               {% include 'partials/error.html' with form=form%}
               {%endif%}
-              <p><a class='brand-color' href="#">Forgot your password?</a></p>
+              <p><a class='brand-color' href="{% url 'password_reset' %}">Forgot your password?</a></p>
               <div class="d-grid"><button type="submit" class="btn btn-primary btn-lg mb-3">Login</button></div>
             </form>
           </div>
