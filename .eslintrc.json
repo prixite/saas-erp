@@ -5,10 +5,7 @@
     "es6": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "import"
-  ],
+  "plugins": ["@typescript-eslint", "import"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -46,7 +43,7 @@
           }
         ],
         "pathGroupsExcludedImportTypes": ["builtin"],
-        "newlines-between": "always",
+        "newlines-between": "ignore",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

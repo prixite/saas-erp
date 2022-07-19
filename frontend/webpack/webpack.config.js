@@ -4,7 +4,13 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "/frontend/src/index.jsx",
+  entry: "/frontend/src/index.tsx",
+  resolve: {
+    alias: {
+      "@src": path.resolve(__dirname, "../src/"),
+    },
+    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+  },
   output: {
     path: path.resolve(__dirname, "../dist/"),
     filename: "main.js",
