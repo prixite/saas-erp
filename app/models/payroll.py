@@ -5,6 +5,7 @@ class CompensationHistory(models.Model):
     """
     All the compensations given to an employee.
     """
+
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE)
     amount = models.FloatField()
@@ -19,6 +20,7 @@ class Payroll(models.Model):
     """
     Monthly payroll.
     """
+
     amount = models.FloatField()
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
     tax = models.FloatField()
@@ -31,6 +33,7 @@ class Compensation(models.Model):
     """
     Current compensation according to the contract.
     """
+
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
     rate = models.FloatField()
     max_hours_per_week = models.SmallIntegerField(null=True)
@@ -47,6 +50,7 @@ class CompensationChange(models.Model):
     """
     Change in compensation. A change can be due to increment for example.
     """
+
     employee = models.OneToOneField("Employee", on_delete=models.CASCADE)
     amount = models.FloatField()
     reason = models.ForeignKey("CompensationChangeReason", on_delete=models.PROTECT)
@@ -60,6 +64,7 @@ class CompensationChangeReason(models.Model):
     - Increment
     - Change in status
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,6 +75,7 @@ class CompensationSchedule(models.Model):
     """
     Represents when compensation is to be disbursed.
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     is_weekly = models.BooleanField(default=False)
@@ -82,6 +88,7 @@ class CompensationType(models.Model):
     """
     Hourly, monthly, milestone based etc.
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     is_hourly = models.BooleanField(default=False)

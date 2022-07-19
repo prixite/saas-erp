@@ -8,6 +8,7 @@ class User(AbstractUser):
     This model represents a user that can log into ERP. A user can also be a
     employee, but an employee might not be a user.
     """
+
     email = models.EmailField(_("email address"), unique=True)
 
     organization = models.ForeignKey(
@@ -23,6 +24,7 @@ class Organization(models.Model):
     This model is used to add organization scope. A data belonging to one
     organization should only be visible to that organization.
     """
+
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,6 +37,7 @@ class OrganizationModule(models.Model):
     a row for every module-organization pair in this model. We control access
     using is_enabled boolean.
     """
+
     module = models.ForeignKey("Module", on_delete=models.PROTECT)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     is_enabled = models.BooleanField(default=False)
@@ -49,6 +52,7 @@ class Module(models.Model):
     - Employee
     - Inventory
     """
+
     slug = models.SlugField()
     name = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -61,6 +65,7 @@ class Role(models.Model):
     - Admin
     - Member
     """
+
     name = models.CharField(max_length=64)
     is_admin = models.BooleanField(default=False)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
@@ -74,6 +79,7 @@ class Currency(models.Model):
     - USD
     - PKR
     """
+
     code = models.CharField(max_length=3)
     symbol = models.CharField(max_length=1)
     created_at = models.DateTimeField(auto_now_add=True)
