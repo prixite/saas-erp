@@ -14,8 +14,5 @@ class Command(BaseCommand):
         )
 
         factories.OrganizationFactory()
-        factories.EmployeeFactory.create_batch(
-            size=10,
-        )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))

@@ -23,6 +23,7 @@ env = environ.Env(
     DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
+    EMAIL_BACKEND=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -140,7 +141,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = "static/"
 STATICFILES_DIRS = [BASE_DIR / "frontend/dist/"]
-
+EMAIL_BACKEND = env("EMAIL_BACKEND")
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
