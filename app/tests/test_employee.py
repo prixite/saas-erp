@@ -20,8 +20,9 @@ class EmployeeTestCase(BaseTestCase):
                 "nic",
                 "emergency_contact_number",
                 "date_of_joining",
-                "last_employer_salary_slip",
                 "organization",
+                "type",
+                "department",
             ],
         )
 
@@ -34,8 +35,9 @@ class EmployeeTestCase(BaseTestCase):
             "nic": "23470247027420",
             "emergency_contact_number": "0234324243",
             "date_of_joining": timezone.now().strftime("%Y-%m-%d"),
-            "last_employer_salary_slip": True,
             "organization": self.organization.id,
+            "type": self.employment_type.id,
+            "department": self.department.id,
         }
 
         response = self.client.post("/api/employees/", data=employee_data)

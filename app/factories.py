@@ -1,4 +1,5 @@
 import factory
+from django.utils import timezone
 from faker import Faker
 
 from app import models
@@ -37,7 +38,24 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
     organization = factory.iterator(models.Organization.objects.all)
-    last_employer_salary_slip = False
 
     class Meta:
         model = models.Employee
+
+
+class DepartmentFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.Department
+
+
+class EmploymentType(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.EmploymentType

@@ -46,6 +46,9 @@
 </nav>
 
 <div class="container">
+  {% block heading_wrapper %}
+    <h1 class="display-6">{% block heading %}{% endblock %}</h1>
+  {% endblock %}
   {% block page %}{% endblock %}
 </div>
 

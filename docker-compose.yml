@@ -1,6 +1,14 @@
 version: '3.4'
 
 services:
+  db:
+    image: postgres:13.4
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=saas-erp
+
   app:
     build:
       context: .
@@ -11,17 +19,9 @@ services:
       - DATABASE_URL=postgres://postgres:secret@db/saas-erp
     container_name: saas-erp
     command: ./manage.py runserver 0.0.0.0:8000
-
     ports:
       - 8000:8000
     volumes:
       - .:/opt/code
-  db:
-    image: postgres:13.4
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=saas-erp
     depends_on:
-      - app
+      - db
