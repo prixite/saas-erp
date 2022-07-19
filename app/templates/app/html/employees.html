@@ -1,5 +1,35 @@
 {% extends "app/html/base.html" %}
 
 {% block page %}
-<h3>Employees</h3>
+<h1>Employees</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Email</th>
+      <th scope="col">Name</th>
+      <th scope="col">Department</th>
+      <th scope="col">Designation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>john.doe@prixite.com</td>
+      <td>John Doe</td>
+      <td>Engineering</td>
+      <td>Software Engineer</td>
+    </tr>
+    <tr>
+      <td>jane.doe@prixite.com</td>
+      <td>Jane Doe</td>
+      <td>Engineering</td>
+      <td>Software Engineer</td>
+    </tr>
+    <tr>
+      <td>jonah.doe@prixite.com</td>
+      <td>Jonah Doe</td>
+      <td>Engineering</td>
+      <td>Software Engineer</td>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}
