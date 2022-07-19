@@ -23,6 +23,7 @@ class Document(models.Model):
     The documents will be uploaded to cloud storage. We will only store URL of
     the document in this model.
     """
+
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     type = models.ForeignKey("DocumentType", on_delete=models.PROTECT)
@@ -41,6 +42,7 @@ class DocumentType(models.Model):
     - Job Contract
     - Contractor Agreement
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -52,6 +54,7 @@ class Team(models.Model):
     Teams define an organization level in a organization. An employee can be
     part of multiple teams.
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     members = models.ManyToManyField("Employee")
@@ -63,6 +66,7 @@ class Degree(models.Model):
     """
     The educational degrees of an employee.
     """
+
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="degrees"
     )
@@ -80,6 +84,7 @@ class Program(models.Model):
     - Bachelors
     - Masters
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -90,6 +95,7 @@ class Institute(models.Model):
     """
     Educational institutes.
     """
+
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -104,6 +110,7 @@ class Benefit(models.Model):
     - Paid Leaves
     - Quarterly Bonus
     """
+
     name = models.CharField(max_length=64)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -120,6 +127,7 @@ class Department(models.Model):
     - Operations
     - Accounts
     """
+
     name = models.CharField(max_length=64)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -135,6 +143,7 @@ class EmploymentType(models.Model):
     - Probation
     - Intern
     """
+
     name = models.CharField(max_length=64)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
