@@ -20,5 +20,5 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "date_of_joining",
             "organization",
             "type",
-            "department"
+            "department",
         ]

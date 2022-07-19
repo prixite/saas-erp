@@ -13,10 +13,10 @@ from app.models.employee import (
     Document,
     DocumentType,
     Employee,
+    EmploymentType,
     Institute,
     Program,
     Team,
-    EmploymentType
 )
 from app.models.inventory import Asset, AssetType
 from app.models.payroll import (
@@ -52,5 +52,5 @@ __all__ = [
     "Role",
     "Team",
     "User",
-    "EmploymentType"
+    "EmploymentType",
 ]

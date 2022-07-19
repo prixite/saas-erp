@@ -8,422 +8,672 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0004_employee_organization'),
+        ("app", "0004_employee_organization"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Asset',
+            name="Asset",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('attribute_values', models.JSONField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("attribute_values", models.JSONField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='AssetType',
+            name="AssetType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('attributes', models.JSONField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("attributes", models.JSONField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Benefit',
+            name="Benefit",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Compensation',
+            name="Compensation",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rate', models.FloatField()),
-                ('hourly_limit_per_week', models.SmallIntegerField(null=True)),
-                ('hourly_limit_per_month', models.SmallIntegerField(null=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("rate", models.FloatField()),
+                ("hourly_limit_per_week", models.SmallIntegerField(null=True)),
+                ("hourly_limit_per_month", models.SmallIntegerField(null=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CompensationChange',
+            name="CompensationChange",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.FloatField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.FloatField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CompensationChangeReason',
+            name="CompensationChangeReason",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CompensationHistory',
+            name="CompensationHistory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.FloatField()),
-                ('tax', models.FloatField()),
-                ('bonus', models.FloatField(default=0)),
-                ('action', models.CharField(max_length=5)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.FloatField()),
+                ("tax", models.FloatField()),
+                ("bonus", models.FloatField(default=0)),
+                ("action", models.CharField(max_length=5)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CompensationSchedule',
+            name="CompensationSchedule",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('is_weekly', models.BooleanField(default=False)),
-                ('is_monthly', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("is_weekly", models.BooleanField(default=False)),
+                ("is_monthly", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CompensationType',
+            name="CompensationType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('is_hourly', models.BooleanField(default=False)),
-                ('is_monthly', models.BooleanField(default=False)),
-                ('is_milestone', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("is_hourly", models.BooleanField(default=False)),
+                ("is_monthly", models.BooleanField(default=False)),
+                ("is_milestone", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Currency',
+            name="Currency",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(max_length=3)),
-                ('symbol', models.CharField(max_length=1)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("code", models.CharField(max_length=3)),
+                ("symbol", models.CharField(max_length=1)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Degree',
+            name="Degree",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('grade', models.CharField(max_length=4)),
-                ('year', models.DateField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("grade", models.CharField(max_length=4)),
+                ("year", models.DateField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Department',
+            name="Department",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Document',
+            name="Document",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('document_url', models.URLField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("document_url", models.URLField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='DocumentType',
+            name="DocumentType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='EmploymentType',
+            name="EmploymentType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Institute',
+            name="Institute",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Module',
+            name="Module",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField()),
-                ('name', models.CharField(max_length=64)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField()),
+                ("name", models.CharField(max_length=64)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='OrganizationModule',
+            name="OrganizationModule",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_enabled', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('module', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.module')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("is_enabled", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "module",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT, to="app.module"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Program',
+            name="Program",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Role',
+            name="Role",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64)),
-                ('is_admin', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                ("is_admin", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=128)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.RemoveField(
-            model_name='salary',
-            name='employee',
+            model_name="salary",
+            name="employee",
         ),
         migrations.RemoveField(
-            model_name='salaryhistory',
-            name='salary',
+            model_name="salaryhistory",
+            name="salary",
         ),
         migrations.RemoveField(
-            model_name='employee',
-            name='last_employer_experience_letter',
+            model_name="employee",
+            name="last_employer_experience_letter",
         ),
         migrations.RemoveField(
-            model_name='employee',
-            name='last_employer_salary_slip',
+            model_name="employee",
+            name="last_employer_salary_slip",
         ),
         migrations.AddField(
-            model_name='employee',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="employee",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='employee',
-            name='manager',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='manages', to='app.employee'),
+            model_name="employee",
+            name="manager",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="manages",
+                to="app.employee",
+            ),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='updated_at',
+            model_name="employee",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AddField(
-            model_name='organization',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="organization",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='organization',
-            name='updated_at',
+            model_name="organization",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.DeleteModel(
-            name='Degrees',
+            name="Degrees",
         ),
         migrations.DeleteModel(
-            name='Salary',
+            name="Salary",
         ),
         migrations.DeleteModel(
-            name='SalaryHistory',
+            name="SalaryHistory",
         ),
         migrations.AddField(
-            model_name='team',
-            name='members',
-            field=models.ManyToManyField(to='app.employee'),
+            model_name="team",
+            name="members",
+            field=models.ManyToManyField(to="app.employee"),
         ),
         migrations.AddField(
-            model_name='team',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.organization'),
+            model_name="team",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='role',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="role",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='program',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="program",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='organizationmodule',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="organizationmodule",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='institute',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="institute",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='employmenttype',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="employmenttype",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='documenttype',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.organization'),
+            model_name="documenttype",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='document',
-            name='employee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.employee'),
+            model_name="document",
+            name="employee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.employee"
+            ),
         ),
         migrations.AddField(
-            model_name='department',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="department",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='degree',
-            name='employee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='degrees', to='app.employee'),
+            model_name="degree",
+            name="employee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="degrees",
+                to="app.employee",
+            ),
         ),
         migrations.AddField(
-            model_name='degree',
-            name='institute',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.institute'),
+            model_name="degree",
+            name="institute",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.institute"
+            ),
         ),
         migrations.AddField(
-            model_name='degree',
-            name='program',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.program'),
+            model_name="degree",
+            name="program",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.program"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationtype',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="compensationtype",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationschedule',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="compensationschedule",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationhistory',
-            name='employee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.employee'),
+            model_name="compensationhistory",
+            name="employee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.employee"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationchangereason',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="compensationchangereason",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationchange',
-            name='employee',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='app.employee'),
+            model_name="compensationchange",
+            name="employee",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="app.employee"
+            ),
         ),
         migrations.AddField(
-            model_name='compensationchange',
-            name='reason',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.compensationchangereason'),
+            model_name="compensationchange",
+            name="reason",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="app.compensationchangereason",
+            ),
         ),
         migrations.AddField(
-            model_name='compensation',
-            name='compensation_schedule',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.compensationschedule'),
+            model_name="compensation",
+            name="compensation_schedule",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="app.compensationschedule",
+            ),
         ),
         migrations.AddField(
-            model_name='compensation',
-            name='compensation_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.compensationtype'),
+            model_name="compensation",
+            name="compensation_type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.compensationtype"
+            ),
         ),
         migrations.AddField(
-            model_name='compensation',
-            name='currency',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.currency'),
+            model_name="compensation",
+            name="currency",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.currency"
+            ),
         ),
         migrations.AddField(
-            model_name='compensation',
-            name='employee',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='app.employee'),
+            model_name="compensation",
+            name="employee",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to="app.employee"
+            ),
         ),
         migrations.AddField(
-            model_name='benefit',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="benefit",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='assettype',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="assettype",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='asset',
-            name='employee',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.employee'),
+            model_name="asset",
+            name="employee",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="app.employee",
+            ),
         ),
         migrations.AddField(
-            model_name='asset',
-            name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            model_name="asset",
+            name="organization",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="app.organization"
+            ),
         ),
         migrations.AddField(
-            model_name='asset',
-            name='type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.assettype'),
+            model_name="asset",
+            name="type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, to="app.assettype"
+            ),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='benefits',
-            field=models.ManyToManyField(to='app.benefit'),
+            model_name="employee",
+            name="benefits",
+            field=models.ManyToManyField(to="app.benefit"),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='department',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.department'),
+            model_name="employee",
+            name="department",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="app.department",
+            ),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='type',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to='app.employmenttype'),
+            model_name="employee",
+            name="type",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="app.employmenttype",
+            ),
             preserve_default=False,
         ),
     ]

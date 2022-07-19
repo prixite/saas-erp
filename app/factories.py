@@ -1,6 +1,5 @@
-from datetime import datetime
-from unicodedata import name
 import factory
+from django.utils import timezone
 from faker import Faker
 
 from app import models
@@ -47,8 +46,7 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
 class DepartmentFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
     organization = factory.iterator(models.Organization.objects.all)
-    created_at = factory.LazyFunction(datetime.now)
-    updated_at = factory.LazyFunction(datetime.now)
+    updated_at = factory.LazyFunction(timezone.now)
 
     class Meta:
         model = models.Department
@@ -57,8 +55,7 @@ class DepartmentFactory(factory.django.DjangoModelFactory):
 class EmploymentType(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
     organization = factory.iterator(models.Organization.objects.all)
-    created_at = factory.LazyFunction(datetime.now)
-    updated_at = factory.LazyFunction(datetime.now)
+    updated_at = factory.LazyFunction(timezone.now)
 
     class Meta:
         model = models.EmploymentType

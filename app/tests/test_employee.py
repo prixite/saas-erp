@@ -11,7 +11,7 @@ class EmployeeTestCase(BaseTestCase):
         response = self.client.get("/api/employees/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(len(response.json()), 11)
         self.assertEqual(
             list(response.json()[0].keys()),
             [
@@ -37,7 +37,7 @@ class EmployeeTestCase(BaseTestCase):
             "date_of_joining": timezone.now().strftime("%Y-%m-%d"),
             "organization": self.organization.id,
             "type": self.employment_type.id,
-            "department": self.department.id
+            "department": self.department.id,
         }
 
         response = self.client.post("/api/employees/", data=employee_data)
