@@ -44,7 +44,7 @@
                 {{ form.password.errors }}
               </div>
               {% if form.errors %}
-              {% include 'partials/error.html' with form=form%}
+              {% include 'app/html/partials/error.html' with form=form%}
               {%endif%}
               <p><a class='brand-color' href="{% url 'password_reset' %}">Forgot your password?</a></p>
               <div class="d-grid"><button type="submit" class="btn btn-primary btn-lg mb-3">Login</button></div>

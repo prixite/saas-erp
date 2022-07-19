@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     # 3rd party apps
     "rest_framework",
     "drf_spectacular",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -162,3 +164,6 @@ SPECTACULAR_SETTINGS = {
     },
     "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@3.35.1",
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

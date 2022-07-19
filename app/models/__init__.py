@@ -13,6 +13,7 @@ from app.models.employee import (
     Document,
     DocumentType,
     Employee,
+    EmploymentType,
     Institute,
     Program,
     Team,
@@ -51,4 +52,5 @@ __all__ = [
     "Role",
     "Team",
     "User",
+    "EmploymentType",
 ]
