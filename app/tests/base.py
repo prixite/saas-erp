@@ -4,7 +4,6 @@ from app import factories
 from app.tests.client import Client
 
 
-# Create your tests here.
 class BaseTestCase(TestCase):
     def setUp(self) -> None:
         self.client = Client()
