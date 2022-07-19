@@ -12,10 +12,16 @@ class Command(BaseCommand):
             is_staff=True,
             email="super-admin@example.com",
         )
-
-        factories.OrganizationFactory()
+        organization = factories.OrganizationFactory()
+        employement_type = factories.EmploymentType()
         factories.EmployeeFactory.create_batch(
             size=10,
+            department=factories.DepartmentFactory(),
+            organization=organization,
+            manager=factories.EmployeeFactory(
+                organization=organization, type=employement_type
+            ),
+            type=employement_type,
         )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
