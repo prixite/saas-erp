@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 RUN apt-get install -y nodejs
 
-RUN pip install pip==21.1.3
+RUN pip install pip==22.1.2
 
 WORKDIR /opt/code
 
@@ -31,7 +31,5 @@ COPY requirements.txt requirements.txt
 COPY requirements-dev.txt requirements-dev.txt
 
 RUN pip install -r requirements-dev.txt
-
-RUN pip install psycopg2==2.9.1
 
 COPY . ./

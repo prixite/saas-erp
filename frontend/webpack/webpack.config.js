@@ -7,7 +7,7 @@ module.exports = {
   entry: "/frontend/src/index.tsx",
   resolve: {
     alias: {
-      "@src": path.resolve("frontend/src/"),
+      "@src": path.resolve(__dirname, "../src/"),
     },
     extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
   },
