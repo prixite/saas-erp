@@ -27,7 +27,7 @@ accounts = [
         name="login",
     ),
     path(
-        "accounst/password_change/",
+        "accounts/password_change/",
         auth_views.PasswordChangeView.as_view(),
         name="password_change",
     ),
