@@ -16,6 +16,14 @@ class Employees(TemplateView):
     template_name = "app/html/employees.html"
 
 
+class Payroll(TemplateView):
+    template_name = "app/html/payroll.html"
+
+
+class Inventory(TemplateView):
+    template_name = "app/html/inventory.html"
+
+
 class Settings(TemplateView):
     template_name = "app/html/settings.html"
 

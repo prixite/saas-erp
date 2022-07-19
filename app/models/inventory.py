@@ -2,6 +2,12 @@ from django.db import models
 
 
 class Asset(models.Model):
+    """
+    The asset in an organization.
+
+    attributes_values: This is a hash table which maps asset attributes to a
+    value.
+    """
     name = models.CharField(max_length=128)
     type = models.ForeignKey("AssetType", on_delete=models.PROTECT)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
@@ -12,6 +18,14 @@ class Asset(models.Model):
 
 
 class AssetType(models.Model):
+    """
+    Currently we support following assets:
+    - Laptop
+    - Mouse
+    - LCD Screen
+
+    attributes: This is a list of attributes of an asset. For example, model.
+    """
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     attributes = models.JSONField()
