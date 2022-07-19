@@ -13,13 +13,6 @@ class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
 
-class UserViewSet(ModelViewSet):
-    serializer_class = serializers.UserSerializer
-
-    def get_queryset(self):
-        return models.User.objects.all()
-
-
 class EmployeeViewSet(ModelViewSet):
     serializer_class = serializers.EmployeeSerializer
 

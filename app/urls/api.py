@@ -4,14 +4,6 @@ from app.views import api
 
 urlpatterns = [
     path(
-        "users/",
-        api.UserViewSet.as_view(
-            {
-                "get": "list",
-            }
-        ),
-    ),
-    path(
         "employees/",
         api.EmployeeViewSet.as_view(
             {
