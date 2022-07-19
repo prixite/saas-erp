@@ -29,6 +29,12 @@
         {% url "html:employees" as employees_url %}
         <a class="nav-link {% if request.path == employees_url %}active{% endif %}" href="{{ employees_url }}">Employees</a>
 
+        {% url "html:payroll" as payroll_url %}
+        <a class="nav-link {% if request.path == payroll_url %}active{% endif %}" href="{{ payroll_url }}">Payroll</a>
+
+        {% url "html:inventory" as inventory_url %}
+        <a class="nav-link {% if request.path == inventory_url %}active{% endif %}" href="{{ inventory_url }}">Inventory</a>
+
         {% url "html:settings" as settings_url %}
         <a class="nav-link {% if request.path == settings_url %}active{% endif %}" href="{{ settings_url }}">Settings</a>
 
@@ -40,6 +46,9 @@
 </nav>
 
 <div class="container">
+  {% block heading_wrapper %}
+    <h1 class="display-6">{% block heading %}{% endblock %}</h1>
+  {% endblock %}
   {% block page %}{% endblock %}
 </div>
 
