@@ -28,4 +28,7 @@ class CompensationViewSet(ModelViewSet):
     serializer_class = serializers.CompensationSerializer
 
     def get_queryset(self):
-        return models.Compensation.objects.filter(employee=self.kwargs["pk"])
+        return models.Compensation.objects.none
+
+    def get_object(self):
+        return models.Compensation.objects.get(employee=self.kwargs["pk"])
