@@ -12,4 +12,12 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "employees/<int:pk>/compensation/",
+        api.CompensationViewSet.as_view(
+            {
+                "get": "list",
+            }
+        ),
+    ),
 ]

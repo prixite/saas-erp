@@ -22,3 +22,10 @@ class EmployeeViewSet(ModelViewSet):
         return models.Employee.objects.filter(
             organization=self.request.user.organization
         )
+
+
+class CompensationViewSet(ModelViewSet):
+    serializer_class = serializers.CompensationSerializer
+
+    def get_queryset(self):
+        return models.Compensation.objects.filter(employee=self.kwargs["pk"])

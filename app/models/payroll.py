@@ -45,6 +45,10 @@ class Compensation(models.Model):
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def current_salary(self):
+        return self.rate * self.max_hours_per_week
+
 
 class CompensationChange(models.Model):
     """
