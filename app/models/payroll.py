@@ -7,7 +7,7 @@ class CompensationHistory(models.Model):
     """
 
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
-    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE)
+    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE, null=True)
     amount = models.FloatField()
     tax = models.FloatField()
     bonus = models.FloatField(default=0)

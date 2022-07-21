@@ -114,16 +114,19 @@ class Owners(ListView):
     template_name = "app/html/owners.html"
     model = models.User
 
+    def get_queryset(self):
+        return self.model.objects.filter(is_owner=True)
+
 
 class CreateOwner(CreateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
-    success_url = reverse_lazy("html:organizations")
+    success_url = reverse_lazy("html:owners")
 
 
 class UpdateOwner(UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
-    success_url = reverse_lazy("html:organizations")
+    success_url = reverse_lazy("html:owners")

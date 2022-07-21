@@ -11,8 +11,12 @@ class User(AbstractUser):
 
     email = models.EmailField(_("email address"), unique=True)
 
-    organization = models.ForeignKey(
+    organization = models.OneToOneField(
         "Organization", on_delete=models.PROTECT, null=True
+    )
+
+    role = models.OneToOneField(
+        "Role", on_delete=models.PROTECT, null=True
     )
 
     USERNAME_FIELD = "email"
