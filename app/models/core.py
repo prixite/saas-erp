@@ -30,6 +30,9 @@ class Organization(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 
 class OrganizationModule(models.Model):
     """
@@ -68,6 +71,7 @@ class Role(models.Model):
 
     name = models.CharField(max_length=64)
     is_admin = models.BooleanField(default=False)
+    is_owner = models.BooleanField(default=False)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

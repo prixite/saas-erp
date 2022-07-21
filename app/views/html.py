@@ -56,3 +56,74 @@ class Settings(TemplateView):
 
 class Account(TemplateView):
     template_name = "app/html/account.html"
+
+
+class Roles(ListView):
+    template_name = "app/html/roles.html"
+    model = models.Role
+
+
+class CreateRole(CreateView):
+    model = models.Role
+    fields = ["name", "is_admin"]
+    template_name = "app/html/role_form.html"
+    success_url = reverse_lazy("html:roles")
+
+    def form_valid(self, form):
+        form.instance.organization = self.request.user.organization
+        return super().form_valid(form)
+
+
+class UpdateRole(UpdateView):
+    model = models.User
+    fields = ["name", "is_admin"]
+    template_name = "app/html/role_form.html"
+    success_url = reverse_lazy("html:roles")
+
+
+class ManageOrganizations(TemplateView):
+    template_name = "app/html/manage_organizations.html"
+
+
+class Organizations(ListView):
+    template_name = "app/html/organizations.html"
+    model = models.Organization
+
+
+class CreateOrganization(CreateView):
+    model = models.Organization
+    fields = ["name", "address"]
+    template_name = "app/html/organization_form.html"
+    success_url = reverse_lazy("html:organizations")
+
+
+class UpdateOrganization(UpdateView):
+    model = models.Organization
+    fields = ["name", "address"]
+    template_name = "app/html/organization_form.html"
+    success_url = reverse_lazy("html:organizations")
+
+
+class DeleteOrganization(DeleteView):
+    model = models.Organization
+    success_url = reverse_lazy("html:organizations")
+    template_name = "app/html/organization_confirm_delete.html"
+
+
+class Owners(ListView):
+    template_name = "app/html/owners.html"
+    model = models.User
+
+
+class CreateOwner(CreateView):
+    model = models.User
+    fields = ["email", "first_name", "last_name", "organization"]
+    template_name = "app/html/owner_form.html"
+    success_url = reverse_lazy("html:organizations")
+
+
+class UpdateOwner(UpdateView):
+    model = models.User
+    fields = ["email", "first_name", "last_name", "organization"]
+    template_name = "app/html/owner_form.html"
+    success_url = reverse_lazy("html:organizations")
