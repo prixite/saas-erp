@@ -1,8 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import models
+
+
+class PrivateViewMixin(LoginRequiredMixin):
+    pass
 
 
 class Home(TemplateView):
@@ -15,6 +20,7 @@ class UserMixin:
             is_superuser=False,
             organization=self.request.user.organization,
         )
+
 
 class Users(UserMixin, ListView):
     template_name = "app/html/users.html"
