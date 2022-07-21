@@ -9,12 +9,19 @@ class Home(TemplateView):
     template_name = "app/html/home.html"
 
 
-class Users(ListView):
+class UserMixin:
+    def get_queryset(self):
+        return self.model.objects.filter(
+            is_superuser=False,
+            organization=self.request.user.organization,
+        )
+
+class Users(UserMixin, ListView):
     template_name = "app/html/users.html"
     model = models.User
 
 
-class CreateUser(CreateView):
+class CreateUser(UserMixin, CreateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
@@ -25,14 +32,14 @@ class CreateUser(CreateView):
         return super().form_valid(form)
 
 
-class UpdateUser(UpdateView):
+class UpdateUser(UserMixin, UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
 
 
-class DeleteUser(DeleteView):
+class DeleteUser(UserMixin, DeleteView):
     model = models.User
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_confirm_delete.html"
