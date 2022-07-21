@@ -15,9 +15,7 @@ class User(AbstractUser):
         "Organization", on_delete=models.PROTECT, null=True
     )
 
-    role = models.OneToOneField(
-        "Role", on_delete=models.PROTECT, null=True
-    )
+    role = models.OneToOneField("Role", on_delete=models.PROTECT, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
