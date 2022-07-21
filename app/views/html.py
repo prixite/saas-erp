@@ -16,7 +16,7 @@ class Users(ListView):
 
 class CreateUser(CreateView):
     model = models.User
-    fields = ["email", "first_name", "last_name"]
+    fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
 
@@ -27,7 +27,7 @@ class CreateUser(CreateView):
 
 class UpdateUser(UpdateView):
     model = models.User
-    fields = ["email", "first_name", "last_name"]
+    fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
 
@@ -96,6 +96,15 @@ class CreateOrganization(CreateView):
     template_name = "app/html/organization_form.html"
     success_url = reverse_lazy("html:organizations")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        models.Role.objects.create(
+            name="Owner",
+            is_owner=True,
+            organization=form.instance,
+        )
+        return response
+
 
 class UpdateOrganization(UpdateView):
     model = models.Organization
@@ -126,6 +135,13 @@ class CreateOwner(CreateView):
 
     def get_queryset(self):
         return self.model.objects.filter(role__is_owner=True)
+
+    def form_valid(self, form):
+        form.instance.role = models.Role.objects.filter(
+            organization=form.instance.organization,
+            is_owner=True,
+        ).first()
+        return super().form_valid(form)
 
 
 class UpdateOwner(UpdateView):

@@ -12,7 +12,7 @@ class User(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
 
     organization = models.OneToOneField(
-        "Organization", on_delete=models.PROTECT, null=True
+        "Organization", on_delete=models.CASCADE, null=True
     )
 
     role = models.OneToOneField("Role", on_delete=models.PROTECT, null=True)
@@ -77,6 +77,9 @@ class Role(models.Model):
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Currency(models.Model):
