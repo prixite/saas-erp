@@ -1,13 +1,13 @@
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
-import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 
 const EmployeeBio = () => {
   return (
