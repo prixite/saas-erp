@@ -1,7 +1,7 @@
 import { Suspense } from "react";
+import { ThemeProvider } from "@mui/material/styles";
 import Routes from "@src/routes/AppRoutes";
 import baseTheme from "@src/theme/base-theme";
-import { ThemeProvider } from "@mui/material/styles";
 
 const loading = <span>Loading....</span>;
 const App = () => (
