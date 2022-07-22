@@ -7,7 +7,7 @@ class CompensationHistory(models.Model):
     """
 
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
-    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE)
+    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE, null=True)
     amount = models.FloatField()
     tax = models.FloatField()
     bonus = models.FloatField(default=0)
@@ -44,6 +44,10 @@ class Compensation(models.Model):
     )
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def current_salary(self):
+        return self.rate * self.max_hours_per_week
 
 
 class CompensationChange(models.Model):

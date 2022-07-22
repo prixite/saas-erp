@@ -38,6 +38,9 @@
         {% url "html:settings" as settings_url %}
         <a class="nav-link {% if request.path == settings_url %}active{% endif %}" href="{{ settings_url }}">Settings</a>
 
+        {% url "html:organizations-manage" as organization_url %}
+        <a class="nav-link {% if request.path == organization_url %}active{% endif %}" href="{{ organization_url }}">Organization</a>
+
         {% url "html:account" as account_url %}
         <a class="nav-link {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Account</a>
       </div>

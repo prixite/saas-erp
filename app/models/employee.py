@@ -13,7 +13,7 @@ class Employee(models.Model):
     )
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     benefits = models.ManyToManyField("Benefit")
-    type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT)
+    type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,7 +26,7 @@ class Document(models.Model):
 
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    type = models.ForeignKey("DocumentType", on_delete=models.PROTECT)
+    type = models.ForeignKey("DocumentType", on_delete=models.PROTECT, null=True)
     document_url = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
