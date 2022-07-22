@@ -1,12 +1,12 @@
 const routes = {
   dashboard: {
     name: "dashboard",
-    path: "/",
+    path: "/dashboard",
     component: "Dashboard",
   },
   employeeCreation: {
     name: "employee-creation",
-    path: "/employee-creation",
+    path: "/",
     component: "Employee",
   },
 };

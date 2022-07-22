@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Routes from "./routes/AppRoutes";
+import Routes from "@src/routes/AppRoutes";
 
 const loading = <span>Loading....</span>;
 const App = () => (

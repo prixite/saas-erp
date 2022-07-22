@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import include, path, re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from app.views.api import HomeView
@@ -79,4 +79,5 @@ urlpatterns = accounts + [
         name="open-api",
     ),
     path("", HomeView.as_view(), name="home"),
+    re_path(r"^$|^.+/$", HomeView.as_view(), name="home"),
 ]
