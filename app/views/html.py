@@ -7,10 +7,13 @@ from app import models
 
 
 class PrivateViewMixin(LoginRequiredMixin):
-    pass
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
-class Home(TemplateView):
+class Home(PrivateViewMixin, TemplateView):
     template_name = "app/html/home.html"
 
 
@@ -22,12 +25,12 @@ class UserMixin:
         )
 
 
-class Users(UserMixin, ListView):
+class Users(PrivateViewMixin, UserMixin, ListView):
     template_name = "app/html/users.html"
     model = models.User
 
 
-class CreateUser(UserMixin, CreateView):
+class CreateUser(PrivateViewMixin, UserMixin, CreateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
@@ -38,45 +41,45 @@ class CreateUser(UserMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateUser(UserMixin, UpdateView):
+class UpdateUser(PrivateViewMixin, UserMixin, UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
 
 
-class DeleteUser(UserMixin, DeleteView):
+class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
     model = models.User
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_confirm_delete.html"
 
 
-class Employees(TemplateView):
+class Employees(PrivateViewMixin, TemplateView):
     template_name = "app/html/employees.html"
 
 
-class Payroll(TemplateView):
+class Payroll(PrivateViewMixin, TemplateView):
     template_name = "app/html/payroll.html"
 
 
-class Inventory(TemplateView):
+class Inventory(PrivateViewMixin, TemplateView):
     template_name = "app/html/inventory.html"
 
 
-class Settings(TemplateView):
+class Settings(PrivateViewMixin, TemplateView):
     template_name = "app/html/settings.html"
 
 
-class Account(TemplateView):
+class Account(PrivateViewMixin, TemplateView):
     template_name = "app/html/account.html"
 
 
-class Roles(ListView):
+class Roles(PrivateViewMixin, ListView):
     template_name = "app/html/roles.html"
     model = models.Role
 
 
-class CreateRole(CreateView):
+class CreateRole(PrivateViewMixin, CreateView):
     model = models.Role
     fields = ["name", "is_admin"]
     template_name = "app/html/role_form.html"
@@ -87,23 +90,23 @@ class CreateRole(CreateView):
         return super().form_valid(form)
 
 
-class UpdateRole(UpdateView):
+class UpdateRole(PrivateViewMixin, UpdateView):
     model = models.User
     fields = ["name", "is_admin"]
     template_name = "app/html/role_form.html"
     success_url = reverse_lazy("html:roles")
 
 
-class ManageOrganizations(TemplateView):
+class ManageOrganizations(PrivateViewMixin, TemplateView):
     template_name = "app/html/manage_organizations.html"
 
 
-class Organizations(ListView):
+class Organizations(PrivateViewMixin, ListView):
     template_name = "app/html/organizations.html"
     model = models.Organization
 
 
-class CreateOrganization(CreateView):
+class CreateOrganization(PrivateViewMixin, CreateView):
     model = models.Organization
     fields = ["name", "address"]
     template_name = "app/html/organization_form.html"
@@ -119,20 +122,20 @@ class CreateOrganization(CreateView):
         return response
 
 
-class UpdateOrganization(UpdateView):
+class UpdateOrganization(PrivateViewMixin, UpdateView):
     model = models.Organization
     fields = ["name", "address"]
     template_name = "app/html/organization_form.html"
     success_url = reverse_lazy("html:organizations")
 
 
-class DeleteOrganization(DeleteView):
+class DeleteOrganization(PrivateViewMixin, DeleteView):
     model = models.Organization
     success_url = reverse_lazy("html:organizations")
     template_name = "app/html/organization_confirm_delete.html"
 
 
-class Owners(ListView):
+class Owners(PrivateViewMixin, ListView):
     template_name = "app/html/owners.html"
     model = models.User
 
@@ -140,7 +143,7 @@ class Owners(ListView):
         return self.model.objects.filter(role__is_owner=True)
 
 
-class CreateOwner(CreateView):
+class CreateOwner(PrivateViewMixin, CreateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
@@ -157,7 +160,7 @@ class CreateOwner(CreateView):
         return super().form_valid(form)
 
 
-class UpdateOwner(UpdateView):
+class UpdateOwner(PrivateViewMixin, UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
