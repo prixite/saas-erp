@@ -49,6 +49,9 @@ class Compensation(models.Model):
     def current_salary(self):
         return self.rate * self.max_hours_per_week
 
+    def __str__(self) -> str:
+        return self.employee
+
 
 class CompensationChange(models.Model):
     """
@@ -87,6 +90,9 @@ class CompensationSchedule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return str(self.name).capitalize()
+
 
 class CompensationType(models.Model):
     """
@@ -100,3 +106,6 @@ class CompensationType(models.Model):
     is_milestone = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return str(self.name).capitalize()
