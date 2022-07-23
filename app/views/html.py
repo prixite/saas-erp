@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -138,27 +139,30 @@ class CreateOrganization(PrivateViewMixin, CreateView):
     success_url = reverse_lazy("html:organizations")
     allow_superuser = True
 
+    @transaction.atomic
     def form_valid(self, form):
         response = super().form_valid(form)
         models.Role.objects.bulk_create(
-            models.Role(
-                name="Owner",
-                is_owner=True,
-                is_default=True,
-                organization=form.instance,
-            ),
-            models.Role(
-                name="Admin",
-                is_owner=True,
-                is_default=True,
-                organization=form.instance,
-            ),
-            models.Role(
-                name="Member",
-                is_owner=True,
-                is_default=True,
-                organization=form.instance,
-            ),
+            [
+                models.Role(
+                    name="Owner",
+                    is_owner=True,
+                    is_default=True,
+                    organization=form.instance,
+                ),
+                models.Role(
+                    name="Admin",
+                    is_owner=True,
+                    is_default=True,
+                    organization=form.instance,
+                ),
+                models.Role(
+                    name="Member",
+                    is_owner=True,
+                    is_default=True,
+                    organization=form.instance,
+                ),
+            ]
         )
         return response
 

@@ -35,7 +35,7 @@ class Organization(models.Model):
     organization should only be visible to that organization.
     """
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     address = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -96,7 +96,7 @@ class Role(models.Model):
     - Member: Can only manage own data.
     """
 
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     is_owner = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_member = models.BooleanField(default=False)
