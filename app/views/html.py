@@ -8,13 +8,25 @@ from app import models
 
 class PrivateViewMixin(LoginRequiredMixin):
     allow_superuser = False
+    allowed_roles = []
+    allowed_roles = set()
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if not (request.user.is_superuser and self.allow_superuser):
+        if request.user.is_superuser and not self.allow_superuser:
             return self.handle_no_permission()
+        elif not request.user.is_superuser:
+            if self.allow_superuser:
+                return self.handle_no_permission()
+            else:
+                modules = [x for x in request.user.modules if x in self.allowed_roles]
+                if not modules:
+                    return self.handle_no_permission()
+
+                if [x for x in modules if x.role.is_admin or x.role.is_owner]:
+                    request.user.is_admin = True
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -44,6 +56,11 @@ class CreateUser(PrivateViewMixin, UserMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.username = form.instance.email
+        form.instance.default_role = models.Role.objects.filter(
+            organization=form.instance.organization,
+            is_member=True,
+            is_default=True,
+        ).first()
         return super().form_valid(form)
 
 
@@ -123,10 +140,25 @@ class CreateOrganization(PrivateViewMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        models.Role.objects.create(
-            name="Owner",
-            is_owner=True,
-            organization=form.instance,
+        models.Role.objects.bulk_create(
+            models.Role(
+                name="Owner",
+                is_owner=True,
+                is_default=True,
+                organization=form.instance,
+            ),
+            models.Role(
+                name="Admin",
+                is_owner=True,
+                is_default=True,
+                organization=form.instance,
+            ),
+            models.Role(
+                name="Member",
+                is_owner=True,
+                is_default=True,
+                organization=form.instance,
+            ),
         )
         return response
 
@@ -146,39 +178,40 @@ class DeleteOrganization(PrivateViewMixin, DeleteView):
     allow_superuser = True
 
 
-class Owners(PrivateViewMixin, ListView):
+class OwnerMixin:
+    def get_queryset(self):
+        return self.model.objects.filter(
+            default_role__is_owner=True,
+            is_superuser=False,
+        )
+
+
+class Owners(PrivateViewMixin, OwnerMixin, ListView):
     template_name = "app/html/owners.html"
     model = models.User
     allow_superuser = True
 
-    def get_queryset(self):
-        return self.model.objects.filter(role__is_owner=True)
 
-
-class CreateOwner(PrivateViewMixin, CreateView):
+class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
 
-    def get_queryset(self):
-        return self.model.objects.filter(role__is_owner=True)
-
     def form_valid(self, form):
-        form.instance.role = models.Role.objects.filter(
+        form.instance.username = form.instance.email
+        form.instance.default_role = models.Role.objects.filter(
             organization=form.instance.organization,
             is_owner=True,
+            is_default=True,
         ).first()
         return super().form_valid(form)
 
 
-class UpdateOwner(PrivateViewMixin, UpdateView):
+class UpdateOwner(PrivateViewMixin, OwnerMixin, UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
-
-    def get_queryset(self):
-        return self.model.objects.filter(role__is_owner=True)
