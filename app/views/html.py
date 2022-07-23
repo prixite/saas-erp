@@ -7,9 +7,15 @@ from app import models
 
 
 class PrivateViewMixin(LoginRequiredMixin):
+    allow_superuser = False
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
+
+        if not (request.user.is_superuser and self.allow_superuser):
+            return self.handle_no_permission()
+
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -99,11 +105,13 @@ class UpdateRole(PrivateViewMixin, UpdateView):
 
 class ManageOrganizations(PrivateViewMixin, TemplateView):
     template_name = "app/html/manage_organizations.html"
+    allow_superuser = True
 
 
 class Organizations(PrivateViewMixin, ListView):
     template_name = "app/html/organizations.html"
     model = models.Organization
+    allow_superuser = True
 
 
 class CreateOrganization(PrivateViewMixin, CreateView):
@@ -111,6 +119,7 @@ class CreateOrganization(PrivateViewMixin, CreateView):
     fields = ["name", "address"]
     template_name = "app/html/organization_form.html"
     success_url = reverse_lazy("html:organizations")
+    allow_superuser = True
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -127,17 +136,20 @@ class UpdateOrganization(PrivateViewMixin, UpdateView):
     fields = ["name", "address"]
     template_name = "app/html/organization_form.html"
     success_url = reverse_lazy("html:organizations")
+    allow_superuser = True
 
 
 class DeleteOrganization(PrivateViewMixin, DeleteView):
     model = models.Organization
     success_url = reverse_lazy("html:organizations")
     template_name = "app/html/organization_confirm_delete.html"
+    allow_superuser = True
 
 
 class Owners(PrivateViewMixin, ListView):
     template_name = "app/html/owners.html"
     model = models.User
+    allow_superuser = True
 
     def get_queryset(self):
         return self.model.objects.filter(role__is_owner=True)
@@ -148,6 +160,7 @@ class CreateOwner(PrivateViewMixin, CreateView):
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
+    allow_superuser = True
 
     def get_queryset(self):
         return self.model.objects.filter(role__is_owner=True)
@@ -165,6 +178,7 @@ class UpdateOwner(PrivateViewMixin, UpdateView):
     fields = ["email", "first_name", "last_name", "organization"]
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
+    allow_superuser = True
 
     def get_queryset(self):
         return self.model.objects.filter(role__is_owner=True)
