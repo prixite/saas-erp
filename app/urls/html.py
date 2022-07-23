@@ -42,4 +42,5 @@ urlpatterns = [
     path("owners/", views.Owners.as_view(), name="owners"),
     path("owners/add/", views.CreateOwner.as_view(), name="owners-add"),
     path("owners/<int:pk>/", views.UpdateOwner.as_view(), name="owners-update"),
+    path("logout/", views.Logout.as_view(), name="logout"),
 ]

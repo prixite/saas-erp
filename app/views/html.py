@@ -9,7 +9,6 @@ from app import models
 
 class PrivateViewMixin(LoginRequiredMixin):
     allow_superuser = False
-    allowed_roles = []
     allowed_roles = set()
 
     def dispatch(self, request, *args, **kwargs):
@@ -219,3 +218,7 @@ class UpdateOwner(PrivateViewMixin, OwnerMixin, UpdateView):
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
+
+
+class Logout(LoginRequiredMixin, TemplateView):
+    template_name = "app/html/logout.html"

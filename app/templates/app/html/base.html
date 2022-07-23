@@ -43,6 +43,9 @@
 
         {% url "html:account" as account_url %}
         <a class="nav-link {% if request.path == account_url %}active{% endif %}" href="{{ account_url }}">Account</a>
+
+        {% url "html:logout" as logout_url %}
+        <a class="nav-link {% if request.path == logout_url %}active{% endif %}" href="{{ logout_url }}">Logout</a>
       </div>
     </div>
   </div>
