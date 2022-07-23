@@ -11,7 +11,7 @@ class User(AbstractUser):
 
     email = models.EmailField(_("email address"), unique=True)
 
-    organization = models.OneToOneField(
+    organization = models.ForeignKey(
         "Organization", on_delete=models.CASCADE, null=True
     )
 
@@ -42,6 +42,10 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def owner(self):
+        return self.user_set.filter(default_role__is_owner=True).first()
 
 
 class OrganizationModule(models.Model):

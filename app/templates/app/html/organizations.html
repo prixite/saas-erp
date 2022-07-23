@@ -12,6 +12,7 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Address</th>
+      <th scope="col">Owner</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
     <tr>
       <td><a href="{% url 'html:organizations-update' item.pk %}">{{ item.name }}</a></td>
       <td>{{ item.address }}</td>
+      <td>{{ item.owner }}</td>
       <td><a class="btn btn-danger btn-sm" href="{% url "html:organizations-delete" item.id %}">Delete</a></td>
     </tr>
     {% endfor %}
