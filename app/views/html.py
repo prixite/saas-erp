@@ -5,6 +5,7 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import models
+from app.lib.user import send_invite
 
 
 class PrivateViewMixin(LoginRequiredMixin):
@@ -212,6 +213,7 @@ class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
 
+    @transaction.atomic
     def form_valid(self, form):
         form.instance.username = form.instance.email
         form.instance.default_role = models.Role.objects.filter(
@@ -223,6 +225,7 @@ class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
         invite = models.Invitation(user=form.instance)
         invite.generate_key()
         invite.save()
+        send_invite(form.instance)
         return response
 
 
