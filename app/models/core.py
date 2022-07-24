@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -16,6 +18,7 @@ class User(AbstractUser):
     )
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
+    is_onboarded = models.BooleanField(default=False)
 
     # this field should not be stored in DB. This field will be updated by
     # view to True if the user is admin for the module being accessed.
@@ -27,6 +30,16 @@ class User(AbstractUser):
     @property
     def modules(self):
         return {x.module for x in self.module_role_set.all()}
+
+
+class Invitation(models.Model):
+    user = models.OneToOneField("User", on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def generate_key(self):
+        self.slug = f"{self.user.id}{random.randint(0, 2**31-1)}"
 
 
 class Organization(models.Model):

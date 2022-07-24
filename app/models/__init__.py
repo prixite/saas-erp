@@ -1,5 +1,6 @@
 from app.models.core import (
     Currency,
+    Invitation,
     Module,
     Organization,
     OrganizationModule,
@@ -44,7 +45,9 @@ __all__ = [
     "Document",
     "DocumentType",
     "Employee",
+    "EmploymentType",
     "Institute",
+    "Invitation",
     "Module",
     "Organization",
     "OrganizationModule",
@@ -52,5 +55,4 @@ __all__ = [
     "Role",
     "Team",
     "User",
-    "EmploymentType",
 ]

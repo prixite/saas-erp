@@ -77,6 +77,16 @@ class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
     template_name = "app/html/user_confirm_delete.html"
 
 
+class InviteUser(UpdateView):
+    model = models.User
+    fields = ["password"]
+    template_name = "app/html/user_form.html"
+    success_url = reverse_lazy("html:home")
+
+    def get_slug_field(self):
+        return "invitation__slug"
+
+
 class Employees(PrivateViewMixin, TemplateView):
     template_name = "app/html/employees.html"
 
@@ -209,7 +219,11 @@ class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
             is_owner=True,
             is_default=True,
         ).first()
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        invite = models.Invitation(user=form.instance)
+        invite.generate_key()
+        invite.save()
+        return response
 
 
 class UpdateOwner(PrivateViewMixin, OwnerMixin, UpdateView):
