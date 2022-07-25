@@ -78,7 +78,7 @@ urlpatterns = accounts + [
     path("docs/schema/", SpectacularAPIView.as_view(), name="schema_docs"),
     path(
         "docs/api/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
+        SpectacularSwaggerView.as_view(url_name="schema_docs"),
         name="api_docs",
     ),
     path("", HomeView.as_view(), name="home"),
