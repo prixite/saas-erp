@@ -87,6 +87,13 @@ class InviteUser(UpdateView):
     def get_slug_field(self):
         return "invitation__slug"
 
+    @transaction.atomic
+    def form_valid(self, form):
+        form.instance.set_password(form.instance.password)
+        form.instance.invitation.is_onboarded = True
+        form.instance.invitation.save()
+        return super().form_valid(form)
+
 
 class Employees(PrivateViewMixin, TemplateView):
     template_name = "app/html/employees.html"
