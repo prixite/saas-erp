@@ -27,10 +27,6 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
-    @property
-    def modules(self):
-        return {x.module for x in self.module_role_set.all()}
-
 
 class Invitation(models.Model):
     """
@@ -87,7 +83,7 @@ class UserModuleRole(models.Model):
 
     module = models.ForeignKey("Module", on_delete=models.PROTECT)
     user = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name="module_role_set"
+        "User", on_delete=models.CASCADE, related_name="module_roles"
     )
     role = models.ForeignKey("Role", on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -107,6 +103,9 @@ class Module(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.slug
+
 
 class Role(models.Model):
     """
@@ -117,14 +116,48 @@ class Role(models.Model):
     - Member: Can only manage own data.
     """
 
+    class Permission(models.TextChoices):
+        OWNER = "owner", "Owner"
+        ADMIN = "admin", "Admin"
+        MEMBER = "member", "Member"
+
     name = models.CharField(max_length=64, unique=True)
-    is_owner = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_member = models.BooleanField(default=False)
+    permission = models.CharField(
+        max_length=10, choices=Permission.choices, default=Permission.MEMBER
+    )
     is_default = models.BooleanField(default=False)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __gt__(self, permission_or_role):
+        other_permission = (
+            permission_or_role.permission
+            if isinstance(permission_or_role, Role)
+            else permission_or_role
+        )
+
+        if self.permission == self.Permission.OWNER and other_permission in (
+            self.Permission.MEMBER,
+            self.Permission.ADMIN,
+        ):
+            return True
+
+        if (
+            self.permission == self.Permission.ADMIN
+            and other_permission == self.Permission.MEMBER
+        ):
+            return True
+
+        return False
+
+    def __eq__(self, permission_or_role):
+        other_permission = (
+            permission_or_role.permission
+            if isinstance(permission_or_role, Role)
+            else permission_or_role
+        )
+        return self.permission == other_permission
 
     def __str__(self):
         return self.name
