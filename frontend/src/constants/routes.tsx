@@ -6,7 +6,7 @@ const routes = {
   },
   employeeCreation: {
     name: "employee-creation",
-    path: "/employee-creation",
+    path: "/employee",
     component: "Employee",
   },
 };
