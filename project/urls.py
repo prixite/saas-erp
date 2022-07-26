@@ -83,6 +83,6 @@ urlpatterns = accounts + [
         name="api_docs",
     ),
     path("react/", HomeView.as_view(), name="home"),
+    re_path(r"^react/.+/$", HomeView.as_view(), name="home"),
     path("", include("app.urls.html")),
-    re_path(r"^$|^.+/$", HomeView.as_view(), name="home"),
 ]
