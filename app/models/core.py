@@ -78,6 +78,8 @@ class OrganizationModule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return str(f'{self.module}-{self.is_enabled}')
 
 class UserModuleRole(models.Model):
     """
@@ -106,6 +108,9 @@ class Module(models.Model):
     name = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Role(models.Model):

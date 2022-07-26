@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from app import models
+from app import inline_admin, models
 
 
 @admin.register(models.User)
@@ -24,4 +24,8 @@ class CompensationAdmin(admin.ModelAdmin):
 
 @admin.register(models.Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    pass
+    fields = ("name", "address")
+    inlines = [
+        inline_admin.UserInline,
+        inline_admin.OrganizationModuleInline,
+    ]
