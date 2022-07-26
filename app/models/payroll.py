@@ -91,7 +91,7 @@ class CompensationSchedule(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return str(self.name).capitalize()
+        return str(self.name).title()
 
 
 class CompensationType(models.Model):
@@ -108,4 +108,4 @@ class CompensationType(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return str(self.name).capitalize()
+        return str(self.name).title()
