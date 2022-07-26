@@ -17,6 +17,9 @@ class Employee(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Document(models.Model):
     """
@@ -30,6 +33,9 @@ class Document(models.Model):
     document_url = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class DocumentType(models.Model):
@@ -48,6 +54,9 @@ class DocumentType(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Team(models.Model):
     """
@@ -60,6 +69,9 @@ class Team(models.Model):
     members = models.ManyToManyField("Employee")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Degree(models.Model):
@@ -116,6 +128,9 @@ class Benefit(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Department(models.Model):
     """
@@ -133,6 +148,9 @@ class Department(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class EmploymentType(models.Model):
     """
@@ -148,3 +166,6 @@ class EmploymentType(models.Model):
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
