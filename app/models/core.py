@@ -33,6 +33,9 @@ class User(AbstractUser):
 
 
 class Invitation(models.Model):
+    """
+    This model is used to track the invitation of the user.
+    """
     user = models.OneToOneField("User", on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
