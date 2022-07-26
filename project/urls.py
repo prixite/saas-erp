@@ -24,7 +24,9 @@ from app.views.api import HomeView
 accounts = [
     path(
         "accounts/login/",
-        auth_views.LoginView.as_view(template_name="app/html/registration/login.html"),
+        auth_views.LoginView.as_view(
+            template_name="app/html/registration/login.html",
+        ),
         name="login",
     ),
     path(
@@ -74,13 +76,13 @@ accounts = [
 urlpatterns = accounts + [
     path("admin/", admin.site.urls),
     path("api/", include("app.urls.api")),
-    path("html/", include("app.urls.html")),
     path("docs/schema/", SpectacularAPIView.as_view(), name="schema_docs"),
     path(
         "docs/api/",
         SpectacularSwaggerView.as_view(url_name="schema_docs"),
         name="api_docs",
     ),
-    path("", HomeView.as_view(), name="home"),
+    path("react/", HomeView.as_view(), name="home"),
+    path("", include("app.urls.html")),
     re_path(r"^$|^.+/$", HomeView.as_view(), name="home"),
 ]
