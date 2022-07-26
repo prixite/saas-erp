@@ -8,30 +8,38 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0013_user_is_onboarded_invitation'),
+        ("app", "0013_user_is_onboarded_invitation"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='role',
-            name='is_admin',
+            model_name="role",
+            name="is_admin",
         ),
         migrations.RemoveField(
-            model_name='role',
-            name='is_member',
+            model_name="role",
+            name="is_member",
         ),
         migrations.RemoveField(
-            model_name='role',
-            name='is_owner',
+            model_name="role",
+            name="is_owner",
         ),
         migrations.AddField(
-            model_name='role',
-            name='permission',
-            field=models.CharField(choices=[('owner', 'Owner'), ('admin', 'Admin'), ('member', 'Member')], default='member', max_length=10),
+            model_name="role",
+            name="permission",
+            field=models.CharField(
+                choices=[("owner", "Owner"), ("admin", "Admin"), ("member", "Member")],
+                default="member",
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='usermodulerole',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='module_roles', to=settings.AUTH_USER_MODEL),
+            model_name="usermodulerole",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="module_roles",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

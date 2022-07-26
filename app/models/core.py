@@ -58,7 +58,9 @@ class Organization(models.Model):
 
     @property
     def owner(self):
-        return self.user_set.filter(default_role__is_owner=True).first()
+        return self.user_set.filter(
+            default_role__permission=Role.Permission.OWNER
+        ).first()
 
 
 class OrganizationModule(models.Model):
@@ -130,7 +132,7 @@ class Role(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __gt__(self, permission_or_role):
+    def less_than(self, permission_or_role):
         other_permission = (
             permission_or_role.permission
             if isinstance(permission_or_role, Role)
@@ -151,7 +153,7 @@ class Role(models.Model):
 
         return False
 
-    def __eq__(self, permission_or_role):
+    def equal_to(self, permission_or_role):
         other_permission = (
             permission_or_role.permission
             if isinstance(permission_or_role, Role)

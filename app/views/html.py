@@ -163,19 +163,19 @@ class CreateOrganization(PrivateViewMixin, CreateView):
             [
                 models.Role(
                     name="Owner",
-                    is_owner=True,
+                    permission=models.Role.Permission.OWNER,
                     is_default=True,
                     organization=form.instance,
                 ),
                 models.Role(
                     name="Admin",
-                    is_owner=True,
+                    permission=models.Role.Permission.ADMIN,
                     is_default=True,
                     organization=form.instance,
                 ),
                 models.Role(
                     name="Member",
-                    is_owner=True,
+                    permission=models.Role.Permission.MEMBER,
                     is_default=True,
                     organization=form.instance,
                 ),
@@ -202,7 +202,7 @@ class DeleteOrganization(PrivateViewMixin, DeleteView):
 class OwnerMixin:
     def get_queryset(self):
         return self.model.objects.filter(
-            default_role__is_owner=True,
+            default_role__permission=models.Role.Permission.OWNER,
             is_superuser=False,
         )
 
@@ -225,7 +225,7 @@ class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
         form.instance.username = form.instance.email
         form.instance.default_role = models.Role.objects.filter(
             organization=form.instance.organization,
-            is_owner=True,
+            permission=models.Role.Permission.OWNER,
             is_default=True,
         ).first()
         response = super().form_valid(form)
