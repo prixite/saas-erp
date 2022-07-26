@@ -24,6 +24,7 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
+    DOMAIN_NAME=(str, "https://erp.prixite.com"),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -38,6 +39,7 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
+DOMAIN_NAME = env("DOMAIN_NAME")
 
 # Application definition
 
