@@ -23,7 +23,7 @@ env = environ.Env(
     DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
-    EMAIL_BACKEND=(str, None),
+    EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 

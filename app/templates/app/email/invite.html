@@ -1,0 +1,7 @@
+Hi {{ user.get_full_name }},
+
+You have been invited to Prixite ERP. Please click the link below to create your account.
+
+{% url "html:users-invite" user.invitation.slug %}
+
+Cheers!
