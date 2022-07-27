@@ -23,9 +23,46 @@ class User(AbstractUser):
     # this field should not be stored in DB. This field will be updated by
     # view to True if the user is admin for the module being accessed.
     is_module_admin = False
+    # this field should not be stored in DB. This field will be updated by
+    # view to True if the user is owner for the module being accessed.
+    is_module_owner = False
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
+
+    def get_modules(self, permission):
+        modules = set()
+        for module_role in self.module_roles.filter(
+            module__is_enabled=True,
+            role__permission=permission,
+        ):
+            modules.add(module_role.module)
+
+        if not self.is_superuser:
+            modules = modules & self.organization_modules
+
+        return modules
+
+    @property
+    def organization_modules(self):
+        organization_modules = OrganizationModule.objects.filter(
+            organization=self.organization,
+            is_enabled=True,
+        )
+
+        return {x.module for x in organization_modules}
+
+    @property
+    def member_modules(self):
+        return self.get_modules(Role.Permission.MEMBER)
+
+    @property
+    def admin_modules(self):
+        return self.get_modules(Role.Permission.ADMIN)
+
+    @property
+    def owner_modules(self):
+        return self.get_modules(Role.Permission.OWNER)
 
 
 class Invitation(models.Model):

@@ -20,20 +20,18 @@ class PrivateViewMixin(LoginRequiredMixin):
         if request.user.is_superuser and self.allow_superuser:
             return super().dispatch(request, *args, **kwargs)
 
-        for module_role in request.user.module_roles.all():
-            if module_role.module.slug == self.module:
-                if module_role.role.permission in (
-                    models.Role.Permission.ADMIN,
-                    models.Role.Permission.OWNER,
-                ):
-                    request.user.is_module_admin = True
+        if self.module in [x.slug for x in request.user.member_modules]:
+            if self.module in [x.slug for x in request.user.admin_modules]:
+                request.user.is_module_admin = True
+            if self.module in [x.slug for x in request.user.owner_modules]:
+                request.user.is_module_owner = True
 
                 return super().dispatch(request, *args, **kwargs)
 
         return self.handle_no_permission()
 
 
-class Home(PrivateViewMixin, TemplateView):
+class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
 
 
