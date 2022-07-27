@@ -40,6 +40,37 @@ urlpatterns = [
         views.DeleteOrganization.as_view(),
         name="organizations-delete",
     ),
+    path("modules/", views.Modules.as_view(), name="modules"),
+    path(
+        "modules/add/",
+        views.CreateModule.as_view(),
+        name="modules-add",
+    ),
+    path(
+        "modules/<int:pk>/",
+        views.UpdateModule.as_view(),
+        name="modules-update",
+    ),
+    path(
+        "modules/<int:pk>/delete/",
+        views.DeleteModule.as_view(),
+        name="modules-delete",
+    ),
+    path(
+        "organizations/modules/",
+        views.OrganizationModules.as_view(),
+        name="organizations-modules",
+    ),
+    path(
+        "organizations/modules/add/",
+        views.CreateOrganizationModule.as_view(),
+        name="organizations-modules-add",
+    ),
+    path(
+        "organizations/modules/<int:pk>/delete/",
+        views.DeleteOrganizationModule.as_view(),
+        name="organizations-modules-delete",
+    ),
     path("owners/", views.Owners.as_view(), name="owners"),
     path("owners/add/", views.CreateOwner.as_view(), name="owners-add"),
     path("owners/<int:pk>/", views.UpdateOwner.as_view(), name="owners-update"),

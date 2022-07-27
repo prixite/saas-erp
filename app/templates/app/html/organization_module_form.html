@@ -1,0 +1,13 @@
+{% extends "app/html/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block heading %}Add Module Assignment{% endblock %}
+
+{% block page %}
+<form method="POST">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary" href="{% url "html:organizations-modules" %}">Cancel</a>
+</form>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -196,6 +197,60 @@ class DeleteOrganization(PrivateViewMixin, DeleteView):
     model = models.Organization
     success_url = reverse_lazy("html:organizations")
     template_name = "app/html/organization_confirm_delete.html"
+    allow_superuser = True
+
+
+class Modules(PrivateViewMixin, ListView):
+    template_name = "app/html/modules.html"
+    model = models.Module
+    allow_superuser = True
+
+
+class CreateModule(PrivateViewMixin, CreateView):
+    model = models.Module
+    fields = ["name", "is_enabled"]
+    template_name = "app/html/module_form.html"
+    success_url = reverse_lazy("html:modules")
+    allow_superuser = True
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.name)
+        return super().form_valid(form)
+
+
+class UpdateModule(PrivateViewMixin, UpdateView):
+    model = models.Module
+    fields = ["name", "is_enabled"]
+    template_name = "app/html/module_form.html"
+    success_url = reverse_lazy("html:modules")
+    allow_superuser = True
+
+
+class DeleteModule(PrivateViewMixin, DeleteView):
+    model = models.Module
+    success_url = reverse_lazy("html:modules")
+    template_name = "app/html/module_confirm_delete.html"
+    allow_superuser = True
+
+
+class OrganizationModules(PrivateViewMixin, ListView):
+    template_name = "app/html/organization_modules.html"
+    model = models.OrganizationModule
+    allow_superuser = True
+
+
+class CreateOrganizationModule(PrivateViewMixin, CreateView):
+    model = models.OrganizationModule
+    fields = ["organization", "module"]
+    template_name = "app/html/organization_module_form.html"
+    success_url = reverse_lazy("html:organizations-modules")
+    allow_superuser = True
+
+
+class DeleteOrganizationModule(PrivateViewMixin, DeleteView):
+    model = models.OrganizationModule
+    success_url = reverse_lazy("html:organizations-modules")
+    template_name = "app/html/organization_module_confirm_delete.html"
     allow_superuser = True
 
 
