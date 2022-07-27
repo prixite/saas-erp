@@ -31,26 +31,25 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
     def get_modules(self, permission):
-        modules = set()
-        for module_role in self.module_roles.filter(
-            module__is_enabled=True,
-            role__permission=permission,
-        ):
-            modules.add(module_role.module)
+        module_roles = self.module_roles.filter(module__is_enabled=True)
+        if self.default_role and self.default_role.permission >= permission:
+            module_roles = module_roles.filter(
+                role__permission__lte=self.default_role.permission,
+            )
+        else:
+            module_roles = module_roles.filter(role__permission=permission)
 
-        if not self.is_superuser:
-            modules = modules & self.organization_modules
-
-        return modules
+        return {x.module for x in module_roles} & self.organization_modules
 
     @property
     def organization_modules(self):
-        organization_modules = OrganizationModule.objects.filter(
-            organization=self.organization,
-            is_enabled=True,
-        )
-
-        return {x.module for x in organization_modules}
+        return {
+            x.module
+            for x in OrganizationModule.objects.filter(
+                organization=self.organization,
+                is_enabled=True,
+            )
+        }
 
     @property
     def member_modules(self):
@@ -157,13 +156,13 @@ class Role(models.Model):
     """
 
     class Permission(models.TextChoices):
-        OWNER = "owner", "Owner"
-        ADMIN = "admin", "Admin"
-        MEMBER = "member", "Member"
+        OWNER = "c", "Owner"
+        ADMIN = "b", "Admin"
+        MEMBER = "a", "Member"
 
     name = models.CharField(max_length=64, unique=True)
     permission = models.CharField(
-        max_length=10, choices=Permission.choices, default=Permission.MEMBER
+        max_length=1, choices=Permission.choices, default=Permission.MEMBER
     )
     is_default = models.BooleanField(default=False)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
