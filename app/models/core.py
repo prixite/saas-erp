@@ -133,35 +133,6 @@ class Role(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def less_than(self, permission_or_role):
-        other_permission = (
-            permission_or_role.permission
-            if isinstance(permission_or_role, Role)
-            else permission_or_role
-        )
-
-        if self.permission == self.Permission.OWNER and other_permission in (
-            self.Permission.MEMBER,
-            self.Permission.ADMIN,
-        ):
-            return True
-
-        if (
-            self.permission == self.Permission.ADMIN
-            and other_permission == self.Permission.MEMBER
-        ):
-            return True
-
-        return False
-
-    def equal_to(self, permission_or_role):
-        other_permission = (
-            permission_or_role.permission
-            if isinstance(permission_or_role, Role)
-            else permission_or_role
-        )
-        return self.permission == other_permission
-
     def __str__(self):
         return self.name
 

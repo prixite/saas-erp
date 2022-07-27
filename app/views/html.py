@@ -11,26 +11,26 @@ from app.lib.user import send_invite
 
 class PrivateViewMixin(LoginRequiredMixin):
     allow_superuser = False
-    allowed_roles = set()
+    module = None
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
 
-        if request.user.is_superuser and not self.allow_superuser:
-            return self.handle_no_permission()
-        elif not request.user.is_superuser:
-            if self.allow_superuser:
-                return self.handle_no_permission()
-            else:
-                modules = [x for x in request.user.modules if x in self.allowed_roles]
-                if not modules:
-                    return self.handle_no_permission()
+        if request.user.is_superuser and self.allow_superuser:
+            return super().dispatch(request, *args, **kwargs)
 
-                if [x for x in modules if x.role.is_admin or x.role.is_owner]:
-                    request.user.is_admin = True
+        for module_role in request.user.module_roles.all():
+            if module_role.module.slug == self.module:
+                if module_role.role.permission in (
+                    models.Role.Permission.ADMIN,
+                    models.Role.Permission.OWNER,
+                ):
+                    request.user.is_module_admin = True
 
-        return super().dispatch(request, *args, **kwargs)
+                return super().dispatch(request, *args, **kwargs)
+
+        return self.handle_no_permission()
 
 
 class Home(PrivateViewMixin, TemplateView):
