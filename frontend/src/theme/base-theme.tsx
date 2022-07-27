@@ -41,7 +41,7 @@ const baseTheme = createTheme({
     // },
   },
   typography: {
-    fontFamily: "",
+    fontFamily: ["Lato", "sans-serif"].join(","),
     fontSize: 14,
     h1: {
       fontFamily: "",
@@ -59,9 +59,9 @@ const baseTheme = createTheme({
       fontWeight: 700,
     },
     h4: {
-      fontFamily: "",
-      fontSize: 14,
+      fontSize: 20,
       fontWeight: 700,
+      color: GLOBAL_BLACK,
     },
     h5: {
       fontFamily: "",
@@ -82,6 +82,17 @@ const baseTheme = createTheme({
       fontSize: "16px",
       fontWeight: 400,
       color: GLOBAL_WHITE,
+    },
+  },
+  components: {
+    MUIDataTableHeadCell: {
+      styleOverrides: {
+        root: {
+          color: "#6C6C6C",
+          backgroundColor: "#e4e3e3",
+          fontWeight: "600",
+        },
+      },
     },
   },
 });

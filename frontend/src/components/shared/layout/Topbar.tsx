@@ -9,8 +9,9 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
-import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
+// import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
+import { Typography } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -60,7 +61,15 @@ const Topbar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <BreadCrumbs />
+          {/* <BreadCrumbs /> */}
+          <Typography
+            sx={{ flexGrow: 1 }}
+            color="secondary"
+            variant="h5"
+            component="h4"
+          >
+            SASS ERP Dashboard
+          </Typography>
           <IconButton sx={{ color: "#130F26" }}>
             <SearchIcon />
           </IconButton>
