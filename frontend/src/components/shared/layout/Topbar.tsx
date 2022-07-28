@@ -65,7 +65,7 @@ const Topbar = (props) => {
           <Typography
             sx={{ flexGrow: 1 }}
             color="secondary"
-            variant="h5"
+            variant="h2"
             component="h4"
           >
             SASS ERP Dashboard

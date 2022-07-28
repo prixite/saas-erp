@@ -5,6 +5,8 @@ import PageHeader from "@src/components/shared/page-header";
 import Controls from "@src/components/shared/form-controls";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import EmployeeForm from "@src/components/employee/employee-form";
 
 import MUIDataTable from "mui-datatables";
 
@@ -60,10 +62,14 @@ const columns = [
             <Grid style={{ display: "flex" }}>
               <Grid>
                 {" "}
-                <Button>
-                  <EditOutlinedIcon fontSize="small" />
-                  <DeleteOutlineOutlinedIcon fontSize="small" sx={{ ml: 2 }} />
-                </Button>
+                <>
+                  <EditOutlinedIcon fontSize="small" color="primary" />
+                  <DeleteOutlineOutlinedIcon
+                    fontSize="small"
+                    color="primary"
+                    sx={{ ml: 2 }}
+                  />
+                </>
               </Grid>
               <Grid></Grid>
             </Grid>
@@ -128,9 +134,17 @@ const options = {
   rowsPerPageOptions: [20, 50, 70, 100],
 };
 const EmployeeListing = () => {
-  const [recordForEdit] = useState(null);
-  // const [showForm, setShowForm] = useState(false);
-  const [showListing] = useState(true);
+  const [recordForEdit, setRecordForEdit] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [showListing, setShowListing] = useState(true);
+
+  const addOrEdit = (values, resetForm) => {
+    if (recordForEdit === null) {
+      //Do add operation
+    } else {
+      //Do edit/update operation
+    }
+  };
   return (
     <>
       <Grid>
@@ -153,8 +167,14 @@ const EmployeeListing = () => {
             <Controls.Button
               text="ADD EMPLOYEE"
               variant="contained"
-              // startIcon={<AddIcon />}
+              color="primary"
+              startIcon={<AddIcon />}
               // className={classes.addBtn}
+              onClick={() => {
+                setShowForm(true);
+                setShowListing(false);
+                setRecordForEdit(null);
+              }}
             />
           </Grid>
         )}
@@ -184,15 +204,13 @@ const EmployeeListing = () => {
           </Grid>
         </Grid>
       )}
-      {/* {showForm && (
-    <AgencyMTLForm
-      recordForEdit={recordForEdit}
-      addOrEdit={addOrEdit}
-      setShowForm={setShowForm}
-      getHierarchy={getHierarchy}
-      getListRegion={getListRegion}
-    />
-  )} */}
+      {showForm && (
+        <EmployeeForm
+          recordForEdit={recordForEdit}
+          addOrEdit={addOrEdit}
+          setShowForm={setShowForm}
+        />
+      )}
 
       {/* <ConfirmDialog
     confirmDialog={confirmDialog}

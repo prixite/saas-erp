@@ -85,13 +85,23 @@ const baseTheme = createTheme({
     },
   },
   components: {
-    MUIDataTableHeadCell: {
+    MuiTableCell: {
       styleOverrides: {
-        root: {
-          color: "#6C6C6C",
+        head: {
+          color: GLOBAL_GRAY,
           backgroundColor: "#e4e3e3",
           fontWeight: "600",
         },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: ({}) => ({
+          "&:hover": {
+            opacity: 0.8,
+            // backgroundColor: GLOBAL_RED,
+          },
+        }),
       },
     },
   },
