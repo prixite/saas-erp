@@ -67,6 +67,11 @@ urlpatterns = [
         name="organizations-modules-add",
     ),
     path(
+        "organizations/modules/<int:pk>/",
+        views.UpdateOrganizationModule.as_view(),
+        name="organizations-modules-update",
+    ),
+    path(
         "organizations/modules/<int:pk>/delete/",
         views.DeleteOrganizationModule.as_view(),
         name="organizations-modules-delete",

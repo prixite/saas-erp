@@ -12,6 +12,7 @@
     <tr>
       <th scope="col">Organization</th>
       <th scope="col">Module</th>
+      <th scope="col">Is Enabled</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -19,7 +20,8 @@
     {% for item in object_list %}
     <tr>
       <td>{{ item.organization }}</td>
-      <td>{{ item.module }}</td>
+      <td><a href="{% url 'html:organizations-modules-update' item.pk %}">{{ item.module }}</a></td>
+      <td>{{ item.is_enabled }}</td>
       <td><a class="btn btn-danger btn-sm" href="{% url "html:organizations-modules-delete" item.id %}">Delete</a></td>
     </tr>
     {% endfor %}

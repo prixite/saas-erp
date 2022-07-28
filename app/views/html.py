@@ -20,6 +20,11 @@ class PrivateViewMixin(LoginRequiredMixin):
         if request.user.is_superuser and self.allow_superuser:
             return super().dispatch(request, *args, **kwargs)
 
+        print(request.user.organization)
+        print(request.user.organization_modules)
+        print(request.user.member_modules)
+        print(request.user.admin_modules)
+        print(request.user.owner_modules)
         if self.module in [x.slug for x in request.user.member_modules]:
             if self.module in [x.slug for x in request.user.admin_modules]:
                 request.user.is_module_admin = True
@@ -239,7 +244,15 @@ class OrganizationModules(PrivateViewMixin, ListView):
 
 class CreateOrganizationModule(PrivateViewMixin, CreateView):
     model = models.OrganizationModule
-    fields = ["organization", "module"]
+    fields = ["organization", "module", "is_enabled"]
+    template_name = "app/html/organization_module_form.html"
+    success_url = reverse_lazy("html:organizations-modules")
+    allow_superuser = True
+
+
+class UpdateOrganizationModule(PrivateViewMixin, UpdateView):
+    model = models.OrganizationModule
+    fields = ["organization", "module", "is_enabled"]
     template_name = "app/html/organization_module_form.html"
     success_url = reverse_lazy("html:organizations-modules")
     allow_superuser = True
