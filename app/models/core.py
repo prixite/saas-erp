@@ -79,7 +79,8 @@ class OrganizationModule(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(f'{self.module}-{self.is_enabled}')
+        return str(f"{self.module}-{self.is_enabled}")
+
 
 class UserModuleRole(models.Model):
     """
