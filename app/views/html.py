@@ -20,11 +20,6 @@ class PrivateViewMixin(LoginRequiredMixin):
         if request.user.is_superuser and self.allow_superuser:
             return super().dispatch(request, *args, **kwargs)
 
-        print(request.user.organization)
-        print(request.user.organization_modules)
-        print(request.user.member_modules)
-        print(request.user.admin_modules)
-        print(request.user.owner_modules)
         if self.module in [x.slug for x in request.user.member_modules]:
             if self.module in [x.slug for x in request.user.admin_modules]:
                 request.user.is_module_admin = True
@@ -51,13 +46,15 @@ class UserMixin:
 class Users(PrivateViewMixin, UserMixin, ListView):
     template_name = "app/html/users.html"
     model = models.User
+    module = "user"
 
 
 class CreateUser(PrivateViewMixin, UserMixin, CreateView):
     model = models.User
-    fields = ["email", "first_name", "last_name", "role"]
+    fields = ["email", "first_name", "last_name", "default_role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
+    module = "user"
 
     def form_valid(self, form):
         form.instance.username = form.instance.email
@@ -71,15 +68,17 @@ class CreateUser(PrivateViewMixin, UserMixin, CreateView):
 
 class UpdateUser(PrivateViewMixin, UserMixin, UpdateView):
     model = models.User
-    fields = ["email", "first_name", "last_name", "role"]
+    fields = ["email", "first_name", "last_name", "default_role"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
+    module = "user"
 
 
 class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
     model = models.User
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_confirm_delete.html"
+    module = "user"
 
 
 class InviteUser(UpdateView):
