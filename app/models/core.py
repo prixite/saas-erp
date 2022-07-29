@@ -119,6 +119,14 @@ class OrganizationModule(models.Model):
     def __str__(self):
         return str(f"{self.module}-{self.is_enabled}")
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["module", "organization"],
+                name="organization_module_constrataint",
+            ),
+        ]
+
 
 class UserModuleRole(models.Model):
     """

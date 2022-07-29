@@ -29,6 +29,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     fields = ("name", "address")
     inlines = [
         inline_admin.UserInline,
+        inline_admin.OrganizationModuleInline,
     ]
 
 

@@ -6,7 +6,6 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-from app.admin import inline_admin
 
 
 class PrivateViewMixin(LoginRequiredMixin):
