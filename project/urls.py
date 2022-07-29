@@ -68,7 +68,9 @@ accounts = [
     ),
     path(
         "accounts/reset/done/",
-        auth_views.PasswordResetCompleteView.as_view(),
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="app/html/registration/account_reset_done.html"
+        ),
         name="password_reset_complete",
     ),
 ]
