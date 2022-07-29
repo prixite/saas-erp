@@ -32,7 +32,6 @@ class PrivateViewMixin(LoginRequiredMixin):
 
 class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
-    # form = inline_forms.
 
 
 class UserMixin:
