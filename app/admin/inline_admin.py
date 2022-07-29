@@ -1,15 +1,12 @@
 from django.contrib import admin
 
-from app import forms, models
+from app import models
+from app.admin import admin_forms as forms
 
 
 class UserInline(admin.TabularInline):
     model = models.User
-    # fields = ["email","default_role"]
-    form = forms.UserInlineFormset
-
-    def get_queryset(self, request):
-        return models.User.objects.all()
+    form = forms.OrganizationUserForm
 
 
 class OrganizationModuleInline(admin.TabularInline):

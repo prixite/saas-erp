@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from app import models
+from app.admin import inline_admin
+
 
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
@@ -25,6 +27,9 @@ class CompensationAdmin(admin.ModelAdmin):
 @admin.register(models.Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     fields = ("name", "address")
+    inlines = [
+        inline_admin.UserInline,
+    ]
 
 
 if settings.DEBUG:

@@ -6,6 +6,7 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
+from app.admin import inline_admin
 
 
 class PrivateViewMixin(LoginRequiredMixin):
@@ -32,6 +33,7 @@ class PrivateViewMixin(LoginRequiredMixin):
 
 class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
+    # form = inline_forms.
 
 
 class UserMixin:
