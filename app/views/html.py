@@ -5,8 +5,7 @@ from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from app import models
-from app.lib.user import send_invite
+from app import forms, models
 
 
 class PrivateViewMixin(LoginRequiredMixin):
@@ -51,19 +50,13 @@ class Users(PrivateViewMixin, UserMixin, ListView):
 
 class CreateUser(PrivateViewMixin, UserMixin, CreateView):
     model = models.User
-    fields = ["email", "first_name", "last_name", "default_role"]
+    form_class = forms.UserForm
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
     module = "user"
 
-    def form_valid(self, form):
-        form.instance.username = form.instance.email
-        form.instance.default_role = models.Role.objects.filter(
-            organization=form.instance.organization,
-            is_member=True,
-            is_default=True,
-        ).first()
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(heading="Add new user", **kwargs)
 
 
 class UpdateUser(PrivateViewMixin, UserMixin, UpdateView):
@@ -73,11 +66,49 @@ class UpdateUser(PrivateViewMixin, UserMixin, UpdateView):
     success_url = reverse_lazy("html:users")
     module = "user"
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            heading=f"Update {self.object.get_full_name()}",
+            **kwargs,
+        )
+
 
 class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
     model = models.User
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_confirm_delete.html"
+    module = "user"
+
+
+class UserModules(PrivateViewMixin, ListView):
+    template_name = "app/html/user_modules.html"
+    model = models.UserModuleRole
+    module = "user"
+
+    def get_queryset(self):
+        return self.model.objects.filter(user_id=self.kwargs["pk"])
+
+
+class CreateUserModule(PrivateViewMixin, CreateView):
+    model = models.UserModuleRole
+    fields = ["module", "role"]
+    template_name = "app/html/user_module_form.html"
+    success_url = reverse_lazy("html:users")
+    module = "user"
+
+
+class UpdateUserModule(PrivateViewMixin, UpdateView):
+    model = models.UserModuleRole
+    fields = ["module", "role"]
+    template_name = "app/html/user_module_form.html"
+    success_url = reverse_lazy("html:users")
+    module = "user"
+
+
+class DeleteUserModule(PrivateViewMixin, DeleteView):
+    model = models.UserModuleRole
+    success_url = reverse_lazy("html:users")
+    template_name = "app/html/user_module_confirm_delete.html"
     module = "user"
 
 
@@ -280,25 +311,10 @@ class Owners(PrivateViewMixin, OwnerMixin, ListView):
 
 class CreateOwner(PrivateViewMixin, OwnerMixin, CreateView):
     model = models.User
-    fields = ["email", "first_name", "last_name", "organization"]
+    form_class = forms.OwnerForm
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
-
-    @transaction.atomic
-    def form_valid(self, form):
-        form.instance.username = form.instance.email
-        form.instance.default_role = models.Role.objects.filter(
-            organization=form.instance.organization,
-            permission=models.Role.Permission.OWNER,
-            is_default=True,
-        ).first()
-        response = super().form_valid(form)
-        invite = models.Invitation(user=form.instance)
-        invite.generate_key()
-        invite.save()
-        send_invite(form.instance)
-        return response
 
 
 class UpdateOwner(PrivateViewMixin, OwnerMixin, UpdateView):

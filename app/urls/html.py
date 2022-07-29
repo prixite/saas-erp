@@ -11,6 +11,22 @@ urlpatterns = [
     path("users/<int:pk>/", views.UpdateUser.as_view(), name="users-update"),
     path("users/<int:pk>/delete/", views.DeleteUser.as_view(), name="users-delete"),
     path("users/invite/<str:slug>/", views.InviteUser.as_view(), name="users-invite"),
+    path("users/<int:pk>/modules/", views.UserModules.as_view(), name="user-modules"),
+    path(
+        "users/<int:pk>/modules/add/",
+        views.CreateUserModule.as_view(),
+        name="user-modules-add",
+    ),
+    path(
+        "users/modules/<int:pk>/",
+        views.UpdateUserModule.as_view(),
+        name="user-modules-update",
+    ),
+    path(
+        "users/modules/<int:pk>/delete/",
+        views.DeleteUserModule.as_view(),
+        name="user-modules-delete",
+    ),
     path("employees/", views.Employees.as_view(), name="employees"),
     path("payroll/", views.Payroll.as_view(), name="payroll"),
     path("inventory/", views.Inventory.as_view(), name="inventory"),

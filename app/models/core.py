@@ -147,7 +147,7 @@ class Module(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.slug
+        return self.name
 
 
 class Role(models.Model):

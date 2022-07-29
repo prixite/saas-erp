@@ -13,6 +13,7 @@
       <th scope="col">Email</th>
       <th scope="col">Name</th>
       <th scope="col">Default Role</th>
+      <th scope="col">Access</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
       <td><a href="{% url 'html:users-update' user.pk %}">{{ user.email }}</a></td>
       <td>{{ user.get_full_name }}</td>
       <td>{{ user.default_role }}</td>
+      <td><a href="{% url "html:user-modules" user.id %}">View</a></td>
       <td><a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user.id %}">Delete</a></td>
     </tr>
     {% endfor %}
