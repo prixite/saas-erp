@@ -1,14 +1,14 @@
 import * as React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
+import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
+import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
-import BasicInformations from "@src/components/employee/employee-form/basic-informations";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import BasicInformations from "@src/components/employee/employee-form/basic-informations";
 
 interface IFormInputs {
   email: string;
@@ -40,7 +40,8 @@ export default function EmployeeForm() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
     //handle next step code ended
-    console.log("Form data is.....", data);
+
+    // console.log("Form data is.....", data);
   };
 
   const isStepOptional = (step: number) => {
