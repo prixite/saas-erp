@@ -31,7 +31,7 @@ export default function EmployeeForm() {
   });
 
   // const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
+  const formSubmitHandler: SubmitHandler<IFormInputs> = () => {
     //handle next step code started
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
