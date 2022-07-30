@@ -30,6 +30,7 @@ export default function EmployeeForm() {
     resolver: yupResolver(schema),
   });
 
+  // const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
   const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
     //handle next step code started
     let newSkipped = skipped;
