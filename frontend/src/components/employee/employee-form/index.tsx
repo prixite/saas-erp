@@ -5,12 +5,43 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import BasicInformations from "@src/components/employee/employee-form/basic-informations";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-const steps = ["Basic Information", "Experience", "Education"];
+interface IFormInputs {
+  email: string;
+  password: string;
+}
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(4).max(20).required(),
+});
+
+const steps = ["Basic Info", "Experience", "Education"];
 
 export default function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+
+  //methods include all methods of useForm()
+  const methods = useForm<IFormInputs>({
+    resolver: yupResolver(schema),
+  });
+
+  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
+    //handle next step code started
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+    //handle next step code ended
+    console.log("Form data is.....", data);
+  };
 
   const isStepOptional = (step: number) => {
     return step === 1;
@@ -18,17 +49,6 @@ export default function EmployeeForm() {
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
@@ -57,7 +77,7 @@ export default function EmployeeForm() {
   const handleSteps = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return <h2>step 1</h2>;
+        return <BasicInformations />;
       case 1:
         return <h2>step 2</h2>;
       case 2:
@@ -108,26 +128,34 @@ export default function EmployeeForm() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {handleSteps(activeStep)}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
-          </Box>
+          <FormProvider {...methods}>
+            <form>
+              {handleSteps(activeStep)}
+              {/* <input type="submit" /> */}
+              {/* <Button onClick={methods.handleSubmit(formSubmitHandler)}>
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button> */}
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                {isStepOptional(activeStep) && (
+                  <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                    Skip
+                  </Button>
+                )}
+                <Button onClick={methods.handleSubmit(formSubmitHandler)}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+              </Box>
+            </form>
+          </FormProvider>
         </React.Fragment>
       )}
     </Box>

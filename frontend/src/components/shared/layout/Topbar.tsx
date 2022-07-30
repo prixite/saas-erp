@@ -1,6 +1,7 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
+import { Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -11,7 +12,6 @@ import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
 // import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
-import { Typography } from "@mui/material";
 
 const drawerWidth = 240;
 

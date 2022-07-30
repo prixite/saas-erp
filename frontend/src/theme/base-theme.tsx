@@ -73,10 +73,10 @@ const baseTheme = createTheme({
       fontSize: 14,
       fontWeight: 700,
     },
-    subtitle1: {},
-    subtitle2: {},
-    body1: {},
-    body2: {},
+    // subtitle1: {},
+    // subtitle2: {},
+    // body1: {},
+    // body2: {},
     button: {
       fontFamily: "",
       fontSize: "16px",
@@ -96,7 +96,7 @@ const baseTheme = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: ({}) => ({
+        root: () => ({
           "&:hover": {
             opacity: 0.8,
             // backgroundColor: GLOBAL_RED,

@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Button, Grid } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Grid } from "@mui/material";
+import MUIDataTable from "mui-datatables";
+import EmployeeForm from "@src/components/employee/employee-form";
+import Controls from "@src/components/shared/form-controls/Controls";
 import Breadcrumbs from "@src/components/shared/layout/breadcrumbs";
 import PageHeader from "@src/components/shared/page-header";
-import Controls from "@src/components/shared/form-controls";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import AddIcon from "@mui/icons-material/Add";
-import EmployeeForm from "@src/components/employee/employee-form";
-
-import MUIDataTable from "mui-datatables";
 
 const columns = [
   {
@@ -125,20 +124,20 @@ const data = [
   },
 ];
 
-const options = {
-  filter: true,
-  filterType: "dropdown",
-  selectableRows: "none",
-  responsive: "standard",
-  rowsPerPage: 10,
-  rowsPerPageOptions: [20, 50, 70, 100],
-};
+// const options = {
+//   filter: true,
+//   filterType: "dropdown",
+//   selectableRows: "none",
+//   responsive: "standard",
+//   rowsPerPage: 10,
+//   rowsPerPageOptions: [20, 50, 70, 100],
+// };
 const EmployeeListing = () => {
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showListing, setShowListing] = useState(true);
 
-  const addOrEdit = (values, resetForm) => {
+  const addOrEdit = () => {
     if (recordForEdit === null) {
       //Do add operation
     } else {
@@ -180,9 +179,6 @@ const EmployeeListing = () => {
         )}
       </Grid>
 
-      {/* {loading || !records?.length ? (
-    <Spinner />
-  ) : ( */}
       {showListing && (
         <Grid
           container
@@ -193,12 +189,7 @@ const EmployeeListing = () => {
           <Grid item xs={12}>
             {showListing && (
               <>
-                <MUIDataTable
-                  // title={"Employee List"}
-                  data={data}
-                  columns={columns}
-                  options={options}
-                />
+                <MUIDataTable data={data} columns={columns} />
               </>
             )}
           </Grid>
@@ -211,11 +202,6 @@ const EmployeeListing = () => {
           setShowForm={setShowForm}
         />
       )}
-
-      {/* <ConfirmDialog
-    confirmDialog={confirmDialog}
-    setConfirmDialog={setConfirmDialog}
-  /> */}
     </>
   );
 };
