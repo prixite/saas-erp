@@ -91,8 +91,10 @@ class CreateUserModule(PrivateViewMixin, CreateView):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
+        user = models.User.objects.get(id=self.kwargs["pk"])
         return super().get_context_data(
-            user=models.User.objects.get(id=self.kwargs["pk"]),
+            user=user,
+            heading=f"Give access to {user.get_full_name()}",
             **kwargs,
         )
 
@@ -119,6 +121,7 @@ class UpdateUserModule(PrivateViewMixin, UpdateView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(
             user=self.object.user,
+            heading=f"Update access for {self.object.user.get_full_name()}",
             **kwargs,
         )
 
