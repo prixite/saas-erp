@@ -104,18 +104,35 @@ class UpdateUserModule(PrivateViewMixin, UpdateView):
     model = models.UserModuleRole
     fields = ["module", "role"]
     template_name = "app/html/user_module_form.html"
-    success_url = reverse_lazy("html:users")
     module = "user"
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields["module"].queryset = models.Module.objects.filter(
+            id__in={x.id for x in self.request.user.organization_modules}
+        )
+        form.fields["role"].queryset = models.Role.objects.filter(
+            organization=self.request.user.organization
+        )
+        return form
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            user=self.object.user,
+            **kwargs,
+        )
+
+    def get_success_url(self):
+        return reverse("html:user-modules", args=(self.object.user_id,))
 
 
 class DeleteUserModule(PrivateViewMixin, DeleteView):
     model = models.UserModuleRole
-    success_url = reverse_lazy("html:users")
     template_name = "app/html/user_module_confirm_delete.html"
     module = "user"
 
     def get_success_url(self):
-        return reverse("html:user-modules", args=(self.object.id,))
+        return reverse("html:user-modules", args=(self.object.user_id,))
 
 
 class InviteUser(UpdateView):
