@@ -43,6 +43,7 @@ class Compensation(models.Model):
         "CompensationSchedule", on_delete=models.PROTECT
     )
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
