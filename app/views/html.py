@@ -157,6 +157,7 @@ class InviteUser(UpdateView):
 
 class Employees(PrivateViewMixin, TemplateView):
     template_name = "app/html/employees.html"
+    module = "employees"
 
 
 class Payroll(PrivateViewMixin, TemplateView):
