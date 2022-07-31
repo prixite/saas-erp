@@ -13,15 +13,22 @@ class UserAdmin(UserAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ["name", "contact_number", "manager", "date_of_joining"]
-    list_filter = ["organization", "type", "benefits"]
-    filter_horizontal = ["benefits"]
+    list_display = (
+        "name",
+        "contact_number",
+        "manager",
+        "date_of_joining",
+        "created_at",
+        "updated_at",
+    )
+    list_filter = ("organization", "type", "benefits")
+    filter_horizontal = ("benefits",)
 
 
 @admin.register(models.Compensation)
 class CompensationAdmin(admin.ModelAdmin):
-    list_display = ["employee", "max_hours_per_week"]
-    list_filter = ["compensation_type", "compensation_schedule"]
+    list_display = ("employee", "max_hours_per_week", "created_at", "updated_at")
+    list_filter = ("compensation_type", "compensation_schedule")
 
 
 @admin.register(models.Organization)

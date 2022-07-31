@@ -7,6 +7,8 @@ class OrganizationUserForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = [
-            "email",
+            "users",
             "default_role",
         ]
+
+    users = forms.ModelChoiceField(queryset=models.User.objects.all())
