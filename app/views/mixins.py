@@ -20,7 +20,7 @@ class PrivateViewMixin(LoginRequiredMixin):
             if self.module in [x.slug for x in request.user.owner_modules]:
                 request.user.is_module_owner = True
 
-                return super().dispatch(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
 
         return self.handle_no_permission()
 
