@@ -39,7 +39,7 @@ class User(AbstractUser):
         else:
             module_roles = module_roles.filter(role__permission=permission)
 
-        if self.default_role.permission == Role.Permission.OWNER:
+        if self.default_role and self.default_role.permission == Role.Permission.OWNER:
             return self.organization_modules
 
         return {x.module for x in module_roles} & self.organization_modules
