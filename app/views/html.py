@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -63,12 +63,17 @@ class UserModules(PrivateViewMixin, ListView):
     def get_queryset(self):
         return self.model.objects.filter(user_id=self.kwargs["pk"])
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            user=models.User.objects.get(id=self.kwargs["pk"]),
+            **kwargs,
+        )
+
 
 class CreateUserModule(PrivateViewMixin, CreateView):
     model = models.UserModuleRole
     fields = ["module", "role"]
     template_name = "app/html/user_module_form.html"
-    success_url = reverse_lazy("html:users")
     module = "user"
 
     def get_form(self, *args, **kwargs):
@@ -85,6 +90,15 @@ class CreateUserModule(PrivateViewMixin, CreateView):
         form.instance.user_id = self.kwargs["pk"]
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            user=models.User.objects.get(id=self.kwargs["pk"]),
+            **kwargs,
+        )
+
+    def get_success_url(self):
+        return reverse("html:user-modules", args=(self.kwargs["pk"],))
+
 
 class UpdateUserModule(PrivateViewMixin, UpdateView):
     model = models.UserModuleRole
@@ -99,6 +113,9 @@ class DeleteUserModule(PrivateViewMixin, DeleteView):
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_module_confirm_delete.html"
     module = "user"
+
+    def get_success_url(self):
+        return reverse("html:user-modules", args=(self.object.id,))
 
 
 class InviteUser(UpdateView):
