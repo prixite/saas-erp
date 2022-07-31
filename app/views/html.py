@@ -6,40 +6,11 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-
-
-class PrivateViewMixin(LoginRequiredMixin):
-    allow_superuser = False
-    module = None
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return self.handle_no_permission()
-
-        if request.user.is_superuser and self.allow_superuser:
-            return super().dispatch(request, *args, **kwargs)
-
-        if self.module in [x.slug for x in request.user.member_modules]:
-            if self.module in [x.slug for x in request.user.admin_modules]:
-                request.user.is_module_admin = True
-            if self.module in [x.slug for x in request.user.owner_modules]:
-                request.user.is_module_owner = True
-
-                return super().dispatch(request, *args, **kwargs)
-
-        return self.handle_no_permission()
+from app.views.mixins import AddGetFormMixin, OwnerMixin, PrivateViewMixin, UserMixin
 
 
 class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
-
-
-class UserMixin:
-    def get_queryset(self):
-        return self.model.objects.filter(
-            is_superuser=False,
-            organization=self.request.user.organization,
-        )
 
 
 class Users(PrivateViewMixin, UserMixin, ListView):
@@ -48,18 +19,22 @@ class Users(PrivateViewMixin, UserMixin, ListView):
     module = "user"
 
 
-class CreateUser(PrivateViewMixin, UserMixin, CreateView):
+class CreateUser(PrivateViewMixin, AddGetFormMixin, UserMixin, CreateView):
     model = models.User
     form_class = forms.UserForm
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
     module = "user"
 
+    def form_valid(self, form):
+        form.instance.organization = self.request.user.organization
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         return super().get_context_data(heading="Add new user", **kwargs)
 
 
-class UpdateUser(PrivateViewMixin, UserMixin, UpdateView):
+class UpdateUser(PrivateViewMixin, AddGetFormMixin, UserMixin, UpdateView):
     model = models.User
     fields = ["email", "first_name", "last_name", "default_role"]
     template_name = "app/html/user_form.html"
@@ -95,6 +70,20 @@ class CreateUserModule(PrivateViewMixin, CreateView):
     template_name = "app/html/user_module_form.html"
     success_url = reverse_lazy("html:users")
     module = "user"
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields["module"].queryset = models.Module.objects.filter(
+            id__in={x.id for x in self.request.user.organization_modules}
+        )
+        form.fields["role"].queryset = models.Role.objects.filter(
+            organization=self.request.user.organization
+        )
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.kwargs["pk"]
+        return super().form_valid(form)
 
 
 class UpdateUserModule(PrivateViewMixin, UpdateView):
@@ -293,14 +282,6 @@ class DeleteOrganizationModule(PrivateViewMixin, DeleteView):
     success_url = reverse_lazy("html:organizations-modules")
     template_name = "app/html/organization_module_confirm_delete.html"
     allow_superuser = True
-
-
-class OwnerMixin:
-    def get_queryset(self):
-        return self.model.objects.filter(
-            default_role__permission=models.Role.Permission.OWNER,
-            is_superuser=False,
-        )
 
 
 class Owners(PrivateViewMixin, OwnerMixin, ListView):

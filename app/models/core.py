@@ -164,7 +164,7 @@ class Role(models.Model):
         ADMIN = "b", "Admin"
         MEMBER = "a", "Member"
 
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64)
     permission = models.CharField(
         max_length=1, choices=Permission.choices, default=Permission.MEMBER
     )
@@ -172,6 +172,14 @@ class Role(models.Model):
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                name="unique_name_organization",
+                fields=["name", "organization"],
+            ),
+        ]
 
     def __str__(self):
         return self.name
