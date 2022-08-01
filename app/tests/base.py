@@ -27,13 +27,15 @@ class BaseTestCase(TestCase):
         )
 
         self.degree = factories.DegreeFactory(
-            employee=self.employee,
-            program=self.program,
-            institute=self.institute
+            employee=self.employee, program=self.program, institute=self.institute
         )
 
         factories.DegreeFactory.create_batch(
-            size=4, employee=self.employee, program=self.program, institute=self.institute)
+            size=4,
+            employee=self.employee,
+            program=self.program,
+            institute=self.institute,
+        )
 
         factories.EmployeeFactory.create_batch(
             size=10,

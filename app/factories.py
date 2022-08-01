@@ -1,4 +1,3 @@
-from math import degrees
 import random
 
 import factory

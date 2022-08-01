@@ -1,5 +1,4 @@
 from django.db import models
-# id, full_name, email, phone, date_of_joining, emergency_contact, designation, department, education details
 
 
 class Employee(models.Model):
