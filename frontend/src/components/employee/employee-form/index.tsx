@@ -11,12 +11,46 @@ import * as yup from "yup";
 import BasicInformations from "@src/components/employee/employee-form/basic-informations";
 
 interface IFormInputs {
+  name: string;
   email: string;
+  phone: number;
+  cnic: number;
   password: string;
+  dateStarted: Date;
+  manager: string;
+  designation: string;
+  salary: number;
+  managing: string;
+  employmentType: string;
+  assets: string;
+  emergencyContact: number;
+  compansationBenefits: string[];
 }
+//validation schema for create employee form
 const schema = yup.object().shape({
+  name: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().min(4).max(20).required(),
+  phone: yup
+    .string()
+    .required()
+    .matches(
+      /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+      "Phone number is not valid!"
+    )
+    .min(10, "to short Phone Number")
+    .max(10, "to long Phone Number"),
+  cnic: yup.number().required().positive().integer(),
+  dateStarted: yup.date().default(function () {
+    return new Date();
+  }),
+  manager: yup.string().required(),
+  designation: yup.string().required(),
+  salary: yup.number().required(),
+  managing: yup.string().required(),
+  employmentType: yup.string().required(),
+  assets: yup.string().required(),
+  emergencyContact: yup.number().required(),
+  compansationBenefits: yup.string().required(),
 });
 
 const steps = ["Basic Info", "Experience", "Education"];
@@ -31,7 +65,7 @@ export default function EmployeeForm() {
   });
 
   // const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-  const formSubmitHandler: SubmitHandler<IFormInputs> = () => {
+  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
     //handle next step code started
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -42,7 +76,7 @@ export default function EmployeeForm() {
     setSkipped(newSkipped);
     //handle next step code ended
 
-    // console.log("Form data is.....", data);
+    console.log("Form data is.....", data);
   };
 
   const isStepOptional = (step: number) => {
@@ -133,10 +167,6 @@ export default function EmployeeForm() {
           <FormProvider {...methods}>
             <form>
               {handleSteps(activeStep)}
-              {/* <input type="submit" /> */}
-              {/* <Button onClick={methods.handleSubmit(formSubmitHandler)}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button> */}
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -148,11 +178,19 @@ export default function EmployeeForm() {
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
                 {isStepOptional(activeStep) && (
-                  <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                  <Button
+                    color="inherit"
+                    variant="contained"
+                    onClick={handleSkip}
+                    sx={{ mr: 1 }}
+                  >
                     Skip
                   </Button>
                 )}
-                <Button onClick={methods.handleSubmit(formSubmitHandler)}>
+                <Button
+                  variant="contained"
+                  onClick={methods.handleSubmit(formSubmitHandler)}
+                >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
