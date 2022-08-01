@@ -1,0 +1,10 @@
+{% extends "app/html/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block heading %}Logout{% endblock %}
+
+{% block page %}
+<p class="lead">Logout {% firstof request.user.get_full_name request.user.email %}?</p>
+<a class="btn btn-success" href="{% url "logout" %}">Yes</a>
+<a class="btn btn-secondary" href="{% url "html:home" %}">No</a>
+{% endblock %}

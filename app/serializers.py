@@ -28,3 +28,16 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
             "type",
             "department",
         ]
+
+
+class CompensationSerializer(serializers.ModelSerializer):
+    current_salary = serializers.FloatField(read_only=True)
+
+    class Meta:
+        model = models.Compensation
+        fields = [
+            "current_salary",
+            "currency",
+            "compensation_type",
+            "compensation_schedule",
+        ]

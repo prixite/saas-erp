@@ -1,0 +1,15 @@
+{% extends "app/html/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block heading %}Delete Access{% endblock %}
+
+{% block page %}
+
+<form method="POST">
+	{% csrf_token %}
+	<p class="lead">Remove access on {{ object.module }} module?</p>
+	<button type="submit" class="btn btn-success">Yes</button>
+  <a class="btn btn-secondary" href="{% url 'html:user-modules' object.user.id %}">No</a>
+</form>
+
+{% endblock %}

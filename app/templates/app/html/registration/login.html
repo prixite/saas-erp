@@ -2,56 +2,54 @@
 {% load static %}
 
 {% block content %}
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-8">
-        Page details #TODO
-      </div>
-      <div class="col-4 content-center login-page">
-        <div class="card my-5">
-          <div class="card-body">
-            <h3 class="card-title">Login</h3>
-            <hr>
-            <form method="post" accept="{% url 'login' %}">
-              {% csrf_token %}
-              <div class="mb-3">
-                <label for="id_username" class="form-label">Username</label>
-                <input type="text"
-                       class="form-control form-control-lg"
-                       placeholder="Enter your username"
-                       name="username"
-                       autocapitalize="none"
-                       autocomplete="Username"
-                       maxlength="150"
-                       id="id_username"
-                       required autofocus>
-                {{ form.username.errors }}
-              </div>
+<div class="container-fluid vh-100">
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="col col-sm-6 col-xl-4">
+      <h1>Prixite ERP</h1>
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title">Login</h3>
+          <hr>
+          <form method="post" accept="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_username" class="form-label">Username</label>
+              <input type="text"
+                     class="form-control form-control-lg"
+                     placeholder="Enter your username"
+                     name="username"
+                     autocapitalize="none"
+                     autocomplete="Username"
+                     maxlength="150"
+                     id="id_username"
+                     required autofocus>
+              {{ form.username.errors }}
+            </div>
 
-              <div class="mb-3">
-                <label for="id_password" class="form-label">Password</label>
-                <div class="input-group input-group-lg mb-3">
-                  <input type="password"
-                         class="form-control"
-                         placeholder="Enter your password"
+            <div class="mb-3">
+              <label for="id_password" class="form-label">Password</label>
+              <div class="input-group input-group-lg mb-3">
+                <input type="password"
+                       class="form-control"
+                       placeholder="Enter your password"
 
-                         aria-describedby="basic-addon1"
-                         name="password"
-                         autocomplete="current-password"
-                         id="id_password"
-                         required />
-                </div>
-                {{ form.password.errors }}
+                       aria-describedby="basic-addon1"
+                       name="password"
+                       autocomplete="current-password"
+                       id="id_password"
+                       required />
               </div>
-              {% if form.errors %}
-              {% include 'app/html/partials/error.html' with form=form%}
-              {%endif%}
-              <p><a class='brand-color' href="{% url 'password_reset' %}">Forgot your password?</a></p>
-              <div class="d-grid"><button type="submit" class="btn btn-primary btn-lg mb-3">Login</button></div>
-            </form>
-          </div>
+              {{ form.password.errors }}
+            </div>
+            {% if form.errors %}
+            {% include 'app/html/partials/error.html' with form=form%}
+            {%endif%}
+            <p><a class='brand-color' href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <div class="d-grid"><button type="submit" class="btn btn-primary btn-lg mb-3">Login</button></div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

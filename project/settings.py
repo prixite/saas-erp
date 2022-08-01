@@ -23,7 +23,8 @@ env = environ.Env(
     DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
-    EMAIL_BACKEND=(str, None),
+    EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
+    DOMAIN_NAME=(str, "https://erp.prixite.com"),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -38,6 +39,7 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
+DOMAIN_NAME = env("DOMAIN_NAME")
 
 # Application definition
 
@@ -146,6 +148,8 @@ EMAIL_BACKEND = env("EMAIL_BACKEND")
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

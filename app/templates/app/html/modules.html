@@ -1,0 +1,28 @@
+{% extends "app/html/base.html" %}
+
+{% block heading %}Modules{% endblock %}
+
+{% block page %}
+<div class="d-flex justify-content-end">
+  <a class="btn btn-primary end-0" href="{% url "html:modules-add" %}" role="button">Add New</a>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Is Enabled</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in object_list %}
+    <tr>
+      <td><a href="{% url 'html:modules-update' item.pk %}">{{ item.name }}</a></td>
+      <td>{{ item.is_enabled }}</td>
+      <td><a class="btn btn-danger btn-sm" href="{% url "html:modules-delete" item.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

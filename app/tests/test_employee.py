@@ -39,3 +39,11 @@ class EmployeeTestCase(BaseTestCase):
         response = self.client.post("/api/employees/", data=employee_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
+
+
+class CompensationTestCase(BaseTestCase):
+    def test_compensation_list(self):
+        self.client.force_login(self.super_user)
+        response = self.client.get(f"/api/employees/{self.employee.id}/compensation/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

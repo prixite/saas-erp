@@ -7,7 +7,7 @@ class CompensationHistory(models.Model):
     """
 
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
-    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE)
+    payroll = models.ForeignKey("Payroll", on_delete=models.CASCADE, null=True)
     amount = models.FloatField()
     tax = models.FloatField()
     bonus = models.FloatField(default=0)
@@ -44,6 +44,13 @@ class Compensation(models.Model):
     )
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def current_salary(self):
+        return self.rate * self.max_hours_per_week
+
+    def __str__(self) -> str:
+        return self.employee
 
 
 class CompensationChange(models.Model):
@@ -83,6 +90,9 @@ class CompensationSchedule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return str(self.name).capitalize()
+
 
 class CompensationType(models.Model):
     """
@@ -96,3 +106,6 @@ class CompensationType(models.Model):
     is_milestone = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return str(self.name).capitalize()
