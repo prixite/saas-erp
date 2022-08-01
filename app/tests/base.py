@@ -13,6 +13,8 @@ class BaseTestCase(TestCase):
         self.org_user = factories.UserFactory(organization=self.organization)
         self.department = factories.DepartmentFactory(organization=self.organization)
         self.employment_type = factories.EmploymentType(organization=self.organization)
+        self.program = factories.ProgramFactory(organization=self.organization)
+        self.institute = factories.InstituteFactory(organization=self.organization)
 
         factories.CurrencyFactory.create_batch(size=3)
         self.add_compensation_type_instances()
@@ -23,6 +25,15 @@ class BaseTestCase(TestCase):
             organization=self.organization,
             type=self.employment_type,
         )
+
+        self.degree = factories.DegreeFactory(
+            employee=self.employee,
+            program=self.program,
+            institute=self.institute
+        )
+
+        factories.DegreeFactory.create_batch(
+            size=4, employee=self.employee, program=self.program, institute=self.institute)
 
         factories.EmployeeFactory.create_batch(
             size=10,

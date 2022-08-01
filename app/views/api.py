@@ -15,10 +15,12 @@ class HomeView(TemplateView):
 
 class EmployeeViewSet(ModelViewSet):
     def get_serializer_class(self):
-        if self.request.method == "GET":
+        if self.action == "list":
             return serializers.EmployeeListSerializer
-        elif self.request.method == "POST":
+        elif self.action == "create":
             return serializers.EmployeeCreateSerializer
+        elif self.action == "retrieve":
+            return serializers.EmployeeDetailSerializer
         else:
             return super().get_serializer_class()
 

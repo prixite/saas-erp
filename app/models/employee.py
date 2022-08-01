@@ -1,4 +1,5 @@
 from django.db import models
+# id, full_name, email, phone, date_of_joining, emergency_contact, designation, department, education details
 
 
 class Employee(models.Model):
@@ -8,6 +9,8 @@ class Employee(models.Model):
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
+    designation = models.CharField(max_length=50)
+    email = models.EmailField()
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
