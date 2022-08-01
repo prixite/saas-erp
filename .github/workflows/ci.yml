@@ -2,34 +2,39 @@ name: ci
 
 on:
   pull_request:
-    branches: "master"
+    branches:
+      - "master"
+  push:
+    branches: [master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4.0.0
-      with:
-        python-version: "3.10"
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-    - name: Run Tests
-      env:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: "3.10"
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          sudo apt-get install -y gdal-bin
+          pip install -r requirements-dev.txt
+      - name: Run Tests
+        env:
           SECRET_KEY: fake_key
           DEBUG: True
-      run: |
-        coverage run manage.py test
-        coverage xml
-    - name: Show report
-      uses: 5monkeys/cobertura-action@v12
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        minimum_coverage: 80
+        run: |
+          coverage run manage.py test
+          coverage xml
+        if: ${{ github.actor !='dependabot[bot]'}}
+      - name: Show report
+        uses: 5monkeys/cobertura-action@v12
+        with:
+          repo_token: ${{ github.token }}
+          minimum_coverage: 80
 
   pre-commit:
     runs-on: ubuntu-latest
@@ -37,7 +42,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
+          python-version: "3.10"
           cache: pip
       - uses: actions/setup-node@v2
         with:

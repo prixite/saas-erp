@@ -13,9 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import include, path, re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from app.views.api import HomeView
@@ -23,11 +24,15 @@ from app.views.api import HomeView
 accounts = [
     path(
         "accounts/login/",
-        auth_views.LoginView.as_view(template_name="app/html/registration/login.html"),
+        auth_views.LoginView.as_view(
+            template_name="app/html/registration/login.html",
+        ),
         name="login",
     ),
     path(
-        "accounts/logout/", auth_views.LogoutView.as_view(next_page="/"), name="logout"
+        "accounts/logout/",
+        auth_views.LogoutView.as_view(next_page=settings.LOGIN_URL),
+        name="logout",
     ),
     path(
         "accounts/password_change/",
@@ -79,12 +84,13 @@ accounts = [
 urlpatterns = accounts + [
     path("admin/", admin.site.urls),
     path("api/", include("app.urls.api")),
-    path("html/", include("app.urls.html")),
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("docs/schema/", SpectacularAPIView.as_view(), name="schema_docs"),
     path(
-        "openapi/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="open-api",
+        "docs/api/",
+        SpectacularSwaggerView.as_view(url_name="schema_docs"),
+        name="api_docs",
     ),
-    path("", HomeView.as_view(), name="home"),
+    path("react/", HomeView.as_view(), name="home"),
+    re_path(r"^react/.+/$", HomeView.as_view(), name="home"),
+    path("", include("app.urls.html")),
 ]

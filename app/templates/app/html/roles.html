@@ -1,0 +1,26 @@
+{% extends "app/html/base.html" %}
+
+{% block heading %}Roles{% endblock %}
+
+{% block page %}
+<div class="d-flex justify-content-end">
+  <a class="btn btn-primary end-0" href="{% url "html:roles-add" %}" role="button">Add New</a>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Is Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for role in object_list %}
+    <tr>
+      <td><a href="{% url 'html:role-update' role.pk %}">{{ role.name }}</a></td>
+      <td>{{ role.is_admin }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "app/html/base.html" %}
+
+{% block heading %}Manage Organizations{% endblock %}
+
+{% block page %}
+<p><a href="{% url 'html:organizations' %}">View Organizations</a></p>
+<p><a href="{% url 'html:modules' %}">View Modules</a></p>
+<p><a href="{% url 'html:organizations-modules' %}">View Organization Modules</a></p>
+<p><a href="{% url 'html:owners' %}">View Owners</a></p>
+{% endblock %}
