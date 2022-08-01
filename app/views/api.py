@@ -14,7 +14,11 @@ class HomeView(TemplateView):
 
 
 class EmployeeViewSet(ModelViewSet):
-    serializer_class = serializers.EmployeeSerializer
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return serializers.EmployeeSerializerGet
+        elif self.request.method == "POST":
+            return serializers.EmployeeSerializerPost
 
     def get_queryset(self):
         if self.request.user.is_superuser:

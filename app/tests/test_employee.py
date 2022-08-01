@@ -15,14 +15,10 @@ class EmployeeTestCase(BaseTestCase):
         self.assertEqual(
             list(response.json()[0].keys()),
             [
+                "id",
                 "name",
                 "contact_number",
-                "nic",
-                "emergency_contact_number",
                 "date_of_joining",
-                "organization",
-                "type",
-                "department",
             ],
         )
 
