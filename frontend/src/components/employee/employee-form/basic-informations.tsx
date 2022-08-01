@@ -5,7 +5,7 @@ import Controls from "@src/components/shared/form-controls/Controls";
 const BasicInformations = () => {
   const {
     control,
-    formState: { errors },
+    // formState: { errors },
   } = useFormContext();
   return (
     <>

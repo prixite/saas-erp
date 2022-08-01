@@ -1,12 +1,10 @@
-import React from "react";
-import { Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 interface FormInputProps {
   name: string;
-  control: any;
+  control: string;
   label: string;
-  setValue?: any;
 }
 
 const Input = ({ name, control, label }: FormInputProps) => {

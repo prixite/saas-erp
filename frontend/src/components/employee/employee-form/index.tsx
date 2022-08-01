@@ -65,7 +65,7 @@ export default function EmployeeForm() {
   });
 
   // const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
+  const formSubmitHandler: SubmitHandler<IFormInputs> = () => {
     //handle next step code started
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -76,7 +76,7 @@ export default function EmployeeForm() {
     setSkipped(newSkipped);
     //handle next step code ended
 
-    console.log("Form data is.....", data);
+    // console.log("Form data is.....", data);
   };
 
   const isStepOptional = (step: number) => {
