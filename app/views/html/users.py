@@ -1,12 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.urls import reverse, reverse_lazy
-from django.utils.text import slugify
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-from app.views.mixins import AddGetFormMixin, OwnerMixin, PrivateViewMixin, UserMixin
+from app.views.mixins import AddGetFormMixin, PrivateViewMixin, UserMixin
 
 
 class Users(PrivateViewMixin, UserMixin, ListView):

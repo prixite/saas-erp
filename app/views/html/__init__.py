@@ -92,7 +92,7 @@ class Inventory(PrivateViewMixin, TemplateView):
 
 class Settings(PrivateViewMixin, TemplateView):
     template_name = "app/html/settings.html"
-    module = 'settings'
+    module = "settings"
 
 
 class Account(PrivateViewMixin, TemplateView):
