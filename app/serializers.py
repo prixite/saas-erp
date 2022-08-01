@@ -3,7 +3,7 @@ from rest_framework import serializers
 from app import models
 
 
-class EmployeeSerializerGet(serializers.ModelSerializer):
+class EmployeeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employee
         fields = [
@@ -14,7 +14,7 @@ class EmployeeSerializerGet(serializers.ModelSerializer):
         ]
 
 
-class EmployeeSerializerPost(serializers.ModelSerializer):
+class EmployeeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employee
         fields = [
