@@ -19,8 +19,8 @@ class EmployeeViewSet(ModelViewSet):
             return serializers.EmployeeListSerializer
         elif self.request.method == "POST":
             return serializers.EmployeeCreateSerializer
-        else:
-            return super().get_serializer_class()
+
+        return super().get_serializer_class()
 
     def get_queryset(self):
         if self.request.user.is_superuser:
