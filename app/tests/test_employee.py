@@ -30,6 +30,8 @@ class EmployeeTestCase(BaseTestCase):
             "contact_number": "0333 869 3455",
             "nic": "23470247027420",
             "emergency_contact_number": "0234324243",
+            "email": "test@gmail.com",
+            "designation": "Software Engineer | Python",
             "date_of_joining": timezone.now().strftime("%Y-%m-%d"),
             "organization": self.organization.id,
             "type": self.employment_type.id,

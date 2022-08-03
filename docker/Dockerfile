@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libgif-dev \
     librsvg2-dev \
-    g++
+    gdal-bin \
+    g++ \
+    gettext
 
 RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 RUN apt-get install -y nodejs

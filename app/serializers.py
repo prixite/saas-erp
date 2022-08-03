@@ -14,6 +14,28 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         ]
 
 
+class EmployeeDetailSerializer(serializers.ModelSerializer):
+    degrees = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = models.Employee
+
+        fields = [
+            "id",
+            "name",
+            "contact_number",
+            "date_of_joining",
+            "nic",
+            "email",
+            "designation",
+            "degrees",
+            "emergency_contact_number",
+            "organization",
+            "type",
+            "department",
+        ]
+
+
 class EmployeeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employee
@@ -23,6 +45,9 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
             "contact_number",
             "date_of_joining",
             "nic",
+            "email",
+            "designation",
+            # "degrees",
             "emergency_contact_number",
             "organization",
             "type",
