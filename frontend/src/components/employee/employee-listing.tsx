@@ -159,6 +159,13 @@ const EmployeeListing = () => {
                 ? "Update Employee"
                 : "Add Employee"
             }
+            subTitle={
+              showListing && showListing === true
+                ? ""
+                : recordForEdit != null
+                ? "Fill the following fields to update an Employee"
+                : "Fill the following fields to add an Employee"
+            }
           />
         </Grid>
         {showListing === true && (

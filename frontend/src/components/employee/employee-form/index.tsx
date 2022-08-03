@@ -1,5 +1,6 @@
 import * as React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import SendIcon from "@mui/icons-material/Send";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
@@ -9,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import * as yup from "yup";
 import BasicInformations from "@src/components/employee/employee-form/basic-informations";
+import Education from "@src/components/employee/employee-form/education";
+import Experience from "@src/components/employee/employee-form/experience";
 
 interface IFormInputs {
   name: string;
@@ -25,6 +28,16 @@ interface IFormInputs {
   assets: string;
   emergencyContact: number;
   compansationBenefits: string[];
+  designationExp: string;
+  company: string;
+  dateStartedExp: Date;
+  dateEndedExp: Date;
+  currentlyWorking: string[];
+  degree: string;
+  university: string;
+  dateStartedEdu: string;
+  dateEndedEdu: string;
+  currentlyInProgressEdu: string[];
 }
 //validation schema for create employee form
 const schema = yup.object().shape({
@@ -38,19 +51,19 @@ const schema = yup.object().shape({
       "Phone number is not valid!"
     )
     .min(10, "to short Phone Number")
-    .max(10, "to long Phone Number"),
+    .max(14, "to long Phone Number"),
   cnic: yup.number().required().positive().integer(),
-  dateStarted: yup.date().default(function () {
-    return new Date();
-  }),
+  // dateStarted: yup.date().default(function () {
+  //   return new Date();
+  // }),
   manager: yup.string().required(),
   designation: yup.string().required(),
   salary: yup.number().required(),
   managing: yup.string().required(),
   employmentType: yup.string().required(),
-  assets: yup.string().required(),
+  // assets: yup.string().required(),
   emergencyContact: yup.number().required(),
-  compansationBenefits: yup.string().required(),
+  // compansationBenefits: yup.string().required(),
 });
 
 const steps = ["Basic Info", "Experience", "Education"];
@@ -113,17 +126,11 @@ export default function EmployeeForm() {
   const handleSteps = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return <BasicInformations />;
+        return <BasicInformations setValue={methods.setValue} />;
       case 1:
-        return <h2>step 2</h2>;
+        return <Experience setValue={methods.setValue} />;
       case 2:
-        return <h2>step 3</h2>;
-      case 3:
-        return <h2>step 4</h2>;
-      case 4:
-        return <h2>step 5</h2>;
-      case 5:
-        return <h2>step 6</h2>;
+        return <Education setValue={methods.setValue} />;
       default:
         throw new Error("Unknown step");
     }
@@ -190,6 +197,7 @@ export default function EmployeeForm() {
                 <Button
                   variant="contained"
                   onClick={methods.handleSubmit(formSubmitHandler)}
+                  endIcon={<SendIcon />}
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>

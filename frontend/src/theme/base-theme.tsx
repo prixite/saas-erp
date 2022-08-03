@@ -76,7 +76,10 @@ const baseTheme = createTheme({
     // subtitle1: {},
     // subtitle2: {},
     // body1: {},
-    // body2: {},
+    body2: {
+      fontSize: "0.75rem",
+      fontFamily: "",
+    },
     button: {
       fontFamily: "",
       fontSize: "16px",
@@ -102,6 +105,13 @@ const baseTheme = createTheme({
             // backgroundColor: GLOBAL_RED,
           },
         }),
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
       },
     },
   },

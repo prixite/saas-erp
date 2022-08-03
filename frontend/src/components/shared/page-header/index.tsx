@@ -45,7 +45,7 @@ const PageHeader = ({ title, subTitle }: props) => {
         <Typography variant="h4" component="div">
           {title}
         </Typography>
-        <Typography variant="subtitle2" component="div">
+        <Typography variant="subtitle2" component="div" sx={{ pt: 1 }}>
           {subTitle}
         </Typography>
       </Box>
