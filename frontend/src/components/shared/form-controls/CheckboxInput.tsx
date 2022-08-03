@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
 import {
@@ -19,6 +20,7 @@ interface FormInputProps {
   control: unknown;
   label: string;
   options: Array<Type>;
+  setValue: string;
 }
 
 export const CheckboxInput: React.FC<FormInputProps> = ({
@@ -55,7 +57,7 @@ export const CheckboxInput: React.FC<FormInputProps> = ({
               control={
                 <Controller
                   name={name}
-                  render={({}) => {
+                  render={() => {
                     return (
                       <Checkbox
                         checked={selectedItems.includes(option.value)}
