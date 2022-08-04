@@ -41,7 +41,6 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     contact_number = factory.Faker("phone_number")
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
-    email = factory.Faker("email")
     designation = factory.Faker("job")
     organization = factory.iterator(models.Organization.objects.all)
     compensation = factory.RelatedFactory(
