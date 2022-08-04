@@ -29,8 +29,7 @@ jobs:
         run: |
           coverage run manage.py test
           coverage xml
-      - if: ${{ github.actor !='dependabot[bot]'}}
-        run: echo ${{github.actor}}
+      - if: ${{ ! contains(github.actor,'dependabot')}}
         name: Show report
         uses: 5monkeys/cobertura-action@v12
         with:
