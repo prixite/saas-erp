@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0018_employee_designation_employee_email'),
+        ("app", "0018_employee_designation_employee_email"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='employee',
-            options={'ordering': ['-id']},
+            name="employee",
+            options={"ordering": ["-id"]},
         ),
         migrations.RemoveField(
-            model_name='employee',
-            name='email',
+            model_name="employee",
+            name="email",
         ),
     ]
