@@ -12,7 +12,9 @@ class BaseTestCase(TestCase):
         self.organization = factories.OrganizationFactory()
         self.org_user = factories.UserFactory(organization=self.organization)
         self.department = factories.DepartmentFactory(organization=self.organization)
-        self.employment_type = factories.EmploymentType(organization=self.organization)
+        self.employment_type = factories.EmploymentTypeFactory(
+            organization=self.organization
+        )
         self.program = factories.ProgramFactory(organization=self.organization)
         self.institute = factories.InstituteFactory(organization=self.organization)
 

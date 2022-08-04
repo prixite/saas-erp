@@ -49,10 +49,10 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
         rate=random.randint(10, 50),
         factory_related_name="employee",
     )
-    degrees = factory.RelatedFactory(
-        "app.factories.DegreeFactory",
-        factory_related_name="employee",
-    )
+    # degrees = factory.RelatedFactory(
+    #     "app.factories.DegreeFactory",
+    #     factory_related_name="employee",
+    # )
 
     class Meta:
         model = models.Employee
@@ -67,7 +67,7 @@ class DepartmentFactory(factory.django.DjangoModelFactory):
         model = models.Department
 
 
-class EmploymentType(factory.django.DjangoModelFactory):
+class EmploymentTypeFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
     organization = factory.iterator(models.Organization.objects.all)
     updated_at = factory.LazyFunction(timezone.now)

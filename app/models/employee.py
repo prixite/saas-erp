@@ -16,6 +16,7 @@ class Employee(models.Model):
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     benefits = models.ManyToManyField("Benefit")
     type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
+    user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

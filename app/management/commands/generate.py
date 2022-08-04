@@ -13,7 +13,7 @@ class Command(BaseCommand):
             email="super-admin@example.com",
         )
         organization = factories.OrganizationFactory()
-        employement_type = factories.EmploymentType(name="Full time")
+        employement_type = factories.EmploymentTypeFactory(name="Full time")
 
         factories.CurrencyFactory.create_batch(size=3)
         self.add_compensation_type_instances(organization)
