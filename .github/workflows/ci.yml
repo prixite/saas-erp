@@ -27,14 +27,7 @@ jobs:
           SECRET_KEY: fake_key
           DEBUG: True
         run: |
-          coverage run manage.py test
-          coverage xml
-        if: ${{ github.actor !='dependabot[bot]'}}
-      - name: Show report
-        uses: 5monkeys/cobertura-action@v12
-        with:
-          repo_token: ${{ github.token }}
-          minimum_coverage: 80
+          python manage.py test
 
   pre-commit:
     runs-on: self-hosted
