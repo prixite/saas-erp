@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
 import Box from "@mui/material/Box";
@@ -12,6 +12,16 @@ import * as yup from "yup";
 import BasicInformations from "@src/components/employee/employee-form/basic-informations";
 import Education from "@src/components/employee/employee-form/education";
 import Experience from "@src/components/employee/employee-form/experience";
+
+const FORM_DATA_KEY = "app_form_local_data";
+
+export const usePersistForm = ({ value, localStorageKey }) => {
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(value));
+  }, [value, localStorageKey]);
+
+  return;
+};
 
 interface IFormInputs {
   name: string;
@@ -65,7 +75,6 @@ const schema = yup.object().shape({
   emergencyContact: yup.number().required(),
   // compansationBenefits: yup.string().required(),
 });
-
 const steps = ["Basic Info", "Experience", "Education"];
 
 export default function EmployeeForm() {
@@ -135,6 +144,11 @@ export default function EmployeeForm() {
         throw new Error("Unknown step");
     }
   };
+
+  usePersistForm({
+    value: methods.setValue,
+    localStorageKey: FORM_DATA_KEY,
+  });
 
   return (
     <Box sx={{ width: "100%" }}>
