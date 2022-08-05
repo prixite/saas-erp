@@ -1,8 +1,11 @@
 from django.db import transaction
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib import messages
+
 
 from app import forms, models
 from app.views.mixins import OwnerMixin, PrivateViewMixin
@@ -151,3 +154,22 @@ class UpdateOwner(PrivateViewMixin, OwnerMixin, UpdateView):
     template_name = "app/html/owner_form.html"
     success_url = reverse_lazy("html:owners")
     allow_superuser = True
+
+
+class DeleteOwner(PrivateViewMixin, OwnerMixin, DeleteView):
+    model = models.User
+    success_url = reverse_lazy("html:owners")
+    template_name = "app/html/owner_confirm_delete.html"
+    allow_superuser = True
+
+    def form_valid(self, form):
+        user = models.User.objects.get(id=self.kwargs['pk'])
+        owners_count = models.User.objects.filter(
+            organization=user.organization, default_role=models.Role.objects.get(permission='c')).count()
+        if owners_count <= 1:
+            messages.error(self.request, 'Can not delete last owner of organization.')
+            failure_url = reverse_lazy("html:owners-delete",
+                                       kwargs={'pk': self.kwargs['pk']})
+            return HttpResponseRedirect(failure_url)
+        else:
+            return super().form_valid(form)

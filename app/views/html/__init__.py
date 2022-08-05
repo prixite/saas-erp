@@ -21,6 +21,7 @@ from app.views.html.organizations import (
     UpdateOrganization,
     UpdateOrganizationModule,
     UpdateOwner,
+    DeleteOwner
 )
 from app.views.html.users import (
     CreateUser,
@@ -65,6 +66,7 @@ __all__ = [
     "UpdateOrganization",
     "UpdateOrganizationModule",
     "UpdateOwner",
+    "DeleteOwner",
     "UpdateRole",
     "UpdateUser",
     "UpdateUserModule",
