@@ -12,6 +12,7 @@ from app.views.html.organizations import (
     DeleteModule,
     DeleteOrganization,
     DeleteOrganizationModule,
+    DeleteOwner,
     ManageOrganizations,
     Modules,
     OrganizationModules,
@@ -21,7 +22,6 @@ from app.views.html.organizations import (
     UpdateOrganization,
     UpdateOrganizationModule,
     UpdateOwner,
-    DeleteOwner
 )
 from app.views.html.users import (
     CreateUser,
