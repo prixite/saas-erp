@@ -8,23 +8,27 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0019_alter_employee_options_remove_employee_email'),
+        ("app", "0019_alter_employee_options_remove_employee_email"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='employee',
-            name='name',
+            model_name="employee",
+            name="name",
         ),
         migrations.AddField(
-            model_name='employee',
-            name='user',
-            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="employee",
+            name="user",
+            field=models.OneToOneField(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='employee',
-            name='user_allowed',
+            model_name="employee",
+            name="user_allowed",
             field=models.BooleanField(default=False),
         ),
     ]
