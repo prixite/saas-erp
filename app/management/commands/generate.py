@@ -20,6 +20,11 @@ class Command(BaseCommand):
         self.add_compensation_type_instances(organization)
         self.add_compenstation_schedule_instances(organization)
 
+        factories.InstituteFactory.create_batch(
+            size=3,
+            name=factory.Faker("name"),
+            organization=organization,
+        )
         factories.EmployeeFactory.create_batch(
             size=10,
             department=factories.DepartmentFactory(),
@@ -28,11 +33,6 @@ class Command(BaseCommand):
                 organization=organization, type=employement_type
             ),
             type=employement_type,
-        )
-        factories.InstituteFactory.create_batch(
-            size=3,
-            name=factory.Faker("name"),
-            organization=organization,
         )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
