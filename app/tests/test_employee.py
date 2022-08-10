@@ -15,14 +15,10 @@ class EmployeeTestCase(BaseTestCase):
         self.assertEqual(
             list(response.json()[0].keys()),
             [
+                "id",
                 "name",
                 "contact_number",
-                "nic",
-                "emergency_contact_number",
                 "date_of_joining",
-                "organization",
-                "type",
-                "department",
             ],
         )
 
@@ -34,6 +30,7 @@ class EmployeeTestCase(BaseTestCase):
             "contact_number": "0333 869 3455",
             "nic": "23470247027420",
             "emergency_contact_number": "0234324243",
+            "designation": "Software Engineer | Python",
             "date_of_joining": timezone.now().strftime("%Y-%m-%d"),
             "organization": self.organization.id,
             "type": self.employment_type.id,
@@ -43,6 +40,28 @@ class EmployeeTestCase(BaseTestCase):
         response = self.client.post("/api/employees/", data=employee_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
+
+    def test_employee_detail(self):
+        self.client.force_login(self.super_user)
+        response = self.client.get(f"/api/employees/{self.employee.id}/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "contact_number",
+                "date_of_joining",
+                "nic",
+                "designation",
+                "degrees",
+                "emergency_contact_number",
+                "organization",
+                "type",
+                "department",
+            ],
+        )
 
 
 class CompensationTestCase(BaseTestCase):

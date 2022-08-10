@@ -3,19 +3,10 @@
 {% block heading %}Hello {{ request.user.get_full_name }}{% endblock %}
 
 {% block page %}
-<div>First name: {{ request.user.first_name }}</div>
-<div>Last name: {{ request.user.last_name }}</div>
-<div>Email: {{ request.user.email }}</div>
-<div>Type: Permanent</div>
-<div>Department: Engineering</div>
-<div>Designation: Senior Software Engineer</div>
-<div>Manager: Jane Doe</div>
-<div>Managing: Arif, Jana</div>
-<div>Teams: ScoopRank, ERP</div>
-<div>Assets: Laptop, Mouse</div>
-<div>Compensation: $1000</div>
-<div>Compensation Schedule: Monthly</div>
-<div>Benefits: Paid Leaves, Quarterly Bonus</div>
-<div>Documents: NDA, Job Offer, Acceptance</div>
-<div><a href="#">Compensation Changes</a></div>
+<p>Email: {{ request.user.email }}</p>
+
+{% if user.is_superuser %}
+{% include "app/html/partials/manage_organizations.html" %}
+{% endif %}
+
 {% endblock %}

@@ -9,39 +9,31 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4.0.0
-      with:
-        python-version: "3.10"
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-    - name: Run Tests
-      env:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: "3.10"
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements-dev.txt
+      - name: Run Tests
+        env:
           SECRET_KEY: fake_key
           DEBUG: True
-      run: |
-        coverage run manage.py test
-        coverage xml
-      if: ${{ github.actor !='dependabot[bot]'}}
-    - name: Show report
-      uses: 5monkeys/cobertura-action@v12
-      with:
-        repo_token: ${{ github.token }}
-        minimum_coverage: 80
+        run: |
+          python manage.py test
 
   pre-commit:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
+          python-version: "3.10"
           cache: pip
       - uses: actions/setup-node@v2
         with:

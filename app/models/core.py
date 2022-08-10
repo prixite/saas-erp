@@ -23,13 +23,49 @@ class User(AbstractUser):
     # this field should not be stored in DB. This field will be updated by
     # view to True if the user is admin for the module being accessed.
     is_module_admin = False
+    # this field should not be stored in DB. This field will be updated by
+    # view to True if the user is owner for the module being accessed.
+    is_module_owner = False
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
+    def get_modules(self, permission):
+        module_roles = self.module_roles.filter(module__is_enabled=True)
+        if self.default_role and self.default_role.permission >= permission:
+            module_roles = module_roles.filter(
+                role__permission__lte=self.default_role.permission,
+            )
+        else:
+            module_roles = module_roles.filter(role__permission=permission)
+
+        if self.default_role and self.default_role.permission == Role.Permission.OWNER:
+            return self.organization_modules
+
+        return {x.module for x in module_roles} & self.organization_modules
+
     @property
-    def modules(self):
-        return {x.module for x in self.module_role_set.all()}
+    def organization_modules(self):
+        return {
+            x.module
+            for x in OrganizationModule.objects.filter(
+                organization=self.organization,
+                module__is_enabled=True,
+                is_enabled=True,
+            )
+        }
+
+    @property
+    def member_modules(self):
+        return self.get_modules(Role.Permission.MEMBER)
+
+    @property
+    def admin_modules(self):
+        return self.get_modules(Role.Permission.ADMIN)
+
+    @property
+    def owner_modules(self):
+        return self.get_modules(Role.Permission.OWNER)
 
 
 class Invitation(models.Model):
@@ -62,7 +98,9 @@ class Organization(models.Model):
 
     @property
     def owner(self):
-        return self.user_set.filter(default_role__is_owner=True).first()
+        return self.user_set.filter(
+            default_role__permission=Role.Permission.OWNER
+        ).first()
 
 
 class OrganizationModule(models.Model):
@@ -87,7 +125,7 @@ class UserModuleRole(models.Model):
 
     module = models.ForeignKey("Module", on_delete=models.PROTECT)
     user = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name="module_role_set"
+        "User", on_delete=models.CASCADE, related_name="module_roles"
     )
     role = models.ForeignKey("Role", on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -104,8 +142,12 @@ class Module(models.Model):
 
     slug = models.SlugField()
     name = models.CharField(max_length=64)
+    is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Role(models.Model):
@@ -117,14 +159,27 @@ class Role(models.Model):
     - Member: Can only manage own data.
     """
 
-    name = models.CharField(max_length=64, unique=True)
-    is_owner = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_member = models.BooleanField(default=False)
+    class Permission(models.TextChoices):
+        OWNER = "c", "Owner"
+        ADMIN = "b", "Admin"
+        MEMBER = "a", "Member"
+
+    name = models.CharField(max_length=64)
+    permission = models.CharField(
+        max_length=1, choices=Permission.choices, default=Permission.MEMBER
+    )
     is_default = models.BooleanField(default=False)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                name="unique_name_organization",
+                fields=["name", "organization"],
+            ),
+        ]
 
     def __str__(self):
         return self.name

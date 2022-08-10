@@ -6,6 +6,7 @@ from app.models.core import (
     OrganizationModule,
     Role,
     User,
+    UserModuleRole,
 )
 from app.models.employee import (
     Benefit,
@@ -55,4 +56,5 @@ __all__ = [
     "Role",
     "Team",
     "User",
+    "UserModuleRole",
 ]

@@ -10,3 +10,5 @@ __pycache__
 .coverage
 venv
 package-lock.json
+.vscode/*
+.DS_Store

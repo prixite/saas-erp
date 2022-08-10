@@ -4,7 +4,10 @@
 {% block heading %}Logout{% endblock %}
 
 {% block page %}
-<p class="lead">Logout {{ request.user }}?</p>
-<a class="btn btn-success" href="{% url "logout" %}">Yes</a>
-<a class="btn btn-secondary" href="{% url "html:home" %}">No</a>
+<p class="lead">Logout {% firstof request.user.get_full_name request.user.email %}?</p>
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button class="btn btn-success" type="submit">Yes</button>
+  <a class="btn btn-secondary" href="{% url "html:home" %}">No</a>
+</form>
 {% endblock %}

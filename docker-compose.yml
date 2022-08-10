@@ -8,6 +8,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=saas-erp
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
   app:
     build:
@@ -25,3 +27,6 @@ services:
       - .:/opt/code
     depends_on:
       - db
+
+volumes:
+  db_data:

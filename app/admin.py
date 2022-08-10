@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -25,3 +26,22 @@ class CompensationAdmin(admin.ModelAdmin):
 @admin.register(models.Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     pass
+
+
+if settings.DEBUG:
+
+    @admin.register(models.Role)
+    class RoleAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.UserModuleRole)
+    class UserModuleRoleAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Module)
+    class ModuleAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.OrganizationModule)
+    class OrganizationModuleAdmin(admin.ModelAdmin):
+        pass

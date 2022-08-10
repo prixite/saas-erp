@@ -9,6 +9,8 @@ from app import models
 fake = Faker()
 fake.seed_instance(1234)
 
+dummy_grades = ["A", "B", "C", "D"]
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Sequence(lambda x: fake.unique.email())
@@ -39,10 +41,15 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     contact_number = factory.Faker("phone_number")
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
+    designation = factory.Faker("job")
     organization = factory.iterator(models.Organization.objects.all)
     compensation = factory.RelatedFactory(
         "app.factories.CompensationFactory",
         rate=random.randint(10, 50),
+        factory_related_name="employee",
+    )
+    degrees = factory.RelatedFactory(
+        "app.factories.DegreeFactory",
         factory_related_name="employee",
     )
 
@@ -93,3 +100,34 @@ class CompensationTypeFactory(factory.django.DjangoModelFactory):
 class CompensationScheduleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.CompensationSchedule
+
+
+class ProgramFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.Program
+
+
+class InstituteFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.Institute
+
+
+class DegreeFactory(factory.django.DjangoModelFactory):
+
+    employee = factory.iterator(models.Employee.objects.all)
+    program = factory.iterator(models.Program.objects.all)
+    institute = factory.iterator(models.Institute.objects.all)
+    grade = factory.Sequence(lambda x: fake.sentence(ext_word_list=dummy_grades))
+    year = factory.Faker("date_time")
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.Degree
