@@ -165,7 +165,9 @@ class DeleteOwner(PrivateViewMixin, OwnerMixin, DeleteView):
         user = models.User.objects.get(id=self.kwargs["pk"])
         owners_count = models.User.objects.filter(
             organization=user.organization,
-            default_role=models.Role.objects.get(permission=Role.Permission.OWNER),
+            default_role=models.Role.objects.get(
+                permission=models.Role.Permission.OWNER
+            ),
         ).count()
         if owners_count <= 1:
             messages.error(self.request, "Can not delete last owner of organization.")
