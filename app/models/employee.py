@@ -9,7 +9,6 @@ class Employee(models.Model):
     emergency_contact_number = models.CharField(max_length=20)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
     designation = models.CharField(max_length=50)
-    email = models.EmailField()
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
@@ -21,6 +20,9 @@ class Employee(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        ordering = ["-id"]
 
 
 class Document(models.Model):
