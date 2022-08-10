@@ -3,136 +3,11 @@ import AddIcon from "@mui/icons-material/Add";
 // import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 // import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Grid } from "@mui/material";
-// import MUIDataTable from "mui-datatables";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EmployeeForm from "@src/components/employee/employee-form";
 import Controls from "@src/components/shared/form-controls/Controls";
 import Breadcrumbs from "@src/components/shared/layout/breadcrumbs";
 import PageHeader from "@src/components/shared/page-header";
-
-// const columns = [
-//   {
-//     name: "id",
-//     value: "id",
-//     label: "ID",
-//     options: {
-//       filter: true,
-//       sort: false,
-//     },
-//   },
-//   {
-//     name: "name",
-//     value: "name",
-//     label: "Name",
-//     options: {
-//       filter: true,
-//       sort: false,
-//     },
-//   },
-
-//   {
-//     name: "contact",
-//     value: "contact",
-//     label: "Contact Number",
-//     options: {
-//       filter: true,
-//       sort: false,
-//     },
-//   },
-//   {
-//     name: "joiningDate",
-//     value: "joiningDate",
-//     label: "Joining Date",
-//     options: {
-//       filter: true,
-//       sort: false,
-//     },
-//   },
-
-//   {
-//     name: "",
-//     label: "Actions",
-//     options: {
-//       filter: false,
-//       sort: false,
-//       empty: true,
-//       customBodyRender: () => {
-//         return (
-//           <>
-//             <Grid style={{ display: "flex" }}>
-//               <Grid>
-//                 {" "}
-//                 <>
-//                   <EditOutlinedIcon fontSize="small" color="primary" />
-//                   <DeleteOutlineOutlinedIcon
-//                     fontSize="small"
-//                     color="primary"
-//                     sx={{ ml: 2 }}
-//                   />
-//                 </>
-//               </Grid>
-//               <Grid></Grid>
-//             </Grid>
-//           </>
-//         );
-//       },
-//     },
-//   },
-// ];
-
-// const data = [
-//   {
-//     id: "PX-05",
-//     name: "Muhammad Shafiq",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-06",
-//     name: "Umair Khan",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-06",
-//     name: "Waqar Ali",
-//     contact: "03129594346",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-07",
-//     name: "Hammad Yaqoub",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-08",
-//     name: "Rabeel",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-05",
-//     name: "Muhammad Shafiq",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-//   {
-//     id: "PX-05",
-//     name: "Muhammad Shafiq",
-//     contact: "03465554403",
-//     joiningDate: "14 May,2022",
-//   },
-// ];
-
-// const options = {
-//   filter: true,
-//   filterType: "dropdown",
-//   selectableRows: "none",
-//   responsive: "standard",
-//   rowsPerPage: 10,
-//   rowsPerPageOptions: [20, 50, 70, 100],
-// };
 
 const rows = [
   {
@@ -258,7 +133,6 @@ const EmployeeListing = () => {
           <Grid item xs={12}>
             {showListing && (
               <>
-                {/* <MUIDataTable data={data} columns={columns} /> */}
                 <DataGrid
                   rows={rows}
                   columns={columns}
