@@ -165,7 +165,7 @@ class DeleteOwner(PrivateViewMixin, OwnerMixin, DeleteView):
         user = models.User.objects.get(id=self.kwargs["pk"])
         owners_count = models.User.objects.filter(
             organization=user.organization,
-            default_role=models.Role.objects.get(permission="c"),
+            default_role=models.Role.objects.get(permission=Role.Permission.OWNER),
         ).count()
         if owners_count <= 1:
             messages.error(self.request, "Can not delete last owner of organization.")
@@ -173,5 +173,5 @@ class DeleteOwner(PrivateViewMixin, OwnerMixin, DeleteView):
                 "html:owners-delete", kwargs={"pk": self.kwargs["pk"]}
             )
             return HttpResponseRedirect(failure_url)
-        else:
-            return super().form_valid(form)
+
+        return super().form_valid(form)
