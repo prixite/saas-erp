@@ -37,11 +37,10 @@ class OrganizationFactory(factory.django.DjangoModelFactory):
 
 
 class EmployeeFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
+    user = factory.SubFactory(factory=UserFactory)
     contact_number = factory.Faker("phone_number")
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
-    email = factory.Faker("email")
     designation = factory.Faker("job")
     organization = factory.iterator(models.Organization.objects.all)
     compensation = factory.RelatedFactory(
@@ -49,10 +48,10 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
         rate=random.randint(10, 50),
         factory_related_name="employee",
     )
-    # degrees = factory.RelatedFactory(
-    #     "app.factories.DegreeFactory",
-    #     factory_related_name="employee",
-    # )
+    degrees = factory.RelatedFactory(
+        "app.factories.DegreeFactory",
+        factory_related_name="employee",
+    )
 
     class Meta:
         model = models.Employee
