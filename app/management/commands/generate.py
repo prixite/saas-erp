@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from app import factories, models
+from app import factories
 
 
 class Command(BaseCommand):
@@ -28,8 +28,6 @@ class Command(BaseCommand):
             ),
             type=employement_type,
         )
-
-        print(models.Employee.objects.first()._email)
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
 
