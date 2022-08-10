@@ -1,128 +1,129 @@
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+// import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+// import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Grid } from "@mui/material";
-import MUIDataTable from "mui-datatables";
+// import MUIDataTable from "mui-datatables";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EmployeeForm from "@src/components/employee/employee-form";
 import Controls from "@src/components/shared/form-controls/Controls";
 import Breadcrumbs from "@src/components/shared/layout/breadcrumbs";
 import PageHeader from "@src/components/shared/page-header";
 
-const columns = [
-  {
-    name: "id",
-    value: "id",
-    label: "ID",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
-  {
-    name: "name",
-    value: "name",
-    label: "Name",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
+// const columns = [
+//   {
+//     name: "id",
+//     value: "id",
+//     label: "ID",
+//     options: {
+//       filter: true,
+//       sort: false,
+//     },
+//   },
+//   {
+//     name: "name",
+//     value: "name",
+//     label: "Name",
+//     options: {
+//       filter: true,
+//       sort: false,
+//     },
+//   },
 
-  {
-    name: "contact",
-    value: "contact",
-    label: "Contact Number",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
-  {
-    name: "joiningDate",
-    value: "joiningDate",
-    label: "Joining Date",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
+//   {
+//     name: "contact",
+//     value: "contact",
+//     label: "Contact Number",
+//     options: {
+//       filter: true,
+//       sort: false,
+//     },
+//   },
+//   {
+//     name: "joiningDate",
+//     value: "joiningDate",
+//     label: "Joining Date",
+//     options: {
+//       filter: true,
+//       sort: false,
+//     },
+//   },
 
-  {
-    name: "",
-    label: "Actions",
-    options: {
-      filter: false,
-      sort: false,
-      empty: true,
-      customBodyRender: () => {
-        return (
-          <>
-            <Grid style={{ display: "flex" }}>
-              <Grid>
-                {" "}
-                <>
-                  <EditOutlinedIcon fontSize="small" color="primary" />
-                  <DeleteOutlineOutlinedIcon
-                    fontSize="small"
-                    color="primary"
-                    sx={{ ml: 2 }}
-                  />
-                </>
-              </Grid>
-              <Grid></Grid>
-            </Grid>
-          </>
-        );
-      },
-    },
-  },
-];
+//   {
+//     name: "",
+//     label: "Actions",
+//     options: {
+//       filter: false,
+//       sort: false,
+//       empty: true,
+//       customBodyRender: () => {
+//         return (
+//           <>
+//             <Grid style={{ display: "flex" }}>
+//               <Grid>
+//                 {" "}
+//                 <>
+//                   <EditOutlinedIcon fontSize="small" color="primary" />
+//                   <DeleteOutlineOutlinedIcon
+//                     fontSize="small"
+//                     color="primary"
+//                     sx={{ ml: 2 }}
+//                   />
+//                 </>
+//               </Grid>
+//               <Grid></Grid>
+//             </Grid>
+//           </>
+//         );
+//       },
+//     },
+//   },
+// ];
 
-const data = [
-  {
-    id: "PX-05",
-    name: "Muhammad Shafiq",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-06",
-    name: "Umair Khan",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-06",
-    name: "Waqar Ali",
-    contact: "03129594346",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-07",
-    name: "Hammad Yaqoub",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-08",
-    name: "Rabeel",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-05",
-    name: "Muhammad Shafiq",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-  {
-    id: "PX-05",
-    name: "Muhammad Shafiq",
-    contact: "03465554403",
-    joiningDate: "14 May,2022",
-  },
-];
+// const data = [
+//   {
+//     id: "PX-05",
+//     name: "Muhammad Shafiq",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-06",
+//     name: "Umair Khan",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-06",
+//     name: "Waqar Ali",
+//     contact: "03129594346",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-07",
+//     name: "Hammad Yaqoub",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-08",
+//     name: "Rabeel",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-05",
+//     name: "Muhammad Shafiq",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+//   {
+//     id: "PX-05",
+//     name: "Muhammad Shafiq",
+//     contact: "03465554403",
+//     joiningDate: "14 May,2022",
+//   },
+// ];
 
 // const options = {
 //   filter: true,
@@ -132,6 +133,67 @@ const data = [
 //   rowsPerPage: 10,
 //   rowsPerPageOptions: [20, 50, 70, 100],
 // };
+
+const rows = [
+  {
+    id: 1,
+    name: "Waqar",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 2,
+    name: "Umair",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 3,
+    name: "Hammad",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 4,
+    name: "Shafiq",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 5,
+    name: "Rabeel",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 6,
+    name: "Asfandiyar khan",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+  {
+    id: 7,
+    name: "Basit Ali",
+    contact: "03465554403",
+    joiningDate: "23-04-2022",
+    Actions: "Edit | Delete",
+  },
+];
+
+const columns = [
+  { field: "id", headerName: "ID", width: 350 },
+  { field: "name", headerName: "Name", width: 350 },
+  { field: "contact", headerName: "Contact", width: 350 },
+  { field: "joiningDate", headerName: "Joining Date", width: 350 },
+  { field: "Actions", headerName: "Actions", width: 350 },
+];
+
 const EmployeeListing = () => {
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -196,7 +258,15 @@ const EmployeeListing = () => {
           <Grid item xs={12}>
             {showListing && (
               <>
-                <MUIDataTable data={data} columns={columns} />
+                {/* <MUIDataTable data={data} columns={columns} /> */}
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  autoHeight={true}
+                  components={{
+                    Toolbar: GridToolbar,
+                  }}
+                />
               </>
             )}
           </Grid>
