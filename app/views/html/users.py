@@ -75,6 +75,9 @@ class CreateUserModule(PrivateViewMixin, CreateView):
         form.fields["module"].queryset = models.Module.objects.filter(
             id__in={x.id for x in self.request.user.organization_modules}
         )
+        form.fields["role"].initial = models.User.objects.get(
+            id=self.kwargs["pk"]
+        ).default_role
         form.fields["role"].queryset = models.Role.objects.filter(
             organization=self.request.user.organization
         )
