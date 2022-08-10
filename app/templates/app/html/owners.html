@@ -13,6 +13,7 @@
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Organization</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
       <td><a href="{% url 'html:owners-update' item.pk %}">{{ item.get_full_name }}</a></td>
       <td>{{ item.email }}</td>
       <td>{{ item.organization }}</td>
+      <td><a class="btn btn-danger btn-sm" href="{% url "html:owners-delete" item.id %}">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>
