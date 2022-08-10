@@ -124,7 +124,10 @@ class InstituteFactory(factory.django.DjangoModelFactory):
 class DegreeFactory(factory.django.DjangoModelFactory):
 
     employee = factory.iterator(models.Employee.objects.all)
-    program = factory.iterator(models.Program.objects.all)
+    program = factory.RelatedFactory(
+        "app.factories.ProgramFactory",
+        factory_related_name="degrees",
+    )
     institute = factory.iterator(models.Institute.objects.all)
     grade = factory.Sequence(lambda x: fake.sentence(ext_word_list=dummy_grades))
     year = factory.Faker("date_time")

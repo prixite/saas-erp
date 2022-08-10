@@ -1,3 +1,4 @@
+import factory
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -27,6 +28,11 @@ class Command(BaseCommand):
                 organization=organization, type=employement_type
             ),
             type=employement_type,
+        )
+        factories.InstituteFactory.create_batch(
+            size=3,
+            name=factory.Faker("name"),
+            organization=organization,
         )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
