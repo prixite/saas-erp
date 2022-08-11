@@ -27,9 +27,6 @@ class Employee(models.Model):
     class Meta:
         ordering = ["-id"]
 
-    def save(self,user_args,**kwargs):
-        self.user = AUTH_USER_MODEL.objects.create(username=user_args['username'],email=user_args['email'])
-        return super().save(**kwargs)
 
 class Document(models.Model):
     """
