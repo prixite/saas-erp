@@ -1,6 +1,7 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
+import { Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -9,7 +10,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
-import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
+// import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
 
 const drawerWidth = 240;
@@ -60,7 +61,15 @@ const Topbar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <BreadCrumbs />
+          {/* <BreadCrumbs /> */}
+          <Typography
+            sx={{ flexGrow: 1 }}
+            color="secondary"
+            variant="h2"
+            component="h4"
+          >
+            SASS ERP Dashboard
+          </Typography>
           <IconButton sx={{ color: "#130F26" }}>
             <SearchIcon />
           </IconButton>
