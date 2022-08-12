@@ -1,3 +1,4 @@
+import factory
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -19,6 +20,11 @@ class Command(BaseCommand):
         self.add_compensation_type_instances(organization)
         self.add_compenstation_schedule_instances(organization)
 
+        factories.InstituteFactory.create_batch(
+            size=3,
+            name=factory.Faker("name"),
+            organization=organization,
+        )
         factories.EmployeeFactory.create_batch(
             size=10,
             department=factories.DepartmentFactory(),
