@@ -46,3 +46,14 @@ class CompensationSerializer(serializers.ModelSerializer):
             "compensation_type",
             "compensation_schedule",
         ]
+
+
+class DocumentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Document
+        fields = [
+            "name",
+            "type",
+            "document_url",
+        ]

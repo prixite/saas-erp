@@ -131,3 +131,12 @@ class DegreeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Degree
+
+
+class DocumentTypeFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.DocumentType
