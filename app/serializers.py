@@ -49,7 +49,6 @@ class CompensationSerializer(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Document
         fields = [
