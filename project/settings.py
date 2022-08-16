@@ -24,6 +24,7 @@ env = environ.Env(
     DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
+    CSRF_TRUSTED_ORIGINS=(list, ["https://erp.prixite.com"]),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
     EMAIL_HOST=(str, None),
     EMAIL_PORT=(int, 587),
@@ -45,6 +46,8 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 DOMAIN_NAME = env("DOMAIN_NAME")
 
