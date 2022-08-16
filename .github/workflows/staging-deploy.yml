@@ -41,5 +41,4 @@ jobs:
           ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml build'
           ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml up -d'
           ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app ./manage.py migrate'
-          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app npm run build'
           ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app ./manage.py collectstatic --noinput'
