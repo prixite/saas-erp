@@ -41,7 +41,6 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     contact_number = factory.Faker("phone_number")
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
-    email = factory.Faker("email")
     designation = factory.Faker("job")
     organization = factory.iterator(models.Organization.objects.all)
     compensation = factory.RelatedFactory(
@@ -124,7 +123,9 @@ class InstituteFactory(factory.django.DjangoModelFactory):
 class DegreeFactory(factory.django.DjangoModelFactory):
 
     employee = factory.iterator(models.Employee.objects.all)
-    program = factory.iterator(models.Program.objects.all)
+    program = factory.SubFactory(
+        "app.factories.ProgramFactory",
+    )
     institute = factory.iterator(models.Institute.objects.all)
     grade = factory.Sequence(lambda x: fake.sentence(ext_word_list=dummy_grades))
     year = factory.Faker("date_time")

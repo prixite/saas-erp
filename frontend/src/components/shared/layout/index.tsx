@@ -48,6 +48,11 @@ const Layout = (props) => {
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
+          p: {
+            xs: 1,
+            md: 3,
+            lg: 3,
+          },
         }}
       >
         <Toolbar />

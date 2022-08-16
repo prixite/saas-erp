@@ -41,7 +41,7 @@ const baseTheme = createTheme({
     // },
   },
   typography: {
-    fontFamily: "",
+    fontFamily: ["Lato", "sans-serif"].join(","),
     fontSize: 14,
     h1: {
       fontFamily: "",
@@ -59,9 +59,9 @@ const baseTheme = createTheme({
       fontWeight: 700,
     },
     h4: {
-      fontFamily: "",
-      fontSize: 14,
+      fontSize: 20,
       fontWeight: 700,
+      color: GLOBAL_BLACK,
     },
     h5: {
       fontFamily: "",
@@ -73,15 +73,46 @@ const baseTheme = createTheme({
       fontSize: 14,
       fontWeight: 700,
     },
-    subtitle1: {},
-    subtitle2: {},
-    body1: {},
-    body2: {},
+    // subtitle1: {},
+    // subtitle2: {},
+    // body1: {},
+    body2: {
+      fontSize: "0.75rem",
+      fontFamily: "",
+    },
     button: {
       fontFamily: "",
       fontSize: "16px",
       fontWeight: 400,
       color: GLOBAL_WHITE,
+    },
+  },
+  components: {
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          color: GLOBAL_GRAY,
+          backgroundColor: "#e4e3e3",
+          fontWeight: "600",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: () => ({
+          "&:hover": {
+            opacity: 0.8,
+            // backgroundColor: GLOBAL_RED,
+          },
+        }),
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
     },
   },
 });
