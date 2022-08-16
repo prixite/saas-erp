@@ -116,13 +116,11 @@
 
 
         {% url "html:logout" as logout_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == logout_url %}active{% endif %}"
           href="{{ logout_url }}"
           >Logout</a
         >
-        {% endif %}
 
       </div>
     </div>
