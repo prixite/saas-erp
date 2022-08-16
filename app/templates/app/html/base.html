@@ -38,67 +38,92 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         {% url "html:home" as home_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == home_url %}active{% endif %}"
           href="{{ home_url }}"
           >Home</a
         >
+        {% endif %}
 
         {% url "html:users" as users_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == users_url %}active{% endif %}"
           href="{{ users_url }}"
           >Users</a
         >
+        {% endif %}
+
 
         {% url "html:employees" as employees_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == employees_url %}active{% endif %}"
           href="{{ employees_url }}"
           >Employees</a
         >
+        {% endif %}
+
 
         {% url "html:payroll" as payroll_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == payroll_url %}active{% endif %}"
           href="{{ payroll_url }}"
           >Payroll</a
         >
+        {% endif %}
 
         {% url "html:inventory" as inventory_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == inventory_url %}active{% endif %}"
           href="{{ inventory_url }}"
           >Inventory</a
         >
+        {% endif %}
+
 
         {% url "html:settings" as settings_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == settings_url %}active{% endif %}"
           href="{{ settings_url }}"
           >Settings</a
         >
+        {% endif %}
+
 
         {% url "html:organizations-manage" as organization_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == organization_url %}active{% endif %}"
           href="{{ organization_url }}"
           >Organization</a
         >
+        {% endif %}
+
 
         {% url "html:account" as account_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == account_url %}active{% endif %}"
           href="{{ account_url }}"
           >Account</a
         >
+        {% endif %}
+
 
         {% url "html:logout" as logout_url %}
+        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == logout_url %}active{% endif %}"
           href="{{ logout_url }}"
           >Logout</a
         >
+        {% endif %}
+
       </div>
     </div>
   </div>
