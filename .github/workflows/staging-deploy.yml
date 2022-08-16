@@ -34,7 +34,7 @@ jobs:
           SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
 
       - name: Pull the latest code to the staging environment
-        run: ssh staging 'cd saas-erp && git pull'
+        run: ssh staging 'cd saas-erp && git pull origin'
 
       - name: Start containers
         run: |
