@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres:13.4
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=saas-erp
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ./.env
+    environment:
+      - DATABASE_URL=postgres://postgres:secret@db/saas-erp
+    container_name: saas-erp
+    command: ./docker/scripts/run-gunicorn
+    volumes:
+      - .:/opt/code
+      - static_volume:/opt/code/static
+      - shm:/dev/shm
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: staging.Dockerfile
+    restart: always
+    ports:
+      - 8002:80
+    volumes:
+      - static_volume:/opt/code/static
+      - shm:/dev/shm
+    depends_on:
+      - app
+
+volumes:
+  db_data:
+  static_volume:
+  shm:
