@@ -1,0 +1,45 @@
+name: deploy-to-staging
+on:
+  push:
+    branches:
+      # When someone push to `master` branch
+      - master
+
+jobs:
+  pre-commit_and_test:
+    uses: ./.github/workflows/ci.yml
+  deploy:
+    concurrency:
+      group: ${{ github.ref }}
+    needs: pre-commit_and_test
+    name: "Deploy to staging"
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+
+      - name: Pull the latest code to the staging environment
+        run: ssh staging 'cd saas-erp && git pull'
+
+      - name: Start containers
+        run: |
+          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml build'
+          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml up -d'
+          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app ./manage.py migrate'
+          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app npm run build'
+          ssh staging 'cd saas-erp && docker-compose -f docker-compose.staging.yml exec app ./manage.py collectstatic --noinput'
