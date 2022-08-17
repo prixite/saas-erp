@@ -6,13 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0019_alter_employee_options_remove_employee_email'),
+        ("app", "0019_alter_employee_options_remove_employee_email"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='module',
-            name='slug',
-            field=models.SlugField(choices=[('payroll', 'Payroll'), ('user', 'User'), ('employees', 'Employees'), ('inventory', 'Inventory')]),
+            model_name="module",
+            name="slug",
+            field=models.SlugField(
+                choices=[
+                    ("payroll", "Payroll"),
+                    ("user", "User"),
+                    ("employees", "Employees"),
+                    ("inventory", "Inventory"),
+                ]
+            ),
         ),
     ]
