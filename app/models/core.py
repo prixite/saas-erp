@@ -140,7 +140,13 @@ class Module(models.Model):
     - Inventory
     """
 
-    slug = models.SlugField()
+    class ModuleType(models.TextChoices):
+        PAYROLL = "payroll", "Payroll"
+        USER = "user", "User"
+        EMPLOYEES = "employees", "Employees"
+        INVENTORY = "inventory", "Inventory"
+
+    slug = models.SlugField(choices=ModuleType.choices)
     name = models.CharField(max_length=64)
     is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
