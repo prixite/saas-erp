@@ -72,3 +72,11 @@ class CompensationTestCase(BaseTestCase):
         response = self.client.get(f"/api/employees/{self.employee.id}/compensation/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class DocumentTestCase(BaseTestCase):
+    def test_document_list(self):
+        self.client.force_login(self.super_user)
+        response = self.client.get(f"/api/employees/{self.employee.id}/documents/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

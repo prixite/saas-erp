@@ -19,6 +19,7 @@ class Command(BaseCommand):
         factories.CurrencyFactory.create_batch(size=3)
         self.add_compensation_type_instances(organization)
         self.add_compenstation_schedule_instances(organization)
+        self.add_document_type_instances(organization)
 
         factories.InstituteFactory.create_batch(
             size=3,
@@ -63,5 +64,31 @@ class Command(BaseCommand):
         factories.CompensationScheduleFactory(
             name="weekly",
             is_weekly=True,
+            organization=organization,
+        )
+
+    def add_document_type_instances(self, organization):
+        factories.DocumentTypeFactory(
+            name="NDA",
+            organization=organization,
+        )
+        factories.DocumentTypeFactory(
+            name="Offer letter",
+            organization=organization,
+        )
+        factories.DocumentTypeFactory(
+            name="Experience Letter",
+            organization=organization,
+        )
+        factories.DocumentTypeFactory(
+            name="Acceptance letter",
+            organization=organization,
+        )
+        factories.DocumentTypeFactory(
+            name="Job Contract",
+            organization=organization,
+        )
+        factories.DocumentTypeFactory(
+            name="Contractor Agreement",
             organization=organization,
         )
