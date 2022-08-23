@@ -16,7 +16,6 @@ class EmployeeTestCase(BaseTestCase):
             list(response.json()[0].keys()),
             [
                 "id",
-                "name",
                 "contact_number",
                 "date_of_joining",
             ],
@@ -26,7 +25,10 @@ class EmployeeTestCase(BaseTestCase):
         self.client.force_login(self.super_user)
 
         employee_data = {
-            "name": "Waqar Ali",
+            "user": {
+                "first_name": "Waqar Ali",
+                "email": "test@email.com",
+            },
             "contact_number": "0333 869 3455",
             "nic": "23470247027420",
             "emergency_contact_number": "0234324243",
@@ -39,6 +41,7 @@ class EmployeeTestCase(BaseTestCase):
 
         response = self.client.post("/api/employees/", data=employee_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        employee_data.pop("user")
         self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
 
     def test_employee_detail(self):
@@ -50,7 +53,6 @@ class EmployeeTestCase(BaseTestCase):
             list(response.json().keys()),
             [
                 "id",
-                "name",
                 "contact_number",
                 "date_of_joining",
                 "nic",

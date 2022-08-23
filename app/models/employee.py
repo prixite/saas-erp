@@ -1,8 +1,10 @@
 from django.db import models
 
+from project.settings import AUTH_USER_MODEL
+
 
 class Employee(models.Model):
-    name = models.CharField(max_length=50)
+    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     contact_number = models.CharField(max_length=20)
     nic = models.CharField(max_length=25)
     date_of_joining = models.DateField()
@@ -15,6 +17,7 @@ class Employee(models.Model):
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     benefits = models.ManyToManyField("Benefit")
     type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
+    user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
