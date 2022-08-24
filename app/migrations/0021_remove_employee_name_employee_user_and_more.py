@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("app", "0019_alter_employee_options_remove_employee_email"),
+        ("app", "0020_alter_module_slug"),
     ]
 
     operations = [
