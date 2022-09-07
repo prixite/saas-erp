@@ -4,6 +4,7 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from app import models
+from app.views.html.employees import CreateEmployee, Employees
 from app.views.html.organizations import (
     CreateModule,
     CreateOrganization,
@@ -77,11 +78,6 @@ __all__ = [
 
 class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
-
-
-class Employees(PrivateViewMixin, TemplateView):
-    template_name = "app/html/employees.html"
-    module = "employees"
 
 
 class Payroll(PrivateViewMixin, TemplateView):

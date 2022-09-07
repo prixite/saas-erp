@@ -29,3 +29,9 @@ class OwnerForm(UserForm):
             is_default=True,
         ).first()
         return super().save()
+
+
+class EmployeeForm(ModelForm):
+    class Meta:
+        model = models.Employee
+        fields = ["contact_number", "nic", "date_of_joining"]

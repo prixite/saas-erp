@@ -25,11 +25,21 @@ class PrivateViewMixin(LoginRequiredMixin):
         return self.handle_no_permission()
 
 
-class UserMixin:
+class CurrentOrganizationMixin:
     def get_queryset(self):
         return self.model.objects.filter(
-            is_superuser=False,
             organization=self.request.user.organization,
+        )
+
+
+class UserMixin(CurrentOrganizationMixin):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                is_superuser=False,
+            )
         )
 
 
