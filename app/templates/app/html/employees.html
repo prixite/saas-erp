@@ -20,7 +20,7 @@
     <tr>
       <td><a href="{% url 'html:employees-update' employee.pk %}">{{ employee.user.email }}</a></td>
       <td>{{ employee.user.get_full_name }}</td>
-      <td><a href="{% url "html:user-modules" user.id %}">View</a></td>
+      <td><a class="btn btn-danger btn-sm" href="{% url "html:employees-delete" employee.id %}">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

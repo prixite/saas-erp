@@ -4,7 +4,7 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from app import models
-from app.views.html.employees import CreateEmployee, Employees
+from app.views.html.employees import CreateEmployee, Employees, UpdateEmployee, DeleteEmployee
 from app.views.html.organizations import (
     CreateModule,
     CreateOrganization,
@@ -46,9 +46,11 @@ __all__ = [
     "CreateRole",
     "CreateUser",
     "CreateUserModule",
+    "DeleteEmployee",
     "DeleteModule",
     "DeleteOrganization",
     "DeleteOrganizationModule",
+    "DeleteOwner",
     "DeleteUser",
     "DeleteUserModule",
     "Employees",
@@ -63,16 +65,16 @@ __all__ = [
     "Payroll",
     "Roles",
     "Settings",
+    "UpdateEmployee",
     "UpdateModule",
     "UpdateOrganization",
     "UpdateOrganizationModule",
     "UpdateOwner",
-    "DeleteOwner",
     "UpdateRole",
     "UpdateUser",
     "UpdateUserModule",
-    "Users",
     "UserModules",
+    "Users",
 ]
 
 
