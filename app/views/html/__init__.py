@@ -4,7 +4,12 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from app import models
-from app.views.html.employees import CreateEmployee, Employees, UpdateEmployee, DeleteEmployee
+from app.views.html.employees import (
+    CreateEmployee,
+    DeleteEmployee,
+    Employees,
+    UpdateEmployee,
+)
 from app.views.html.organizations import (
     CreateModule,
     CreateOrganization,
@@ -39,6 +44,7 @@ from app.views.mixins import PrivateViewMixin
 
 __all__ = [
     "Account",
+    "CreateEmployee",
     "CreateModule",
     "CreateOrganization",
     "CreateOrganizationModule",

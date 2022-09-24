@@ -1,10 +1,10 @@
 from django.db import transaction
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-from app.views.mixins import AddGetFormMixin, CurrentOrganizationMixin, PrivateViewMixin
+from app.views.mixins import CurrentOrganizationMixin, PrivateViewMixin
 
 
 class Employees(PrivateViewMixin, CurrentOrganizationMixin, ListView):
@@ -15,18 +15,19 @@ class Employees(PrivateViewMixin, CurrentOrganizationMixin, ListView):
 
 class CreateEmployee(PrivateViewMixin, CurrentOrganizationMixin, CreateView):
     model = models.Employee
-    form_class = forms.EmployeeForm
+    fields = ["contact_number", "nic", "date_of_joining"]
     template_name = "app/html/employee_form.html"
     success_url = reverse_lazy("html:employees")
     module = models.Module.ModuleType.EMPLOYEES
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(heading="Add new employee", **kwargs)
+        context = super().get_context_data(heading="Add new employee", **kwargs)
+        if "user_form" not in context:
+            context["user_form"] = forms.EmployeeUserForm(
+                request=self.request, **self.get_form_kwargs()
+            )
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
+        return context
 
     def form_valid(self, form):
         form.instance.organization = self.request.user.organization
@@ -35,16 +36,23 @@ class CreateEmployee(PrivateViewMixin, CurrentOrganizationMixin, CreateView):
 
 class UpdateEmployee(PrivateViewMixin, CurrentOrganizationMixin, UpdateView):
     model = models.Employee
-    form_class = forms.EmployeeForm
+    fields = ["contact_number", "nic", "date_of_joining"]
     template_name = "app/html/employee_form.html"
     success_url = reverse_lazy("html:employees")
     module = models.Module.ModuleType.EMPLOYEES
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(
-            heading=f"Update {self.object.get_full_name()}",
+        context = super().get_context_data(
+            heading=f"Update {self.object.user.get_full_name()}",
             **kwargs,
         )
+        if "user_form" not in context:
+            kwargs = self.get_form_kwargs()
+            kwargs["request"] = self.request
+            kwargs["instance"] = self.object.user
+            context["user_form"] = forms.EmployeeUserForm(**kwargs)
+
+        return context
 
 
 class DeleteEmployee(PrivateViewMixin, CurrentOrganizationMixin, DeleteView):
