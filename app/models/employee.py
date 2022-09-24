@@ -14,7 +14,6 @@ class Employee(models.Model):
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
-    organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     benefits = models.ManyToManyField("Benefit")
     type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
     user_allowed = models.BooleanField(default=False)

@@ -4,58 +4,55 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-from app.views.mixins import CurrentOrganizationMixin, PrivateViewMixin
+from app.views.mixins import EmployeeOrganizationMixin, PrivateViewMixin
 
 
-class Employees(PrivateViewMixin, CurrentOrganizationMixin, ListView):
+class Employees(PrivateViewMixin, EmployeeOrganizationMixin, ListView):
     template_name = "app/html/employees.html"
     model = models.Employee
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class CreateEmployee(PrivateViewMixin, CurrentOrganizationMixin, CreateView):
+class CreateEmployee(PrivateViewMixin, EmployeeOrganizationMixin, CreateView):
     model = models.Employee
-    fields = ["contact_number", "nic", "date_of_joining"]
+    form_class = forms.EmployeeForm
     template_name = "app/html/employee_form.html"
     success_url = reverse_lazy("html:employees")
     module = models.Module.ModuleType.EMPLOYEES
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(heading="Add new employee", **kwargs)
-        if "user_form" not in context:
-            context["user_form"] = forms.EmployeeUserForm(
-                request=self.request, **self.get_form_kwargs()
-            )
+        return super().get_context_data(heading="Add new employee", **kwargs)
 
-        return context
-
-    def form_valid(self, form):
-        form.instance.organization = self.request.user.organization
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
 
-class UpdateEmployee(PrivateViewMixin, CurrentOrganizationMixin, UpdateView):
+class UpdateEmployee(PrivateViewMixin, EmployeeOrganizationMixin, UpdateView):
     model = models.Employee
-    fields = ["contact_number", "nic", "date_of_joining"]
+    form_class = forms.EmployeeForm
     template_name = "app/html/employee_form.html"
     success_url = reverse_lazy("html:employees")
     module = models.Module.ModuleType.EMPLOYEES
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(
+        return super().get_context_data(
             heading=f"Update {self.object.user.get_full_name()}",
             **kwargs,
         )
-        if "user_form" not in context:
-            kwargs = self.get_form_kwargs()
-            kwargs["request"] = self.request
-            kwargs["instance"] = self.object.user
-            context["user_form"] = forms.EmployeeUserForm(**kwargs)
 
-        return context
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
 
 
-class DeleteEmployee(PrivateViewMixin, CurrentOrganizationMixin, DeleteView):
+class DeleteEmployee(PrivateViewMixin, EmployeeOrganizationMixin, DeleteView):
     model = models.Employee
     success_url = reverse_lazy("html:employees")
     template_name = "app/html/employee_confirm_delete.html"
