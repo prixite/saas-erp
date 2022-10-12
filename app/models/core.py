@@ -133,18 +133,12 @@ class UserModuleRole(models.Model):
 
 
 class Module(models.Model):
-    """
-    Currently we support following modules:
-    - Payroll
-    - Employee
-    - Inventory
-    """
-
     class ModuleType(models.TextChoices):
         PAYROLL = "payroll", "Payroll"
         USER = "user", "User"
         EMPLOYEES = "employees", "Employees"
         INVENTORY = "inventory", "Inventory"
+        SETTINGS = "settings", "Settings"
 
     slug = models.SlugField(choices=ModuleType.choices)
     name = models.CharField(max_length=64)
