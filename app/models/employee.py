@@ -9,6 +9,7 @@ class Employee(models.Model):
     nic = models.CharField(max_length=25)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
+    organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
     designation = models.CharField(max_length=50)
     manager = models.ForeignKey(
