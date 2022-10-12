@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
-from app.views.mixins import AddGetFormMixin, PrivateViewMixin, UserMixin
+from app.views.mixins import AddGetFormMixin, PrivateViewMixin, SelfMixin, UserMixin
 
 
 class Users(PrivateViewMixin, UserMixin, ListView):
@@ -42,7 +42,7 @@ class UpdateUser(PrivateViewMixin, AddGetFormMixin, UserMixin, UpdateView):
         )
 
 
-class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
+class DeleteUser(PrivateViewMixin, SelfMixin, UserMixin, DeleteView):
     model = models.User
     success_url = reverse_lazy("html:users")
     template_name = "app/html/user_confirm_delete.html"
