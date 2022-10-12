@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.utils.text import slugify
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
