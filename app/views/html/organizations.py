@@ -79,19 +79,15 @@ class Modules(PrivateViewMixin, ListView):
 
 class CreateModule(PrivateViewMixin, CreateView):
     model = models.Module
-    fields = ["name", "is_enabled"]
+    fields = ["name", "slug", "is_enabled"]
     template_name = "app/html/module_form.html"
     success_url = reverse_lazy("html:modules")
     allow_superuser = True
 
-    def form_valid(self, form):
-        form.instance.slug = slugify(form.instance.name)
-        return super().form_valid(form)
-
 
 class UpdateModule(PrivateViewMixin, UpdateView):
     model = models.Module
-    fields = ["name", "is_enabled"]
+    fields = ["name", "slug", "is_enabled"]
     template_name = "app/html/module_form.html"
     success_url = reverse_lazy("html:modules")
     allow_superuser = True
