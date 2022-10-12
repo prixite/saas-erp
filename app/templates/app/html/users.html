@@ -24,7 +24,7 @@
       <td>{{ user_obj.get_full_name }}</td>
       <td>{{ user_obj.default_role }}</td>
       <td><a href="{% url "html:user-modules" user.id %}">View</a></td>
-      
+
       {% if not user.id == user_obj.id %}
         <td><a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user_obj.id %}">Delete</a></td>
       {% endif %}
