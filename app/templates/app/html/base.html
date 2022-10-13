@@ -93,6 +93,13 @@
           >Account</a
         >
 
+        {% url "html:profile" as profile_url %}
+        <a
+          class="nav-link {% if request.path == profile_url %}active{% endif %}"
+          href="{{ profile_url }}"
+          >Profile</a
+        >
+
         {% url "html:logout" as logout_url %}
         <a
           class="nav-link {% if request.path == logout_url %}active{% endif %}"
