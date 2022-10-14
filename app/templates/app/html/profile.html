@@ -3,6 +3,6 @@
 {% block heading %}Profile{% endblock %}
 
 {% block page %}
-    {{ object.user.first_name object.user.last_name }}
-    {{ object.designation }}
+    {{ object.first_name }} {{ object.last_name }}
+    {{ object.employee.designation }}
 {% endblock %}

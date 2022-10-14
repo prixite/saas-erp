@@ -106,10 +106,8 @@ class Account(LoginRequiredMixin, TemplateView):
 
 
 class Profile(LoginRequiredMixin, DetailView):
+    model = models.User
     template_name = "app/html/profile.html"
-
-    def get_queryset(self):
-        return models.User.objects.get(id=self.request.user.id)
 
 
 class Roles(PrivateViewMixin, ListView):

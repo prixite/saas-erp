@@ -54,11 +54,7 @@ class EmployeeUserForm(UserForm):
 class EmployeeForm(ModelForm):
     class Meta:
         model = models.Employee
-        fields = [
-            "nic",
-            "contact_number",
-            "date_of_joining",
-        ]
+        fields = ["nic", "contact_number", "date_of_joining", "image"]
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request")

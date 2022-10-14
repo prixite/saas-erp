@@ -154,6 +154,9 @@ STATIC_URL = "static/"
 STATIC_ROOT = "static/"
 STATICFILES_DIRS = [BASE_DIR / "frontend/dist/"]
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = "media"
+
 EMAIL_BACKEND = env("EMAIL_BACKEND")
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
