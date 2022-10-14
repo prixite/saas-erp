@@ -31,7 +31,7 @@ env = environ.Env(
     EMAIL_USE_TLS=(bool, True),
     EMAIL_HOST_USER=(str, None),
     EMAIL_HOST_PASSWORD=(str, None),
-    DEFAULT_FROM_EMAIL=(str, "no-reply@prixite.com"),
+    DEFAULT_FROM_EMAIL=(str, "noreply@626.healthcare"),
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
