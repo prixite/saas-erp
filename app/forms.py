@@ -57,8 +57,8 @@ class EmployeeForm(ModelForm):
         fields = ["nic", "contact_number", "date_of_joining", "image"]
 
     def __init__(self, *args, **kwargs):
-        request = kwargs.pop("request")
-        self.user_form = EmployeeUserForm(request, *args, **kwargs)
+        self.request = kwargs.pop("request")
+        self.user_form = EmployeeUserForm(self.request, *args, **kwargs)
         super().__init__(*args, **kwargs)
 
     def full_clean(self):
@@ -71,4 +71,5 @@ class EmployeeForm(ModelForm):
     @transaction.atomic
     def save(self):
         self.instance.user = self.user_form.save()
+        self.instance.organization = self.request.user.organization
         return super().save()

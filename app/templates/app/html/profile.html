@@ -2,7 +2,17 @@
 
 {% block heading %}Profile{% endblock %}
 
+{% block css %}
+    <style>
+        .img{
+            width:200px;
+            height: 200px;
+        }
+    </style>
+{% endblock %}
+
 {% block page %}
-    {{ object.first_name }} {{ object.last_name }}
-    {{ object.employee.designation }}
+    <h3 class="h4 mt-5">{{ object.first_name }} {{ object.last_name }}</h3>
+    <p class="lead">{{ object.employee.designation }}</p>
+    <img src={{ object.employee.image.url }} class="rounded-circle img" alt="image"> 
 {% endblock %}
