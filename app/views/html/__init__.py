@@ -101,7 +101,7 @@ class Settings(PrivateViewMixin, TemplateView):
     module = "settings"
 
 
-class Account(PrivateViewMixin, TemplateView):
+class Account(LoginRequiredMixin, TemplateView):
     template_name = "app/html/account.html"
 
 
