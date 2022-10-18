@@ -133,6 +133,15 @@ class UserModuleRole(models.Model):
 
 
 class Module(models.Model):
+    """
+    Currently we support following modules:
+    - Payroll
+    - Employee
+    - Inventory
+    - Settings
+    - User
+    """
+
     class ModuleType(models.TextChoices):
         PAYROLL = "payroll", "Payroll"
         USER = "user", "User"
