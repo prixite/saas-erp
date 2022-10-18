@@ -12,3 +12,4 @@ venv
 package-lock.json
 .vscode/*
 .DS_Store
+static

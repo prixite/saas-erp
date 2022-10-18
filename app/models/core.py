@@ -138,6 +138,8 @@ class Module(models.Model):
     - Payroll
     - Employee
     - Inventory
+    - Settings
+    - User
     """
 
     class ModuleType(models.TextChoices):
@@ -145,6 +147,7 @@ class Module(models.Model):
         USER = "user", "User"
         EMPLOYEES = "employees", "Employees"
         INVENTORY = "inventory", "Inventory"
+        SETTINGS = "settings", "Settings"
 
     slug = models.SlugField(choices=ModuleType.choices)
     name = models.CharField(max_length=64)
