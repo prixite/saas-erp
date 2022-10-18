@@ -1,5 +1,5 @@
 import Layout from "@src/components/shared/layout";
-import { useGetEmployeesQuery } from "@src/services/employees-api";
+import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
 
 const Dashboard = () => {
   const { data, isLoading, error, isFetching, isSuccess } =
