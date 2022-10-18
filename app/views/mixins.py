@@ -55,10 +55,3 @@ class AddGetFormMixin:
             organization=self.request.user.organization,
         )
         return form
-
-
-class SelfMixin(LoginRequiredMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if self.get_object().id == request.user.id:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
