@@ -9,9 +9,9 @@ import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import * as yup from "yup";
-import BasicInformations from "@src/components/employee/employee-form/basic-informations";
-import Education from "@src/components/employee/employee-form/education";
-import Experience from "@src/components/employee/employee-form/experience";
+import BasicInformations from "./basic-informations";
+import Education from "./education";
+import Experience from "./experience";
 
 const FORM_DATA_KEY = "app_form_local_data";
 

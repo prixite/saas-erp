@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import Routes from "@src/routes/AppRoutes";
+import Routes from "@src/components/hoc/AppRoutes";
 import baseTheme from "@src/theme/base-theme";
 
 const loading = <span>Loading....</span>;

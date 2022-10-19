@@ -18,13 +18,17 @@
     </tr>
   </thead>
   <tbody>
-    {% for user in object_list %}
+    {% for user_obj in object_list %}
     <tr>
-      <td><a href="{% url 'html:users-update' user.pk %}">{{ user.email }}</a></td>
-      <td>{{ user.get_full_name }}</td>
-      <td>{{ user.default_role }}</td>
+      <td><a href="{% url 'html:users-update' user.pk %}">{{ user_obj.email }}</a></td>
+      <td>{{ user_obj.get_full_name }}</td>
+      <td>{{ user_obj.default_role }}</td>
       <td><a href="{% url "html:user-modules" user.id %}">View</a></td>
-      <td><a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user.id %}">Delete</a></td>
+
+      {% if not user.id == user_obj.id %}
+        <td><a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user_obj.id %}">Delete</a></td>
+      {% endif %}
+
     </tr>
     {% endfor %}
   </tbody>

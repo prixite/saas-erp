@@ -48,6 +48,12 @@ class DeleteUser(PrivateViewMixin, UserMixin, DeleteView):
     template_name = "app/html/user_confirm_delete.html"
     module = "user"
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().id == request.user.id:
+            return self.handle_no_permission()
+
+        return super().dispatch(request, *args, **kwargs)
+
 
 class UserModules(PrivateViewMixin, ListView):
     template_name = "app/html/user_modules.html"
