@@ -1,6 +1,6 @@
 const routes = {
   dashboard: {
-    name: "dashboard",
+    name: "Dashboard",
     path: "/react",
     component: "Dashboard",
   },

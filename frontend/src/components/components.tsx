@@ -1,5 +1,5 @@
 import Employee from "./common/presentational/employee/employee";
-import Dashboard from "./common/smart/dashboard/dashboard";
+import Dashboard from "./common/smart/dashboard/Dashboard";
 
 const allComponents = {
   Employee,

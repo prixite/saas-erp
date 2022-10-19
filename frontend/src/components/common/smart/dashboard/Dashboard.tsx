@@ -1,6 +1,6 @@
-import DashboardSkeleton from "@src/components/shared/DashboardSkeleton";
 import Layout from "@src/components/shared/layout";
 import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
+import DashboardSkeleton from "./DashboardSkeleton";
 
 const Dashboard = () => {
   const { data, isSuccess } = useGetEmployeesQuery();
