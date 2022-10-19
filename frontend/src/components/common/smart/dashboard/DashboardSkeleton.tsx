@@ -5,7 +5,7 @@ export default function DashboardSkeleton() {
   return (
     <Grid
       container
-      rowSpacing={5}
+      rowSpacing={2}
       columnSpacing={2}
       xs={12}
       sm={12}
@@ -19,7 +19,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -28,7 +32,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -37,7 +45,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -46,7 +58,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
       <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -55,7 +71,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={605}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
       <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
@@ -64,7 +84,11 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={605}
-          sx={{ backgroundColor: "#FFCDCD" }}
+          sx={{
+            backgroundColor: "#FFCDCD",
+            opacity: 0.2,
+            borderRadius: "12px",
+          }}
         />
       </Grid>
     </Grid>
