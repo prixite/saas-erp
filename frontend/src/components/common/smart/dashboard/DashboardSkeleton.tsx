@@ -19,6 +19,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -27,6 +28,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -35,6 +37,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
@@ -43,6 +46,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={242}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
       <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -51,6 +55,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={605}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
       <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
@@ -59,6 +64,7 @@ export default function DashboardSkeleton() {
           variant="rectangular"
           width={"100%"}
           height={605}
+          sx={{ backgroundColor: "#FFCDCD" }}
         />
       </Grid>
     </Grid>
