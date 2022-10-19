@@ -1,6 +1,7 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 
 const path = require("path");
+const { EnvironmentPlugin } = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -15,6 +16,14 @@ module.exports = {
     path: path.resolve(__dirname, "../dist/"),
     filename: "main.js",
   },
+  plugins: [
+    new EnvironmentPlugin({
+      "process.env.NODE_ENV": JSON.stringify("production"),
+      REACT_APP_GOOGLE_CLIENT_ID: "fake",
+      REACT_APP_LOCAL_URL: "http://localhost:8000",
+      REACT_APP_BASE_URL: "http://localhost:8000",
+    }),
+  ],
   module: {
     strictExportPresence: true,
     rules: [
