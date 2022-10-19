@@ -10,7 +10,6 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
-// import BreadCrumbs from "@src/components/shared/layout/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
 
 const drawerWidth = 240;

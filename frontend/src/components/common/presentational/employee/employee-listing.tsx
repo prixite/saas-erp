@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 // import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Grid } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import EmployeeForm from "@src/components/employee/employee-form";
+import EmployeeForm from "@src/components/common/presentational/employee/employee-form";
 import Controls from "@src/components/shared/form-controls/Controls";
 import Breadcrumbs from "@src/components/shared/layout/breadcrumbs";
 import PageHeader from "@src/components/shared/page-header";
