@@ -13,6 +13,8 @@
     "esModuleInterop": true,
   },
   "include": [
-    "frontend/src/**/*"
+    "frontend/src/**/*",
+    "frontend/src/components",
+    "frontend/src/custom.d.ts"
   ]
 }
