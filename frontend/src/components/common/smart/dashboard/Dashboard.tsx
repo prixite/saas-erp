@@ -1,6 +1,6 @@
 import Layout from "@src/components/shared/layout";
+import DashboardSkeleton from "@src/components/shared/loaders/DashboardSkeleton";
 import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
-import DashboardSkeleton from "./DashboardSkeleton";
 
 const Dashboard = () => {
   const { data, isSuccess } = useGetEmployeesQuery();
@@ -9,10 +9,12 @@ const Dashboard = () => {
       {isSuccess ? (
         <div>{data.map((item) => item.name)}</div>
       ) : (
-        <>{/* <DashboardSkeleton /> */}</>
+        <>
+          <DashboardSkeleton />
+        </>
       )}
-      {/* Keeping the Skeleton Effect visible for now! */}
-      <DashboardSkeleton />
+      {/* To Test Display Skeleton! */}
+      {/* <DashboardSkeleton /> */}
     </Layout>
   );
 };
