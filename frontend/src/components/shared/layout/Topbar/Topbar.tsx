@@ -1,4 +1,3 @@
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Divider, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -8,6 +7,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
+import bellIcon from "@src/assets/svgs/bell.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
@@ -72,7 +72,7 @@ const Topbar = (props) => {
           <Divider orientation="vertical" flexItem className="divider-cls" />
           {/* <BreadCrumbs /> */}
           <Typography
-            sx={{ flexGrow: 1, ml: "10px", mt: "20px" }}
+            sx={{ flexGrow: 1, ml: "10px", mt: "5px" }}
             color="secondary"
             variant="h2"
             component="h4"
@@ -86,7 +86,7 @@ const Topbar = (props) => {
 
           <IconButton sx={{ color: "#130F26" }}>
             <Badge badgeContent={1} color="error">
-              <NotificationsIcon />
+              <img src={bellIcon} />
             </Badge>
             <Divider orientation="vertical" flexItem sx={{ ml: "25px" }} />
           </IconButton>
