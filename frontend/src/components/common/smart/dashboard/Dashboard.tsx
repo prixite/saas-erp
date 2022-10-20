@@ -9,8 +9,10 @@ const Dashboard = () => {
       {isSuccess ? (
         <div>{data.map((item) => item.name)}</div>
       ) : (
-        <DashboardSkeleton />
+        <>{/* <DashboardSkeleton /> */}</>
       )}
+      {/* Keeping the Skeleton Effect visible for now! */}
+      <DashboardSkeleton />
     </Layout>
   );
 };
