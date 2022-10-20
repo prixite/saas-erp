@@ -2,12 +2,14 @@ import { Divider, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
 import bellIcon from "@src/assets/svgs/bell.svg";
+import lineIcon from "@src/assets/svgs/Line 7.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
@@ -72,24 +74,29 @@ const Topbar = (props) => {
           <Divider orientation="vertical" flexItem className="divider-cls" />
           {/* <BreadCrumbs /> */}
           <Typography
-            sx={{ flexGrow: 1, ml: "10px", mt: "5px" }}
+            sx={{ flexGrow: 1, ml: "10px", mt: "5px", fontWeight: "200" }}
             color="secondary"
             variant="h2"
-            component="h4"
+            component="h2"
           >
             Hey Umair
           </Typography>
-          <IconButton sx={{ color: "#130F26" }}>
-            <img src={searchIcon} />
-            <Divider orientation="vertical" flexItem sx={{ ml: "25px" }} />
-          </IconButton>
+          <Box className="search-icon-box">
+            <IconButton sx={{ color: "#130F26" }}>
+              <img src={searchIcon} />
+            </IconButton>
+            <img src={lineIcon} />
+          </Box>
 
-          <IconButton sx={{ color: "#130F26" }}>
-            <Badge badgeContent={1} color="error">
-              <img src={bellIcon} />
-            </Badge>
-            <Divider orientation="vertical" flexItem sx={{ ml: "25px" }} />
-          </IconButton>
+          <Box className="search-icon-box">
+            <IconButton sx={{ color: "#130F26" }}>
+              <Badge badgeContent={1} color="error">
+                <img src={bellIcon} />
+              </Badge>
+            </IconButton>
+            <img src={lineIcon} />
+          </Box>
+
           <IconButton sx={{ color: "#130F26" }}>
             <Avatar
               alt="loggedIn user"

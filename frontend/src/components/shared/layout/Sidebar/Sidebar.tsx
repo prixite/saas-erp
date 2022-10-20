@@ -69,40 +69,40 @@ const Sidebar = (props) => {
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-        <Divider sx={{ mt: "5px" }} />
+        <Divider sx={{ mt: "26px" }} />
         <List className="icon-lists" component="nav">
-          <ListItemButton sx={{ ml: "8px" }}>
-            <ListItemIcon>
+          <ListItemButton>
+            <ListItemIcon sx={{ ml: "8px" }}>
               <img src={sideIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
           <ListItemButton className="list-item-btn">
-            <ListItemIcon>
+            <ListItemIcon className="list-item-icon">
               <img src={bagIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
           <ListItemButton className="list-item-btn">
-            <ListItemIcon>
+            <ListItemIcon className="list-item-icon">
               <img src={userIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Employees" />
           </ListItemButton>
           <ListItemButton className="list-item-btn">
-            <ListItemIcon>
+            <ListItemIcon className="list-item-icon">
               <img src={workIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Payrool" />
           </ListItemButton>
           <ListItemButton className="list-item-btn">
-            <ListItemIcon>
+            <ListItemIcon className="list-item-icon">
               <img src={vectorIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
           </ListItemButton>
           <ListItemButton className="drawer-setting-btn">
-            <ListItemIcon>
+            <ListItemIcon sx={{ ml: "8px" }}>
               <img src={settingIcon} className="app logo" />
             </ListItemIcon>
           </ListItemButton>
