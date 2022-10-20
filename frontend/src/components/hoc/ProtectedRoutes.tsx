@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 interface props {
@@ -14,7 +14,14 @@ const ProtectedRoutes = ({ path, MatchComponent }: props) => {
       {isLoggedIn ? (
         <>
           <Routes>
-            <Route path={path} element={<MatchComponent />} />
+            <Route
+              path={path}
+              element={
+                <Suspense fallback={<h1>Loading...</h1>}>
+                  <MatchComponent />
+                </Suspense>
+              }
+            />
           </Routes>
         </>
       ) : (
