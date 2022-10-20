@@ -4,10 +4,16 @@
     height: 100vh;
     .icon-lists {
       height: 100%;
+      margin-top: 60px;
       .drawer-setting-btn {
         position: absolute;
         bottom: 20px;
         color: "red";
+        margin-left: 8px;
+      }
+      .list-item-btn {
+        margin-top: 30px;
+        margin-left: 8px;
       }
     }
   }

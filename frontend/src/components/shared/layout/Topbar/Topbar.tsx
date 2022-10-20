@@ -1,5 +1,4 @@
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
 import { Divider, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -9,6 +8,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
+import searchIcon from "@src/assets/svgs/Search.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
@@ -69,10 +69,10 @@ const Topbar = (props) => {
           >
             <img src={appIcon} className="app logo" />
           </IconButton>
-          <Divider orientation="vertical" flexItem />
+          <Divider orientation="vertical" flexItem className="divider-cls" />
           {/* <BreadCrumbs /> */}
           <Typography
-            sx={{ flexGrow: 1, ml: "10px" }}
+            sx={{ flexGrow: 1, ml: "10px", mt: "20px" }}
             color="secondary"
             variant="h2"
             component="h4"
@@ -80,15 +80,15 @@ const Topbar = (props) => {
             Hey Umair
           </Typography>
           <IconButton sx={{ color: "#130F26" }}>
-            <SearchIcon />
-            <Divider orientation="vertical" flexItem sx={{ ml: "20px" }} />
+            <img src={searchIcon} />
+            <Divider orientation="vertical" flexItem sx={{ ml: "25px" }} />
           </IconButton>
 
           <IconButton sx={{ color: "#130F26" }}>
             <Badge badgeContent={1} color="error">
               <NotificationsIcon />
             </Badge>
-            <Divider orientation="vertical" flexItem sx={{ ml: "30px" }} />
+            <Divider orientation="vertical" flexItem sx={{ ml: "25px" }} />
           </IconButton>
           <IconButton sx={{ color: "#130F26" }}>
             <Avatar

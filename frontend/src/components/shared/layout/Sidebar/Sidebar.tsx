@@ -1,10 +1,4 @@
-import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import PeopleIcon from "@mui/icons-material/People";
-import SettingsIcon from "@mui/icons-material/Settings";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -15,8 +9,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-
 import PropTypes from "prop-types";
+import sideIcon from "@src/assets/svgs/24px.svg";
+import userIcon from "@src/assets/svgs/3 User.svg";
+import bagIcon from "@src/assets/svgs/Bag.svg";
+import settingIcon from "@src/assets/svgs/Setting.svg";
+import vectorIcon from "@src/assets/svgs/Vector.svg";
+import workIcon from "@src/assets/svgs/Work.svg";
+
 import "@src/components/shared/layout/Sidebar/Sidebar.scss";
 
 const drawerWidth = 240;
@@ -69,41 +69,41 @@ const Sidebar = (props) => {
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-        <Divider />
+        <Divider sx={{ mt: "5px" }} />
         <List className="icon-lists" component="nav">
-          <ListItemButton>
+          <ListItemButton sx={{ ml: "8px" }}>
             <ListItemIcon>
-              <DashboardIcon />
+              <img src={sideIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton className="list-item-btn">
             <ListItemIcon>
-              <PeopleIcon />
+              <img src={bagIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton className="list-item-btn">
             <ListItemIcon>
-              <BusinessCenterIcon />
+              <img src={userIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Employees" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton className="list-item-btn">
             <ListItemIcon>
-              <WorkOutlineIcon />
+              <img src={workIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Payrool" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton className="list-item-btn">
             <ListItemIcon>
-              <LocalAtmIcon />
+              <img src={vectorIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
           </ListItemButton>
           <ListItemButton className="drawer-setting-btn">
             <ListItemIcon>
-              <SettingsIcon />
+              <img src={settingIcon} className="app logo" />
             </ListItemIcon>
           </ListItemButton>
         </List>
