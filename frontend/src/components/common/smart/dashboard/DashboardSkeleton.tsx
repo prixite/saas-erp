@@ -21,7 +21,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
@@ -34,7 +34,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
@@ -47,7 +47,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
@@ -60,7 +60,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
@@ -73,7 +73,7 @@ export default function DashboardSkeleton() {
           height={605}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
@@ -86,7 +86,7 @@ export default function DashboardSkeleton() {
           height={605}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.2,
+            opacity: 0.4,
             borderRadius: "12px",
           }}
         />
