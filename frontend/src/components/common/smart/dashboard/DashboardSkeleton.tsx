@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
+import "./dashboardSkeleton.scss";
 
 export default function DashboardSkeleton() {
   return (
@@ -12,6 +13,7 @@ export default function DashboardSkeleton() {
       md={12}
       lg={12}
       xl={12}
+      className={`dashboardSkeleton`}
     >
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
         <Skeleton
@@ -21,7 +23,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
@@ -34,7 +36,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
@@ -47,7 +49,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
@@ -60,7 +62,7 @@ export default function DashboardSkeleton() {
           height={242}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
@@ -73,7 +75,7 @@ export default function DashboardSkeleton() {
           height={605}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
@@ -86,7 +88,7 @@ export default function DashboardSkeleton() {
           height={605}
           sx={{
             backgroundColor: "#FFCDCD",
-            opacity: 0.4,
+            opacity: 0.2,
             borderRadius: "12px",
           }}
         />
