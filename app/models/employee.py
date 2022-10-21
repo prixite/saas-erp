@@ -16,7 +16,14 @@ class Employee(models.Model):
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
     benefits = models.ManyToManyField("Benefit")
-    type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
+    type = models.ForeignKey(
+        "EmploymentType",
+        on_delete=models.PROTECT,
+        null=True,
+    )
+
+    image = models.ImageField(upload_to="profile", null=True)
+
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

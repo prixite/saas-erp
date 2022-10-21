@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from app import models
@@ -103,6 +103,11 @@ class Settings(PrivateViewMixin, TemplateView):
 
 class Account(LoginRequiredMixin, TemplateView):
     template_name = "app/html/account.html"
+
+
+class Profile(LoginRequiredMixin, DetailView):
+    model = models.User
+    template_name = "app/html/profile.html"
 
 
 class Roles(PrivateViewMixin, ListView):
