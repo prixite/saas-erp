@@ -1,5 +1,7 @@
 import Layout from "@src/components/shared/layout";
-import DashboardSkeleton from "@src/components/shared/loaders/DashboardSkeleton";
+import DashboardSkeleton from "@src/components/shared/loaders/dashboardSkeleton/dashboardSkeleton";
+import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
+
 import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
 
 const Dashboard = () => {
@@ -11,6 +13,7 @@ const Dashboard = () => {
       ) : (
         <>
           <DashboardSkeleton />
+          <RowSkeletonCard />
         </>
       )}
       {/* To Test Display Skeleton! */}
