@@ -1,25 +1,35 @@
 from django.db import models
 
+from project.settings import AUTH_USER_MODEL
+
 
 class Employee(models.Model):
-    name = models.CharField(max_length=50)
+    user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     contact_number = models.CharField(max_length=20)
     nic = models.CharField(max_length=25)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
+    organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
     designation = models.CharField(max_length=50)
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
-    organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     benefits = models.ManyToManyField("Benefit")
-    type = models.ForeignKey("EmploymentType", on_delete=models.PROTECT, null=True)
+    type = models.ForeignKey(
+        "EmploymentType",
+        on_delete=models.PROTECT,
+        null=True,
+    )
+
+    image = models.ImageField(upload_to="profile", null=True)
+
+    user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.name
+        return self.user.get_full_name()
 
     class Meta:
         ordering = ["-id"]

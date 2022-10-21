@@ -1,9 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from app import models
+from app.views.html.employees import (
+    CreateEmployee,
+    DeleteEmployee,
+    Employees,
+    UpdateEmployee,
+)
 from app.views.html.organizations import (
     CreateModule,
     CreateOrganization,
@@ -38,6 +44,7 @@ from app.views.mixins import PrivateViewMixin
 
 __all__ = [
     "Account",
+    "CreateEmployee",
     "CreateModule",
     "CreateOrganization",
     "CreateOrganizationModule",
@@ -45,9 +52,11 @@ __all__ = [
     "CreateRole",
     "CreateUser",
     "CreateUserModule",
+    "DeleteEmployee",
     "DeleteModule",
     "DeleteOrganization",
     "DeleteOrganizationModule",
+    "DeleteOwner",
     "DeleteUser",
     "DeleteUserModule",
     "Employees",
@@ -62,26 +71,21 @@ __all__ = [
     "Payroll",
     "Roles",
     "Settings",
+    "UpdateEmployee",
     "UpdateModule",
     "UpdateOrganization",
     "UpdateOrganizationModule",
     "UpdateOwner",
-    "DeleteOwner",
     "UpdateRole",
     "UpdateUser",
     "UpdateUserModule",
-    "Users",
     "UserModules",
+    "Users",
 ]
 
 
 class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
-
-
-class Employees(PrivateViewMixin, TemplateView):
-    template_name = "app/html/employees.html"
-    module = "employees"
 
 
 class Payroll(PrivateViewMixin, TemplateView):
@@ -97,8 +101,13 @@ class Settings(PrivateViewMixin, TemplateView):
     module = "settings"
 
 
-class Account(PrivateViewMixin, TemplateView):
+class Account(LoginRequiredMixin, TemplateView):
     template_name = "app/html/account.html"
+
+
+class Profile(LoginRequiredMixin, DetailView):
+    model = models.User
+    template_name = "app/html/profile.html"
 
 
 class Roles(PrivateViewMixin, ListView):

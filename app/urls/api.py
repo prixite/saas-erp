@@ -28,4 +28,13 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "employees/<int:pk>/documents/",
+        api.DocumentViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
 ]

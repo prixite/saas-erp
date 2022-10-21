@@ -8,19 +8,26 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         model = models.Employee
         fields = [
             "id",
-            "name",
             "contact_number",
             "date_of_joining",
         ]
 
 
+class EmployeeUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ["first_name", "email"]
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
+    user = EmployeeUserSerializer(write_only=True)
+
     class Meta:
         model = models.Employee
 
         fields = [
             "id",
-            "name",
+            "user",
             "contact_number",
             "date_of_joining",
             "nic",
@@ -30,9 +37,18 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "organization",
             "type",
             "department",
+            "image",
         ]
 
         read_only_fields = ["degrees"]
+
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+        user = models.User.objects.create(
+            username=user_data["email"],
+            first_name=user_data["first_name"],
+        )
+        return models.Employee.objects.create(user=user, **validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -45,4 +61,14 @@ class CompensationSerializer(serializers.ModelSerializer):
             "currency",
             "compensation_type",
             "compensation_schedule",
+        ]
+
+
+class DocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Document
+        fields = [
+            "name",
+            "type",
+            "document_url",
         ]

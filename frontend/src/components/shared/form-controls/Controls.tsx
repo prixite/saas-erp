@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
+import DatePicker from "@src/components/shared/form-controls/DatePicker";
 import Button from "./Button";
 import { CheckboxInput } from "./CheckboxInput";
-import DatePicker from "./DatePicker";
 import Input from "./Input";
 import { SelectDropdown } from "./SelectDropdown";
 

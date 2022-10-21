@@ -1,6 +1,7 @@
 import random
 
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -116,6 +117,20 @@ class OrganizationModule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def validate_unique(self, exclude):
+        if (
+            self.__class__.objects.filter(
+                module=self.module, organization=self.organization
+            )
+            .exclude(id=self.id)
+            .exists()
+        ):
+            raise ValidationError(
+                message="This module already exists in this organization.",
+                code="unique_together",
+            )
+        super().validate_unique(exclude)
+
 
 class UserModuleRole(models.Model):
     """
@@ -138,9 +153,18 @@ class Module(models.Model):
     - Payroll
     - Employee
     - Inventory
+    - Settings
+    - User
     """
 
-    slug = models.SlugField()
+    class ModuleType(models.TextChoices):
+        PAYROLL = "payroll", "Payroll"
+        USER = "user", "User"
+        EMPLOYEES = "employees", "Employees"
+        INVENTORY = "inventory", "Inventory"
+        SETTINGS = "settings", "Settings"
+
+    slug = models.SlugField(choices=ModuleType.choices)
     name = models.CharField(max_length=64)
     is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

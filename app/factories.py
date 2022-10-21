@@ -37,7 +37,7 @@ class OrganizationFactory(factory.django.DjangoModelFactory):
 
 
 class EmployeeFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
+    user = factory.SubFactory(factory=UserFactory)
     contact_number = factory.Faker("phone_number")
     emergency_contact_number = factory.Faker("phone_number")
     date_of_joining = factory.Faker("date")
@@ -66,7 +66,7 @@ class DepartmentFactory(factory.django.DjangoModelFactory):
         model = models.Department
 
 
-class EmploymentType(factory.django.DjangoModelFactory):
+class EmploymentTypeFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
     organization = factory.iterator(models.Organization.objects.all)
     updated_at = factory.LazyFunction(timezone.now)
@@ -133,3 +133,12 @@ class DegreeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Degree
+
+
+class DocumentTypeFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("name")
+    organization = factory.iterator(models.Organization.objects.all)
+    updated_at = factory.LazyFunction(timezone.now)
+
+    class Meta:
+        model = models.DocumentType

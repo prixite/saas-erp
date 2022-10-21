@@ -3,34 +3,26 @@
 {% block heading %}Employees{% endblock %}
 
 {% block page %}
+<div class="d-flex justify-content-end">
+  <a class="btn btn-primary end-0" href="{% url "html:employees-add" %}" role="button">Add New</a>
+</div>
+
 <table class="table">
   <thead>
     <tr>
       <th scope="col">Email</th>
       <th scope="col">Name</th>
-      <th scope="col">Department</th>
-      <th scope="col">Designation</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
+    {% for employee in object_list %}
     <tr>
-      <td>john.doe@prixite.com</td>
-      <td>John Doe</td>
-      <td>Engineering</td>
-      <td>Software Engineer</td>
+      <td><a href="{% url 'html:employees-update' employee.pk %}">{{ employee.user.email }}</a></td>
+      <td>{{ employee.user.get_full_name }}</td>
+      <td><a class="btn btn-danger btn-sm" href="{% url "html:employees-delete" employee.id %}">Delete</a></td>
     </tr>
-    <tr>
-      <td>jane.doe@prixite.com</td>
-      <td>Jane Doe</td>
-      <td>Engineering</td>
-      <td>Software Engineer</td>
-    </tr>
-    <tr>
-      <td>jonah.doe@prixite.com</td>
-      <td>Jonah Doe</td>
-      <td>Engineering</td>
-      <td>Software Engineer</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
 {% endblock %}

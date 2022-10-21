@@ -1,8 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
-import allComponents from "@src/components";
-import ROUTES from "@src/constants/routes";
-import ProtectedRoute from "@src/routes/ProtectedRoutes";
-import { objectToArray } from "@src/utils/objectToArray";
+import allComponents from "@src/components/components";
+import ProtectedRoute from "@src/components/hoc/ProtectedRoutes";
+import { objectToArray } from "@src/helpers/utils/objectToArray";
+import ROUTES from "@src/routes";
 
 const AppRoutes = () => {
   return (
