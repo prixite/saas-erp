@@ -1,5 +1,7 @@
 import Layout from "@src/components/shared/layout";
-import DashboardSkeleton from "@src/components/shared/loaders/DashboardSkeleton";
+import DashboardSkeleton from "@src/components/shared/loaders/dashboardSkeleton/DashboardSkeleton";
+import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+
 import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
 
 const Dashboard = () => {
@@ -15,6 +17,9 @@ const Dashboard = () => {
       )}
       {/* To Test Display Skeleton! */}
       {/* <DashboardSkeleton /> */}
+      {new Array(20).fill(0).map((_, index) => (
+        <RowSkeletonCard key={index} />
+      ))}
     </Layout>
   );
 };
