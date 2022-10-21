@@ -8,7 +8,7 @@ function RowSkeletonCard() {
       <Box sx={{ width: "100%" }}>
         <Skeleton
           animation="wave"
-          height={50}
+          height={90}
           sx={{
             backgroundColor: "#FFCDCD",
             opacity: 0.2,
