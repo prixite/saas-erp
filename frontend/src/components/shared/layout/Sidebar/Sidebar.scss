@@ -2,6 +2,17 @@
   .drawer-cls {
     position: relative;
     height: 100vh;
+    .toolbar-cls {
+      padding-right: 0px;
+      .css-pmywly-MuiToolbar-root {
+        padding-right: 0px;
+      }
+      .app-icon-box {
+        padding-right: 12px;
+        padding-left: 21px;
+        margin-top: 17px;
+      }
+    }
     .icon-lists {
       height: 100%;
       margin-top: 60px;

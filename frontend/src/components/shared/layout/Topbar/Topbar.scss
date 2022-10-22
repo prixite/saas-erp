@@ -2,11 +2,10 @@
   position: absolute;
   border-bottom: none;
   background-color: #f5f5f5;
-  .toolbar-cls {
-    min-height: 90px;
-    .divider-cls {
-      margin-left: 9px;
-    }
+  .appbar-toolbar-cls {
+    min-height: 80px;
+    padding: 0px;
+
     .icon-btn-cls {
       margin-top: 5px;
     }

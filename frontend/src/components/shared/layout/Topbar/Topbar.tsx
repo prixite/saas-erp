@@ -11,11 +11,10 @@ import employeeAvatar from "@src/assets/images/avatar.jpeg";
 import bellIcon from "@src/assets/svgs/bell.svg";
 import lineIcon from "@src/assets/svgs/Line 7.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
-import appIcon from "@src/assets/svgs/sidebar.svg";
 import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
 
-const drawerWidth = 240;
+const drawerWidth = 170;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -42,7 +41,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Topbar = (props) => {
-  const { open, toggleDrawer } = props;
+  const { open } = props;
   return (
     <>
       <AppBar
@@ -50,29 +49,17 @@ const Topbar = (props) => {
         elevation={0}
         position="absolute"
         open={open}
-        sx={{ borderBottom: "none" }}
+        sx={{ borderBottom: "none", left: "70px" }}
       >
         <Toolbar
           sx={{
             borderBottom: "none",
             backgroundColor: "white",
           }}
-          className="toolbar-cls"
+          className="appbar-toolbar-cls"
         >
-          <IconButton
-            edge="start"
-            color="error"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            className="icon-btn-cls"
-            sx={{
-              ...(open && { display: "none" }),
-            }}
-          >
-            <img src={appIcon} className="app logo" />
-          </IconButton>
-          <Divider orientation="vertical" flexItem className="divider-cls" />
           {/* <BreadCrumbs /> */}
+          <Divider orientation="vertical" flexItem className="divider-cls" />
           <Typography
             sx={{ flexGrow: 1, ml: "10px", mt: "5px", fontWeight: "200" }}
             color="secondary"

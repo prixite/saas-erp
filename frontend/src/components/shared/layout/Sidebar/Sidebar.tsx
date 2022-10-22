@@ -14,6 +14,7 @@ import sideIcon from "@src/assets/svgs/24px.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
 import settingIcon from "@src/assets/svgs/Setting.svg";
+import appIcon from "@src/assets/svgs/sidebar.svg";
 import vectorIcon from "@src/assets/svgs/Vector.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
 
@@ -65,11 +66,28 @@ const Sidebar = (props) => {
           }}
           className="toolbar-cls"
         >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Box className="chevron-box">
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Box>
+          <Box className="app-icon-box">
+            <IconButton
+              edge="start"
+              color="error"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              className="icon-btn-cls"
+              sx={{
+                ...(open && { display: "none" }),
+              }}
+            >
+              <img src={appIcon} className="app logo" />
+            </IconButton>
+          </Box>
         </Toolbar>
-        <Divider sx={{ mt: "26px" }} />
+
+        <Divider sx={{ mt: "16px" }} />
         <List className="icon-lists" component="nav">
           <ListItemButton>
             <ListItemIcon sx={{ ml: "8px" }}>
