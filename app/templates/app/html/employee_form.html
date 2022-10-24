@@ -4,7 +4,7 @@
 {% block heading %}{{ heading }}{% endblock %}
 
 {% block page %}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{ form.user_form|crispy }}
 	{{ form|crispy }}

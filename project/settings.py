@@ -31,7 +31,7 @@ env = environ.Env(
     EMAIL_USE_TLS=(bool, True),
     EMAIL_HOST_USER=(str, None),
     EMAIL_HOST_PASSWORD=(str, None),
-    DEFAULT_FROM_EMAIL=(str, "noreply@626.healthcare"),
+    DEFAULT_FROM_EMAIL=(str, "no-reply@prixite.com"),
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     # Internal Apps
     "app",
     # 3rd party apps
@@ -154,6 +155,9 @@ STATIC_URL = "static/"
 STATIC_ROOT = "static/"
 STATICFILES_DIRS = [BASE_DIR / "frontend/dist/"]
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = "media"
+
 EMAIL_BACKEND = env("EMAIL_BACKEND")
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
@@ -199,3 +203,6 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
+
+
+SITE_ID = 1

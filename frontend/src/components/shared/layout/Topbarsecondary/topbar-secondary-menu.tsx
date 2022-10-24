@@ -4,11 +4,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
+import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -64,7 +66,7 @@ const TopbarSecondaryMenu = () => {
   };
 
   return (
-    <div>
+    <Box className="topbar-secondary">
       <Button
         id="demo-customized-button"
         aria-controls={open ? "demo-customized-menu" : undefined}
@@ -105,7 +107,7 @@ const TopbarSecondaryMenu = () => {
           More
         </MenuItem>
       </StyledMenu>
-    </div>
+    </Box>
   );
 };
 export default TopbarSecondaryMenu;

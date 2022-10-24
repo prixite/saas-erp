@@ -11,7 +11,7 @@ import employeeAvatar from "@src/assets/images/avatar.jpeg";
 import bellIcon from "@src/assets/svgs/bell.svg";
 import lineIcon from "@src/assets/svgs/Line 7.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
-import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
+import TopbarSecondaryMenu from "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
 
 const drawerWidth = 170;
