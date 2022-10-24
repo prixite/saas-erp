@@ -95,25 +95,25 @@ const Sidebar = (props) => {
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton className="list-item-btn">
+          <ListItemButton className="list-items-btn">
             <ListItemIcon className="list-item-icon">
               <img src={bagIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
-          <ListItemButton className="list-item-btn">
+          <ListItemButton className="list-items-btn">
             <ListItemIcon className="list-item-icon">
               <img src={userIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Employees" />
           </ListItemButton>
-          <ListItemButton className="list-item-btn">
+          <ListItemButton className="list-items-btn">
             <ListItemIcon className="list-item-icon">
               <img src={workIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Payrool" />
           </ListItemButton>
-          <ListItemButton className="list-item-btn">
+          <ListItemButton className="list-items-btn">
             <ListItemIcon className="list-item-icon">
               <img src={vectorIcon} className="app logo" />
             </ListItemIcon>
