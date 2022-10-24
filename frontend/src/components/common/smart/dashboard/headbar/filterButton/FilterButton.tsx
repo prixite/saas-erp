@@ -1,5 +1,5 @@
-import TuneIcon from "@mui/icons-material/Tune";
 import { Button } from "@mui/material";
+import FilterIcon from "./FilterButtonSVG";
 
 function FilterButton() {
   return (
@@ -8,10 +8,10 @@ function FilterButton() {
         className="filter-btn"
         id="filter-btn-id"
         variant="outlined"
-        startIcon={<TuneIcon />}
+        startIcon={<FilterIcon />}
       >
         {" "}
-        <p id="filter-btn-text">Filter</p>
+        <p>Filter</p>
       </Button>
     </>
   );

@@ -33,7 +33,7 @@
 
     .css-p4kkd-MuiInputBase-root-MuiOutlinedInput-root {
       border-radius: 12px;
-      height: 42px;
+      height: 44px;
       background: #ffffff;
       border: 1px solid #e7e7e7;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
@@ -45,6 +45,7 @@
     margin-left: auto;
 
     .filter-btn {
+      text-transform: none;
       margin-right: 1rem;
       height: 44px;
       background: #ffffff;
@@ -52,6 +53,7 @@
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 12px;
       color: black;
+      padding: 12.5px 16px 12.5px 19.33px;
     }
   }
 
@@ -59,6 +61,7 @@
     margin: 5px;
 
     .create-btn {
+      text-transform: none;
       border-radius: 12px;
       width: 108px;
       height: 44px;
@@ -115,11 +118,13 @@
       justify-content: center;
 
       .filter-btn {
-        height: 42px;
+        height: 44px;
+        width: 98px;
         background: #ffffff;
         border: 1px solid #e7e7e7;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
         border-radius: 12px;
+        padding: 16px 12px;
       }
     }
 
@@ -136,6 +141,7 @@
         background: #ff2f2f;
         border-radius: 12px;
         color: white;
+        padding: 16px 12px;
       }
     }
   }
