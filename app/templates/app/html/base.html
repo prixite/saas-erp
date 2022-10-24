@@ -33,26 +33,24 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         {% url "html:home" as home_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == home_url %}active{% endif %}"
           href="{{ home_url }}"
           >Home</a
         >
-        {% endif %}
 
+        {% if 'user' in allowed_modules %}
         {% url "html:users" as users_url %}
-        {% if is_allowed %}
         <a
-          class="nav-link {% if request.path == users_url %}active{% endif %}"
+          class="nav-link {% if request.path  == users_url %}active{% endif %}"
           href="{{ users_url }}"
           >Users</a
         >
         {% endif %}
 
 
+        {% if 'employees' in allowed_modules %}
         {% url "html:employees" as employees_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == employees_url %}active{% endif %}"
           href="{{ employees_url }}"
@@ -61,8 +59,8 @@
         {% endif %}
 
 
+        {% if 'payroll' in allowed_modules %}
         {% url "html:payroll" as payroll_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == payroll_url %}active{% endif %}"
           href="{{ payroll_url }}"
@@ -70,8 +68,8 @@
         >
         {% endif %}
 
+        {% if 'inventory' in allowed_modules %}
         {% url "html:inventory" as inventory_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == inventory_url %}active{% endif %}"
           href="{{ inventory_url }}"
@@ -80,8 +78,8 @@
         {% endif %}
 
 
+        {% if 'settings' in allowed_modules %}
         {% url "html:settings" as settings_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == settings_url %}active{% endif %}"
           href="{{ settings_url }}"
@@ -89,26 +87,21 @@
         >
         {% endif %}
 
-
+        {% if user.is_superuser %}
         {% url "html:organizations-manage" as organization_url %}
-        {% if is_allowed %}
         <a
-          class="nav-link {% if request.path == organization_url %}active{% endif %}"
-          href="{{ organization_url }}"
-          >Organization</a
+        class="nav-link {% if request.path == organization_url %}active{% endif %}"
+        href="{{ organization_url }}"
+        >Organization</a
         >
         {% endif %}
 
-
         {% url "html:account" as account_url %}
-        {% if is_allowed %}
         <a
           class="nav-link {% if request.path == account_url %}active{% endif %}"
           href="{{ account_url }}"
           >Account</a
         >
-        {% endif %}
-
 
         {% url "html:profile" user.id as profile_url %}
         <a

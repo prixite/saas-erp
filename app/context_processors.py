@@ -1,16 +1,15 @@
 def accessible_modules(request):
 
-    is_allowed = False
-    module = None
+    allowed_modules = []
 
     if request.user.is_authenticated:
-        if request.user.is_superuser:
-            is_allowed = True
+        for module in request.user.member_modules:
+            allowed_modules.append(module.slug)
+        for module in request.user.admin_modules:
+            allowed_modules.append(module.slug)
+        for module in request.user.owner_modules:
+            allowed_modules.append(module.slug)
 
-        if module in [x.slug for x in request.user.member_modules]:
-            if module in [x.slug for x in request.user.admin_modules]:
-                is_allowed = True
-            if module in [x.slug for x in request.user.owner_modules]:
-                is_allowed = True
+    allowed_modules = list(set(allowed_modules))
 
-    return {"is_allowed": is_allowed}
+    return {"allowed_modules": allowed_modules}
