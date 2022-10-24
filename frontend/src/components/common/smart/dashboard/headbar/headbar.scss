@@ -51,6 +51,7 @@
       border: 1px solid #e7e7e7;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 12px;
+      color: black;
     }
   }
 
@@ -109,9 +110,12 @@
 
     .x-3 {
       margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .filter-btn {
-        height: 44px;
+        height: 42px;
         background: #ffffff;
         border: 1px solid #e7e7e7;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
@@ -121,6 +125,9 @@
 
     .x-4 {
       margin: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       .create-btn {
         border-radius: 12px;
