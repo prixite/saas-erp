@@ -1,8 +1,6 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -10,6 +8,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
+import CloseBtn from "@src/assets/images/back.png";
+import OpenBtn from "@src/assets/images/forward.png";
 import sideIcon from "@src/assets/svgs/24px.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
@@ -58,33 +58,12 @@ const Sidebar = (props) => {
         open={open}
         sx={{ border: "none" }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          className="toolbar-cls"
-        >
-          <Box className="chevron-box">
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Box>
-          <Box className="app-icon-box">
-            <IconButton
-              edge="start"
-              color="error"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              className="icon-btn-cls"
-              sx={{
-                ...(open && { display: "none" }),
-              }}
-            >
+        <Toolbar className="toolbar-cls">
+          <ListItemButton className="app-icon-box">
+            <ListItemIcon className="icon-btn-cls">
               <img src={appIcon} className="app logo" />
-            </IconButton>
-          </Box>
+            </ListItemIcon>
+          </ListItemButton>
         </Toolbar>
 
         <Divider sx={{ mt: "16px" }} />
@@ -118,6 +97,11 @@ const Sidebar = (props) => {
               <img src={vectorIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
+          </ListItemButton>
+          <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
+            <ListItemIcon sx={{ ml: "8px" }}>
+              {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}
+            </ListItemIcon>
           </ListItemButton>
           <ListItemButton className="drawer-setting-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
