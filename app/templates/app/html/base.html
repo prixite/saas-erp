@@ -48,8 +48,7 @@
         >
         {% endif %}
 
-
-        {% if 'employees' in allowed_modules %}
+        {% if 'employees' in  allowed_modules %}
         {% url "html:employees" as employees_url %}
         <a
           class="nav-link {% if request.path == employees_url %}active{% endif %}"
@@ -57,7 +56,6 @@
           >Employees</a
         >
         {% endif %}
-
 
         {% if 'payroll' in allowed_modules %}
         {% url "html:payroll" as payroll_url %}
@@ -76,7 +74,6 @@
           >Inventory</a
         >
         {% endif %}
-
 
         {% if 'settings' in allowed_modules %}
         {% url "html:settings" as settings_url %}
