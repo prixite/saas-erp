@@ -27,14 +27,11 @@ RUN pip install pip==22.1.2
 
 WORKDIR /opt/code
 
-COPY package.json package.json
-
-COPY package-lock.json package-lock.json
+COPY package*.json ./
 
 RUN npm ci
 
-COPY requirements.txt requirements.txt
-COPY requirements-dev.txt requirements-dev.txt
+COPY requirements*.txt ./
 
 RUN pip install -r requirements-dev.txt
 
