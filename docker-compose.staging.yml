@@ -10,6 +10,8 @@ services:
       - POSTGRES_DB=saas-erp
     volumes:
       - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   app:
     build:
@@ -22,7 +24,6 @@ services:
     container_name: saas-erp
     command: ./docker/scripts/run-gunicorn
     volumes:
-      - .:/opt/code
       - static_volume:/opt/code/static
       - shm:/dev/shm
     depends_on:
