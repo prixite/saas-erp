@@ -1,4 +1,6 @@
+{% load render_bundle from webpack_loader %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,9 +15,12 @@
     />
 
     <title>Sass ERP</title>
+    {% render_bundle 'main' 'css' %}
   </head>
-  <body>
+  <body data-flags="{% block data_flags %}{% endblock %}">
+    {% block body %}{% endblock %}
     <div id="container"></div>
-    <script src="{% static 'main.js' %}"></script>
+    {% block js_includes %}
+    {% endblock %}
   </body>
 </html>

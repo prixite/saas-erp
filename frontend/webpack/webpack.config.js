@@ -2,6 +2,7 @@
 
 const path = require("path");
 const { EnvironmentPlugin } = require("webpack");
+const BundleTracker = require("webpack-bundle-tracker");
 
 module.exports = {
   mode: "development",
@@ -12,9 +13,17 @@ module.exports = {
     },
     extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      name: "vendor",
+    },
+  },
   output: {
     path: path.resolve(__dirname, "../dist/"),
-    filename: "main.js",
+    publicPath: "/static/",
+    filename: "[name].[contenthash].js",
+    clean: true,
   },
   plugins: [
     new EnvironmentPlugin({
@@ -23,6 +32,7 @@ module.exports = {
       REACT_APP_LOCAL_URL: "http://localhost:8000",
       REACT_APP_BASE_URL: "http://localhost:8000",
     }),
+    new BundleTracker({ filename: "./webpack-stats.json" }),
   ],
   module: {
     strictExportPresence: true,
