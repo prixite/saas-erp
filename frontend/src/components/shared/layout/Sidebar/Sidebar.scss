@@ -20,6 +20,10 @@
     .icon-lists {
       height: 100%;
       margin-top: 60px;
+      .drawer-arrow-btn {
+        position: absolute;
+        bottom: 98px;
+      }
       .drawer-setting-btn {
         position: absolute;
         bottom: 20px;
