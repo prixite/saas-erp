@@ -1,8 +1,6 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -28,6 +26,7 @@ const Drawer = styled(MuiDrawer, {
   "& .MuiDrawer-paper": {
     position: "relative",
     whiteSpace: "nowrap",
+    overflow: "hidden",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -58,33 +57,12 @@ const Sidebar = (props) => {
         open={open}
         sx={{ border: "none" }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          className="toolbar-cls"
-        >
-          <Box className="chevron-box">
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Box>
-          <Box className="app-icon-box">
-            <IconButton
-              edge="start"
-              color="error"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              className="icon-btn-cls"
-              sx={{
-                ...(open && { display: "none" }),
-              }}
-            >
+        <Toolbar className="toolbar-cls">
+          <ListItemButton onClick={toggleDrawer} className="app-icon-box">
+            <ListItemIcon className="icon-btn-cls">
               <img src={appIcon} className="app logo" />
-            </IconButton>
-          </Box>
+            </ListItemIcon>
+          </ListItemButton>
         </Toolbar>
 
         <Divider sx={{ mt: "16px" }} />

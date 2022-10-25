@@ -14,7 +14,7 @@ import searchIcon from "@src/assets/svgs/Search.svg";
 import TopbarSecondaryMenu from "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
 
-const drawerWidth = 170;
+const drawerWidth = 169;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -49,7 +49,7 @@ const Topbar = (props) => {
         elevation={0}
         position="absolute"
         open={open}
-        sx={{ borderBottom: "none", left: "70px" }}
+        sx={{ borderBottom: "none", left: "71px" }}
       >
         <Toolbar
           sx={{
@@ -61,7 +61,7 @@ const Topbar = (props) => {
           {/* <BreadCrumbs /> */}
           <Divider orientation="vertical" flexItem className="divider-cls" />
           <Typography
-            sx={{ flexGrow: 1, ml: "10px", mt: "5px", fontWeight: "200" }}
+            sx={{ flexGrow: 1, ml: "25px", mt: "5px", fontWeight: "200" }}
             color="secondary"
             variant="h2"
             component="h2"
