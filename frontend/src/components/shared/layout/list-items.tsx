@@ -1,10 +1,10 @@
 import * as React from "react";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import BarChartIcon from "@mui/icons-material/BarChart";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import LayersIcon from "@mui/icons-material/Layers";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import PeopleIcon from "@mui/icons-material/People";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -26,31 +26,19 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <BusinessCenterIcon />
       </ListItemIcon>
       <ListItemText primary="Employees" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <WorkOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Payrool" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inventories" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Settings" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
+        <LocalAtmIcon />
       </ListItemIcon>
       <ListItemText primary="Accounts" />
     </ListItemButton>
