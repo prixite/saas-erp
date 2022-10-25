@@ -8,6 +8,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
+import CloseBtn from "@src/assets/images/back.png";
+import OpenBtn from "@src/assets/images/forward.png";
 import sideIcon from "@src/assets/svgs/24px.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
@@ -58,7 +60,7 @@ const Sidebar = (props) => {
         sx={{ border: "none" }}
       >
         <Toolbar className="toolbar-cls">
-          <ListItemButton onClick={toggleDrawer} className="app-icon-box">
+          <ListItemButton className="app-icon-box">
             <ListItemIcon className="icon-btn-cls">
               <img src={appIcon} className="app logo" />
             </ListItemIcon>
@@ -96,6 +98,11 @@ const Sidebar = (props) => {
               <img src={vectorIcon} className="app logo" />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
+          </ListItemButton>
+          <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
+            <ListItemIcon sx={{ ml: "8px" }}>
+              {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}
+            </ListItemIcon>
           </ListItemButton>
           <ListItemButton className="drawer-setting-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
