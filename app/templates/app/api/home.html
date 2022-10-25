@@ -20,7 +20,7 @@
   <body data-flags="{% block data_flags %}{% endblock %}">
     {% block body %}{% endblock %}
     <div id="container"></div>
-    {% block js_includes %}
-    {% endblock %}
+    {% block js_includes %}{% endblock %}
+    {% render_bundle 'main' 'js' %}
   </body>
 </html>
