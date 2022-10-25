@@ -77,7 +77,7 @@ const Topbar = (props) => {
 
           <Box className="search-icon-box">
             <IconButton sx={{ color: "#130F26" }}>
-              <Badge badgeContent={1} color="error">
+              <Badge badgeContent={0} color="error">
                 <img src={bellIcon} />
               </Badge>
             </IconButton>
