@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 import pathlib
 from pathlib import Path
 
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "crispy_forms",
     "crispy_bootstrap5",
+    "webpack_loader",
 ]
 
 MIDDLEWARE = [
@@ -206,3 +208,13 @@ MESSAGE_TAGS = {
 
 
 SITE_ID = 1
+
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    }
+}

@@ -38,8 +38,8 @@ class OrganizationFactory(factory.django.DjangoModelFactory):
 
 class EmployeeFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(factory=UserFactory)
-    contact_number = factory.Faker("phone_number")
-    emergency_contact_number = factory.Faker("phone_number")
+    contact_number = factory.Faker("phone_number", locale="hi_IN")
+    emergency_contact_number = factory.Faker("phone_number", locale="hi_IN")
     date_of_joining = factory.Faker("date")
     designation = factory.Faker("job")
     organization = factory.iterator(models.Organization.objects.all)
@@ -121,13 +121,14 @@ class InstituteFactory(factory.django.DjangoModelFactory):
 
 
 class DegreeFactory(factory.django.DjangoModelFactory):
-
     employee = factory.iterator(models.Employee.objects.all)
     program = factory.SubFactory(
         "app.factories.ProgramFactory",
     )
     institute = factory.iterator(models.Institute.objects.all)
-    grade = factory.Sequence(lambda x: fake.sentence(ext_word_list=dummy_grades))
+    grade = factory.Sequence(
+        lambda x: fake.sentence(nb_words=1, ext_word_list=dummy_grades)
+    )
     year = factory.Faker("date_time")
     updated_at = factory.LazyFunction(timezone.now)
 

@@ -20,15 +20,18 @@ RUN apt-get update && apt-get install -y \
     librsvg2-dev \
     g++
 
-RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 RUN pip install pip==22.1.2
 
 WORKDIR /opt/code
 
-COPY requirements.txt requirements.txt
-COPY requirements-dev.txt requirements-dev.txt
+COPY package*.json ./
+
+RUN npm ci
+
+COPY requirements*.txt ./
 
 RUN pip install -r requirements-dev.txt
 
