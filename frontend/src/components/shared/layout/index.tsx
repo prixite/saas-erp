@@ -1,29 +1,10 @@
-// import PropTypes from "prop-types";
-// import Topbar from "./Topbar";
-
-// const Layout = (props) => {
-//   const { children } = props;
-
-//   return (
-//     <div>
-//       <Topbar />
-//       <main>{children}</main>
-//     </div>
-//   );
-// };
-
-// Layout.propTypes = {
-//   children: PropTypes.node,
-// };
-
-// export default Layout;
 import * as React from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
-import Sidebar from "@src/components/shared/layout/Sidebar";
-import Topbar from "@src/components/shared/layout/Topbar";
+import Sidebar from "@src/components/shared/layout/Sidebar/Sidebar";
+import Topbar from "@src/components/shared/layout/Topbar/Topbar";
 
 const Layout = (props) => {
   const { children } = props;

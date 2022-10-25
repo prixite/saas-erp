@@ -1,18 +1,20 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
-import TopbarSecondaryMenu from "@src/components/shared/layout/topbar-secondary-menu";
+import bellIcon from "@src/assets/svgs/bell.svg";
+import lineIcon from "@src/assets/svgs/Line 7.svg";
+import searchIcon from "@src/assets/svgs/Search.svg";
+import TopbarSecondaryMenu from "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu";
+import "@src/components/shared/layout/Topbar/Topbar.scss";
 
-const drawerWidth = 240;
+const drawerWidth = 169;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -39,44 +41,49 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Topbar = (props) => {
-  const { open, toggleDrawer } = props;
+  const { open } = props;
   return (
     <>
-      <AppBar position="absolute" open={open}>
+      <AppBar
+        className="app-bar-cls"
+        elevation={0}
+        position="absolute"
+        open={open}
+        sx={{ borderBottom: "none", left: "71px" }}
+      >
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            borderBottom: "none",
+            backgroundColor: "white",
           }}
+          className="appbar-toolbar-cls"
         >
-          <IconButton
-            edge="start"
-            color="error"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: "36px",
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
           {/* <BreadCrumbs /> */}
+          <Divider orientation="vertical" flexItem className="divider-cls" />
           <Typography
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, ml: "25px", mt: "5px", fontWeight: "200" }}
             color="secondary"
             variant="h2"
-            component="h4"
+            component="h2"
           >
-            SASS ERP Dashboard
+            Hey Umair
           </Typography>
-          <IconButton sx={{ color: "#130F26" }}>
-            <SearchIcon />
-          </IconButton>
-          <IconButton sx={{ color: "#130F26" }}>
-            <Badge badgeContent={4} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Box className="search-icon-box">
+            <IconButton sx={{ color: "#130F26" }}>
+              <img src={searchIcon} />
+            </IconButton>
+            <img src={lineIcon} />
+          </Box>
+
+          <Box className="search-icon-box">
+            <IconButton sx={{ color: "#130F26" }}>
+              <Badge badgeContent={1} color="error">
+                <img src={bellIcon} />
+              </Badge>
+            </IconButton>
+            <img src={lineIcon} />
+          </Box>
+
           <IconButton sx={{ color: "#130F26" }}>
             <Avatar
               alt="loggedIn user"
