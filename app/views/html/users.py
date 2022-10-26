@@ -30,7 +30,7 @@ class CreateUser(PrivateViewMixin, AddGetFormMixin, UserMixin, CreateView):
 
 class UpdateUser(PrivateViewMixin, AddGetFormMixin, UserMixin, UpdateView):
     model = models.User
-    fields = ["email", "first_name", "last_name", "default_role"]
+    fields = ["email", "first_name", "last_name", "default_role", "image"]
     template_name = "app/html/user_form.html"
     success_url = reverse_lazy("html:users")
     module = "user"
