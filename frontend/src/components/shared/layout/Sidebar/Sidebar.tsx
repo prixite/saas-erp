@@ -75,9 +75,9 @@ const Sidebar = (props) => {
         <Divider sx={{ mt: "16px" }} />
         <List className="icon-lists" component="nav">
           <ListItemButton
-            selected={loc.pathname === "/react"}
+            selected={loc.pathname === "/react/"}
             style={{
-              backgroundColor: loc.pathname === "/react" ? "danger" : "",
+              backgroundColor: loc.pathname === "/react/" ? "danger" : "",
             }}
             onClick={() => {
               navigate("/react");
