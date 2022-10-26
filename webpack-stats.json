@@ -1,10 +1,10 @@
 {
   "status": "done",
   "assets": {
-    "main.2ee3a14afd517603290c.js": {
-      "name": "main.2ee3a14afd517603290c.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.2ee3a14afd517603290c.js",
-      "publicPath": "/static/main.2ee3a14afd517603290c.js"
+    "main.d9c28d4ceaf40c3f90f9.js": {
+      "name": "main.d9c28d4ceaf40c3f90f9.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.d9c28d4ceaf40c3f90f9.js",
+      "publicPath": "/static/main.d9c28d4ceaf40c3f90f9.js"
     },
     "4cf054fe5895e3e00f70.jpeg": {
       "name": "4cf054fe5895e3e00f70.jpeg",
@@ -21,10 +21,10 @@
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/9be80b3914aee5e3f24b.png",
       "publicPath": "/static/9be80b3914aee5e3f24b.png"
     },
-    "3608ba179a584fdd325d.svg": {
-      "name": "3608ba179a584fdd325d.svg",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/3608ba179a584fdd325d.svg",
-      "publicPath": "/static/3608ba179a584fdd325d.svg"
+    "7e9109897d55af6cef57.svg": {
+      "name": "7e9109897d55af6cef57.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/7e9109897d55af6cef57.svg",
+      "publicPath": "/static/7e9109897d55af6cef57.svg"
     },
     "f09bd541ce565254e5a1.svg": {
       "name": "f09bd541ce565254e5a1.svg",
@@ -35,6 +35,11 @@
       "name": "104d05955e8aa750c9dc.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/104d05955e8aa750c9dc.svg",
       "publicPath": "/static/104d05955e8aa750c9dc.svg"
+    },
+    "2296f537066ba080876c.svg": {
+      "name": "2296f537066ba080876c.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/2296f537066ba080876c.svg",
+      "publicPath": "/static/2296f537066ba080876c.svg"
     },
     "a502dab0946ec92af3e0.svg": {
       "name": "a502dab0946ec92af3e0.svg",
@@ -50,11 +55,6 @@
       "name": "27104733135f80c43718.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/27104733135f80c43718.svg",
       "publicPath": "/static/27104733135f80c43718.svg"
-    },
-    "77178387b6e01d0bd2e5.svg": {
-      "name": "77178387b6e01d0bd2e5.svg",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/77178387b6e01d0bd2e5.svg",
-      "publicPath": "/static/77178387b6e01d0bd2e5.svg"
     },
     "413799b3813c06e01133.svg": {
       "name": "413799b3813c06e01133.svg",
@@ -76,21 +76,16 @@
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.af919cdabc5f98003f89.js",
       "publicPath": "/static/vendor.af919cdabc5f98003f89.js"
     },
-    "main.fd6a684f5b53ed86421e.js": {
-      "name": "main.fd6a684f5b53ed86421e.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.fd6a684f5b53ed86421e.js",
-      "publicPath": "/static/main.fd6a684f5b53ed86421e.js"
-    },
-    "2296f537066ba080876c.svg": {
-      "name": "2296f537066ba080876c.svg",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/2296f537066ba080876c.svg",
-      "publicPath": "/static/2296f537066ba080876c.svg"
+    "main.fca123fa7d7d61bb408a.js": {
+      "name": "main.fca123fa7d7d61bb408a.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.fca123fa7d7d61bb408a.js",
+      "publicPath": "/static/main.fca123fa7d7d61bb408a.js"
     }
   },
   "chunks": {
     "main": [
       "vendor.af919cdabc5f98003f89.js",
-      "main.fd6a684f5b53ed86421e.js"
+      "main.d9c28d4ceaf40c3f90f9.js"
     ]
   },
   "publicPath": "/static/"
