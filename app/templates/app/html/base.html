@@ -39,47 +39,59 @@
           >Home</a
         >
 
+        {% if 'user' in allowed_modules %}
         {% url "html:users" as users_url %}
         <a
           class="nav-link {% if request.path == users_url %}active{% endif %}"
           href="{{ users_url }}"
           >Users</a
         >
+        {% endif %}
 
+        {% if 'employees' in  allowed_modules %}
         {% url "html:employees" as employees_url %}
         <a
           class="nav-link {% if request.path == employees_url %}active{% endif %}"
           href="{{ employees_url }}"
           >Employees</a
         >
+        {% endif %}
 
+        {% if 'payroll' in allowed_modules %}
         {% url "html:payroll" as payroll_url %}
         <a
           class="nav-link {% if request.path == payroll_url %}active{% endif %}"
           href="{{ payroll_url }}"
           >Payroll</a
         >
+        {% endif %}
 
+        {% if 'inventory' in allowed_modules %}
         {% url "html:inventory" as inventory_url %}
         <a
           class="nav-link {% if request.path == inventory_url %}active{% endif %}"
           href="{{ inventory_url }}"
           >Inventory</a
         >
+        {% endif %}
 
+        {% if 'settings' in allowed_modules %}
         {% url "html:settings" as settings_url %}
         <a
           class="nav-link {% if request.path == settings_url %}active{% endif %}"
           href="{{ settings_url }}"
           >Settings</a
         >
+        {% endif %}
 
+        {% if user.is_superuser %}
         {% url "html:organizations-manage" as organization_url %}
         <a
-          class="nav-link {% if request.path == organization_url %}active{% endif %}"
-          href="{{ organization_url }}"
-          >Organization</a
+        class="nav-link {% if request.path == organization_url %}active{% endif %}"
+        href="{{ organization_url }}"
+        >Organization</a
         >
+        {% endif %}
 
         {% url "html:account" as account_url %}
         <a
@@ -101,6 +113,7 @@
           href="{{ logout_url }}"
           >Logout</a
         >
+
       </div>
     </div>
   </div>
