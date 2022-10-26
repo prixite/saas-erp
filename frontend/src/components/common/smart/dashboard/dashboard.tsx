@@ -1,4 +1,5 @@
 import { Typography, Box } from "@mui/material";
+import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
 import Layout from "@src/components/shared/layout";
 import DashboardSkeleton from "@src/components/shared/loaders/dashboardSkeleton/dashboardSkeleton";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
@@ -12,7 +13,10 @@ const Dashboard = () => {
       <Box>
         <Typography variant="h1">Dashboard</Typography>
         {isSuccess ? (
-          <div>{data.map((item) => item.name)}</div>
+          <>
+            <HeadBar />
+            <div>{data.map((item) => item.name)}</div>
+          </>
         ) : (
           <>
             <DashboardSkeleton />
