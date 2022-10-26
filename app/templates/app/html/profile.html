@@ -13,16 +13,16 @@
 
 {% block page %}
     <h3 class="h4 mt-5">{{ object.first_name }} {{ object.last_name }}</h3>
-    
+
     {% if object.image %}
     <img src={{ object.image.url }} class="img-thumbnail img" alt="image">
     {% endif %}
-    
+
     {% if object.employee %}
     <p class="lead mt-3">{{ object.employee.contact_number }}</p>
     <p class="lead">{{ object.employee.designation }}</p>
     <p class="lead">{{ object.employee.nic }}</p>
     {% endif %}
-    
+
 
 {% endblock %}
