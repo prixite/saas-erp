@@ -43,7 +43,7 @@
         {% if 'user' in allowed_modules %}
         {% url "html:users" as users_url %}
         <a
-          class="nav-link {% if request.path|startswith:'/users/' %}active{% endif %}"
+          class="nav-link {% if request.path|startswith:users_url %}active{% endif %}"
           href="{{ users_url }}"
           >Users</a
         >
@@ -52,7 +52,7 @@
         {% if 'employees' in  allowed_modules %}
         {% url "html:employees" as employees_url %}
         <a
-          class="nav-link {% if request.path|startswith:'/employees/' %}active{% endif %}"
+          class="nav-link {% if request.path|startswith:employees_url %}active{% endif %}"
           href="{{ employees_url }}"
           >Employees</a
         >
@@ -86,17 +86,18 @@
         {% endif %}
 
         {% if user.is_superuser %}
-        {% url "html:organizations-manage" as organization_url %}
+        {% url "html:organizations" as organization_url %}
+        {% url "html:organizations-manage" as organization_manage_url %}
         <a
-          class="nav-link {% if request.path|startswith:'/organizations/' %}active{% endif %}"
-          href="{{ organization_url }}"
+          class="nav-link {% if request.path|startswith:organization_url %}active{% endif %}"
+          href="{{ organization_manage_url }}"
           >Organization</a
         >
         {% endif %}
 
         {% url "html:account" as account_url %}
         <a
-          class="nav-link {% if request.path|startswith:'/accounts/' %}active{% endif %}"
+          class="nav-link {% if request.path|startswith:account_url %}active{% endif %}"
           href="{{ account_url }}"
           >Account</a
         >
