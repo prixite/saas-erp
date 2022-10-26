@@ -1,7 +1,7 @@
 const routes = {
   dashboard: {
     name: "Dashboard",
-    path: "/react",
+    path: "/react/",
     component: "Dashboard",
   },
   employeeCreation: {

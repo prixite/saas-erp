@@ -80,7 +80,7 @@ const Sidebar = (props) => {
               backgroundColor: loc.pathname === "/react/" ? "danger" : "",
             }}
             onClick={() => {
-              navigate("/react");
+              navigate("/react/");
             }}
           >
             <ListItemIcon sx={{ ml: "8px" }}>
