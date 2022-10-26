@@ -37,7 +37,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
             "organization",
             "type",
             "department",
-            "image",
         ]
 
         read_only_fields = ["degrees"]
