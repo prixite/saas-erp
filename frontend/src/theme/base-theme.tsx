@@ -45,8 +45,8 @@ const baseTheme = createTheme({
     fontSize: 14,
     h1: {
       fontFamily: "",
-      fontSize: 22,
-      fontWeight: 700,
+      fontSize: 32,
+      fontWeight: 900,
     },
     h2: {
       fontFamily: "",

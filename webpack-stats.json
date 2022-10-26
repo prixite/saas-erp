@@ -1,0 +1,97 @@
+{
+  "status": "done",
+  "assets": {
+    "main.2ee3a14afd517603290c.js": {
+      "name": "main.2ee3a14afd517603290c.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.2ee3a14afd517603290c.js",
+      "publicPath": "/static/main.2ee3a14afd517603290c.js"
+    },
+    "4cf054fe5895e3e00f70.jpeg": {
+      "name": "4cf054fe5895e3e00f70.jpeg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/4cf054fe5895e3e00f70.jpeg",
+      "publicPath": "/static/4cf054fe5895e3e00f70.jpeg"
+    },
+    "ba9b714bbd81b2b8e75c.png": {
+      "name": "ba9b714bbd81b2b8e75c.png",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/ba9b714bbd81b2b8e75c.png",
+      "publicPath": "/static/ba9b714bbd81b2b8e75c.png"
+    },
+    "9be80b3914aee5e3f24b.png": {
+      "name": "9be80b3914aee5e3f24b.png",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/9be80b3914aee5e3f24b.png",
+      "publicPath": "/static/9be80b3914aee5e3f24b.png"
+    },
+    "3608ba179a584fdd325d.svg": {
+      "name": "3608ba179a584fdd325d.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/3608ba179a584fdd325d.svg",
+      "publicPath": "/static/3608ba179a584fdd325d.svg"
+    },
+    "f09bd541ce565254e5a1.svg": {
+      "name": "f09bd541ce565254e5a1.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/f09bd541ce565254e5a1.svg",
+      "publicPath": "/static/f09bd541ce565254e5a1.svg"
+    },
+    "104d05955e8aa750c9dc.svg": {
+      "name": "104d05955e8aa750c9dc.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/104d05955e8aa750c9dc.svg",
+      "publicPath": "/static/104d05955e8aa750c9dc.svg"
+    },
+    "a502dab0946ec92af3e0.svg": {
+      "name": "a502dab0946ec92af3e0.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/a502dab0946ec92af3e0.svg",
+      "publicPath": "/static/a502dab0946ec92af3e0.svg"
+    },
+    "aecfb6104fd75320d41c.svg": {
+      "name": "aecfb6104fd75320d41c.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/aecfb6104fd75320d41c.svg",
+      "publicPath": "/static/aecfb6104fd75320d41c.svg"
+    },
+    "27104733135f80c43718.svg": {
+      "name": "27104733135f80c43718.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/27104733135f80c43718.svg",
+      "publicPath": "/static/27104733135f80c43718.svg"
+    },
+    "77178387b6e01d0bd2e5.svg": {
+      "name": "77178387b6e01d0bd2e5.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/77178387b6e01d0bd2e5.svg",
+      "publicPath": "/static/77178387b6e01d0bd2e5.svg"
+    },
+    "413799b3813c06e01133.svg": {
+      "name": "413799b3813c06e01133.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/413799b3813c06e01133.svg",
+      "publicPath": "/static/413799b3813c06e01133.svg"
+    },
+    "5d278c1257430c41a373.svg": {
+      "name": "5d278c1257430c41a373.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/5d278c1257430c41a373.svg",
+      "publicPath": "/static/5d278c1257430c41a373.svg"
+    },
+    "b10aac52d7cdeef97a26.svg": {
+      "name": "b10aac52d7cdeef97a26.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/b10aac52d7cdeef97a26.svg",
+      "publicPath": "/static/b10aac52d7cdeef97a26.svg"
+    },
+    "vendor.af919cdabc5f98003f89.js": {
+      "name": "vendor.af919cdabc5f98003f89.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.af919cdabc5f98003f89.js",
+      "publicPath": "/static/vendor.af919cdabc5f98003f89.js"
+    },
+    "main.fd6a684f5b53ed86421e.js": {
+      "name": "main.fd6a684f5b53ed86421e.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.fd6a684f5b53ed86421e.js",
+      "publicPath": "/static/main.fd6a684f5b53ed86421e.js"
+    },
+    "2296f537066ba080876c.svg": {
+      "name": "2296f537066ba080876c.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/2296f537066ba080876c.svg",
+      "publicPath": "/static/2296f537066ba080876c.svg"
+    }
+  },
+  "chunks": {
+    "main": [
+      "vendor.af919cdabc5f98003f89.js",
+      "main.fd6a684f5b53ed86421e.js"
+    ]
+  },
+  "publicPath": "/static/"
+}

@@ -9,6 +9,21 @@ const routes = {
     path: "/react/employee",
     component: "Employee",
   },
+  accounts: {
+    name: "Accounts",
+    path: "/react/accounts",
+    component: "Accounts",
+  },
+  users: {
+    name: "Users",
+    path: "/react/users",
+    component: "Users",
+  },
+  payroll: {
+    name: "Payroll",
+    path: "/react/payroll",
+    component: "Payroll",
+  },
 };
 
 export default routes;
