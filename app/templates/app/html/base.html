@@ -42,7 +42,7 @@
         {% if 'user' in allowed_modules %}
         {% url "html:users" as users_url %}
         <a
-          class="nav-link {% if request.path  == users_url %}active{% endif %}"
+          class="nav-link {% if request.path == users_url %}active{% endif %}"
           href="{{ users_url }}"
           >Users</a
         >
