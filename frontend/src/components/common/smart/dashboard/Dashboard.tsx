@@ -1,4 +1,5 @@
 import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
+import DataGridTable from "@src/components/shared/dataGrid/DataGridTable";
 import Layout from "@src/components/shared/layout";
 import DashboardSkeleton from "@src/components/shared/loaders/dashboardSkeleton/dashboardSkeleton";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
@@ -12,6 +13,7 @@ const Dashboard = () => {
       {isSuccess ? (
         <>
           <HeadBar />
+          <DataGridTable />
           <div>{data.map((item) => item.name)}</div>
         </>
       ) : (
