@@ -320,12 +320,32 @@
       "name": "9512dc2e6658f0aced2a.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/9512dc2e6658f0aced2a.svg",
       "publicPath": "/static/9512dc2e6658f0aced2a.svg"
+    },
+    "main.4ab91956c4c1d4ae543a.js": {
+      "name": "main.4ab91956c4c1d4ae543a.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.4ab91956c4c1d4ae543a.js",
+      "publicPath": "/static/main.4ab91956c4c1d4ae543a.js"
+    },
+    "main.24ae0d33c8e07acadc0a.js": {
+      "name": "main.24ae0d33c8e07acadc0a.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.24ae0d33c8e07acadc0a.js",
+      "publicPath": "/static/main.24ae0d33c8e07acadc0a.js"
+    },
+    "main.c383e44cbf2e5f2ad816.js": {
+      "name": "main.c383e44cbf2e5f2ad816.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.c383e44cbf2e5f2ad816.js",
+      "publicPath": "/static/main.c383e44cbf2e5f2ad816.js"
+    },
+    "main.b1890bd9d6be46ac3a7e.js": {
+      "name": "main.b1890bd9d6be46ac3a7e.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.b1890bd9d6be46ac3a7e.js",
+      "publicPath": "/static/main.b1890bd9d6be46ac3a7e.js"
     }
   },
   "chunks": {
     "main": [
       "vendor.b79bf51ffdea258fd46e.js",
-      "main.65cf89f7606f07a3436d.js"
+      "main.b1890bd9d6be46ac3a7e.js"
     ]
   },
   "publicPath": "/static/",
