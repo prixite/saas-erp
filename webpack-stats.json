@@ -1,10 +1,10 @@
 {
   "status": "done",
   "assets": {
-    "main.d9c28d4ceaf40c3f90f9.js": {
-      "name": "main.d9c28d4ceaf40c3f90f9.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.d9c28d4ceaf40c3f90f9.js",
-      "publicPath": "/static/main.d9c28d4ceaf40c3f90f9.js"
+    "main.23810c899c8cbf202e29.js": {
+      "name": "main.23810c899c8cbf202e29.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.23810c899c8cbf202e29.js",
+      "publicPath": "/static/main.23810c899c8cbf202e29.js"
     },
     "4cf054fe5895e3e00f70.jpeg": {
       "name": "4cf054fe5895e3e00f70.jpeg",
@@ -26,10 +26,20 @@
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/7e9109897d55af6cef57.svg",
       "publicPath": "/static/7e9109897d55af6cef57.svg"
     },
+    "7c96b834840ca9fb12e8.svg": {
+      "name": "7c96b834840ca9fb12e8.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/7c96b834840ca9fb12e8.svg",
+      "publicPath": "/static/7c96b834840ca9fb12e8.svg"
+    },
     "f09bd541ce565254e5a1.svg": {
       "name": "f09bd541ce565254e5a1.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/f09bd541ce565254e5a1.svg",
       "publicPath": "/static/f09bd541ce565254e5a1.svg"
+    },
+    "420c2b5ca600176c7320.svg": {
+      "name": "420c2b5ca600176c7320.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/420c2b5ca600176c7320.svg",
+      "publicPath": "/static/420c2b5ca600176c7320.svg"
     },
     "104d05955e8aa750c9dc.svg": {
       "name": "104d05955e8aa750c9dc.svg",
@@ -40,6 +50,11 @@
       "name": "2296f537066ba080876c.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/2296f537066ba080876c.svg",
       "publicPath": "/static/2296f537066ba080876c.svg"
+    },
+    "109bbd638c0325273d7d.svg": {
+      "name": "109bbd638c0325273d7d.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/109bbd638c0325273d7d.svg",
+      "publicPath": "/static/109bbd638c0325273d7d.svg"
     },
     "a502dab0946ec92af3e0.svg": {
       "name": "a502dab0946ec92af3e0.svg",
@@ -61,6 +76,11 @@
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/413799b3813c06e01133.svg",
       "publicPath": "/static/413799b3813c06e01133.svg"
     },
+    "e42c6609b776d3454999.svg": {
+      "name": "e42c6609b776d3454999.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/e42c6609b776d3454999.svg",
+      "publicPath": "/static/e42c6609b776d3454999.svg"
+    },
     "5d278c1257430c41a373.svg": {
       "name": "5d278c1257430c41a373.svg",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/5d278c1257430c41a373.svg",
@@ -71,42 +91,244 @@
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/b10aac52d7cdeef97a26.svg",
       "publicPath": "/static/b10aac52d7cdeef97a26.svg"
     },
+    "6f0070c3f9bb4a7afd3b.svg": {
+      "name": "6f0070c3f9bb4a7afd3b.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/6f0070c3f9bb4a7afd3b.svg",
+      "publicPath": "/static/6f0070c3f9bb4a7afd3b.svg"
+    },
     "vendor.af919cdabc5f98003f89.js": {
       "name": "vendor.af919cdabc5f98003f89.js",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.af919cdabc5f98003f89.js",
       "publicPath": "/static/vendor.af919cdabc5f98003f89.js"
     },
-    "main.fca123fa7d7d61bb408a.js": {
-      "name": "main.fca123fa7d7d61bb408a.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.fca123fa7d7d61bb408a.js",
-      "publicPath": "/static/main.fca123fa7d7d61bb408a.js"
+    "main.e157207c3fe8e482a54b.js": {
+      "name": "main.e157207c3fe8e482a54b.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.e157207c3fe8e482a54b.js",
+      "publicPath": "/static/main.e157207c3fe8e482a54b.js"
     },
-    "main.ddab5127d822071b5c3b.js": {
-      "name": "main.ddab5127d822071b5c3b.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.ddab5127d822071b5c3b.js",
-      "publicPath": "/static/main.ddab5127d822071b5c3b.js"
+    "main.0232f16e0edace1b0266.js": {
+      "name": "main.0232f16e0edace1b0266.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.0232f16e0edace1b0266.js",
+      "publicPath": "/static/main.0232f16e0edace1b0266.js"
     },
-    "main.102a5f815120b7f721f7.js": {
-      "name": "main.102a5f815120b7f721f7.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.102a5f815120b7f721f7.js",
-      "publicPath": "/static/main.102a5f815120b7f721f7.js"
+    "main.da2508815bfd16b0e5a4.js": {
+      "name": "main.da2508815bfd16b0e5a4.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.da2508815bfd16b0e5a4.js",
+      "publicPath": "/static/main.da2508815bfd16b0e5a4.js"
     },
-    "main.7af2637b29ba9e57c081.js": {
-      "name": "main.7af2637b29ba9e57c081.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.7af2637b29ba9e57c081.js",
-      "publicPath": "/static/main.7af2637b29ba9e57c081.js"
+    "main.499fca1c6ba8000c77df.js": {
+      "name": "main.499fca1c6ba8000c77df.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.499fca1c6ba8000c77df.js",
+      "publicPath": "/static/main.499fca1c6ba8000c77df.js"
     },
-    "main.fa9675b03d7e6d73f863.js": {
-      "name": "main.fa9675b03d7e6d73f863.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.fa9675b03d7e6d73f863.js",
-      "publicPath": "/static/main.fa9675b03d7e6d73f863.js"
+    "main.73460d92fc77e0cdc3f1.js": {
+      "name": "main.73460d92fc77e0cdc3f1.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.73460d92fc77e0cdc3f1.js",
+      "publicPath": "/static/main.73460d92fc77e0cdc3f1.js"
+    },
+    "main.e351b36f80d4a50f53dc.js": {
+      "name": "main.e351b36f80d4a50f53dc.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.e351b36f80d4a50f53dc.js",
+      "publicPath": "/static/main.e351b36f80d4a50f53dc.js"
+    },
+    "main.d8ae5fbfd11f8bc37b38.js": {
+      "name": "main.d8ae5fbfd11f8bc37b38.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.d8ae5fbfd11f8bc37b38.js",
+      "publicPath": "/static/main.d8ae5fbfd11f8bc37b38.js"
+    },
+    "main.c31e4494729a0fa4b565.js": {
+      "name": "main.c31e4494729a0fa4b565.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.c31e4494729a0fa4b565.js",
+      "publicPath": "/static/main.c31e4494729a0fa4b565.js"
+    },
+    "vendor.b79bf51ffdea258fd46e.js": {
+      "name": "vendor.b79bf51ffdea258fd46e.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.b79bf51ffdea258fd46e.js",
+      "publicPath": "/static/vendor.b79bf51ffdea258fd46e.js"
+    },
+    "main.5c98e3bdc2d28e70a91f.js": {
+      "name": "main.5c98e3bdc2d28e70a91f.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.5c98e3bdc2d28e70a91f.js",
+      "publicPath": "/static/main.5c98e3bdc2d28e70a91f.js"
+    },
+    "main.e125f590b4bf833323a3.js": {
+      "name": "main.e125f590b4bf833323a3.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.e125f590b4bf833323a3.js",
+      "publicPath": "/static/main.e125f590b4bf833323a3.js"
+    },
+    "main.6bbc5b093abd2412ff17.js": {
+      "name": "main.6bbc5b093abd2412ff17.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.6bbc5b093abd2412ff17.js",
+      "publicPath": "/static/main.6bbc5b093abd2412ff17.js"
+    },
+    "main.34680541e08c182f3003.js": {
+      "name": "main.34680541e08c182f3003.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.34680541e08c182f3003.js",
+      "publicPath": "/static/main.34680541e08c182f3003.js"
+    },
+    "main.a5ab58c67820c140a01f.js": {
+      "name": "main.a5ab58c67820c140a01f.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.a5ab58c67820c140a01f.js",
+      "publicPath": "/static/main.a5ab58c67820c140a01f.js"
+    },
+    "main.b81ae1491026f6e9bb9d.js": {
+      "name": "main.b81ae1491026f6e9bb9d.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.b81ae1491026f6e9bb9d.js",
+      "publicPath": "/static/main.b81ae1491026f6e9bb9d.js"
+    },
+    "main.b2697021a2cdc31b6e06.js": {
+      "name": "main.b2697021a2cdc31b6e06.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.b2697021a2cdc31b6e06.js",
+      "publicPath": "/static/main.b2697021a2cdc31b6e06.js"
+    },
+    "main.1577981d220828296bf8.js": {
+      "name": "main.1577981d220828296bf8.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.1577981d220828296bf8.js",
+      "publicPath": "/static/main.1577981d220828296bf8.js"
+    },
+    "main.15d9b19d6bc4ba3e2f8f.js": {
+      "name": "main.15d9b19d6bc4ba3e2f8f.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.15d9b19d6bc4ba3e2f8f.js",
+      "publicPath": "/static/main.15d9b19d6bc4ba3e2f8f.js"
+    },
+    "main.c4c0e0e5fe12dd128495.js": {
+      "name": "main.c4c0e0e5fe12dd128495.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.c4c0e0e5fe12dd128495.js",
+      "publicPath": "/static/main.c4c0e0e5fe12dd128495.js"
+    },
+    "main.c36595d45df92f6f2c81.js": {
+      "name": "main.c36595d45df92f6f2c81.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.c36595d45df92f6f2c81.js",
+      "publicPath": "/static/main.c36595d45df92f6f2c81.js"
+    },
+    "main.f6c25718b6ad87881c1a.js": {
+      "name": "main.f6c25718b6ad87881c1a.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.f6c25718b6ad87881c1a.js",
+      "publicPath": "/static/main.f6c25718b6ad87881c1a.js"
+    },
+    "main.a45b0314d9262cf3249b.js": {
+      "name": "main.a45b0314d9262cf3249b.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.a45b0314d9262cf3249b.js",
+      "publicPath": "/static/main.a45b0314d9262cf3249b.js"
+    },
+    "main.6114e719cbf700755dde.js": {
+      "name": "main.6114e719cbf700755dde.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.6114e719cbf700755dde.js",
+      "publicPath": "/static/main.6114e719cbf700755dde.js"
+    },
+    "main.2d10f5fe0d9556efebf1.js": {
+      "name": "main.2d10f5fe0d9556efebf1.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.2d10f5fe0d9556efebf1.js",
+      "publicPath": "/static/main.2d10f5fe0d9556efebf1.js"
+    },
+    "vendor.4841f59887db3d6ec2f1.js": {
+      "name": "vendor.4841f59887db3d6ec2f1.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.4841f59887db3d6ec2f1.js",
+      "publicPath": "/static/vendor.4841f59887db3d6ec2f1.js"
+    },
+    "main.2fdd2c7773127f3007e1.js": {
+      "name": "main.2fdd2c7773127f3007e1.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.2fdd2c7773127f3007e1.js",
+      "publicPath": "/static/main.2fdd2c7773127f3007e1.js"
+    },
+    "main.ed86a030670ed270b43c.js": {
+      "name": "main.ed86a030670ed270b43c.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.ed86a030670ed270b43c.js",
+      "publicPath": "/static/main.ed86a030670ed270b43c.js"
+    },
+    "main.17ae38fd1191aedbb9d3.js": {
+      "name": "main.17ae38fd1191aedbb9d3.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.17ae38fd1191aedbb9d3.js",
+      "publicPath": "/static/main.17ae38fd1191aedbb9d3.js"
+    },
+    "main.abe7459e1e4e72c7072b.js": {
+      "name": "main.abe7459e1e4e72c7072b.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.abe7459e1e4e72c7072b.js",
+      "publicPath": "/static/main.abe7459e1e4e72c7072b.js"
+    },
+    "main.210b80d4a6d3f3589410.js": {
+      "name": "main.210b80d4a6d3f3589410.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.210b80d4a6d3f3589410.js",
+      "publicPath": "/static/main.210b80d4a6d3f3589410.js"
+    },
+    "main.596921541e50f8b5245e.js": {
+      "name": "main.596921541e50f8b5245e.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.596921541e50f8b5245e.js",
+      "publicPath": "/static/main.596921541e50f8b5245e.js"
+    },
+    "main.9fde01aaa84fb8dde609.js": {
+      "name": "main.9fde01aaa84fb8dde609.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.9fde01aaa84fb8dde609.js",
+      "publicPath": "/static/main.9fde01aaa84fb8dde609.js"
+    },
+    "main.3fd717f58bef93476eee.js": {
+      "name": "main.3fd717f58bef93476eee.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.3fd717f58bef93476eee.js",
+      "publicPath": "/static/main.3fd717f58bef93476eee.js"
+    },
+    "main.bb9ddf58330cb9b9885c.js": {
+      "name": "main.bb9ddf58330cb9b9885c.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.bb9ddf58330cb9b9885c.js",
+      "publicPath": "/static/main.bb9ddf58330cb9b9885c.js"
+    },
+    "main.6462e3bcb1d034a3481b.js": {
+      "name": "main.6462e3bcb1d034a3481b.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.6462e3bcb1d034a3481b.js",
+      "publicPath": "/static/main.6462e3bcb1d034a3481b.js"
+    },
+    "main.515408838685ac3b80cb.js": {
+      "name": "main.515408838685ac3b80cb.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.515408838685ac3b80cb.js",
+      "publicPath": "/static/main.515408838685ac3b80cb.js"
+    },
+    "main.8ecf50628b3098fa7816.js": {
+      "name": "main.8ecf50628b3098fa7816.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.8ecf50628b3098fa7816.js",
+      "publicPath": "/static/main.8ecf50628b3098fa7816.js"
+    },
+    "main.cc3be9fd8ddcb1f495cf.js": {
+      "name": "main.cc3be9fd8ddcb1f495cf.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.cc3be9fd8ddcb1f495cf.js",
+      "publicPath": "/static/main.cc3be9fd8ddcb1f495cf.js"
+    },
+    "main.65cf89f7606f07a3436d.js": {
+      "name": "main.65cf89f7606f07a3436d.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.65cf89f7606f07a3436d.js",
+      "publicPath": "/static/main.65cf89f7606f07a3436d.js"
+    },
+    "1aab77dfae591003d801.svg": {
+      "name": "1aab77dfae591003d801.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/1aab77dfae591003d801.svg",
+      "publicPath": "/static/1aab77dfae591003d801.svg"
+    },
+    "6c2dbaf93d6ea336a55a.svg": {
+      "name": "6c2dbaf93d6ea336a55a.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/6c2dbaf93d6ea336a55a.svg",
+      "publicPath": "/static/6c2dbaf93d6ea336a55a.svg"
+    },
+    "2723c62540ec06a18511.svg": {
+      "name": "2723c62540ec06a18511.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/2723c62540ec06a18511.svg",
+      "publicPath": "/static/2723c62540ec06a18511.svg"
+    },
+    "d9d3a9d7340a39486eb7.svg": {
+      "name": "d9d3a9d7340a39486eb7.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/d9d3a9d7340a39486eb7.svg",
+      "publicPath": "/static/d9d3a9d7340a39486eb7.svg"
+    },
+    "9512dc2e6658f0aced2a.svg": {
+      "name": "9512dc2e6658f0aced2a.svg",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/9512dc2e6658f0aced2a.svg",
+      "publicPath": "/static/9512dc2e6658f0aced2a.svg"
     }
   },
   "chunks": {
     "main": [
-      "vendor.af919cdabc5f98003f89.js",
-      "main.fa9675b03d7e6d73f863.js"
+      "vendor.b79bf51ffdea258fd46e.js",
+      "main.65cf89f7606f07a3436d.js"
     ]
   },
-  "publicPath": "/static/"
+  "publicPath": "/static/",
+  "error": "ModuleBuildError",
+  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/faisal/Desktop/saas-erp/frontend/src/components/common/smart/dashboard/dashboard.tsx: Unexpected token (18:8)\n\n  16 |           //   <div>{data.map((item) => item.name)}</div>\n  17 |           // </>\n> 18 |         ) : (\n     |         ^\n  19 |           <>\n  20 |             <DashboardSkeleton />\n  21 |             <RowSkeletonCard />\n    at instantiate (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:72:32)\n    at constructor (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:367:12)\n    at TypeScriptParserMixin.raise (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:3706:19)\n    at TypeScriptParserMixin.unexpected (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:3744:16)\n    at TypeScriptParserMixin.checkExpressionErrors (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:4252:12)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12556:12)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10926:20)\n    at TypeScriptParserMixin.parseExpressionBase (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12454:23)\n    at /home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:39\n    at TypeScriptParserMixin.allowInAnd (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14536:12)\n    at TypeScriptParserMixin.parseExpression (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:17)\n    at TypeScriptParserMixin.jsxParseExpressionContainer (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8014:31)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8113:36)\n    at TypeScriptParserMixin.jsxParseElement (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8165:17)\n    at TypeScriptParserMixin.parseExprAtom (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8179:19)\n    at TypeScriptParserMixin.parseExprSubscripts (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12842:23)\n    at TypeScriptParserMixin.parseUpdate (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12822:21)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12793:23)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10996:20)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12588:61)\n    at TypeScriptParserMixin.parseExprOps (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12594:23)\n    at TypeScriptParserMixin.parseMaybeConditional (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12565:23)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12517:21)\n    at /home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10913:39\n    at TypeScriptParserMixin.tryParse (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:4166:20)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10913:18)\n    at /home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12476:39\n    at TypeScriptParserMixin.allowInAnd (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14536:12)\n    at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12476:17)\n    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:13594:28)\n    at TypeScriptParserMixin.parseExprAtom (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:13169:23)\n    at TypeScriptParserMixin.parseExprAtom (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8184:20)\n    at TypeScriptParserMixin.parseExprSubscripts (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12842:23)\n    at TypeScriptParserMixin.parseUpdate (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12822:21)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12793:23)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10996:20)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12588:61)\n    at TypeScriptParserMixin.parseExprOps (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12594:23)\n    at TypeScriptParserMixin.parseMaybeConditional (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12565:23)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12517:21)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10926:20)\n    at TypeScriptParserMixin.parseExpressionBase (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12454:23)\n    at /home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:39\n    at TypeScriptParserMixin.allowInAnd (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14530:16)\n    at TypeScriptParserMixin.parseExpression (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:17)\n    at TypeScriptParserMixin.parseReturnStatement (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15267:28)\n    at TypeScriptParserMixin.parseStatementContent (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14892:21)\n    at TypeScriptParserMixin.parseStatementContent (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10561:18)\n    at TypeScriptParserMixin.parseStatement (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14838:17)\n    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/faisal/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15495:25)"
 }

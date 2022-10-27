@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Divider,
@@ -14,12 +15,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import CloseBtn from "@src/assets/images/back.png";
 import OpenBtn from "@src/assets/images/forward.png";
 import vectorIcon from "@src/assets/svgs/24px.svg";
+import vectorIconRed from "@src/assets/svgs/24pxred.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
+import userIconRed from "@src/assets/svgs/3 Userred.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
-import sideIcon from "@src/assets/svgs/Category.svg";
+import workIconRed from "@src/assets/svgs/bagred.svg";
+import categoryIcon from "@src/assets/svgs/Category.svg";
+import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
 import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
+import bagIconRed from "@src/assets/svgs/workred.svg";
 
 import "@src/components/shared/layout/Sidebar/Sidebar.scss";
 
@@ -55,7 +61,12 @@ const Drawer = styled(MuiDrawer, {
 const Sidebar = (props) => {
   const { open, toggleDrawer } = props;
   const navigate = useNavigate();
-  const loc = useLocation();
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState("");
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location]);
+
   return (
     <Box className="sidebar-cls">
       <Drawer
@@ -75,79 +86,77 @@ const Sidebar = (props) => {
         <Divider sx={{ mt: "16px" }} />
         <List className="icon-lists" component="nav">
           <ListItemButton
-            selected={loc.pathname === "/react/"}
-            style={{
-              backgroundColor: loc.pathname === "/react/" ? "danger" : "",
-            }}
             onClick={() => {
               navigate("/react/");
             }}
+            className="list-items-btn"
           >
-            <ListItemIcon sx={{ ml: "8px" }}>
-              <img src={sideIcon} />
+            <ListItemIcon className="list-item-icon">
+              <img
+                className="icon-img"
+                src={currentPath === "/react/" ? categoryIconRed : categoryIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
           <ListItemButton
-            selected={loc.pathname === "/react/employee"}
-            style={{
-              backgroundColor:
-                loc.pathname === "/react/employee" ? "danger" : "",
-            }}
             onClick={() => {
-              navigate("/react/employee");
+              navigate("/react/users/");
             }}
+            // selected={loc.pathname === "/react/users"}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
-              <img src={workIcon} />
-            </ListItemIcon>
-            <ListItemText primary="Employees" />
-          </ListItemButton>
-          <ListItemButton
-            selected={loc.pathname === "/react/users"}
-            style={{
-              backgroundColor: loc.pathname === "/react/users" ? "danger" : "",
-            }}
-            onClick={() => {
-              navigate("/react/users");
-            }}
-            className="list-items-btn"
-          >
-            <ListItemIcon className="list-item-icon">
-              <img src={userIcon} />
+              <img
+                className="icon-img"
+                src={currentPath === "/react/users/" ? userIconRed : userIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
           <ListItemButton
-            selected={loc.pathname === "/react/accounts"}
-            style={{
-              backgroundColor:
-                loc.pathname === "/react/accounts" ? "danger" : "",
-            }}
             onClick={() => {
-              navigate("/react/accounts");
+              navigate("/react/employee/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
-              <img src={bagIcon} />
+              <img
+                className="icon-img"
+                src={
+                  currentPath === "/react/employee/" ? workIconRed : workIcon
+                }
+              />
+            </ListItemIcon>
+            <ListItemText primary="Employees" />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/accounts/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon className="list-item-icon">
+              <img
+                className="icon-img"
+                src={currentPath === "/react/accounts/" ? bagIconRed : bagIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
           </ListItemButton>
           <ListItemButton
-            selected={loc.pathname === "/react/payroll"}
-            style={{
-              backgroundColor:
-                loc.pathname === "/react/payroll" ? "danger" : undefined,
-            }}
             onClick={() => {
-              navigate("/react/payroll");
+              navigate("/react/payroll/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
-              <img src={vectorIcon} />
+              <img
+                className="icon-img"
+                src={
+                  currentPath === "/react/payroll/" ? vectorIconRed : vectorIcon
+                }
+              />
             </ListItemIcon>
             <ListItemText primary="Payroll" />
           </ListItemButton>
