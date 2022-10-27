@@ -3,6 +3,7 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 // import { useDemoData } from '@mui/x-data-grid-generator';
 //for Dummy Purpose
+import profileIcon from "@src/assets/svgs/profile_Pic_dummy.svg";
 import DeleteIconSVG from "@src/components/shared/dataGrid/Icons/DeleteIconSVG";
 import EditIconSVG from "@src/components/shared/dataGrid/Icons/EditIconSVG";
 import ShowIconSVG from "@src/components/shared/dataGrid/Icons/ShowIconSVG";
@@ -32,7 +33,29 @@ const columns = [
     // width: 206,
     headerAlign: "start",
     renderCell: (cellValues) => {
-      return <p style={{ marginLeft: "20px" }}>{cellValues?.row?.name}</p>;
+      return (
+        <div
+          style={{
+            marginLeft: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <img
+            style={{
+              width: "32px",
+              height: "32px",
+              left: "241px",
+              top: "154px",
+              marginRight: "8px",
+            }}
+            src={profileIcon}
+            alt="profile pic"
+          />
+          <p>{cellValues?.row?.name}</p>
+        </div>
+      );
     },
   },
   {
