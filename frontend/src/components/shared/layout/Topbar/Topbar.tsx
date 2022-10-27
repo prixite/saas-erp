@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -11,6 +10,7 @@ import employeeAvatar from "@src/assets/images/avatar.jpeg";
 import bellIcon from "@src/assets/svgs/bell.svg";
 import lineIcon from "@src/assets/svgs/Line 7.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
+import BreadCrumbs from "@src/components/shared/layout/Breadcrumbs/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
 
@@ -58,15 +58,8 @@ const Topbar = (props) => {
           }}
           className="appbar-toolbar-cls"
         >
-          {/* <BreadCrumbs /> */}
-          <Typography
-            sx={{ flexGrow: 1, ml: "25px", mt: "5px", fontWeight: "200" }}
-            color="secondary"
-            variant="h2"
-            component="h2"
-          >
-            Hey Umair
-          </Typography>
+          <BreadCrumbs />
+
           <Box className="search-icon-box">
             <IconButton sx={{ color: "#130F26" }}>
               <img src={searchIcon} />
