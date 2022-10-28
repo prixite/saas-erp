@@ -2,6 +2,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
+import { capitalizeFirstLowercaseRest } from "@src/helpers/utils/utils";
 
 const BreadCrumbs = () => {
   const location = useLocation();
@@ -19,8 +20,13 @@ const BreadCrumbs = () => {
           const routeTo = `/${pathnames.slice(0, index + 1).join("/")}/`;
           const isLast = index === pathnames.length - 1;
           return isLast ? (
-            <Typography key={name} variant={"h5"} color="text.primary">
-              {name}
+            <Typography
+              key={name}
+              fontWeight={400}
+              variant={"h5"}
+              color="text.primary"
+            >
+              {capitalizeFirstLowercaseRest(name)}
             </Typography>
           ) : (
             <Link
@@ -28,8 +34,9 @@ const BreadCrumbs = () => {
               key={name}
               color="inherit"
               onClick={() => navigate(routeTo)}
+              sx={{ fontSize: "14px", fontWeight: "400" }}
             >
-              {name}
+              {capitalizeFirstLowercaseRest(name)}
             </Link>
           );
         })}

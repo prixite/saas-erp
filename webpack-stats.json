@@ -530,12 +530,52 @@
       "name": "main.99d27a05ab7b6897610b.js",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.99d27a05ab7b6897610b.js",
       "publicPath": "/static/main.99d27a05ab7b6897610b.js"
+    },
+    "main.dd0fe32b132b03134f68.js": {
+      "name": "main.dd0fe32b132b03134f68.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.dd0fe32b132b03134f68.js",
+      "publicPath": "/static/main.dd0fe32b132b03134f68.js"
+    },
+    "main.84a4dbd9bad355c56996.js": {
+      "name": "main.84a4dbd9bad355c56996.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.84a4dbd9bad355c56996.js",
+      "publicPath": "/static/main.84a4dbd9bad355c56996.js"
+    },
+    "main.256f6cd6ba96b585d88c.js": {
+      "name": "main.256f6cd6ba96b585d88c.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.256f6cd6ba96b585d88c.js",
+      "publicPath": "/static/main.256f6cd6ba96b585d88c.js"
+    },
+    "main.86f1ad394df6f7063f51.js": {
+      "name": "main.86f1ad394df6f7063f51.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.86f1ad394df6f7063f51.js",
+      "publicPath": "/static/main.86f1ad394df6f7063f51.js"
+    },
+    "main.29f684ef0d030b95ce2c.js": {
+      "name": "main.29f684ef0d030b95ce2c.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.29f684ef0d030b95ce2c.js",
+      "publicPath": "/static/main.29f684ef0d030b95ce2c.js"
+    },
+    "main.b4d02c65b2fe10eaa4ba.js": {
+      "name": "main.b4d02c65b2fe10eaa4ba.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.b4d02c65b2fe10eaa4ba.js",
+      "publicPath": "/static/main.b4d02c65b2fe10eaa4ba.js"
+    },
+    "main.9d55fb81e65c02fee565.js": {
+      "name": "main.9d55fb81e65c02fee565.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.9d55fb81e65c02fee565.js",
+      "publicPath": "/static/main.9d55fb81e65c02fee565.js"
+    },
+    "main.4a41d6e8c1be91da04e0.js": {
+      "name": "main.4a41d6e8c1be91da04e0.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.4a41d6e8c1be91da04e0.js",
+      "publicPath": "/static/main.4a41d6e8c1be91da04e0.js"
     }
   },
   "chunks": {
     "main": [
       "vendor.b79bf51ffdea258fd46e.js",
-      "main.99d27a05ab7b6897610b.js"
+      "main.4a41d6e8c1be91da04e0.js"
     ]
   },
   "publicPath": "/static/",

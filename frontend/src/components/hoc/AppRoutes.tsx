@@ -1,6 +1,6 @@
 import allComponents from "@src/components/components";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoutes";
-import { objectToArray } from "@src/helpers/utils/objectToArray";
+import { objectToArray } from "@src/helpers/utils/utils";
 import ROUTES from "@src/routes";
 
 const AppRoutes = () => {
