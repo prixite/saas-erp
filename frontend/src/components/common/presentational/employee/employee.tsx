@@ -1,15 +1,26 @@
 // import EmployeeBio from "@src/components/employee/employee-bio";
 // import EmployeeDetails from "@src/components/employee/employee-details";
+import { Box } from "@mui/system";
 import EmployeeListing from "@src/components/common/presentational/employee/employee-listing";
-import Layout from "@src/components/shared/layout";
+import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
+import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
 
 const Employee = () => {
+  const { data, isSuccess } = useGetEmployeesQuery();
   return (
-    <Layout>
-      {/* <EmployeeBio />
+    <Box>
+      {isSuccess ? (
+        <>
+          <HeadBar />
+          <div>{data.map((item) => item.name)}</div>
+          {/* <EmployeeBio />
       <EmployeeDetails /> */}
-      <EmployeeListing />
-    </Layout>
+          <EmployeeListing />
+        </>
+      ) : (
+        ""
+      )}
+    </Box>
   );
 };
 export default Employee;
