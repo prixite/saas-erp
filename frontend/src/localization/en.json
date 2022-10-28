@@ -1,6 +1,6 @@
 {
     "employeePage": {
-      "loginTitle": "Sign in",
+      "optional": "optional",
       "rememberMe": "Remember me",
       "signinBtn": "Sign In",
       "signupLink": "Dont have an account? Sign Up",

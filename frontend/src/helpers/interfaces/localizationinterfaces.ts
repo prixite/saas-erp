@@ -1,5 +1,5 @@
 export interface EmployeePage {
-  loginTitle: string;
+  optional: string;
   rememberMe: string;
   signinBtn: string;
   signupLink: string;
