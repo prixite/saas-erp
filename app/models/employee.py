@@ -22,8 +22,6 @@ class Employee(models.Model):
         null=True,
     )
 
-    image = models.ImageField(upload_to="profile", null=True)
-
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

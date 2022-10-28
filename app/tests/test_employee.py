@@ -62,7 +62,6 @@ class EmployeeTestCase(BaseTestCase):
                 "organization",
                 "type",
                 "department",
-                "image",
             ],
         )
 
