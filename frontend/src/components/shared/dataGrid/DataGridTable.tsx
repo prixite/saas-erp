@@ -287,12 +287,12 @@ function DataGridTable() {
               outline: "none",
             },
           "& .css-17jjc08-MuiDataGrid-footerContainer": {
-            display: "none",
+            // display: "none",
           },
         }}
         rowHeight={80}
         autoHeight
-        rows={rows.slice(0, 7)}
+        rows={rows}
         columns={columns}
         disableColumnFilter
         disableColumnMenu
