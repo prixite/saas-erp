@@ -5,6 +5,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useFormContext } from "react-hook-form";
 import Controls from "@src/components/shared/form-controls/Controls";
+import {
+  designationOptions,
+  employmentTypeOptions,
+  benefitsOptions,
+  assets,
+} from "@src/helpers/constants/constants";
 
 interface Props {
   setValue: string;
@@ -17,54 +23,6 @@ const BasicInformations = ({ setValue }: Props) => {
     // formState: { errors },
   } = useFormContext();
 
-  const designationOptions = [
-    {
-      label: "Sr. Product Designer",
-      value: "1",
-    },
-    {
-      label: "Senior Front End Developer",
-      value: "2",
-    },
-  ];
-
-  const employmentTypeOptions = [
-    {
-      label: "Permanent",
-      value: "1",
-    },
-    {
-      label: "Temporary",
-      value: "2",
-    },
-  ];
-
-  const benefitsOptions = [
-    {
-      label: "Fuel Allowance",
-      value: "1",
-    },
-    {
-      label: "Phone Allowance",
-      value: "2",
-    },
-    {
-      label: "Overtime Allowance",
-      value: "3",
-    },
-    {
-      label: "Dinner Allowance",
-      value: "4",
-    },
-    {
-      label: "Meals Allowance",
-      value: "5",
-    },
-    {
-      label: "Overtime Allowance",
-      value: "6",
-    },
-  ];
   return (
     <>
       <Grid
@@ -162,12 +120,5 @@ const BasicInformations = ({ setValue }: Props) => {
     </>
   );
 };
-const assets = [
-  { title: "Laptop" },
-  { title: "Mouse" },
-  { title: "Handsfree" },
-  { title: "Led" },
-  { title: "Bag" },
-];
 
 export default BasicInformations;

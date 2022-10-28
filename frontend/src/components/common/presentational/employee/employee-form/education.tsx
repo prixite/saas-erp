@@ -5,6 +5,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useFormContext } from "react-hook-form";
 import Controls from "@src/components/shared/form-controls/Controls";
+import {
+  degreeOptions,
+  universityOptions,
+  checkOption,
+} from "@src/helpers/constants/constants";
 
 interface Props {
   setValue: string;
@@ -15,38 +20,6 @@ const Education = ({ setValue }: Props) => {
   const [dateEnded, setDateEnded] = useState<Date | null>(null);
   const { control } = useFormContext();
 
-  const degreeOptions = [
-    {
-      label: "Bachelor",
-      value: "1",
-    },
-    {
-      label: "Graduation",
-      value: "2",
-    },
-  ];
-
-  const universityOptions = [
-    {
-      label: "NUST University",
-      value: "1",
-    },
-    {
-      label: "Fast University",
-      value: "2",
-    },
-    {
-      label: "Comsats University",
-      value: "3",
-    },
-  ];
-
-  const checkOption = [
-    {
-      label: "Currently InProgress",
-      value: "currentlyInProgress",
-    },
-  ];
   return (
     <>
       <Grid

@@ -1,0 +1,10 @@
+{
+    "employeePage": {
+      "loginTitle": "Sign in",
+      "rememberMe": "Remember me",
+      "signinBtn": "Sign In",
+      "signupLink": "Dont have an account? Sign Up",
+      "forgotPassword": "Forgot password?"
+    }
+
+  }
