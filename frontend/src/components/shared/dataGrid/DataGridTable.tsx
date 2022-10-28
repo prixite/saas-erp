@@ -249,11 +249,12 @@ function DataGridTable() {
         density="standard"
         onCellClick={handleOnCellClick}
         sx={{
+          cursor: "pointer",
           "& renderCell-joiningDate MuiBox-root css-0:focus": {
             outline: "none",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: "#CFCFCF",
+            backgroundColor: "#(207,207,207, 0.2)",
             fontFamily: "Lato",
             fontStyle: "normal",
             fontWeight: "600",
@@ -300,7 +301,7 @@ function DataGridTable() {
             display: "none",
           },
           "& .MuiDataGrid-cell:hover": {
-            color: "#6C6C6C",
+            color: "black",
           },
           // boxShadow: 3,
           // border: 2,
