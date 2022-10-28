@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -49,7 +49,7 @@ const Topbar = (props) => {
         elevation={0}
         position="absolute"
         open={open}
-        sx={{ borderBottom: "none", left: "71px" }}
+        sx={{ borderBottom: "none", left: "72px" }}
       >
         <Toolbar
           sx={{
@@ -59,7 +59,6 @@ const Topbar = (props) => {
           className="appbar-toolbar-cls"
         >
           {/* <BreadCrumbs /> */}
-          <Divider orientation="vertical" flexItem className="divider-cls" />
           <Typography
             sx={{ flexGrow: 1, ml: "25px", mt: "5px", fontWeight: "200" }}
             color="secondary"
@@ -99,6 +98,5 @@ const Topbar = (props) => {
 };
 Topbar.propTypes = {
   open: PropTypes.bool,
-  toggleDrawer: PropTypes.func,
 };
 export default Topbar;
