@@ -3,7 +3,7 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 // import { useDemoData } from '@mui/x-data-grid-generator';
 //for Dummy Purpose
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import profileIcon from "@src/assets/svgs/profile_Pic_dummy.svg";
 import DeleteIconSVG from "@src/components/shared/dataGrid/Icons/DeleteIconSVG";
 import EditIconSVG from "@src/components/shared/dataGrid/Icons/EditIconSVG";
@@ -11,7 +11,7 @@ import ShowIconSVG from "@src/components/shared/dataGrid/Icons/ShowIconSVG";
 import "./dataGridTable.scss";
 
 function DataGridTable() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [pageSize, setPageSize] = useState<number>(10);
   const columns = [
     {
@@ -228,7 +228,7 @@ function DataGridTable() {
   const handleOnCellClick = () => {
     //params => can be used to log click info
     // setFinalCellClickInfo((prevState) => (prevState = params));
-    navigate(`/react/employee`);
+    // navigate(`/react/employee/Employee`);
   };
 
   return (
