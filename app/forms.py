@@ -3,6 +3,7 @@ from django.db import transaction
 
 from app import models
 from app.lib.user import create_and_send_invite
+from project import settings
 
 
 class UserForm(forms.ModelForm):
