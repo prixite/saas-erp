@@ -1,0 +1,224 @@
+{
+  "status": "done",
+  "assets": {
+    "main.924e6a9dc8c7e5093f57.js": {
+      "name": "main.924e6a9dc8c7e5093f57.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.924e6a9dc8c7e5093f57.js",
+      "publicPath": "/static/main.924e6a9dc8c7e5093f57.js"
+    },
+    "4cf054fe5895e3e00f70.jpeg": {
+      "name": "4cf054fe5895e3e00f70.jpeg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/4cf054fe5895e3e00f70.jpeg",
+      "publicPath": "/static/4cf054fe5895e3e00f70.jpeg"
+    },
+    "ba9b714bbd81b2b8e75c.png": {
+      "name": "ba9b714bbd81b2b8e75c.png",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/ba9b714bbd81b2b8e75c.png",
+      "publicPath": "/static/ba9b714bbd81b2b8e75c.png"
+    },
+    "9be80b3914aee5e3f24b.png": {
+      "name": "9be80b3914aee5e3f24b.png",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/9be80b3914aee5e3f24b.png",
+      "publicPath": "/static/9be80b3914aee5e3f24b.png"
+    },
+    "7e9109897d55af6cef57.svg": {
+      "name": "7e9109897d55af6cef57.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/7e9109897d55af6cef57.svg",
+      "publicPath": "/static/7e9109897d55af6cef57.svg"
+    },
+    "1aab77dfae591003d801.svg": {
+      "name": "1aab77dfae591003d801.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/1aab77dfae591003d801.svg",
+      "publicPath": "/static/1aab77dfae591003d801.svg"
+    },
+    "f09bd541ce565254e5a1.svg": {
+      "name": "f09bd541ce565254e5a1.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/f09bd541ce565254e5a1.svg",
+      "publicPath": "/static/f09bd541ce565254e5a1.svg"
+    },
+    "6c2dbaf93d6ea336a55a.svg": {
+      "name": "6c2dbaf93d6ea336a55a.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/6c2dbaf93d6ea336a55a.svg",
+      "publicPath": "/static/6c2dbaf93d6ea336a55a.svg"
+    },
+    "104d05955e8aa750c9dc.svg": {
+      "name": "104d05955e8aa750c9dc.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/104d05955e8aa750c9dc.svg",
+      "publicPath": "/static/104d05955e8aa750c9dc.svg"
+    },
+    "2296f537066ba080876c.svg": {
+      "name": "2296f537066ba080876c.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/2296f537066ba080876c.svg",
+      "publicPath": "/static/2296f537066ba080876c.svg"
+    },
+    "2723c62540ec06a18511.svg": {
+      "name": "2723c62540ec06a18511.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/2723c62540ec06a18511.svg",
+      "publicPath": "/static/2723c62540ec06a18511.svg"
+    },
+    "5869316e80891caadfe6.svg": {
+      "name": "5869316e80891caadfe6.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/5869316e80891caadfe6.svg",
+      "publicPath": "/static/5869316e80891caadfe6.svg"
+    },
+    "c26aee2518a66a18ee30.svg": {
+      "name": "c26aee2518a66a18ee30.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/c26aee2518a66a18ee30.svg",
+      "publicPath": "/static/c26aee2518a66a18ee30.svg"
+    },
+    "a502dab0946ec92af3e0.svg": {
+      "name": "a502dab0946ec92af3e0.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/a502dab0946ec92af3e0.svg",
+      "publicPath": "/static/a502dab0946ec92af3e0.svg"
+    },
+    "e2bff14e42e85341f72a.svg": {
+      "name": "e2bff14e42e85341f72a.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/e2bff14e42e85341f72a.svg",
+      "publicPath": "/static/e2bff14e42e85341f72a.svg"
+    },
+    "aecfb6104fd75320d41c.svg": {
+      "name": "aecfb6104fd75320d41c.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/aecfb6104fd75320d41c.svg",
+      "publicPath": "/static/aecfb6104fd75320d41c.svg"
+    },
+    "27104733135f80c43718.svg": {
+      "name": "27104733135f80c43718.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/27104733135f80c43718.svg",
+      "publicPath": "/static/27104733135f80c43718.svg"
+    },
+    "643fbe4bc8562128b9a5.svg": {
+      "name": "643fbe4bc8562128b9a5.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/643fbe4bc8562128b9a5.svg",
+      "publicPath": "/static/643fbe4bc8562128b9a5.svg"
+    },
+    "413799b3813c06e01133.svg": {
+      "name": "413799b3813c06e01133.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/413799b3813c06e01133.svg",
+      "publicPath": "/static/413799b3813c06e01133.svg"
+    },
+    "d9d3a9d7340a39486eb7.svg": {
+      "name": "d9d3a9d7340a39486eb7.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/d9d3a9d7340a39486eb7.svg",
+      "publicPath": "/static/d9d3a9d7340a39486eb7.svg"
+    },
+    "5d278c1257430c41a373.svg": {
+      "name": "5d278c1257430c41a373.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/5d278c1257430c41a373.svg",
+      "publicPath": "/static/5d278c1257430c41a373.svg"
+    },
+    "3cece8016487aef09d2b.svg": {
+      "name": "3cece8016487aef09d2b.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/3cece8016487aef09d2b.svg",
+      "publicPath": "/static/3cece8016487aef09d2b.svg"
+    },
+    "b10aac52d7cdeef97a26.svg": {
+      "name": "b10aac52d7cdeef97a26.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/b10aac52d7cdeef97a26.svg",
+      "publicPath": "/static/b10aac52d7cdeef97a26.svg"
+    },
+    "9512dc2e6658f0aced2a.svg": {
+      "name": "9512dc2e6658f0aced2a.svg",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/9512dc2e6658f0aced2a.svg",
+      "publicPath": "/static/9512dc2e6658f0aced2a.svg"
+    },
+    "vendor.13b97db4d98f516c87ac.js": {
+      "name": "vendor.13b97db4d98f516c87ac.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/vendor.13b97db4d98f516c87ac.js",
+      "publicPath": "/static/vendor.13b97db4d98f516c87ac.js"
+    },
+    "main.a27f96f91a2bd8460341.js": {
+      "name": "main.a27f96f91a2bd8460341.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.a27f96f91a2bd8460341.js",
+      "publicPath": "/static/main.a27f96f91a2bd8460341.js"
+    },
+    "vendor.9be73d71df6d1233937a.js": {
+      "name": "vendor.9be73d71df6d1233937a.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/vendor.9be73d71df6d1233937a.js",
+      "publicPath": "/static/vendor.9be73d71df6d1233937a.js"
+    },
+    "main.b1890bd9d6be46ac3a7e.js": {
+      "name": "main.b1890bd9d6be46ac3a7e.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.b1890bd9d6be46ac3a7e.js",
+      "publicPath": "/static/main.b1890bd9d6be46ac3a7e.js"
+    },
+    "vendor.b79bf51ffdea258fd46e.js": {
+      "name": "vendor.b79bf51ffdea258fd46e.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/vendor.b79bf51ffdea258fd46e.js",
+      "publicPath": "/static/vendor.b79bf51ffdea258fd46e.js"
+    },
+    "main.e8246c41505269c33eea.js": {
+      "name": "main.e8246c41505269c33eea.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.e8246c41505269c33eea.js",
+      "publicPath": "/static/main.e8246c41505269c33eea.js"
+    },
+    "vendor.4841f59887db3d6ec2f1.js": {
+      "name": "vendor.4841f59887db3d6ec2f1.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/vendor.4841f59887db3d6ec2f1.js",
+      "publicPath": "/static/vendor.4841f59887db3d6ec2f1.js"
+    },
+    "main.bc6ffeca990b7675703b.js": {
+      "name": "main.bc6ffeca990b7675703b.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.bc6ffeca990b7675703b.js",
+      "publicPath": "/static/main.bc6ffeca990b7675703b.js"
+    },
+    "main.61ca6de754addc47b256.js": {
+      "name": "main.61ca6de754addc47b256.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.61ca6de754addc47b256.js",
+      "publicPath": "/static/main.61ca6de754addc47b256.js"
+    },
+    "main.090445b070d1dbacb0d7.js": {
+      "name": "main.090445b070d1dbacb0d7.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.090445b070d1dbacb0d7.js",
+      "publicPath": "/static/main.090445b070d1dbacb0d7.js"
+    },
+    "main.5974a0519a570a42faa6.js": {
+      "name": "main.5974a0519a570a42faa6.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.5974a0519a570a42faa6.js",
+      "publicPath": "/static/main.5974a0519a570a42faa6.js"
+    },
+    "main.4a652d8018a7f3da4821.js": {
+      "name": "main.4a652d8018a7f3da4821.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.4a652d8018a7f3da4821.js",
+      "publicPath": "/static/main.4a652d8018a7f3da4821.js"
+    },
+    "main.5a3477dcdb50dd7d13f3.js": {
+      "name": "main.5a3477dcdb50dd7d13f3.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.5a3477dcdb50dd7d13f3.js",
+      "publicPath": "/static/main.5a3477dcdb50dd7d13f3.js"
+    },
+    "main.6299f4d895f47a732ccf.js": {
+      "name": "main.6299f4d895f47a732ccf.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.6299f4d895f47a732ccf.js",
+      "publicPath": "/static/main.6299f4d895f47a732ccf.js"
+    },
+    "main.dcf493057dd35771a4be.js": {
+      "name": "main.dcf493057dd35771a4be.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.dcf493057dd35771a4be.js",
+      "publicPath": "/static/main.dcf493057dd35771a4be.js"
+    },
+    "main.699d52ea6b3ec984ed8a.js": {
+      "name": "main.699d52ea6b3ec984ed8a.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.699d52ea6b3ec984ed8a.js",
+      "publicPath": "/static/main.699d52ea6b3ec984ed8a.js"
+    },
+    "main.571279fc9e5745c182da.js": {
+      "name": "main.571279fc9e5745c182da.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.571279fc9e5745c182da.js",
+      "publicPath": "/static/main.571279fc9e5745c182da.js"
+    },
+    "main.f1681409e8505aa3a5ed.js": {
+      "name": "main.f1681409e8505aa3a5ed.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.f1681409e8505aa3a5ed.js",
+      "publicPath": "/static/main.f1681409e8505aa3a5ed.js"
+    }
+  },
+  "chunks": {
+    "main": [
+      "vendor.b79bf51ffdea258fd46e.js",
+      "main.b1890bd9d6be46ac3a7e.js"
+    ]
+  },
+  "publicPath": "/static/",
+  "error": "ModuleBuildError",
+  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/rabeel/Desktop/saas-erp/frontend/src/components/shared/employee-Header/EmployeeHeader.tsx: Expected corresponding JSX closing tag for <div>. (54:38)\n\n  52 |             <div className=\"div-two-child-two\">\n  53 |                 <div className=\"twoItem-one\">\n> 54 |                   Sr Software Engineer</p>\n     |                                       ^\n  55 |                 </div>\n  56 |                 <div className=\"twoItem-two\"> \n  57 |                   <img\n    at instantiate (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:72:32)\n    at constructor (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:367:12)\n    at TypeScriptParserMixin.raise (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:3706:19)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8135:16)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8097:32)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8097:32)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8097:32)\n    at TypeScriptParserMixin.jsxParseElementAt (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8097:32)\n    at TypeScriptParserMixin.jsxParseElement (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8165:17)\n    at TypeScriptParserMixin.parseExprAtom (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8179:19)\n    at TypeScriptParserMixin.parseExprSubscripts (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12842:23)\n    at TypeScriptParserMixin.parseUpdate (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12822:21)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12793:23)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10996:20)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12588:61)\n    at TypeScriptParserMixin.parseExprOps (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12594:23)\n    at TypeScriptParserMixin.parseMaybeConditional (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12565:23)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12517:21)\n    at /home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10913:39\n    at TypeScriptParserMixin.tryParse (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:4166:20)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10913:18)\n    at /home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12476:39\n    at TypeScriptParserMixin.allowInAnd (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14536:12)\n    at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12476:17)\n    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:13594:28)\n    at TypeScriptParserMixin.parseExprAtom (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:13169:23)\n    at TypeScriptParserMixin.parseExprAtom (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:8184:20)\n    at TypeScriptParserMixin.parseExprSubscripts (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12842:23)\n    at TypeScriptParserMixin.parseUpdate (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12822:21)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12793:23)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10996:20)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12588:61)\n    at TypeScriptParserMixin.parseExprOps (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12594:23)\n    at TypeScriptParserMixin.parseMaybeConditional (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12565:23)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12517:21)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10926:20)\n    at TypeScriptParserMixin.parseExpressionBase (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12454:23)\n    at /home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:39\n    at TypeScriptParserMixin.allowInAnd (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14530:16)\n    at TypeScriptParserMixin.parseExpression (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:12449:17)\n    at TypeScriptParserMixin.parseReturnStatement (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15267:28)\n    at TypeScriptParserMixin.parseStatementContent (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14892:21)\n    at TypeScriptParserMixin.parseStatementContent (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10561:18)\n    at TypeScriptParserMixin.parseStatement (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14838:17)\n    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15495:25)\n    at TypeScriptParserMixin.parseBlockBody (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15486:10)\n    at TypeScriptParserMixin.parseBlock (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:15470:10)\n    at TypeScriptParserMixin.parseFunctionBody (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14136:24)\n    at TypeScriptParserMixin.parseFunctionBodyAndFinish (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:14120:10)\n    at TypeScriptParserMixin.parseFunctionBodyAndFinish (/home/rabeel/Desktop/saas-erp/node_modules/@babel/parser/lib/index.js:10264:18)"
+}
