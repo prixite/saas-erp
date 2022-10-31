@@ -99,12 +99,9 @@ function EmployeeHeader() {
               src={ThreeDotter}
               alt="profile pic"
               style={{
-                height: "36px",
-                width: "36px",
-                background: "#FFFFFF",
-                border: "1px solid #E7E7E7",
-                boxShadow: "10px 10px 24px 1px rgba(221, 221, 221, 0.15)",
-                borderRadius: "8px",
+                height: "20px",
+                width: "20px",
+                border: "none",
               }}
             />
           </div>
