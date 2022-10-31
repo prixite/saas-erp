@@ -161,7 +161,8 @@ class DeleteOwner(PrivateViewMixin, OwnerMixin, DeleteView):
         owners_count = models.User.objects.filter(
             organization=user.organization,
             default_role=models.Role.objects.get(
-                permission=models.Role.Permission.OWNER
+                permission=models.Role.Permission.OWNER,
+                organization=user.organization,
             ),
         ).count()
         if owners_count <= 1:

@@ -1,22 +1,31 @@
-import { Box } from "@mui/material";
-import Divider from "@mui/material/Divider";
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
+import { useNavigate, useLocation } from "react-router-dom";
 import CloseBtn from "@src/assets/images/back.png";
 import OpenBtn from "@src/assets/images/forward.png";
-import sideIcon from "@src/assets/svgs/24px.svg";
+import vectorIcon from "@src/assets/svgs/24px.svg";
+import vectorIconRed from "@src/assets/svgs/24pxred.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
+import userIconRed from "@src/assets/svgs/3 Userred.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
+import workIconRed from "@src/assets/svgs/bagred.svg";
+import categoryIcon from "@src/assets/svgs/Category.svg";
+import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
 import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import vectorIcon from "@src/assets/svgs/Vector.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
+import bagIconRed from "@src/assets/svgs/workred.svg";
 
 import "@src/components/shared/layout/Sidebar/Sidebar.scss";
 
@@ -51,6 +60,13 @@ const Drawer = styled(MuiDrawer, {
 
 const Sidebar = (props) => {
   const { open, toggleDrawer } = props;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState("");
+  useEffect(() => {
+    setCurrentPath(location.pathname);
+  }, [location]);
+
   return (
     <Box className="sidebar-cls">
       <Drawer
@@ -69,35 +85,80 @@ const Sidebar = (props) => {
 
         <Divider sx={{ mt: "16px" }} />
         <List className="icon-lists" component="nav">
-          <ListItemButton>
-            <ListItemIcon sx={{ ml: "8px" }}>
-              <img src={sideIcon} className="app logo" />
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon className="list-item-icon">
+              <img
+                className="icon-img"
+                src={currentPath === "/react/" ? categoryIconRed : categoryIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton className="list-items-btn">
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/users/");
+            }}
+            // selected={loc.pathname === "/react/users"}
+            className="list-items-btn"
+          >
             <ListItemIcon className="list-item-icon">
-              <img src={bagIcon} className="app logo" />
+              <img
+                className="icon-img"
+                src={currentPath === "/react/users/" ? userIconRed : userIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
-          <ListItemButton className="list-items-btn">
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/employee/");
+            }}
+            className="list-items-btn"
+          >
             <ListItemIcon className="list-item-icon">
-              <img src={userIcon} className="app logo" />
+              <img
+                className="icon-img"
+                src={
+                  currentPath === "/react/employee/" ? workIconRed : workIcon
+                }
+              />
             </ListItemIcon>
             <ListItemText primary="Employees" />
           </ListItemButton>
-          <ListItemButton className="list-items-btn">
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/accounts/");
+            }}
+            className="list-items-btn"
+          >
             <ListItemIcon className="list-item-icon">
-              <img src={workIcon} className="app logo" />
-            </ListItemIcon>
-            <ListItemText primary="Payrool" />
-          </ListItemButton>
-          <ListItemButton className="list-items-btn">
-            <ListItemIcon className="list-item-icon">
-              <img src={vectorIcon} className="app logo" />
+              <img
+                className="icon-img"
+                src={currentPath === "/react/accounts/" ? bagIconRed : bagIcon}
+              />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              navigate("/react/payroll/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon className="list-item-icon">
+              <img
+                className="icon-img"
+                src={
+                  currentPath === "/react/payroll/" ? vectorIconRed : vectorIcon
+                }
+              />
+            </ListItemIcon>
+            <ListItemText primary="Payroll" />
           </ListItemButton>
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
@@ -106,7 +167,7 @@ const Sidebar = (props) => {
           </ListItemButton>
           <ListItemButton className="drawer-setting-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
-              <img src={settingIcon} className="app logo" />
+              <img src={settingIcon} />
             </ListItemIcon>
           </ListItemButton>
         </List>

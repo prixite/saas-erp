@@ -1,0 +1,149 @@
+.x {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 100px;
+  background-color: white;
+
+  .x-1 {
+    margin: 5px;
+    width: 173px;
+    height: 24px;
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    margin-right: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .x-2 {
+    margin: 5px;
+    margin-right: 8px;
+    width: 40%;
+    border: 1px solid white;
+    .css-p4kkd-MuiInputBase-root-MuiOutlinedInput-root {
+      padding: 11px 16px 11px 16px;
+      border-radius: 12px;
+      height: 44px;
+      background: #ffffff;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      border: 1px solid #ffffff;
+    }
+  }
+
+  .x-3 {
+    margin-left: auto;
+
+    .filter-btn {
+      text-transform: none;
+      margin-right: 1rem;
+      height: 44px;
+      background: #ffffff;
+      border: 1px solid #e7e7e7;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      color: black;
+      padding: 12.5px 16px 12.5px 19.33px;
+    }
+  }
+
+  .x-4 {
+    margin: 5px;
+
+    .create-btn {
+      text-transform: none;
+      border-radius: 12px;
+      width: 108px;
+      height: 44px;
+      background: #ff2f2f;
+      border-radius: 12px;
+      color: white;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .x {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 80px;
+    background-color: white;
+    border-radius: 12px;
+
+    .x-1 {
+      margin: 5px;
+      height: 24px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      overflow: hidden;
+      color: #000000;
+    }
+
+    .x-2 {
+      margin: 5px;
+      margin-right: 8px;
+      min-width: 200px;
+
+      .css-p4kkd-MuiInputBase-root-MuiOutlinedInput-root {
+        padding: 11px 16px 11px 16px;
+        border-radius: 12px;
+        height: 42px;
+        background: #ffffff;
+        border: 1px solid #e7e7e7;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 12px;
+      }
+    }
+
+    .x-3 {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .filter-btn {
+        height: 44px;
+        width: 98px;
+        background: #ffffff;
+        border: 1px solid #e7e7e7;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 12px;
+        padding: 16px 12px;
+      }
+    }
+
+    .x-4 {
+      margin: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .create-btn {
+        border-radius: 12px;
+        width: 108px;
+        height: 44px;
+        background: #ff2f2f;
+        border-radius: 12px;
+        color: white;
+        padding: 16px 12px;
+      }
+    }
+  }
+}
