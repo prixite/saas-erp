@@ -205,6 +205,11 @@
       "name": "main.571279fc9e5745c182da.js",
       "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.571279fc9e5745c182da.js",
       "publicPath": "/static/main.571279fc9e5745c182da.js"
+    },
+    "main.f1681409e8505aa3a5ed.js": {
+      "name": "main.f1681409e8505aa3a5ed.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.f1681409e8505aa3a5ed.js",
+      "publicPath": "/static/main.f1681409e8505aa3a5ed.js"
     }
   },
   "chunks": {
