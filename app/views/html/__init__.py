@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
@@ -101,8 +102,17 @@ class Settings(PrivateViewMixin, TemplateView):
     module = "settings"
 
 
-class Account(LoginRequiredMixin, TemplateView):
+class Account(LoginRequiredMixin, UpdateView):
+    model = models.User
+    fields = ["headline", "image"]
     template_name = "app/html/account.html"
+
+    def get_success_url(self):
+        return reverse_lazy("html:account", kwargs={"pk": self.request.user.pk})
+
+    def form_valid(self, form):
+        messages.success(self.request, "Profile updated successfully")
+        return super().form_valid(form)
 
 
 class Profile(LoginRequiredMixin, DetailView):
