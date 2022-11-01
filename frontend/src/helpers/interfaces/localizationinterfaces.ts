@@ -1,11 +1,12 @@
-export interface EmployeePage {
-  optional: string;
-  rememberMe: string;
-  signinBtn: string;
-  signupLink: string;
-  forgotPassword: string;
+export interface btnsInterface {
+  createButton: string;
+  filterButton: string;
+}
+export interface employeeInterface {
+  employeeHeading: string;
 }
 
 export interface LocalizationInterface {
-  employeePage: EmployeePage;
+  Buttons: btnsInterface;
+  Employee: employeeInterface;
 }

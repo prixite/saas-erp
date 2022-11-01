@@ -1,11 +1,10 @@
 {
-    "Buttons": {
+    "createButton": {
       "createButton": "Create",
       "filterButton": "Filter"
-
     },
     "Employee": {
-      "employeeHeading": "Employee’s Module"
-    }
+        "heading": "Employee’s Module"
+      }
 
   }
