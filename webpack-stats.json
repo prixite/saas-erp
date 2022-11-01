@@ -540,12 +540,17 @@
       "name": "main.2bffad873dad9778ec0e.js",
       "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.2bffad873dad9778ec0e.js",
       "publicPath": "/static/main.2bffad873dad9778ec0e.js"
+    },
+    "main.a6e4bf5665c95317287b.js": {
+      "name": "main.a6e4bf5665c95317287b.js",
+      "path": "/home/rabeel/Desktop/saas-erp/frontend/dist/main.a6e4bf5665c95317287b.js",
+      "publicPath": "/static/main.a6e4bf5665c95317287b.js"
     }
   },
   "chunks": {
     "main": [
       "vendor.b79bf51ffdea258fd46e.js",
-      "main.2bffad873dad9778ec0e.js"
+      "main.a6e4bf5665c95317287b.js"
     ]
   },
   "publicPath": "/static/",
