@@ -9,6 +9,11 @@ const routes = {
     path: "/react/employee/",
     component: "Employee",
   },
+  employeeView: {
+    name: "EmployeeView",
+    path: "/react/employee/:employeeId",
+    component: "EmployeeView",
+  },
   accounts: {
     name: "Accounts",
     path: "/react/accounts/",

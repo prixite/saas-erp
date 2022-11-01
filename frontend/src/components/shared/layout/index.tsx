@@ -24,7 +24,7 @@ const Layout = (props) => {
         sx={{
           backgroundColor: (theme) =>
             theme.palette.mode === "light"
-              ? theme.palette.grey[100]
+              ? "#FFFFFF"
               : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
