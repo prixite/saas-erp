@@ -1,11 +1,11 @@
+from django import forms
 from django.db import transaction
-from django.forms import ModelForm
 
 from app import models
 from app.lib.user import create_and_send_invite
 
 
-class UserForm(ModelForm):
+class UserForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ["email", "first_name", "last_name", "default_role", "image"]
@@ -51,15 +51,25 @@ class EmployeeUserForm(UserForm):
         return super().save()
 
 
-class EmployeeForm(ModelForm):
+class EmployeeForm(forms.ModelForm):
+    can_login = forms.BooleanField(required=False)
+
     class Meta:
         model = models.Employee
-        fields = ["nic", "contact_number", "designation", "date_of_joining"]
+        fields = [
+            "nic",
+            "contact_number",
+            "designation",
+            "date_of_joining",
+            "can_login",
+        ]
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         self.user_form = EmployeeUserForm(self.request, *args, **kwargs)
         super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields["can_login"].initial = self.instance.user.is_active
 
     def full_clean(self):
         self.user_form.full_clean()
@@ -72,4 +82,6 @@ class EmployeeForm(ModelForm):
     def save(self):
         self.instance.user = self.user_form.save()
         self.instance.organization = self.request.user.organization
+        self.instance.user.is_active = self.cleaned_data.get("can_login", False)
+        self.instance.user.save()
         return super().save()
