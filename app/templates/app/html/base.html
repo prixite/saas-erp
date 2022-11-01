@@ -85,7 +85,7 @@
         >
         {% endif %}
 
-        {% if user.is_superuser %}
+        {% if request.user.is_superuser %}
         {% url "html:organizations" as organization_url %}
         {% url "html:organizations-manage" as organization_manage_url %}
         <a
@@ -95,17 +95,18 @@
         >
         {% endif %}
 
-        {% url "html:account" as account_url %}
+        {% url "html:account" request.user.id as account_url %}
         <a
           class="nav-link {% if request.path|startswith:account_url %}active{% endif %}"
           href="{{ account_url }}"
           >Account</a
         >
 
-        {% url "html:profile" request.user.id as profile_url %}
+        {% url "html:profile" user.id as profile_url %}
+        {% url "html:profile" request.user.id as own_profile_url %}
         <a
           class="nav-link {% if request.path == profile_url %}active{% endif %}"
-          href="{{ profile_url }}"
+          href="{{ own_profile_url }}"
           >Profile</a
         >
 
@@ -125,6 +126,12 @@
   {% block heading_wrapper %}
   <h1 class="display-6">{% block heading %}{% endblock %}</h1>
   {% endblock %}
+  {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show mt-2" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
   {% block page %}{% endblock %}
 </div>
 

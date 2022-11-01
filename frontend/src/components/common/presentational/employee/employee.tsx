@@ -14,7 +14,7 @@ const Employee = () => {
           <HeadBar />
           <div>{data.map((item) => item.name)}</div>
           {/* <EmployeeBio />
-      <EmployeeDetails /> */}
+          <EmployeeDetails /> */}
           <EmployeeListing />
         </>
       ) : (

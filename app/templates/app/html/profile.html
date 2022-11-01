@@ -13,10 +13,9 @@
 
 {% block page %}
     <h3 class="h4 mt-5">{{ object.first_name }} {{ object.last_name }}</h3>
-
-    {% if object.image %}
+    <h6 class="h6">{{ object.email }}</h6>
+    <h6 class="h6">{{ object.headline }}</h6>
     <img src={{ object.image.url }} class="img-thumbnail img" alt="image">
-    {% endif %}
 
     {% if object.employee %}
     <p class="lead mt-3">{{ object.employee.contact_number }}</p>

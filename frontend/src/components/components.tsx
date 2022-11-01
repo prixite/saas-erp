@@ -1,3 +1,4 @@
+import EmployeeView from "../views/employeeView/EmployeeView";
 import Employee from "./common/presentational/employee/employee";
 import Accounts from "./common/smart/accounts/accounts";
 import Dashboard from "./common/smart/dashboard/dashboard";
@@ -10,6 +11,7 @@ const allComponents = {
   Accounts,
   Payroll,
   Users,
+  EmployeeView,
 };
 
 export default allComponents;
