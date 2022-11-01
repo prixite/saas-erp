@@ -18,7 +18,13 @@ class User(AbstractUser):
         "Organization", on_delete=models.CASCADE, null=True
     )
 
-    image = models.ImageField(upload_to="profile", null=True)
+    image = models.ImageField(
+        upload_to="profile",
+        null=True,
+        default="../static/app/assets/profile_default.png",
+    )
+
+    headline = models.CharField(_("headline"), max_length=255)
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
     is_onboarded = models.BooleanField(default=False)
