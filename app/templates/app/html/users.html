@@ -15,7 +15,7 @@
       <th scope="col">Default Role</th>
       <th scope="col">Access</th>
       <th scope="col">Profile</th>
-      <th scope="col"></th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -26,9 +26,11 @@
       <td>{{ user_obj.default_role }}</td>
       <td><a href="{% url "html:user-modules" user_obj.id %}">View</a></td>
       <td><a href="{% url "html:profile" user_obj.id %}">View</a></td>
+      <td>
       {% if not user.id == user_obj.id %}
-        <td><a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user_obj.id %}">Delete</a></td>
+      <a class="btn btn-danger btn-sm" href="{% url "html:users-delete" user_obj.id %}">Delete</a>
       {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </tbody>
