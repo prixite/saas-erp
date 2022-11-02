@@ -3,7 +3,6 @@ from django.db import transaction
 
 from app import models
 from app.lib.user import create_and_send_invite
-from project import settings
 
 
 class UserForm(forms.ModelForm):
@@ -53,6 +52,10 @@ class EmployeeUserForm(UserForm):
 
 
 class EmployeeForm(forms.ModelForm):
+    date_of_joining = forms.DateField(
+        input_formats=("%d/%m/%Y",),
+        widget=forms.DateInput(format="%d/%m/%Y", attrs={"placeholder": "DD/MM/YYYY"}),
+    )
     can_login = forms.BooleanField(required=False)
 
     class Meta:

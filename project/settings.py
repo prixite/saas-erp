@@ -219,5 +219,3 @@ WEBPACK_LOADER = {
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }
 }
-
-DATE_INPUT_FORMATS = ("%d/%m/%y",)
