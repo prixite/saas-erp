@@ -1,27 +1,31 @@
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
-import { capitalizeFirstLowercaseRest } from "@src/helpers/utils/utils";
 import "@src/components/shared/layout/Breadcrumbs/breadcrumbs.scss";
+import ArrowIcon from "@src/assets/svgs/ArrowDown.svg";
+import { capitalizeFirstLowercaseRest } from "@src/helpers/utils/utils";
 
 const BreadCrumbs = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const pathnames = location.pathname.split("/").filter((x) => x);
+  const pathnames = location.pathname
+    .split("/")
+    .filter((x) => x !== "react" && x !== "");
 
   return (
     <Breadcrumbs
-      separator={<NavigateNextIcon fontSize="medium" />}
+      separator={<img src={ArrowIcon} style={{ marginTop: "8px" }} />}
       aria-label="breadcrumb"
+      className="bread-crumbs"
       sx={{ ml: "25px", flexGrow: 1, display: { xs: "none", sm: "block" } }}
     >
       {pathnames.length > 0 ? (
         <Link
           sx={{ fontSize: "14px", fontWeight: "400", cursor: "pointer" }}
-          underline="hover"
           color="inherit"
+          underline="none"
+          className="link-cls"
           onClick={() => navigate("/")}
         >
           Home
@@ -38,7 +42,7 @@ const BreadCrumbs = () => {
         return isLast ? (
           <Typography
             key={name}
-            fontWeight={400}
+            fontWeight={600}
             variant={"h5"}
             color="text.primary"
           >
@@ -46,9 +50,10 @@ const BreadCrumbs = () => {
           </Typography>
         ) : (
           <Link
-            underline="hover"
             key={name}
             color="inherit"
+            underline="none"
+            className="link-cls"
             onClick={() => navigate(routeTo)}
             sx={{ fontSize: "14px", fontWeight: "400", cursor: "pointer" }}
           >
