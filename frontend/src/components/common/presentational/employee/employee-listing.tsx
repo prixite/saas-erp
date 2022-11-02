@@ -6,7 +6,6 @@ import { Grid } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EmployeeForm from "@src/components/common/presentational/employee/employee-form";
 import Controls from "@src/components/shared/form-controls/Controls";
-import Breadcrumbs from "@src/components/shared/layout/breadcrumbs";
 import PageHeader from "@src/components/shared/page-header";
 
 const rows = [
@@ -83,9 +82,7 @@ const EmployeeListing = () => {
   };
   return (
     <>
-      <Grid>
-        <Breadcrumbs />
-      </Grid>
+      <Grid></Grid>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
           <PageHeader
