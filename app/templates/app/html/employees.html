@@ -4,6 +4,11 @@
 
 {% block page %}
 <div class="d-flex justify-content-end">
+  <form action={% url "html:employees-upload" %} method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="employees_file" id="employees_file">
+    <button class="btn btn-primary end-0 mx-2" type="submit">Upload</button>
+  </form>
   <a class="btn btn-primary end-0" href="{% url "html:employees-add" %}" role="button">Add New</a>
 </div>
 

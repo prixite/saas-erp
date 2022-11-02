@@ -29,6 +29,7 @@ urlpatterns = [
     ),
     path("employees/", views.Employees.as_view(), name="employees"),
     path("employees/add/", views.CreateEmployee.as_view(), name="employees-add"),
+    path("employees/upload/", views.UploadEmployees.as_view(), name="employees-upload"),
     path(
         "employees/<int:pk>/", views.UpdateEmployee.as_view(), name="employees-update"
     ),
