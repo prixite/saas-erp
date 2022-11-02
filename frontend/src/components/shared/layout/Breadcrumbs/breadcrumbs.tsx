@@ -15,7 +15,7 @@ const BreadCrumbs = () => {
 
   return (
     <Breadcrumbs
-      separator={<img src={ArrowIcon} style={{ marginTop: "8px" }} />}
+      separator={<img src={ArrowIcon} style={{ marginTop: "10px" }} />}
       aria-label="breadcrumb"
       className="bread-crumbs"
       sx={{ ml: "25px", flexGrow: 1, display: { xs: "none", sm: "block" } }}
@@ -26,7 +26,7 @@ const BreadCrumbs = () => {
           color="inherit"
           underline="none"
           className="link-cls"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/react/")}
         >
           Home
         </Link>
@@ -46,7 +46,9 @@ const BreadCrumbs = () => {
             variant={"h5"}
             color="text.primary"
           >
-            {capitalizeFirstLowercaseRest(name)}
+            {name === "employee"
+              ? capitalizeFirstLowercaseRest("employee's")
+              : capitalizeFirstLowercaseRest(name)}
           </Typography>
         ) : (
           <Link
@@ -57,7 +59,9 @@ const BreadCrumbs = () => {
             onClick={() => navigate(routeTo)}
             sx={{ fontSize: "14px", fontWeight: "400", cursor: "pointer" }}
           >
-            {capitalizeFirstLowercaseRest(name)}
+            {name === "employee"
+              ? capitalizeFirstLowercaseRest("employee's")
+              : capitalizeFirstLowercaseRest(name)}
           </Link>
         );
       })}
