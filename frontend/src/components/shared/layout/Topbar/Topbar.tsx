@@ -1,16 +1,18 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 import employeeAvatar from "@src/assets/images/avatar.jpeg";
 import bellIcon from "@src/assets/svgs/bell.svg";
 import lineIcon from "@src/assets/svgs/Line 7.svg";
 import searchIcon from "@src/assets/svgs/Search.svg";
+import wavingIcon from "@src/assets/svgs/waving.svg";
+import BreadCrumbs from "@src/components/shared/layout/Breadcrumbs/breadcrumbs";
 import TopbarSecondaryMenu from "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu";
 import "@src/components/shared/layout/Topbar/Topbar.scss";
 
@@ -42,6 +44,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Topbar = (props) => {
   const { open } = props;
+  const location = useLocation();
   return (
     <>
       <AppBar
@@ -58,15 +61,26 @@ const Topbar = (props) => {
           }}
           className="appbar-toolbar-cls"
         >
-          {/* <BreadCrumbs /> */}
-          <Typography
-            sx={{ flexGrow: 1, ml: "25px", mt: "5px", fontWeight: "200" }}
-            color="secondary"
-            variant="h2"
-            component="h2"
-          >
-            Hey Umair
-          </Typography>
+          {location.pathname === "/react/" ? (
+            <Box
+              className="user-box"
+              sx={{ display: "flex", flexGrow: 1, ml: "25px" }}
+            >
+              <Typography
+                sx={{ fontWeight: "200" }}
+                color="secondary"
+                variant="h2"
+                component="h2"
+                className="user-title"
+              >
+                Hey Umair
+              </Typography>
+              <img className="hey-img" src={wavingIcon} />
+            </Box>
+          ) : (
+            <BreadCrumbs />
+          )}
+
           <Box className="search-icon-box">
             <IconButton sx={{ color: "#130F26" }}>
               <img src={searchIcon} />
