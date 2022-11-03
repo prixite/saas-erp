@@ -1,0 +1,22 @@
+{
+    "createButton": {
+      "createButton": "Create",
+      "filterButton": "Filter"
+    },
+    "Employee": {
+        "heading": "Employee’s Module"
+      },
+      "Dashboard": {
+        "dashboardHeading": "Dashboard"
+      },
+      "User": {
+        "userdHeading": "User"
+      },
+      "Account": {
+        "accountdHeading": "Account"
+      },
+      "Payroll": {
+        "payrollHeading": "Payroll"
+      }
+
+  }

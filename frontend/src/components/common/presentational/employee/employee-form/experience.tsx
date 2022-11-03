@@ -5,6 +5,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useFormContext } from "react-hook-form";
 import Controls from "@src/components/shared/form-controls/Controls";
+import {
+  designationOptionseducation,
+  checkOptioneducation,
+  companyOptions,
+} from "@src/helpers/constants/constants";
 
 interface Props {
   setValue: string;
@@ -15,38 +20,6 @@ const Experience = ({ setValue }: Props) => {
   const [dateEnded, setDateEnded] = useState<Date | null>(null);
   const { control } = useFormContext();
 
-  const designationOptions = [
-    {
-      label: "Sr. Product Designer",
-      value: "1",
-    },
-    {
-      label: "Senior Front End Developer",
-      value: "2",
-    },
-  ];
-
-  const companyOptions = [
-    {
-      label: "Google",
-      value: "1",
-    },
-    {
-      label: "Microsoft",
-      value: "2",
-    },
-    {
-      label: "Prixite",
-      value: "3",
-    },
-  ];
-
-  const checkOption = [
-    {
-      label: "Currently Working here",
-      value: "currentlyWorking",
-    },
-  ];
   return (
     <>
       <Grid
@@ -61,7 +34,7 @@ const Experience = ({ setValue }: Props) => {
             name="designation"
             control={control}
             label="Designation"
-            options={designationOptions}
+            options={designationOptionseducation}
           />
         </Grid>
 
@@ -105,7 +78,7 @@ const Experience = ({ setValue }: Props) => {
             setValue={setValue}
             name={"currentlyWorking"}
             label={""}
-            options={checkOption}
+            options={checkOptioneducation}
           />
         </Grid>
       </Grid>

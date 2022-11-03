@@ -1,7 +1,11 @@
 import { Button } from "@mui/material";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 import FilterIcon from "./FilterButtonSVG";
 
 function FilterButton() {
+  const constantData: LocalizationInterface = localizedData();
+  const { filterButton } = constantData.Buttons;
   return (
     <>
       <Button
@@ -11,7 +15,7 @@ function FilterButton() {
         startIcon={<FilterIcon />}
       >
         {" "}
-        <p>Filter</p>
+        <p>{filterButton}</p>
       </Button>
     </>
   );
