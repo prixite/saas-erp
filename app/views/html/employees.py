@@ -42,7 +42,7 @@ class UploadEmployees(PrivateViewMixin, View):
         file = request.FILES.get("employees_file")
         if not file:
             messages.error(self.request, "Please select a file first")
-            return redirect(request.META.get("HTTP_REFERER"))
+            return redirect("html:employees-upload")
         data = StringIO(file.read().decode("utf-8"))
         next(data)
         organization = self.request.user.organization
