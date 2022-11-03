@@ -74,7 +74,7 @@ class UploadEmployees(PrivateViewMixin, View):
                 )
         except Exception as e:
             messages.error(self.request, str(e))
-            return redirect(request.META.get("HTTP_REFERER"))
+            return redirect("html:employees-upload")
 
         messages.success(self.request, "Employees added successfully")
         return redirect("html:employees")
