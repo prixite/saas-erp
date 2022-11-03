@@ -1,10 +1,10 @@
 {
   "status": "done",
   "assets": {
-    "main.ee0a510efc4e7e850ce9.js": {
-      "name": "main.ee0a510efc4e7e850ce9.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.ee0a510efc4e7e850ce9.js",
-      "publicPath": "/static/main.ee0a510efc4e7e850ce9.js"
+    "main.cac8e1c098cca959a35e.js": {
+      "name": "main.cac8e1c098cca959a35e.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.cac8e1c098cca959a35e.js",
+      "publicPath": "/static/main.cac8e1c098cca959a35e.js"
     },
     "4cf054fe5895e3e00f70.jpeg": {
       "name": "4cf054fe5895e3e00f70.jpeg",
@@ -135,31 +135,6 @@
       "name": "vendor.4b8c02a53af969ff4351.js",
       "path": "/home/faisal/Desktop/saas-erp/frontend/dist/vendor.4b8c02a53af969ff4351.js",
       "publicPath": "/static/vendor.4b8c02a53af969ff4351.js"
-    },
-    "main.393a0fce545771555ea1.js": {
-      "name": "main.393a0fce545771555ea1.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.393a0fce545771555ea1.js",
-      "publicPath": "/static/main.393a0fce545771555ea1.js"
-    },
-    "main.72c2ae1a72418f9f4e84.js": {
-      "name": "main.72c2ae1a72418f9f4e84.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.72c2ae1a72418f9f4e84.js",
-      "publicPath": "/static/main.72c2ae1a72418f9f4e84.js"
-    },
-    "main.28e99f07fca9cafaf344.js": {
-      "name": "main.28e99f07fca9cafaf344.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.28e99f07fca9cafaf344.js",
-      "publicPath": "/static/main.28e99f07fca9cafaf344.js"
-    },
-    "main.f33a902747f48b946287.js": {
-      "name": "main.f33a902747f48b946287.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.f33a902747f48b946287.js",
-      "publicPath": "/static/main.f33a902747f48b946287.js"
-    },
-    "main.cac8e1c098cca959a35e.js": {
-      "name": "main.cac8e1c098cca959a35e.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.cac8e1c098cca959a35e.js",
-      "publicPath": "/static/main.cac8e1c098cca959a35e.js"
     }
   },
   "chunks": {
