@@ -43,11 +43,11 @@ class UploadEmployees(PrivateViewMixin, View):
         if not file:
             messages.error(self.request, "Please select a file first")
             return redirect("html:employees-upload")
-        data = StringIO(file.read().decode("utf-8"))
-        next(data)
-        organization = self.request.user.organization
 
         try:
+            data = StringIO(file.read().decode("utf-8"))
+            next(data)
+            organization = self.request.user.organization
             for row in csv.reader(data):
 
                 default_role = models.Role.objects.get(
