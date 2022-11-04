@@ -18,7 +18,7 @@ function DataGridTable() {
       field: "id",
       headerName: "ID",
       sortable: false,
-      width: 400,
+      width: 300,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
