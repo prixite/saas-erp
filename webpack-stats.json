@@ -1,10 +1,10 @@
 {
   "status": "done",
   "assets": {
-    "main.e7420685adfe6533304c.js": {
-      "name": "main.e7420685adfe6533304c.js",
-      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.e7420685adfe6533304c.js",
-      "publicPath": "/static/main.e7420685adfe6533304c.js"
+    "main.a19534112ad2acd34dcd.js": {
+      "name": "main.a19534112ad2acd34dcd.js",
+      "path": "/home/faisal/Desktop/saas-erp/frontend/dist/main.a19534112ad2acd34dcd.js",
+      "publicPath": "/static/main.a19534112ad2acd34dcd.js"
     },
     "4cf054fe5895e3e00f70.jpeg": {
       "name": "4cf054fe5895e3e00f70.jpeg",
@@ -140,7 +140,7 @@
   "chunks": {
     "main": [
       "vendor.4b8c02a53af969ff4351.js",
-      "main.e7420685adfe6533304c.js"
+      "main.a19534112ad2acd34dcd.js"
     ]
   },
   "publicPath": "/static/"

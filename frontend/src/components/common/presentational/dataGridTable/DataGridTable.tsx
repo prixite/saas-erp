@@ -109,7 +109,6 @@ function DataGridTable() {
               aria-label="Show"
               id="show-btn-id"
               className="delete-btn"
-              onClick={handleIconClicks}
             >
               <ShowIconSVG />
             </IconButton>
