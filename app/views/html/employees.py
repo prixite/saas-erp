@@ -1,6 +1,11 @@
+import csv
+from io import StringIO
+
+from django.contrib import messages
 from django.db import transaction
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from app import forms, models
@@ -27,6 +32,52 @@ class CreateEmployee(PrivateViewMixin, EmployeeOrganizationMixin, CreateView):
         kwargs = super().get_form_kwargs()
         kwargs["request"] = self.request
         return kwargs
+
+
+class UploadEmployees(PrivateViewMixin, View):
+    module = models.Module.ModuleType.EMPLOYEES
+
+    def post(self, request, *args, **kwargs):
+        file = request.FILES.get("employees_file")
+        if not file or not file.name.endswith(".csv"):
+            messages.error(request, "Please select a CSV file")
+            return redirect("html:employees")
+
+        try:
+            data = StringIO(file.read().decode("utf-8"))
+            next(data)
+            organization = request.user.organization
+
+            with transaction.atomic:
+                for row in csv.reader(data):
+                    default_role = models.Role.objects.get(
+                        permission=models.Role.Permission[row[3]],
+                        organization=organization,
+                    )
+
+                    user, _ = models.User.objects.get_or_create(
+                        username=row[0],
+                        email=row[0],
+                        first_name=row[1],
+                        last_name=row[2],
+                        organization=organization,
+                        default_role=default_role,
+                    )
+
+                    models.Employee.objects.get_or_create(
+                        user=user,
+                        nic=row[4],
+                        contact_number=row[5],
+                        designation=row[6],
+                        date_of_joining=row[7],
+                        organization=organization,
+                    )
+        except Exception as e:
+            messages.error(request, str(e))
+            return redirect("html:employees")
+
+        messages.success(request, "Employees added successfully")
+        return redirect("html:employees")
 
 
 class UpdateEmployee(PrivateViewMixin, EmployeeOrganizationMixin, UpdateView):
