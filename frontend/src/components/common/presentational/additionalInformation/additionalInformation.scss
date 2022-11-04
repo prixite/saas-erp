@@ -1,0 +1,13 @@
+.additional-Information-main {
+  border: 2px solid red;
+
+  .department {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+    .department-text {
+    }
+  }
+}

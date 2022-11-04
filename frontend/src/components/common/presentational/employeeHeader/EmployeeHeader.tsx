@@ -10,6 +10,7 @@ function EmployeeHeader() {
       <div className="employee-Header-main">
         <div className="empoyee-Header-Div-One">
           {/* <h2>One</h2> */}
+
           <img
             className="profile-pic"
             src={profileIcon}

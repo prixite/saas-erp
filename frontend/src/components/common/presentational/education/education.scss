@@ -1,0 +1,58 @@
+.education-main {
+  // height: 211px;
+  // height: 230px;
+  height: 242px;
+  max-width: 1315px;
+  display: flex;
+  align-items: center;
+  /* width: 1315px; */
+  /* left: 0px; */
+  /* top: 139px; */
+  background: #ffffff;
+  border: 2px solid #e7e7e7;
+  border-radius: 12px;
+  justify-content: flex-start;
+
+  .child-div-one {
+    .experience-text {
+      // background-color: orange;
+      /* position: absolute; */
+      /* width: 68px; */
+      // height: 17px;
+      /* left: 18px; */
+      /* top: 157px; */
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.011em;
+      color: #000000;
+      opacity: 0.5;
+      margin-top: 18px;
+      margin-left: 18px;
+      // margin-bottom: 12px;
+    }
+  }
+
+  .child-div-two {
+    margin-top: 12px;
+
+    .child-div-two-A {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .child-div-two-A-A1 {
+        height: inherit;
+        width: inherit;
+      }
+      .child-div-two-A-A2 {
+      }
+    }
+  }
+  .child-div-two-B {
+    .child-div-two-A {
+    }
+  }
+}
