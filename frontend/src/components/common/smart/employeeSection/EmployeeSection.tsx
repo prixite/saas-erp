@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Grid } from "@mui/material";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import EmployeeHeader from "@src/components/common/presentational/employeeHeader/EmployeeHeader";
 import AdditionalInformation from "../../presentational/additionalInformation/AdditionalInformation";
@@ -5,14 +7,27 @@ import Education from "../../presentational/education/Education";
 import Experience from "../../presentational/experience/Experience";
 
 function EmployeeSection() {
+  const [buttonNameClicked, setButtonNameClicked] = useState<string>("BASIC");
   return (
     <>
       {/* <h1>EmployeeSection</h1> */}
       <EmployeeHeader />
-      <EmployeeButtons />
-      <AdditionalInformation />
-      <Experience />
-      <Education />
+      <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
+      {buttonNameClicked === "BASIC" ? (
+        <Grid xs={12} sm={12}>
+          <AdditionalInformation />
+          <Experience />
+          <Education />
+        </Grid>
+      ) : buttonNameClicked === "DOCS" ? (
+        <Grid xs={12} sm={12}>
+          <h1>DOCS</h1>
+        </Grid>
+      ) : buttonNameClicked === "COMP" ? (
+        <h1>COMP</h1>
+      ) : (
+        ""
+      )}
     </>
   );
 }
