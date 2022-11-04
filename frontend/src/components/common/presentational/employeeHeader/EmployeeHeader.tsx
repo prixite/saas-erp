@@ -67,7 +67,7 @@ function EmployeeHeader() {
               <img
                 className="profile-pic"
                 src={emailIcon}
-                alt="profile pic"
+                alt="email"
                 style={{
                   height: "20px",
                   width: "20px",
@@ -80,7 +80,7 @@ function EmployeeHeader() {
               <img
                 className="profile-pic"
                 src={phoneIcon}
-                alt="profile pic"
+                alt="phone"
                 style={{
                   height: "20px",
                   width: "20px",
@@ -97,7 +97,7 @@ function EmployeeHeader() {
             <img
               className="profile-pic"
               src={ThreeDotter}
-              alt="profile pic"
+              alt="menu"
               style={{
                 height: "20px",
                 width: "20px",
