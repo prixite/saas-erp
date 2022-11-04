@@ -37,46 +37,46 @@ class CreateEmployee(PrivateViewMixin, EmployeeOrganizationMixin, CreateView):
 class UploadEmployees(PrivateViewMixin, View):
     module = models.Module.ModuleType.EMPLOYEES
 
-    @transaction.atomic
     def post(self, request, *args, **kwargs):
         file = request.FILES.get("employees_file")
-        if not file:
-            messages.error(self.request, "Please select a file first")
-            return redirect("html:employees-upload")
+        if not file or not file.name.endswith(".csv"):
+            messages.error(request, "Please select a CSV file")
+            return redirect("html:employees")
 
         try:
             data = StringIO(file.read().decode("utf-8"))
             next(data)
-            organization = self.request.user.organization
-            for row in csv.reader(data):
+            organization = request.user.organization
 
-                default_role = models.Role.objects.get(
-                    permission=models.Role.Permission[row[3]],
-                    organization=organization,
-                )
+            with transaction.atomic:
+                for row in csv.reader(data):
+                    default_role = models.Role.objects.get(
+                        permission=models.Role.Permission[row[3]],
+                        organization=organization,
+                    )
 
-                user, _ = models.User.objects.get_or_create(
-                    username=row[0],
-                    email=row[0],
-                    first_name=row[1],
-                    last_name=row[2],
-                    organization=organization,
-                    default_role=default_role,
-                )
+                    user, _ = models.User.objects.get_or_create(
+                        username=row[0],
+                        email=row[0],
+                        first_name=row[1],
+                        last_name=row[2],
+                        organization=organization,
+                        default_role=default_role,
+                    )
 
-                models.Employee.objects.get_or_create(
-                    user=user,
-                    nic=row[4],
-                    contact_number=row[5],
-                    designation=row[6],
-                    date_of_joining=row[7],
-                    organization=organization,
-                )
+                    models.Employee.objects.get_or_create(
+                        user=user,
+                        nic=row[4],
+                        contact_number=row[5],
+                        designation=row[6],
+                        date_of_joining=row[7],
+                        organization=organization,
+                    )
         except Exception as e:
-            messages.error(self.request, str(e))
-            return redirect("html:employees-upload")
+            messages.error(request, str(e))
+            return redirect("html:employees")
 
-        messages.success(self.request, "Employees added successfully")
+        messages.success(request, "Employees added successfully")
         return redirect("html:employees")
 
 
