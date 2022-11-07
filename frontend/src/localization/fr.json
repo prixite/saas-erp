@@ -4,7 +4,8 @@
       "filterButton": "Filter"
     },
     "Employee": {
-        "heading": "Employee’s Module"
+        "heading": "Employee’s Module",
+        "employeeExperienceLetters":"Experience Letters"
       },
       "Dashboard": {
         "dashboardHeading": "Dashboard"

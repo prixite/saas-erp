@@ -4,6 +4,7 @@ export interface btnsInterface {
 }
 export interface employeeInterface {
   employeeHeading: string;
+  employeeExperienceLetters: string;
 }
 export interface userInterface {
   userHeading: string;
