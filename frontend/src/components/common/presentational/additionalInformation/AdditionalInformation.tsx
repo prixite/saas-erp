@@ -1,5 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import "./additionalInformation.scss";
+import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 
 function AdditionalInformation() {
@@ -13,10 +14,8 @@ function AdditionalInformation() {
         sm={12}
         sx={{
           border: "1px solid #E7E7E7",
-          width: "1315px",
           height: "160px",
           background: "#FFFFFF",
-          // border: "1px solid #E7E7E7",
           borderRadius: "12px",
         }}
       >
@@ -25,9 +24,7 @@ function AdditionalInformation() {
           container
           item
           sx={{
-            // border:'1px solid blue',
             margin: "18px 16px 12px 18px",
-            // width: "137px",
             height: "17px",
           }}
           xs={12}
@@ -63,18 +60,13 @@ function AdditionalInformation() {
               justifyContent: "flex-end",
             }}
           >
-            <div
-              style={{
-                marginRight: "8px",
-                // border:"1px solid blue"
-              }}
-            >
+            <div>
               {/* Icon */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "flex-end",
                   width: "36px",
                   background: "white",
                 }}
@@ -104,7 +96,6 @@ function AdditionalInformation() {
           container
           item
           style={{
-            // border:"1px solid black",
             height: "19px",
             margin: "0px 16px 20px 18px",
           }}
@@ -113,7 +104,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                // width: "89px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -150,7 +140,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                // width: "89px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -168,7 +157,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                // width: "180px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -187,7 +175,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                //   width: "89px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -225,7 +212,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                //   width: "89px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -244,7 +230,6 @@ function AdditionalInformation() {
             <Typography
               variant="body1"
               style={{
-                //   width: "180px",
                 height: "19px",
                 fontFamily: "Lato",
                 fontStyle: "normal",
@@ -267,84 +252,128 @@ function AdditionalInformation() {
           container
           item
           style={{
-            // border:"1px solid black",
             height: "19px",
             margin: "0px 16px 20px 18px",
           }}
         >
-          <Grid container item xs={6} sm={3}>
-            <Typography
-              variant="body1"
-              style={{
-                //   width: "89px",
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-                opacity: "0.8",
-                marginRight: "16px",
-                overflow: "hiddem",
-              }}
-            >
-              Emergency Contact:
-            </Typography>
-            <Typography
-              variant="body1"
-              style={{
-                //   width: "180px",
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "700",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-              }}
-            >
-              +123 4567909
-            </Typography>
+          <Grid
+            container
+            item
+            xs={6}
+            sm={3}
+            display="flex"
+            alignItems={"center"}
+            justifyContent="flex-start"
+          >
+            <Grid item>
+              <Typography
+                variant="body1"
+                style={{
+                  //   width: "89px",
+                  height: "19px",
+                  fontFamily: "Lato",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                  lineHeight: "19px",
+                  letterSpacing: "-0.011em",
+                  color: "#000000",
+                  opacity: "0.8",
+                  marginRight: "16px",
+                  overflow: "hiddem",
+                }}
+              >
+                Emergency Contact:
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <Typography
+                variant="body1"
+                style={{
+                  //   width: "180px",
+                  height: "19px",
+                  fontFamily: "Lato",
+                  fontStyle: "normal",
+                  fontWeight: "700",
+                  fontSize: "16px",
+                  lineHeight: "19px",
+                  letterSpacing: "-0.011em",
+                  color: "#000000",
+                }}
+              >
+                +123 4567909
+              </Typography>
+            </Grid>
           </Grid>
 
-          <Grid container item xs={6} sm={9}>
-            <Typography
-              variant="body1"
-              style={{
-                //   width: "89px",
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-                opacity: "0.8",
-                marginRight: "16px",
-              }}
+          <Grid
+            container
+            item
+            xs={6}
+            sm={8}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Grid item>
+              <Typography
+                variant="body1"
+                style={{
+                  height: "19px",
+                  fontFamily: "Lato",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                  lineHeight: "19px",
+                  letterSpacing: "-0.011em",
+                  color: "#000000",
+                  opacity: "0.8",
+                  marginRight: "16px",
+                }}
+              >
+                CNIC:
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <Typography
+                variant="body1"
+                style={{
+                  height: "19px",
+                  fontFamily: "Lato",
+                  fontStyle: "normal",
+                  fontWeight: "700",
+                  fontSize: "16px",
+                  lineHeight: "19px",
+                  letterSpacing: "-0.011em",
+                  color: "#000000",
+                }}
+              >
+                36044-0935608-8
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              display={"flex"}
+              alignItems="center"
+              justifyContent="center"
             >
-              CNIC:
-            </Typography>
-            <Typography
-              variant="body1"
-              style={{
-                //   width: "180px",
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "700",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-              }}
-            >
-              36044-0935608-8
-            </Typography>
+              <img
+                src={HideIcon}
+                alt="profile pic"
+                style={{
+                  height: "19px",
+                  width: "19px",
+                  background: "inherit",
+                  marginLeft: "11px",
+                  padding: "0px",
+                  marginBottom: "2px",
+                }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

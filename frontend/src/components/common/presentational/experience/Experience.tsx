@@ -8,20 +8,12 @@ function Experience() {
   return (
     <>
       {/* <h1>Experience</h1> */}
-      <Grid
-        container
-        className="experience-main"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          marginTop: "16px",
-        }}
-      >
+      <Grid container className="experience-main">
         <Grid container item xs={12} sm={12} className="child-div-one">
           <Grid item xs={10} sm={10}>
             <Typography className="experience-text">Experience</Typography>
           </Grid>
+
           <Grid
             item
             sx={{
@@ -32,19 +24,17 @@ function Experience() {
             xs={2}
             sm={2}
           >
-            {/* A */}
             <div
               style={{
-                marginRight: "24px",
-                // border:"1px solid blue"
+                marginRight: "18px",
+                marginTop: "18px",
               }}
             >
-              {/* Icon */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "flex-end",
                   width: "36px",
                   background: "white",
                 }}
@@ -62,8 +52,8 @@ function Experience() {
               </div>
             </div>
           </Grid>
-          {/* <Typography className='experience-text'>Experience</Typography> */}
         </Grid>
+
         <Grid
           container
           item
@@ -73,55 +63,24 @@ function Experience() {
           className="child-div-two"
         >
           {/* B */}
-          <Grid item xs={2} sm={2} className="child-div-two-A">
-            {/* 2A */}
-            {/* <div className="child-div-two-A-A1"> */}
+          <Grid item className="child-div-two-A">
             <img
               className="profile-pic"
               src={CompanyLogoOne}
               alt="profile pic"
               style={{
                 background: "inherit",
-                // width: "48px",
+                width: "48px",
+                height: "48px",
                 marginLeft: "18px",
-                // marginRight:"auto",
-                height: "75px",
+                marginRight: "16px",
               }}
             />
-            {/* </div> */}
           </Grid>
-          <Grid
-            container
-            item
-            // border='1px solid red'
-            xs={10}
-            sm={10}
-            className="child-div-two-B"
-            sx={{
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-            }}
-          >
-            {/* 2B */}
-            <Grid
-              className="child-div-two-A"
-              item
-              sx={{ width: "100%", marginBottom: "8px" }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "18px",
-                  lineHeight: "18px",
-                  letterSpacing: "-0.011em",
-                  color: "#000000",
-                  marginTop: "16px",
-                }}
-              >
+
+          <Grid container item className="child-div-two-B">
+            <Grid className="child-div-two-A" item>
+              <Typography variant="body1" className="para">
                 Product Designer
               </Typography>
             </Grid>
@@ -132,37 +91,15 @@ function Experience() {
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
-              sx={{ width: "100%" }}
+              className="child-div-three-A"
             >
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Lato",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "18px",
-                    lineHeight: "22px",
-                    letterSpacing: "-0.011em",
-                    color: "#000000",
-                  }}
-                >
+              <Grid item className="para-One-Div">
+                <Typography variant="body1" className="para">
                   i2c.inc{" "}
                 </Typography>
               </Grid>
-              <Grid item style={{ marginLeft: "auto", marginRight: "48px" }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Lato",
-                    fontStyle: "normal",
-                    fontWeight: "600",
-                    fontSize: "18px",
-                    lineHeight: "22px",
-                    letterSpacing: "-0.011em",
-                    color: "#000000",
-                  }}
-                >
+              <Grid item className="para-Two-Div">
+                <Typography variant="body1" className="para">
                   2016-2022
                 </Typography>
               </Grid>
@@ -170,14 +107,11 @@ function Experience() {
           </Grid>
         </Grid>
 
-        {/* ______________________________________________________________________________________________________________________________________ */}
-        {/* <br /> */}
         <Grid xs={12} sm={12}>
           <Divider
             sx={{ color: "#E7E7E7", marginLeft: "24px", marginRight: "24px" }}
           />
         </Grid>
-        {/* _____________________________________________________________________________________________________________________________________ */}
 
         <Grid
           container
@@ -187,56 +121,24 @@ function Experience() {
           height={90}
           className="child-div-two"
         >
-          {/* C */}
-          <Grid item xs={2} sm={2} className="child-div-two-A">
-            {/* 2A */}
-            {/* <div className="child-div-two-A-A1"> */}
+          <Grid item className="child-div-two-A">
             <img
               className="profile-pic"
               src={CompanyLogoTwo}
               alt="profile pic"
               style={{
                 background: "inherit",
-                // width: "48px",
+                width: "48px",
+                height: "48px",
                 marginLeft: "18px",
-                // marginRight:"auto",
-                height: "75px",
+                marginRight: "16px",
               }}
             />
-            {/* </div> */}
           </Grid>
-          <Grid
-            container
-            item
-            // border='1px solid red'
-            xs={10}
-            sm={10}
-            className="child-div-two-B"
-            sx={{
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-            }}
-          >
-            {/* 2B */}
-            <Grid
-              className="child-div-two-A"
-              item
-              sx={{ width: "100%", marginBottom: "8px" }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "18px",
-                  lineHeight: "18px",
-                  letterSpacing: "-0.011em",
-                  color: "#000000",
-                  marginTop: "16px",
-                }}
-              >
+
+          <Grid container item className="child-div-two-B">
+            <Grid className="child-div-two-A" item>
+              <Typography variant="body1" className="para">
                 UX Designer
               </Typography>
             </Grid>
@@ -247,46 +149,21 @@ function Experience() {
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
-              sx={{ width: "100%" }}
+              className="child-div-three-A"
             >
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Lato",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "18px",
-                    lineHeight: "22px",
-                    letterSpacing: "-0.011em",
-                    color: "#000000",
-                  }}
-                >
-                  Tkxcel{" "}
+              <Grid item className="para-One-Div">
+                <Typography variant="body1" className="para">
+                  Tkxel{" "}
                 </Typography>
               </Grid>
-              <Grid item style={{ marginLeft: "auto", marginRight: "48px" }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Lato",
-                    fontStyle: "normal",
-                    fontWeight: "600",
-                    fontSize: "18px",
-                    lineHeight: "22px",
-                    letterSpacing: "-0.011em",
-                    color: "#000000",
-                  }}
-                >
+              <Grid item className="para-Two-Div">
+                <Typography variant="body1" className="para">
                   2016-2022
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        {/* <Grid item> */}
-        {/* C */}
-        {/* </Grid> */}
       </Grid>
     </>
   );
