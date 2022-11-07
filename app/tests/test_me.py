@@ -1,5 +1,6 @@
-from app.tests.base import BaseTestCase
 from rest_framework import status
+
+from app.tests.base import BaseTestCase
 
 
 class MeTestCase(BaseTestCase):
