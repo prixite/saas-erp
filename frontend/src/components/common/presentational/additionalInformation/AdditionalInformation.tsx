@@ -97,7 +97,7 @@ function AdditionalInformation() {
           item
           style={{
             height: "19px",
-            margin: "0px 16px 20px 18px",
+            margin: "0px 16px 18px 18px",
           }}
         >
           <Grid container item xs={3} sm={3} style={{ minWidth: "25%" }}>
