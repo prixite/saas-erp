@@ -10,7 +10,7 @@ import { localizedData } from "@src/helpers/utils/language";
 
 const DocumentSection = () => {
   const constantData: LocalizationInterface = localizedData();
-  const { employeeExperienceLetters } = constantData.Employee;
+  const { employeeExperienceLetters, uploadDocument } = constantData.Employee;
   return (
     <Box className="documentation-main">
       <Box className="documentation-heading">
@@ -25,8 +25,11 @@ const DocumentSection = () => {
             <img className="doc-img" src={docIcon} alt="doc" />
           </Box>
           <Box className="doc-info-box">
-            <Typography> Product Designer at 12c.inc_Experience.pdf</Typography>
-            <Typography> 250 KB</Typography>
+            <Typography className="file-name">
+              {" "}
+              Product Designer at 12c.inc_Experience.pdf
+            </Typography>
+            <Typography className="file-szie"> 250 KB</Typography>
           </Box>
         </Grid>
         <Grid className="doc-actions" item xs={6} sm={6}>
@@ -41,8 +44,11 @@ const DocumentSection = () => {
             <img className="doc-img" src={docIcon} alt="doc" />
           </Box>
           <Box className="doc-info-box">
-            <Typography> Product Designer at 12c.inc_Experience.pdf</Typography>
-            <Typography> 250 KB</Typography>
+            <Typography className="file-name">
+              {" "}
+              Product Designer at 12c.inc_Experience.pdf
+            </Typography>
+            <Typography className="file-szie"> 250 KB</Typography>
           </Box>
         </Grid>
         <Grid className="doc-actions" item xs={6} sm={6}>
@@ -57,7 +63,7 @@ const DocumentSection = () => {
             {" "}
             <img className="upload-img" src={uploadIcon} alt="doc" />
           </span>{" "}
-          Upload Document
+          {uploadDocument}
         </Button>
       </Box>
     </Box>

@@ -5,6 +5,7 @@ export interface btnsInterface {
 export interface employeeInterface {
   employeeHeading: string;
   employeeExperienceLetters: string;
+  uploadDocument: string;
 }
 export interface userInterface {
   userHeading: string;
