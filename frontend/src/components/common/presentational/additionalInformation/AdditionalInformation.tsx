@@ -109,39 +109,10 @@ function AdditionalInformation() {
             sm={3}
             style={{ minWidth: "25%" }}
           >
-            <Typography
-              variant="body1"
-              style={{
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-                opacity: "0.8",
-                marginRight: "16px",
-                overflow: "hidden",
-              }}
-              className="typo-One"
-            >
+            <Typography variant="body1" className="typo-One">
               Joining Date:
             </Typography>
-            <Typography
-              variant="body1"
-              style={{
-                height: "19px",
-                fontFamily: "Lato",
-                fontStyle: "normal",
-                fontWeight: "700",
-                fontSize: "16px",
-                lineHeight: "19px",
-                letterSpacing: "-0.011em",
-                color: "#000000",
-              }}
-              className="typo-Two"
-            >
+            <Typography variant="body1" className="typo-Two">
               17 Jan, 2023
             </Typography>
           </Grid>
@@ -157,21 +128,7 @@ function AdditionalInformation() {
             </Grid>
 
             <Grid className="ChildThree-A-Two" item>
-              <Typography
-                className="typo"
-                variant="body1"
-                style={{
-                  //   width: "180px",
-                  height: "19px",
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "700",
-                  fontSize: "16px",
-                  lineHeight: "19px",
-                  letterSpacing: "-0.011em",
-                  color: "#000000",
-                }}
-              >
+              <Typography className="typo" variant="body1">
                 +123 4567909
               </Typography>
             </Grid>
@@ -179,57 +136,18 @@ function AdditionalInformation() {
 
           <Grid className="ChildThree-B" container item xs={6} sm={8}>
             <Grid className="ChildThree-B-One" item>
-              <Typography
-                className="typo"
-                variant="body1"
-                style={{
-                  height: "19px",
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "19px",
-                  letterSpacing: "-0.011em",
-                  color: "#000000",
-                  opacity: "0.8",
-                  marginRight: "16px",
-                }}
-              >
+              <Typography className="typo" variant="body1">
                 CNIC:
               </Typography>
             </Grid>
 
             <Grid className="ChildThree-B-Two" item>
-              <Typography
-                className="typo"
-                variant="body1"
-                style={{
-                  height: "19px",
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "700",
-                  fontSize: "16px",
-                  lineHeight: "19px",
-                  letterSpacing: "-0.011em",
-                  color: "#000000",
-                }}
-              >
+              <Typography className="typo" variant="body1">
                 36044-0935608-8
               </Typography>
             </Grid>
             <Grid className="ChildThree-B-Three" item>
-              <img
-                src={HideIcon}
-                alt="profile pic"
-                style={{
-                  height: "19px",
-                  width: "19px",
-                  background: "inherit",
-                  marginLeft: "11px",
-                  padding: "0px",
-                  marginBottom: "2px",
-                }}
-              />
+              <img src={HideIcon} alt="profile pic" />
             </Grid>
           </Grid>
         </Grid>
