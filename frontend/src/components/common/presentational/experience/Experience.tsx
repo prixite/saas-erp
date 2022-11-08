@@ -3,15 +3,22 @@ import "./experience.scss";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
 import CompanyLogoTwo from "@src/assets/svgs/CompanyLogoTwo.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 
 function Experience() {
+  const constantData: LocalizationInterface = localizedData();
+  const { experienceHeading } = constantData.Experience;
+
   return (
     <>
       {/* <h1>Experience</h1> */}
       <Grid container className="experience-main">
         <Grid container item xs={12} sm={12} className="child-div-one">
           <Grid item xs={10} sm={10}>
-            <Typography className="experience-text">Experience</Typography>
+            <Typography className="experience-text">
+              {experienceHeading}
+            </Typography>
           </Grid>
 
           <Grid

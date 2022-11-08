@@ -18,6 +18,14 @@
     },
     "Payroll": {
       "payrollHeading": "Payroll"
+    },
+    "Experience":{
+      "experienceHeading": "Experience"
+    },
+    "Education":{
+      "educationHeading": "Education"
+    },
+    "AdditionalInformation":{
+      "additionalInformationHeading": "Additional Information"
     }
-
   }

@@ -17,7 +17,15 @@ export interface accountInterface {
 export interface dashboardInterface {
   dashboardHeading: string;
 }
-
+export interface experienceInterface {
+  experienceHeading: string;
+}
+export interface educationInterface {
+  educationHeading: string;
+}
+export interface additionalInformationInterface {
+  additionalInformationHeading: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -25,4 +33,7 @@ export interface LocalizationInterface {
   User: userInterface;
   Payroll: payrollInterface;
   Account: accountInterface;
+  Experience: experienceInterface;
+  Education: educationInterface;
+  AdditionalInformation: additionalInformationInterface;
 }

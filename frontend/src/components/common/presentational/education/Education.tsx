@@ -3,15 +3,22 @@ import "./education.scss";
 import CompanyIconFour from "@src/assets/svgs/CompanyIconFour.svg";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 
 function Education() {
+  const constantData: LocalizationInterface = localizedData();
+  const { educationHeading } = constantData.Education;
+
   return (
     <>
       {/* Education */}
       <Grid container className="education-main">
         <Grid container item xs={12} sm={12} className="child-div-one">
           <Grid item xs={10} sm={10}>
-            <Typography className="experience-text">Experience</Typography>
+            <Typography className="experience-text">
+              {educationHeading}
+            </Typography>
           </Grid>
 
           <Grid
