@@ -226,6 +226,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .logo {
+          height: 19px;
+          width: 19px;
+          background: inherit;
+          margin-left: 11px;
+          padding: 0px;
+          margin-bottom: 2px;
+        }
       }
     }
   }

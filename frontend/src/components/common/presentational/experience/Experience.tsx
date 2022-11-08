@@ -12,49 +12,22 @@ function Experience() {
 
   return (
     <>
-      {/* <h1>Experience</h1> */}
-      <Grid container className="experience-main">
-        <Grid container item xs={12} sm={12} className="child-div-one">
-          <Grid item xs={10} sm={10}>
+      {/* Education */}
+      <Grid className="experience-main" container>
+        <Grid className="child-div-one" container item xs={12} sm={12}>
+          <Grid item xs={10} sm={10} className="child-div-one-container-A">
             <Typography className="experience-text">
               {experienceHeading}
             </Typography>
           </Grid>
 
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-            xs={2}
-            sm={2}
-          >
-            <div
-              style={{
-                marginRight: "18px",
-                marginTop: "18px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  width: "36px",
-                  background: "white",
-                }}
-              >
+          <Grid className="child-div-one-container-B" item xs={2} sm={2}>
+            <div className="box">
+              <div className="subBox">
                 <img
                   className="profile-pic"
                   src={ThreeDotter}
                   alt="profile pic"
-                  style={{
-                    height: "19px",
-                    width: "19px",
-                    background: "inherit",
-                  }}
                 />
               </div>
             </div>
@@ -62,12 +35,12 @@ function Experience() {
         </Grid>
 
         <Grid
+          className="child-div-two"
           container
           item
           xs={12}
           sm={12}
           height={90}
-          className="child-div-two"
         >
           {/* B */}
           <Grid item className="child-div-two-A">
@@ -75,13 +48,6 @@ function Experience() {
               className="profile-pic"
               src={CompanyLogoOne}
               alt="profile pic"
-              style={{
-                background: "inherit",
-                width: "48px",
-                height: "48px",
-                marginLeft: "18px",
-                marginRight: "16px",
-              }}
             />
           </Grid>
 
@@ -114,32 +80,25 @@ function Experience() {
           </Grid>
         </Grid>
 
-        <Grid xs={12} sm={12}>
+        <Grid className="divider" xs={12} sm={12}>
           <Divider
             sx={{ color: "#E7E7E7", marginLeft: "24px", marginRight: "24px" }}
           />
         </Grid>
 
         <Grid
+          className="child-div-two"
           container
           item
           xs={12}
           sm={12}
           height={90}
-          className="child-div-two"
         >
           <Grid item className="child-div-two-A">
             <img
               className="profile-pic"
               src={CompanyLogoTwo}
               alt="profile pic"
-              style={{
-                background: "inherit",
-                width: "48px",
-                height: "48px",
-                marginLeft: "18px",
-                marginRight: "16px",
-              }}
             />
           </Grid>
 

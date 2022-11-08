@@ -13,48 +13,21 @@ function Education() {
   return (
     <>
       {/* Education */}
-      <Grid container className="education-main">
-        <Grid container item className="child-div-one" xs={12} sm={12}>
-          <Grid item xs={10} sm={10}>
+      <Grid className="education-main" container>
+        <Grid className="child-div-one" container item xs={12} sm={12}>
+          <Grid item xs={10} sm={10} className="child-div-one-container-A">
             <Typography className="experience-text">
               {educationHeading}
             </Typography>
           </Grid>
 
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-            xs={2}
-            sm={2}
-          >
-            <div
-              style={{
-                marginRight: "18px",
-                marginTop: "18px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  width: "36px",
-                  background: "white",
-                }}
-              >
+          <Grid className="child-div-one-container-B" item xs={2} sm={2}>
+            <div className="box">
+              <div className="subBox">
                 <img
                   className="profile-pic"
                   src={ThreeDotter}
                   alt="profile pic"
-                  style={{
-                    height: "19px",
-                    width: "19px",
-                    background: "inherit",
-                  }}
                 />
               </div>
             </div>
@@ -75,13 +48,6 @@ function Education() {
               className="profile-pic"
               src={CompanyIconThree}
               alt="profile pic"
-              style={{
-                background: "inherit",
-                width: "48px",
-                height: "48px",
-                marginLeft: "18px",
-                marginRight: "16px",
-              }}
             />
           </Grid>
 
@@ -115,7 +81,7 @@ function Education() {
           </Grid>
         </Grid>
 
-        <Grid xs={12} sm={12}>
+        <Grid className="divider" xs={12} sm={12}>
           <Divider
             sx={{ color: "#E7E7E7", marginLeft: "24px", marginRight: "24px" }}
           />
@@ -134,13 +100,6 @@ function Education() {
               className="profile-pic"
               src={CompanyIconFour}
               alt="profile pic"
-              style={{
-                background: "inherit",
-                width: "48px",
-                height: "48px",
-                marginLeft: "18px",
-                marginRight: "16px",
-              }}
             />
           </Grid>
 
