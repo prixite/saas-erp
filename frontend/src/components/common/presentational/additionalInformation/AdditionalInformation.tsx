@@ -147,7 +147,18 @@ function AdditionalInformation() {
               </Typography>
             </Grid>
             <Grid className="ChildThree-B-Three" item>
-              <img src={HideIcon} alt="profile pic" />
+              <img
+                src={HideIcon}
+                alt="profile pic"
+                style={{
+                  height: "19px",
+                  width: "19px",
+                  background: "inherit",
+                  marginLeft: "11px",
+                  padding: "0px",
+                  marginBottom: "2px",
+                }}
+              />
             </Grid>
           </Grid>
         </Grid>
