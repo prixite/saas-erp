@@ -36,11 +36,6 @@ function AdditionalInformation() {
                 className="profile-pic"
                 src={ThreeDotter}
                 alt="profile pic"
-                style={{
-                  height: "19px",
-                  width: "19px",
-                  background: "inherit",
-                }}
               />
             </div>
             {/* </div> */}
@@ -58,14 +53,7 @@ function AdditionalInformation() {
           item
           className="ChildTwo"
         >
-          <Grid
-            container
-            item
-            className="ChildTwo-A"
-            xs={3}
-            sm={3}
-            style={{ minWidth: "25%" }}
-          >
+          <Grid container item className="ChildTwo-A" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
               {/* Department: */}
               {department}
@@ -76,14 +64,7 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
 
-          <Grid
-            container
-            item
-            className="ChildTwo-B"
-            xs={3}
-            sm={3}
-            style={{ minWidth: "25%" }}
-          >
+          <Grid container item className="ChildTwo-B" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
               {manager}
             </Typography>
@@ -93,14 +74,7 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
 
-          <Grid
-            container
-            item
-            className="ChildTwo-C"
-            xs={3}
-            sm={3}
-            style={{ minWidth: "25%" }}
-          >
+          <Grid container item className="ChildTwo-C" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
               {totalExperience}
             </Typography>
@@ -110,14 +84,7 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
 
-          <Grid
-            container
-            item
-            className="ChildTwo-D"
-            xs={3}
-            sm={3}
-            style={{ minWidth: "25%" }}
-          >
+          <Grid container item className="ChildTwo-D" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
               {joiningDate}
             </Typography>
