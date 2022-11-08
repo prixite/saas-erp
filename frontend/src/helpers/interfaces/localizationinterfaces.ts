@@ -25,6 +25,18 @@ export interface educationInterface {
 }
 export interface additionalInformationInterface {
   additionalInformationHeading: string;
+  department: string;
+  manager: string;
+  totalExperience: string;
+  joiningDate: string;
+  emergencyContact: string;
+  cnic: string;
+}
+
+export interface employeeButtons {
+  basicBtn: string;
+  docsBtn: string;
+  compBtn: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
@@ -36,4 +48,5 @@ export interface LocalizationInterface {
   Experience: experienceInterface;
   Education: educationInterface;
   AdditionalInformation: additionalInformationInterface;
+  EmployeeButtons: employeeButtons;
 }

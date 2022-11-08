@@ -1,13 +1,21 @@
 import { Grid, Typography } from "@mui/material";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
-import "./additionalInformation.scss";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import "@src/components/common/presentational/additionalInformation/additionalInformation.scss";
 
 function AdditionalInformation() {
   const constantData: LocalizationInterface = localizedData();
-  const { additionalInformationHeading } = constantData.AdditionalInformation;
+  const {
+    additionalInformationHeading,
+    department,
+    manager,
+    totalExperience,
+    joiningDate,
+    emergencyContact,
+    cnic,
+  } = constantData.AdditionalInformation;
   return (
     <>
       {/* <h1>AdditionalInformation</h1> */}
@@ -59,7 +67,8 @@ function AdditionalInformation() {
             style={{ minWidth: "25%" }}
           >
             <Typography variant="body1" className="typo-One">
-              Department:
+              {/* Department: */}
+              {department}
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
@@ -76,7 +85,7 @@ function AdditionalInformation() {
             style={{ minWidth: "25%" }}
           >
             <Typography variant="body1" className="typo-One">
-              Manager:
+              {manager}
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
@@ -93,7 +102,7 @@ function AdditionalInformation() {
             style={{ minWidth: "25%" }}
           >
             <Typography variant="body1" className="typo-One">
-              Total Exerience:
+              {totalExperience}
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
@@ -110,7 +119,7 @@ function AdditionalInformation() {
             style={{ minWidth: "25%" }}
           >
             <Typography variant="body1" className="typo-One">
-              Joining Date:
+              {joiningDate}
             </Typography>
             <Typography variant="body1" className="typo-Two">
               17 Jan, 2023
@@ -123,7 +132,7 @@ function AdditionalInformation() {
           <Grid className="ChildThree-A" container item xs={6} sm={3}>
             <Grid className="ChildThree-A-One" item>
               <Typography className="typo" variant="body1">
-                Emergency Contact:
+                {emergencyContact}
               </Typography>
             </Grid>
 
@@ -137,7 +146,7 @@ function AdditionalInformation() {
           <Grid className="ChildThree-B" container item xs={6} sm={8}>
             <Grid className="ChildThree-B-One" item>
               <Typography className="typo" variant="body1">
-                CNIC:
+                {cnic}
               </Typography>
             </Grid>
 

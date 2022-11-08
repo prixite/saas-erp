@@ -1,10 +1,10 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import "./education.scss";
 import CompanyIconFour from "@src/assets/svgs/CompanyIconFour.svg";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import "@src/components/common/presentational/education/education.scss";
 
 function Education() {
   const constantData: LocalizationInterface = localizedData();
@@ -14,7 +14,7 @@ function Education() {
     <>
       {/* Education */}
       <Grid container className="education-main">
-        <Grid container item xs={12} sm={12} className="child-div-one">
+        <Grid container item className="child-div-one" xs={12} sm={12}>
           <Grid item xs={10} sm={10}>
             <Typography className="experience-text">
               {educationHeading}
@@ -62,12 +62,12 @@ function Education() {
         </Grid>
 
         <Grid
+          className="child-div-two"
           container
           item
           xs={12}
           sm={12}
           height={90}
-          className="child-div-two"
         >
           {/* B */}
           <Grid item className="child-div-two-A">
@@ -122,12 +122,12 @@ function Education() {
         </Grid>
 
         <Grid
+          className="child-div-two"
           container
           item
           xs={12}
           sm={12}
           height={90}
-          className="child-div-two"
         >
           <Grid item className="child-div-two-A">
             <img

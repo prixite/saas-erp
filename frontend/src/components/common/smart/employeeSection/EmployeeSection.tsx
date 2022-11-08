@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
+import AdditionalInformation from "@src/components/common/presentational/additionalInformation/AdditionalInformation";
+import Education from "@src/components/common/presentational/education/Education";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import EmployeeHeader from "@src/components/common/presentational/employeeHeader/EmployeeHeader";
-import AdditionalInformation from "../../presentational/additionalInformation/AdditionalInformation";
-import Education from "../../presentational/education/Education";
-import Experience from "../../presentational/experience/Experience";
+import Experience from "@src/components/common/presentational/experience/Experience";
 
 function EmployeeSection() {
   const [buttonNameClicked, setButtonNameClicked] = useState<string>("BASIC");
