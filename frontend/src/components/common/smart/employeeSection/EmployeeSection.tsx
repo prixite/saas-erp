@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
+import BenefitsSection from "@src/components/common/presentational/benefitsSection/benefitsSection";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import EmployeeHeader from "@src/components/common/presentational/employeeHeader/EmployeeHeader";
 import AdditionalInformation from "../../presentational/additionalInformation/AdditionalInformation";
@@ -24,7 +25,7 @@ function EmployeeSection() {
           <h1>DOCS</h1>
         </Grid>
       ) : buttonNameClicked === "COMP" ? (
-        <h1>COMP</h1>
+        <BenefitsSection />
       ) : (
         ""
       )}

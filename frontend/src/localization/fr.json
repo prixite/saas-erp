@@ -4,7 +4,15 @@
       "filterButton": "Filter"
     },
     "Employee": {
-        "heading": "Employee’s Module"
+        "heading": "Employee’s Module",
+        "employeeBenefitsHeading": "Salary & Increment History",
+        "currentSalary":"Current Salary",
+        "compensationType":"Compensation Type",
+        "compensationScheule": "Compensation Scheule",
+        "fuelAllowance":"Fuel Allowance",
+        "phoneAllowance":"Phone Allowance",
+        "overtimeAllowance":"Overtime Allowance",
+        "mealsAllowance": "Meals Allowance"
       },
       "Dashboard": {
         "dashboardHeading": "Dashboard"
