@@ -11,6 +11,8 @@ import crossIcon from "@src/assets/svgs/cross.svg";
 import "@src/components/shared/popUps/filterModal/filterModal.scss";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import resetIcon from "@src/assets/svgs/reset.svg";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 
 interface Props {
   open: boolean;
@@ -22,11 +24,21 @@ function valuetext(value: number) {
 }
 
 const FilterModal = ({ open, handleClose }: Props) => {
+  const constantData: LocalizationInterface = localizedData();
+  const {
+    filterHeading,
+    filterSubheading,
+    filterSalaryHeading,
+    filterResetBtn,
+    filterSubmitBtn,
+    filterNameLabel,
+    filterDesignationLabel,
+  } = constantData.Modals;
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
   const [nameError, setNameError] = useState("");
   const [designationErrror, setDesignationError] = useState("");
-  const [value, setValue] = useState<number[]>([20, 37]);
+  const [value, setValue] = useState<number[]>([50, 80]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
@@ -51,9 +63,9 @@ const FilterModal = ({ open, handleClose }: Props) => {
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
-              <Typography className="heading-text">Filter</Typography>
+              <Typography className="heading-text">{filterHeading}</Typography>
               <Typography className="subheading-text">
-                Can optimize your result by applying filters
+                {filterSubheading}
               </Typography>
             </Box>
             <Box className="cross-icon-box" onClick={handleClose}>
@@ -69,7 +81,7 @@ const FilterModal = ({ open, handleClose }: Props) => {
               required
               fullWidth
               name="Name"
-              label="Please Enter Name"
+              label={filterNameLabel}
               onChange={handleName}
               value={name}
               autoComplete="family-name"
@@ -81,7 +93,7 @@ const FilterModal = ({ open, handleClose }: Props) => {
               className="text-field-cls"
               required
               fullWidth
-              label="Please Enter Designation"
+              label={filterDesignationLabel}
               name="Designation"
               onChange={handleDesignation}
               value={designation}
@@ -91,7 +103,9 @@ const FilterModal = ({ open, handleClose }: Props) => {
             <p className="errorText">{designationErrror}</p>
           </Box>
           <Box className="salary-range-box">
-            <Typography className="salary-range-text">Salary Range</Typography>
+            <Typography className="salary-range-text">
+              {filterSalaryHeading}
+            </Typography>
             <Slider
               getAriaLabel={() => "Temperature range"}
               value={value}
@@ -108,10 +122,10 @@ const FilterModal = ({ open, handleClose }: Props) => {
               {" "}
               <img className="reset-img" src={resetIcon} alt="reset" />
             </span>{" "}
-            reset
+            {filterResetBtn}
           </Button>
           <Button className="submitBtn">
-            Submit
+            {filterSubmitBtn}
             <span>
               {" "}
               <img className="submit-img" src={submitIcon} alt="submit" />
