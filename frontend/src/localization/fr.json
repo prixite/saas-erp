@@ -4,7 +4,9 @@
       "filterButton": "Filter"
     },
     "Employee": {
-        "heading": "Employee’s Module"
+        "heading": "Employee’s Module",
+        "employeeExperienceLetters":"Experience Letters",
+        "uploadDocument": "Upload Document"
       },
       "Dashboard": {
         "dashboardHeading": "Dashboard"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
 import AdditionalInformation from "@src/components/common/presentational/additionalInformation/AdditionalInformation";
+import DocumentSection from "@src/components/common/presentational/documentSection/documentSection";
 import Education from "@src/components/common/presentational/education/Education";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import EmployeeHeader from "@src/components/common/presentational/employeeHeader/EmployeeHeader";
@@ -20,9 +21,7 @@ function EmployeeSection() {
           <Education />
         </Grid>
       ) : buttonNameClicked === "DOCS" ? (
-        <Grid xs={12} sm={12}>
-          <h1>DOCS</h1>
-        </Grid>
+        <DocumentSection />
       ) : buttonNameClicked === "COMP" ? (
         <h1>COMP</h1>
       ) : (

@@ -116,7 +116,7 @@ const Sidebar = (props) => {
           </ListItemButton>
           <ListItemButton
             onClick={() => {
-              navigate("/react/employee/");
+              navigate("/react/employees/");
             }}
             className="list-items-btn"
           >
@@ -124,7 +124,7 @@ const Sidebar = (props) => {
               <img
                 className="icon-img"
                 src={
-                  currentPath === "/react/employee/" ? workIconRed : workIcon
+                  currentPath === "/react/employees/" ? workIconRed : workIcon
                 }
               />
             </ListItemIcon>

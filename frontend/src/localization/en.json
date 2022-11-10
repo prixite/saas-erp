@@ -5,7 +5,9 @@
 
     },
     "Employee": {
-      "employeeHeading": "Employee’s Module"
+      "employeeHeading": "Employee’s Module",
+      "employeeExperienceLetters":"Experience Letters",
+      "uploadDocument": "Upload Document"
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"
