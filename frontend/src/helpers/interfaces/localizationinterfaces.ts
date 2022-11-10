@@ -4,6 +4,14 @@ export interface btnsInterface {
 }
 export interface employeeInterface {
   employeeHeading: string;
+  employeeBenefitsHeading: string;
+  currentSalary: string;
+  compensationType: string;
+  compensationScheule: string;
+  fuelAllowance: string;
+  phoneAllowance: string;
+  overtimeAllowance: string;
+  mealsAllowance: string;
   employeeExperienceLetters: string;
   uploadDocument: string;
 }
