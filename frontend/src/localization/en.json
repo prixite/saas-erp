@@ -13,7 +13,9 @@
       "fuelAllowance":"Fuel Allowance",
       "phoneAllowance":"Phone Allowance",
       "overtimeAllowance":"Overtime Allowance",
-      "mealsAllowance": "Meals Allowance"
+      "mealsAllowance": "Meals Allowance",
+      "employeeExperienceLetters":"Experience Letters",
+      "uploadDocument": "Upload Document"
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"

@@ -12,6 +12,8 @@ export interface employeeInterface {
   phoneAllowance: string;
   overtimeAllowance: string;
   mealsAllowance: string;
+  employeeExperienceLetters: string;
+  uploadDocument: string;
 }
 export interface userInterface {
   userHeading: string;

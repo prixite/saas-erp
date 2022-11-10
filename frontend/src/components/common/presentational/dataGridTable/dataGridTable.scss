@@ -14,9 +14,13 @@
       font-size: 14px;
       line-height: 18px;
       letter-spacing: -0.011em;
+      border-bottom: none;
       color: #6c6c6c;
       &:focus {
         outline: white;
+      }
+      .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
+        display: none;
       }
     }
     font-family: "Lato";

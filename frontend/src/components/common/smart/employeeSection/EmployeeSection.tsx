@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
+import AdditionalInformation from "@src/components/common/presentational/additionalInformation/AdditionalInformation";
 import BenefitsSection from "@src/components/common/presentational/benefitsSection/benefitsSection";
+import DocumentSection from "@src/components/common/presentational/documentSection/documentSection";
+import Education from "@src/components/common/presentational/education/Education";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import EmployeeHeader from "@src/components/common/presentational/employeeHeader/EmployeeHeader";
-import AdditionalInformation from "../../presentational/additionalInformation/AdditionalInformation";
-import Education from "../../presentational/education/Education";
-import Experience from "../../presentational/experience/Experience";
+import Experience from "@src/components/common/presentational/experience/Experience";
 
 function EmployeeSection() {
   const [buttonNameClicked, setButtonNameClicked] = useState<string>("BASIC");
@@ -21,9 +22,7 @@ function EmployeeSection() {
           <Education />
         </Grid>
       ) : buttonNameClicked === "DOCS" ? (
-        <Grid xs={12} sm={12}>
-          <h1>DOCS</h1>
-        </Grid>
+        <DocumentSection />
       ) : buttonNameClicked === "COMP" ? (
         <BenefitsSection />
       ) : (
