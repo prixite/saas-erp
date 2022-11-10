@@ -1,5 +1,6 @@
 .experience-main {
-  height: 211px;
+  // height: 211px;
+  height: 217px;
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -9,22 +10,48 @@
   margin-top: 16px;
 
   .child-div-one {
-    .experience-text {
-      font-family: "Lato";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: -0.011em;
-      color: #000000;
-      opacity: 0.5;
-      margin-top: 18px;
-      margin-left: 18px;
+    .child-div-one-container-A {
+      .experience-text {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.5;
+        margin-top: 18px;
+        margin-left: 18px;
+      }
+    }
+
+    .child-div-one-container-B {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .box {
+        margin-right: 18px;
+        margin-top: 18px;
+
+        .subBox {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          width: 36px;
+          background: white;
+
+          .profile-pic {
+            height: 19px;
+            width: 19px;
+            background: inheirt;
+          }
+        }
+      }
     }
   }
 
   .child-div-two {
-    height: 90px;
     height: 90px;
     display: flex;
     align-items: center;
@@ -36,58 +63,62 @@
       align-items: center;
       justify-content: flex-start;
 
-      .child-div-two-A-A1 {
-        height: inherit;
-        width: inherit;
-      }
-      .child-div-two-A-A2 {
-      }
-    }
-  }
-  .child-div-two-B {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    .child-div-two-A {
-      width: 100%;
-      margin-bottom: 8px;
-
-      .para {
-        font-family: "Lato";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 18px;
-        letter-spacing: -0.011em;
-        color: #000000;
+      .profile-pic {
+        background: inherit;
+        width: 48px;
+        height: 48px;
+        margin-left: 18px;
+        margin-right: 16px;
       }
     }
-    .child-div-three-A {
-      width: 100%;
+    .child-div-two-B {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
 
-      .para-One-Div {
-        .para {
-          font-family: "Lato";
-          font-style: normal;
-          font-weight: 400;
-          font-size: 18px;
-          line-height: 22px;
-          letter-spacing: -0.011em;
-          color: #000000;
-        }
-      }
-      .para-Two-Div {
-        margin-left: auto;
-        margin-right: 24px;
+      .child-div-two-A {
+        width: 100%;
+        margin-bottom: 8px;
 
         .para {
           font-family: "Lato";
           font-style: normal;
           font-weight: 600;
-          font-size: 16px;
-          line-height: 22px;
+          font-size: 18px;
+          line-height: 18px;
           letter-spacing: -0.011em;
           color: #000000;
+        }
+      }
+
+      .child-div-three-A {
+        width: 100%;
+
+        .para-One-Div {
+          .para {
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 22px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
+        }
+
+        .para-Two-Div {
+          margin-left: auto;
+          margin-right: 24px;
+
+          .para {
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
         }
       }
     }

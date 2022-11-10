@@ -4,6 +4,9 @@ import "./employeeButtons.scss";
 import { styled } from "@mui/material/styles";
 import MuiToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
+
 interface EmployeeButtonType {
   setButtonNameClicked: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -21,6 +24,9 @@ const ToggleButton = styled(MuiToggleButton)(
 );
 
 function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
+  const constantData: LocalizationInterface = localizedData();
+  const { basicBtn, docsBtn, compBtn } = constantData.EmployeeButtons;
+
   const [alignment, setAlignment] = useState<string | null>("left");
 
   const handleAlignment = (
@@ -61,7 +67,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-one-text"
               style={{ color: `${alignment === "left" ? "white" : "black"}` }}
             >
-              Basic Information
+              {basicBtn}
             </span>
           </ToggleButton>
 
@@ -75,7 +81,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-two-text"
               style={{ color: `${alignment === "center" ? "white" : "black"}` }}
             >
-              Documents
+              {docsBtn}
             </span>
           </ToggleButton>
 
@@ -89,7 +95,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-three-text"
               style={{ color: `${alignment === "right" ? "white" : "black"}` }}
             >
-              Compensation and benefits
+              {compBtn}
             </span>
           </ToggleButton>
         </ToggleButtonGroup>
