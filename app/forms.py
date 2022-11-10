@@ -52,10 +52,6 @@ class EmployeeUserForm(UserForm):
 
 
 class EmployeeForm(forms.ModelForm):
-    date_of_joining = forms.DateField(
-        input_formats=("%d/%m/%Y",),
-        widget=forms.DateInput(format="%d/%m/%Y", attrs={"placeholder": "DD/MM/YYYY"}),
-    )
     can_login = forms.BooleanField(required=False)
 
     class Meta:

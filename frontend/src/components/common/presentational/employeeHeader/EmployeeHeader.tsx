@@ -10,6 +10,7 @@ function EmployeeHeader() {
       <div className="employee-Header-main">
         <div className="empoyee-Header-Div-One">
           {/* <h2>One</h2> */}
+
           <img
             className="profile-pic"
             src={profileIcon}
@@ -67,7 +68,7 @@ function EmployeeHeader() {
               <img
                 className="profile-pic"
                 src={emailIcon}
-                alt="email"
+                alt="profile pic"
                 style={{
                   height: "20px",
                   width: "20px",
@@ -80,7 +81,7 @@ function EmployeeHeader() {
               <img
                 className="profile-pic"
                 src={phoneIcon}
-                alt="phone"
+                alt="profile pic"
                 style={{
                   height: "20px",
                   width: "20px",
@@ -97,7 +98,7 @@ function EmployeeHeader() {
             <img
               className="profile-pic"
               src={ThreeDotter}
-              alt="menu"
+              alt="profile pic"
               style={{
                 height: "20px",
                 width: "20px",

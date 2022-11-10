@@ -10,7 +10,6 @@ from app.views.html.employees import (
     DeleteEmployee,
     Employees,
     UpdateEmployee,
-    UploadEmployees,
 )
 from app.views.html.organizations import (
     CreateModule,
@@ -47,7 +46,6 @@ from app.views.mixins import PrivateViewMixin
 __all__ = [
     "Account",
     "CreateEmployee",
-    "UploadEmployees",
     "CreateModule",
     "CreateOrganization",
     "CreateOrganizationModule",

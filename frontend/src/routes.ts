@@ -6,12 +6,12 @@ const routes = {
   },
   employeeCreation: {
     name: "employee-creation",
-    path: "/react/employees/",
+    path: "/react/employee/",
     component: "Employee",
   },
   employeeView: {
     name: "EmployeeView",
-    path: "/react/employees/:employeeId",
+    path: "/react/employee/:employeeId",
     component: "EmployeeView",
   },
   accounts: {

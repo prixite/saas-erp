@@ -18,6 +18,25 @@
     },
     "Payroll": {
       "payrollHeading": "Payroll"
+    },
+    "Experience":{
+      "experienceHeading": "Experience"
+    },
+    "Education":{
+      "educationHeading": "Education"
+    },
+    "AdditionalInformation":{
+      "additionalInformationHeading": "Additional Information",
+      "department": "Department:",
+      "manager": "Manager:",
+      "totalExperience": "Total Experience:",
+      "joiningDate": "Joining Data:",
+      "emergencyContact": "Emergency Contact:",
+      "cnic": "CNIC:"
+    },
+    "EmployeeButtons":{
+      "basicBtn": "Basic Information",
+      "docsBtn": "Documnets",
+      "compBtn": "Compensation and benefits"
     }
-
   }

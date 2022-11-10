@@ -30,7 +30,7 @@ const EmployeeBio = () => {
           >
             <Grid container spacing={2}>
               <Grid item>
-                <Avatar alt="employee" src={employeeAvatar} />
+                <Avatar alt="Shafiq" src={employeeAvatar} />
               </Grid>
               <Grid item xs={12} sm container>
                 <Grid item xs container direction="row">

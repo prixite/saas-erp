@@ -1,4 +1,4 @@
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -106,7 +106,6 @@ const Topbar = (props) => {
           </IconButton>
           <TopbarSecondaryMenu />
         </Toolbar>
-        <Divider />
       </AppBar>
     </>
   );

@@ -9,7 +9,10 @@ import { capitalizeFirstLowercaseRest } from "@src/helpers/utils/utils";
 const BreadCrumbs = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const pathnames = location.pathname.split("/").filter((x) => x);
+  const pathnames = location.pathname
+    .split("/")
+    .filter((x) => x !== "react" && x !== "");
+
   return (
     <Breadcrumbs
       separator={<img src={ArrowIcon} style={{ marginTop: "10px" }} />}
@@ -17,6 +20,22 @@ const BreadCrumbs = () => {
       className="bread-crumbs"
       sx={{ ml: "25px", flexGrow: 1, display: { xs: "none", sm: "block" } }}
     >
+      {pathnames.length > 0 ? (
+        <Link
+          sx={{ fontSize: "14px", fontWeight: "400", cursor: "pointer" }}
+          color="inherit"
+          underline="none"
+          className="link-cls"
+          onClick={() => navigate("/react/")}
+        >
+          Home
+        </Link>
+      ) : (
+        <Typography fontWeight={400} variant={"h5"} color="inherit">
+          {" "}
+          Home{" "}
+        </Typography>
+      )}
       {pathnames.map((name, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join("/")}/`;
         const isLast = index === pathnames.length - 1;
@@ -27,10 +46,8 @@ const BreadCrumbs = () => {
             variant={"h5"}
             color="text.primary"
           >
-            {name === "employees"
+            {name === "employee"
               ? capitalizeFirstLowercaseRest("employee's")
-              : name === "react"
-              ? capitalizeFirstLowercaseRest("home")
               : capitalizeFirstLowercaseRest(name)}
           </Typography>
         ) : (
@@ -42,10 +59,8 @@ const BreadCrumbs = () => {
             onClick={() => navigate(routeTo)}
             sx={{ fontSize: "14px", fontWeight: "400", cursor: "pointer" }}
           >
-            {name === "employees"
+            {name === "employee"
               ? capitalizeFirstLowercaseRest("employee's")
-              : name === "react"
-              ? capitalizeFirstLowercaseRest("home")
               : capitalizeFirstLowercaseRest(name)}
           </Link>
         );
