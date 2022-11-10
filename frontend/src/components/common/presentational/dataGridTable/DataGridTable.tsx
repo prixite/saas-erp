@@ -18,7 +18,7 @@ function DataGridTable() {
       field: "id",
       headerName: "ID",
       sortable: false,
-      width: 300,
+      width: 200,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -77,7 +77,6 @@ function DataGridTable() {
     {
       field: "joining_Date",
       headerName: "Joining Date",
-      flex: 1,
       sortable: false,
       width: 400,
       headerAlign: "start",
