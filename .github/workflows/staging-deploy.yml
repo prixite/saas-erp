@@ -2,7 +2,7 @@ name: deploy-to-staging
 on:
   push:
     branches:
-      # When someone push to `master` branch
+      # When someone push to `staging` branch
       - staging
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
 
       - name: Start containers
         run: |
-          ssh staging 'cd saas-erp && && bash scripts/start_server.sh'
+          ssh staging 'cd saas-erp && bash scripts/start_server.sh'
 
       - name: Test the App
         run: |
