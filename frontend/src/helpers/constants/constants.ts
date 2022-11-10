@@ -175,20 +175,3 @@ export const columns = [
   { field: "joiningDate", headerName: "Joining Date", width: 350 },
   { field: "Actions", headerName: "Actions", width: 350 },
 ];
-
-export const employeeDocs = [
-  {
-    id: 1,
-    name: "Waqar",
-    contact: "03465554403",
-    joiningDate: "23-04-2022",
-    Actions: "Edit | Delete",
-  },
-  {
-    id: 2,
-    name: "Umair",
-    contact: "03465554403",
-    joiningDate: "23-04-2022",
-    Actions: "Edit | Delete",
-  },
-];

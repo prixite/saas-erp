@@ -1,13 +1,247 @@
-.additional-Information-main {
-  border: 2px solid red;
+@mixin fontOne {
+}
 
-  .department {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    flex-direction: row;
-    .department-text {
+.additional-Information-main {
+  border: 1px solid #e7e7e7;
+  height: 160px;
+  background: #ffffff;
+  border-radius: 12px;
+
+  .ChildOne {
+    margin: 18px 16px 12px 18px;
+    height: 17px;
+
+    .ChildOne-A {
+      .ChildOne-A-Typo {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.5;
+      }
+    }
+    .ChildOne-B {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .logoContainer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 36px;
+        background: white;
+
+        .profile-pic {
+          height: 19px;
+          width: 19px;
+          background: inherit;
+        }
+      }
+    }
+  }
+
+  .ChildTwo {
+    margin: 0px 16px 18px 18px;
+    height: 19px;
+
+    .ChildTwo-A {
+      min-width: 25%;
+
+      .typo-One {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+      }
+      .typo-Two {
+        width: 180px;
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        // opacity: 0.5;
+        // margin-right: 16px;
+      }
+    }
+    .ChildTwo-B {
+      min-width: 25%;
+
+      .typo-One {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+      }
+      .typo-Two {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+    .ChildTwo-C {
+      min-width: 25%;
+
+      .typo-One {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+        overflow: "hidden";
+      }
+      .typo-Two {
+        width: 180px;
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+    .ChildTwo-D {
+      min-width: 25%;
+
+      .typo-One {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+        overflow: "hidden";
+      }
+      .typo-Two {
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+  }
+
+  .ChildThree {
+    margin: 0px 16px 0px 18px;
+    height: 19px;
+
+    .ChildThree-A {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .ChildThree-A-One {
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          opacity: 0.8;
+          margin-right: 16px;
+          overflow: "hidden";
+        }
+      }
+      .ChildThree-A-Two {
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+      }
+    }
+    .ChildThree-B {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .ChildThree-B-One {
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          opacity: 0.8;
+          margin-right: 16px;
+        }
+      }
+      .ChildThree-B-Two {
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+      }
+      .ChildThree-B-Three {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .logo {
+          height: 19px;
+          width: 19px;
+          background: inherit;
+          margin-left: 11px;
+          padding: 0px;
+          margin-bottom: 2px;
+        }
+      }
     }
   }
 }
