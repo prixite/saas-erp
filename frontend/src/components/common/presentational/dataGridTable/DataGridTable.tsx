@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-// import { useDemoData } from '@mui/x-data-grid-generator';
-//for Dummy Purpose
 import { useNavigate } from "react-router-dom";
 import profileIcon from "@src/assets/svgs/profile_pic.svg";
+import { datarows } from "@src/helpers/constants/constants";
 import DeleteIconSVG from "./DeleteIconSVG";
 import EditIconSVG from "./EditIconSVG";
 import ShowIconSVG from "./ShowIconSVG";
@@ -18,9 +17,8 @@ function DataGridTable() {
     {
       field: "id",
       headerName: "ID",
-      flex: 0.5,
       sortable: false,
-      // width: 206,
+      width: 300,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -33,9 +31,8 @@ function DataGridTable() {
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
       sortable: false,
-      // width: 206,
+      width: 400,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -66,9 +63,8 @@ function DataGridTable() {
     {
       field: "contact_Number",
       headerName: "Contact Number",
-      flex: 1,
       sortable: false,
-      // width: 206,
+      width: 400,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -81,10 +77,9 @@ function DataGridTable() {
     {
       field: "joining_Date",
       headerName: "Joining Date",
-      // type: "number",
       flex: 1,
       sortable: false,
-      // width: 206,
+      width: 400,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -96,14 +91,19 @@ function DataGridTable() {
       field: "actions",
       headerName: "Actions",
       headerAlign: "start",
-      flex: 1,
+      width: 400,
       renderCell: () => {
         return (
           <Box
             className="renderCell-joiningDate"
             style={{ marginLeft: "20px" }}
           >
-            <IconButton aria-label="edit" id="edit-btn-id" className="edit-btn">
+            <IconButton
+              onClick={handleIconClicks}
+              aria-label="edit"
+              id="edit-btn-id"
+              className="edit-btn"
+            >
               <EditIconSVG />
             </IconButton>
             <IconButton
@@ -114,6 +114,7 @@ function DataGridTable() {
               <ShowIconSVG />
             </IconButton>
             <IconButton
+              onClick={handleIconClicks}
               aria-label="delete"
               id="delete-btn-id"
               className="delete-btn"
@@ -123,7 +124,6 @@ function DataGridTable() {
           </Box>
         );
       },
-      width: 180,
       valueGetter: (params) =>
         `${params.getValue(params.id, "firstName") || ""} ${
           params.getValue(params.id, "contact_Number") || ""
@@ -131,106 +131,16 @@ function DataGridTable() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      name: "Rabeel Qaiser",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 2,
-      name: "Suzan Talor",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 3,
-      name: "Meer Alba",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 4,
-      name: "Janzi King",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 5,
-      name: "Umair Khan",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 6,
-      name: "Ali Kareem",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 7,
-      name: "Congo Pierce",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 8,
-      name: "Libya Sing",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 9,
-      name: "Susan Doll",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 10,
-      name: "Georgina Sanchez",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 11,
-      name: "Brad, Sir",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 12,
-      name: "Maad Iqbal",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-    {
-      id: 13,
-      name: "Zizi Zalkov",
-      contact_Number: "03334255834",
-      joining_Date: "Sept 16, 2022",
-      actions: "xyz",
-    },
-  ];
+  const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+  };
 
   // const [finalCellClickInfo, setFinalCellClickInfo] = useState(null);
   const handleOnCellClick = (params) => {
     //params => can be used to log click info
     // setFinalCellClickInfo((prevState) => (prevState = params));
     // console.log("params", params.row.id);
-    navigate(`/react/employee/${params.row.id}`);
+    navigate(`/react/employees/${params.row.id}`);
   };
 
   return (
@@ -239,7 +149,7 @@ function DataGridTable() {
         className="dataGrid"
         rowHeight={80}
         autoHeight
-        rows={rows}
+        rows={datarows}
         columns={columns}
         disableColumnFilter
         disableColumnMenu
@@ -316,6 +226,10 @@ function DataGridTable() {
               backgroundColor: "white",
             },
           "&.MuiDataGrid-root .MuiDataGrid-cell:focus, .MuiDataGrid-root .MuiDataGrid-cell:focus-within":
+            {
+              outline: "none",
+            },
+          "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus, .MuiDataGrid-root .MuiDataGrid-cell:focus":
             {
               outline: "none",
             },

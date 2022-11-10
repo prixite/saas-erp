@@ -1,5 +1,4 @@
 import { Divider, Grid, Typography, Box, Button } from "@mui/material";
-import "@src/components/common/presentational/documentSection/documentSection.scss";
 import deleteIcon from "@src/assets/svgs/Delete.svg";
 import docIcon from "@src/assets/svgs/doc.svg";
 import uploadIcon from "@src/assets/svgs/paperupload.svg";
@@ -7,6 +6,7 @@ import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import "@src/components/common/presentational/documentSection/documentSection.scss";
 
 const DocumentSection = () => {
   const constantData: LocalizationInterface = localizedData();
