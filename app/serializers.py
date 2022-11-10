@@ -4,10 +4,15 @@ from app import models
 
 
 class EmployeeListSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.first_name", read_only=True)
+    last_name = serializers.CharField(source="user.last_name", read_only=True)
+
     class Meta:
         model = models.Employee
         fields = [
             "id",
+            "first_name",
+            "last_name",
             "contact_number",
             "date_of_joining",
         ]
@@ -16,11 +21,11 @@ class EmployeeListSerializer(serializers.ModelSerializer):
 class EmployeeUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ["first_name", "email"]
+        fields = ["first_name", "last_name", "email"]
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    user = EmployeeUserSerializer(write_only=True)
+    user = EmployeeUserSerializer()
 
     class Meta:
         model = models.Employee
