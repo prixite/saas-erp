@@ -76,3 +76,22 @@ class DocumentSerializer(serializers.ModelSerializer):
             "type",
             "document_url",
         ]
+
+
+class MeSerializer(serializers.ModelSerializer):
+    organization = serializers.CharField(
+        source="organization.name",
+        default="",
+    )
+
+    class Meta:
+        model = models.User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "organization",
+            "image",
+            "is_superuser",
+            "headline",
+        ]

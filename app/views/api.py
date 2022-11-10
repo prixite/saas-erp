@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from app import models, serializers
@@ -46,3 +47,10 @@ class DocumentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(employee_id=self.kwargs["pk"])
+
+
+class MeApiView(RetrieveAPIView):
+    serializer_class = serializers.MeSerializer
+
+    def get_object(self):
+        return self.request.user

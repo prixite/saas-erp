@@ -37,4 +37,8 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "me/",
+        api.MeApiView.as_view(),
+    ),
 ]
