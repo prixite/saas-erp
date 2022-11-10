@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
+import EditIcon from "@src/assets/svgs/Edit.svg";
 import profileIcon from "@src/assets/svgs/profile_pic.svg";
+import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import { datarows } from "@src/helpers/constants/constants";
-import DeleteIconSVG from "./DeleteIconSVG";
-import EditIconSVG from "./EditIconSVG";
-import ShowIconSVG from "./ShowIconSVG";
 
 import "./dataGridTable.scss";
 
@@ -103,14 +103,16 @@ function DataGridTable() {
               id="edit-btn-id"
               className="edit-btn"
             >
-              <EditIconSVG />
+              {/* EditIconSVG  */}
+              <img className="profile-pic" src={EditIcon} alt="profile pic" />
             </IconButton>
             <IconButton
               aria-label="Show"
               id="show-btn-id"
               className="delete-btn"
             >
-              <ShowIconSVG />
+              {/* ShowIconSVG */}
+              <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
             <IconButton
               onClick={handleIconClicks}
@@ -118,7 +120,8 @@ function DataGridTable() {
               id="delete-btn-id"
               className="delete-btn"
             >
-              <DeleteIconSVG />
+              {/* DeleteIconSVG */}
+              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
             </IconButton>
           </Box>
         );
