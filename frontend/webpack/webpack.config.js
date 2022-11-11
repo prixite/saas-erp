@@ -29,8 +29,6 @@ module.exports = {
     new EnvironmentPlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
       REACT_APP_GOOGLE_CLIENT_ID: "fake",
-      REACT_APP_LOCAL_URL: "http://localhost:8000",
-      REACT_APP_BASE_URL: "http://localhost:8000",
     }),
     new BundleTracker({ filename: "./webpack-stats.json" }),
   ],
