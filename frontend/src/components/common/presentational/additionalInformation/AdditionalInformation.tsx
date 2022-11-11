@@ -70,7 +70,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              {employeeData?.user?.first_name} {employeeData?.user.last_name}
+              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </Typography>
           </Grid>
 
