@@ -1,16 +1,27 @@
 import "./employeeHeader.scss";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone_Frame.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
 
 function EmployeeHeader() {
+  const param = useParams();
+  const [paramValue, setParamValue] = useState<number>(0);
+  const { data: EmployeeData } = useGetEmployeeDataQuery({ id: paramValue });
+
+  useEffect(() => {
+    if (param && param.employeeId !== undefined) {
+      setParamValue(parseInt(param.employeeId));
+    }
+  }, [paramValue]);
+
   return (
     <>
       <div className="employee-Header-main">
         <div className="empoyee-Header-Div-One">
-          {/* <h2>One</h2> */}
-
           <img
             className="profile-pic"
             src={profileIcon}
@@ -24,7 +35,10 @@ function EmployeeHeader() {
         </div>
         <div className="employee-Header-Div-Two">
           <div className="div-two-child-one">
-            <div className="oneItem-one">Nolan Aminoff</div>
+            <div className="oneItem-one">
+              {/* FirstName LastName */}
+              {EmployeeData?.user?.first_name} {EmployeeData?.user?.last_name}
+            </div>
             <div className="oneItem-two">
               <p
                 className="textPX"
@@ -60,7 +74,10 @@ function EmployeeHeader() {
             </div>
           </div>
           <div className="div-two-child-two">
-            <div className="twoItem-one">Sr Software Engineer</div>
+            <div className="twoItem-one">
+              {/* Designation */}
+              {EmployeeData?.designation}
+            </div>
             <div className="twoItem-two">
               <img
                 className="profile-pic"
@@ -72,7 +89,10 @@ function EmployeeHeader() {
                   marginRight: "10.5px",
                 }}
               />
-              <p>nolan.aminoff@gamil.com</p>
+              <p>
+                {/* Email */}
+                {EmployeeData?.user.email}
+              </p>
             </div>
             <div className="twoItem-three">
               <img
@@ -86,7 +106,8 @@ function EmployeeHeader() {
                   background: "rgba(255,205,205, 0.2)",
                 }}
               />
-              03336722892
+              {/* Number */}
+              {EmployeeData?.contact_number}
             </div>
           </div>
         </div>
