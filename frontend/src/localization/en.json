@@ -43,6 +43,11 @@
       "editBtn":"Edit",
       "deleteBtn":"Delete"
     },
+    "MenuButtons":{
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+
     "AdditionalInformation":{
       "additionalInformationHeading": "Additional Information",
       "department": "Department:",

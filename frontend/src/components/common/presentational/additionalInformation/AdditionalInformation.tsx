@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Grid, Typography, Button, Menu, MenuItem } from "@mui/material";
-import deleteIcon from "@src/assets/svgs/Delete.svg";
-import editIcon from "@src/assets/svgs/Edit.svg";
+import { Grid, Typography, Button } from "@mui/material";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/additionalInformation/additionalInformation.scss";
@@ -14,6 +13,13 @@ function AdditionalInformation() {
   const cnicNumber = "36044-0935608-8";
   const [showResults, setShowResults] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const {
     additionalInformationHeading,
     department,
@@ -22,16 +28,7 @@ function AdditionalInformation() {
     joiningDate,
     emergencyContact,
     cnic,
-    editBtn,
-    deleteBtn,
   } = constantData.AdditionalInformation;
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <>
       <Grid className="additional-Information-main" container xs={12} sm={12}>
@@ -51,48 +48,11 @@ function AdditionalInformation() {
                 alt="profile pic"
                 onClick={handleClick}
               />
-              <Menu
-                PaperProps={{ sx: { width: "115px", height: "92px" } }}
-                id="demo-positioned-menu"
-                aria-labelledby="client-options-button"
+              <MenuButtons
                 anchorEl={anchorEl}
                 open={open}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                className="dropdownMenu"
-                onClose={handleClose}
-              >
-                <MenuItem
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "14px",
-                    fontWeight: "400",
-                  }}
-                  onClick={handleClose}
-                >
-                  <img src={editIcon} alt="edit" />
-                  {editBtn}
-                </MenuItem>
-                <MenuItem
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "14px",
-                    fontWeight: "400",
-                  }}
-                  onClick={handleClose}
-                >
-                  <img src={deleteIcon} alt="delete" />
-                  {deleteBtn}
-                </MenuItem>
-              </Menu>
+                handleClose={handleClose}
+              />
             </div>
           </Grid>
         </Grid>
@@ -177,10 +137,7 @@ function AdditionalInformation() {
               )}
             </Grid>
             <Grid className="ChildThree-B-Three" item>
-              <Button
-                className="btn-cls"
-                onClick={() => setShowResults(!showResults)}
-              >
+              <Button onClick={() => setShowResults(!showResults)}>
                 <img
                   className="logo"
                   src={showResults ? showIcon : HideIcon}
