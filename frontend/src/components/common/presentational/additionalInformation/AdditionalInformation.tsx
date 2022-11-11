@@ -1,5 +1,9 @@
-import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
+import { Grid, Typography, Button, Menu, MenuItem } from "@mui/material";
+import deleteIcon from "@src/assets/svgs/Delete.svg";
+import editIcon from "@src/assets/svgs/Edit.svg";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
+import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -7,6 +11,9 @@ import "@src/components/common/presentational/additionalInformation/additionalIn
 
 function AdditionalInformation() {
   const constantData: LocalizationInterface = localizedData();
+  const cnicNumber = "36044-0935608-8";
+  const [showResults, setShowResults] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const {
     additionalInformationHeading,
     department,
@@ -15,12 +22,19 @@ function AdditionalInformation() {
     joiningDate,
     emergencyContact,
     cnic,
+    editBtn,
+    deleteBtn,
   } = constantData.AdditionalInformation;
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
-      {/* <h1>AdditionalInformation</h1> */}
       <Grid className="additional-Information-main" container xs={12} sm={12}>
-        {/* Child One  */}
         <Grid container item className="ChildOne" xs={12} sm={12}>
           <Grid item xs={9} sm={9} className="ChildOne-A">
             <Typography variant="body1" className="ChildOne-A-Typo">
@@ -30,19 +44,58 @@ function AdditionalInformation() {
           </Grid>
 
           <Grid item xs={3} sm={3} marginLeft="auto" className="ChildOne-B">
-            {/* Icon */}
             <div className="logoContainer">
               <img
                 className="profile-pic"
                 src={ThreeDotter}
                 alt="profile pic"
+                onClick={handleClick}
               />
+              <Menu
+                PaperProps={{ sx: { width: "115px", height: "92px" } }}
+                id="demo-positioned-menu"
+                aria-labelledby="client-options-button"
+                anchorEl={anchorEl}
+                open={open}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                className="dropdownMenu"
+                onClose={handleClose}
+              >
+                <MenuItem
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                  }}
+                  onClick={handleClose}
+                >
+                  <img src={editIcon} alt="edit" />
+                  {editBtn}
+                </MenuItem>
+                <MenuItem
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                  }}
+                  onClick={handleClose}
+                >
+                  <img src={deleteIcon} alt="delete" />
+                  {deleteBtn}
+                </MenuItem>
+              </Menu>
             </div>
-            {/* </div> */}
           </Grid>
         </Grid>
-
-        {/* Child Two  */}
         <Grid
           xs={12}
           sm={12}
@@ -55,7 +108,6 @@ function AdditionalInformation() {
         >
           <Grid container item className="ChildTwo-A" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
-              {/* Department: */}
               {department}
             </Typography>
 
@@ -93,8 +145,6 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
         </Grid>
-
-        {/* Child Three  */}
         <Grid xs={12} sm={12} container item className="ChildThree">
           <Grid className="ChildThree-A" container item xs={6} sm={3}>
             <Grid className="ChildThree-A-One" item>
@@ -109,21 +159,34 @@ function AdditionalInformation() {
               </Typography>
             </Grid>
           </Grid>
-
           <Grid className="ChildThree-B" container item xs={6} sm={8}>
             <Grid className="ChildThree-B-One" item>
               <Typography className="typo" variant="body1">
                 {cnic}
               </Typography>
             </Grid>
-
             <Grid className="ChildThree-B-Two" item>
-              <Typography className="typo" variant="body1">
-                36044-0935608-8
-              </Typography>
+              {showResults ? (
+                <Typography className="typo" variant="body1">
+                  {cnicNumber}
+                </Typography>
+              ) : (
+                <Typography className="typo1" variant="body1">
+                  {Array(cnicNumber.length).join(".")}
+                </Typography>
+              )}
             </Grid>
             <Grid className="ChildThree-B-Three" item>
-              <img className="logo" src={HideIcon} alt="profile pic" />
+              <Button
+                className="btn-cls"
+                onClick={() => setShowResults(!showResults)}
+              >
+                <img
+                  className="logo"
+                  src={showResults ? showIcon : HideIcon}
+                  alt="eye"
+                />
+              </Button>
             </Grid>
           </Grid>
         </Grid>

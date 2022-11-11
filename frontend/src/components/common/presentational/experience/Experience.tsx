@@ -1,6 +1,9 @@
-import { Divider, Grid, Typography } from "@mui/material";
+import { useState } from "react";
+import { Divider, Grid, Typography, Menu, MenuItem } from "@mui/material";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
 import CompanyLogoTwo from "@src/assets/svgs/CompanyLogoTwo.svg";
+import deleteIcon from "@src/assets/svgs/Delete.svg";
+import editIcon from "@src/assets/svgs/Edit.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -8,8 +11,15 @@ import "@src/components/common/presentational/experience/experience.scss";
 
 function Experience() {
   const constantData: LocalizationInterface = localizedData();
-  const { experienceHeading } = constantData.Experience;
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { experienceHeading, editBtn, deleteBtn } = constantData.Experience;
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       {/* Education */}
@@ -28,7 +38,50 @@ function Experience() {
                   className="profile-pic"
                   src={ThreeDotter}
                   alt="profile pic"
+                  onClick={handleClick}
                 />
+                <Menu
+                  PaperProps={{ sx: { width: "115px", height: "92px" } }}
+                  id="demo-positioned-menu"
+                  aria-labelledby="client-options-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  className="dropdownMenu"
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                    }}
+                    onClick={handleClose}
+                  >
+                    <img src={editIcon} alt="edit" />
+                    {editBtn}
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                    }}
+                    onClick={handleClose}
+                  >
+                    <img src={deleteIcon} alt="delete" />
+                    {deleteBtn}
+                  </MenuItem>
+                </Menu>
               </div>
             </div>
           </Grid>

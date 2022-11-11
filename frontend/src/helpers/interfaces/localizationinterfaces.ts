@@ -38,9 +38,17 @@ export interface dashboardInterface {
 }
 export interface experienceInterface {
   experienceHeading: string;
+  editBtn: string;
+  deleteBtn: string;
 }
 export interface educationInterface {
   educationHeading: string;
+  editBtn: string;
+  deleteBtn: string;
+}
+export interface employeeheaderInterface {
+  editBtn: string;
+  deleteBtn: string;
 }
 export interface additionalInformationInterface {
   additionalInformationHeading: string;
@@ -50,6 +58,8 @@ export interface additionalInformationInterface {
   joiningDate: string;
   emergencyContact: string;
   cnic: string;
+  editBtn: string;
+  deleteBtn: string;
 }
 
 export interface employeeButtons {
@@ -69,4 +79,5 @@ export interface LocalizationInterface {
   AdditionalInformation: additionalInformationInterface;
   EmployeeButtons: employeeButtons;
   Modals: modalsInterface;
+  EmployeeHeader: employeeheaderInterface;
 }

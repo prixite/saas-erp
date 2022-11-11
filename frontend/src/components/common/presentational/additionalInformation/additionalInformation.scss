@@ -40,6 +40,10 @@
           width: 19px;
           background: inherit;
         }
+        .css-1y8u6dt-MuiButtonBase-root-MuiMenuItem-root {
+          display: flex;
+          justify-content: space-evenly;
+        }
       }
     }
   }
@@ -216,7 +220,11 @@
           margin-right: 16px;
         }
       }
+
       .ChildThree-B-Two {
+        width: 130px;
+        display: flex;
+        justify-content: center;
         .typo {
           height: 19px;
           font-family: "Lato";
@@ -227,19 +235,30 @@
           letter-spacing: -0.011em;
           color: #000000;
         }
+        .typo1 {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 10px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
       }
       .ChildThree-B-Three {
         display: flex;
         align-items: center;
         justify-content: center;
 
+        .btn-cls {
+          width: 5px;
+        }
         .logo {
           height: 19px;
           width: 19px;
           background: inherit;
-          margin-left: 11px;
           padding: 0px;
-          margin-bottom: 2px;
         }
       }
     }
