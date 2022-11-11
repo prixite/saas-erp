@@ -17,13 +17,13 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
         <div className="employee-Header-Div-Two">
           <div className="div-two-child-one">
             <div className="oneItem-one">
-              {employeeData?.user.first_name} {employeeData?.user.last_name}
+              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
             <div className="oneItem-two">
-              <p className="textPX">PX-01</p>
+              <p className="paragraph">PX-01</p>
             </div>
             <div className="oneItem-three">
-              <p className="para">Permanent</p>
+              <p className="paragraph">Permanent</p>
             </div>
           </div>
           <div className="div-two-child-two">
@@ -39,7 +39,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   marginRight: "10.5px",
                 }}
               />
-              <p>{employeeData?.user.email}</p>
+              <p>{employeeData?.user?.email}</p>
             </div>
             <div className="twoItem-three">
               <img
