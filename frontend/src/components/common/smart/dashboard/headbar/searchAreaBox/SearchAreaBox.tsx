@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from "@mui/material";
-import SearchBoxSVG from "../SearchBoxSVG";
+import searchBox from "@src/assets/svgs/searchBox.svg";
 
 function SearchAreaBox() {
   return (
@@ -30,7 +30,8 @@ function SearchAreaBox() {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchBoxSVG />
+            {/* SearchBoxSVG */}
+            <img className="profile-pic" src={searchBox} alt="profile pic" />
           </InputAdornment>
         ),
       }}
