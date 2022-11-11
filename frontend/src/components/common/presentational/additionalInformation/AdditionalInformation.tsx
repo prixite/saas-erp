@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button, Box } from "@mui/material";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
@@ -41,7 +41,7 @@ function AdditionalInformation() {
           </Grid>
 
           <Grid item xs={3} sm={3} marginLeft="auto" className="ChildOne-B">
-            <div className="logoContainer">
+            <Box sx={{ cursor: "pointer" }} className="logoContainer">
               <img
                 className="profile-pic"
                 src={ThreeDotter}
@@ -53,7 +53,7 @@ function AdditionalInformation() {
                 open={open}
                 handleClose={handleClose}
               />
-            </div>
+            </Box>
           </Grid>
         </Grid>
         <Grid

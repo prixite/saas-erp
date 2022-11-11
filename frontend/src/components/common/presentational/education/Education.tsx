@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Divider, Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography, Box } from "@mui/material";
 import CompanyIconFour from "@src/assets/svgs/CompanyIconFour.svg";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
@@ -32,7 +32,7 @@ function Education() {
 
           <Grid className="child-div-one-container-B" item xs={2} sm={2}>
             <div className="box">
-              <div className="subBox">
+              <Box sx={{ cursor: "pointer" }} className="subBox">
                 <img
                   className="profile-pic"
                   src={ThreeDotter}
@@ -44,7 +44,7 @@ function Education() {
                   open={open}
                   handleClose={handleClose}
                 />
-              </div>
+              </Box>
             </div>
           </Grid>
         </Grid>
