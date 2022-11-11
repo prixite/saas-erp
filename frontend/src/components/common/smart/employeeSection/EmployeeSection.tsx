@@ -22,7 +22,6 @@ function EmployeeSection() {
   const [buttonNameClicked, setButtonNameClicked] = useState<string>("BASIC");
   return (
     <>
-      {/* <h1>EmployeeSection</h1> */}
       <EmployeeHeader employeeData={EmployeeData} />
       <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       {buttonNameClicked === "BASIC" ? (

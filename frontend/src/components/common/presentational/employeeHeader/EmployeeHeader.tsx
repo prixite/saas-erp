@@ -1,9 +1,9 @@
-import "./employeeHeader.scss";
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone_Frame.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
+import "@src/components/common/presentational/employeeHeader/employeeHeader.scss";
 interface EmployeeHeaderType {
   employeeData?: EmployeeData;
 }
@@ -17,7 +17,6 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
         <div className="employee-Header-Div-Two">
           <div className="div-two-child-one">
             <div className="oneItem-one">
-              {/* FirstName LastName */}
               {employeeData?.user.first_name} {employeeData?.user.last_name}
             </div>
             <div className="oneItem-two">
@@ -28,10 +27,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
             </div>
           </div>
           <div className="div-two-child-two">
-            <div className="twoItem-one">
-              {/* Designation */}
-              {employeeData?.designation}
-            </div>
+            <div className="twoItem-one">{employeeData?.designation}</div>
             <div className="twoItem-two">
               <img
                 className="profile-pic"
@@ -43,10 +39,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   marginRight: "10.5px",
                 }}
               />
-              <p>
-                {/* Email */}
-                {employeeData?.user.email}
-              </p>
+              <p>{employeeData?.user.email}</p>
             </div>
             <div className="twoItem-three">
               <img
@@ -60,7 +53,6 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   background: "rgba(255,205,205, 0.2)",
                 }}
               />
-              {/* Number */}
               {employeeData?.contact_number}
             </div>
           </div>

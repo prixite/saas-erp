@@ -22,7 +22,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
   } = constantData.AdditionalInformation;
   return (
     <>
-      {/* <h1>AdditionalInformation</h1> */}
       <Grid className="additional-Information-main" container xs={12} sm={12}>
         {/* Child One  */}
         <Grid container item className="ChildOne" xs={12} sm={12}>
@@ -34,7 +33,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
           </Grid>
 
           <Grid item xs={3} sm={3} marginLeft="auto" className="ChildOne-B">
-            {/* Icon */}
             <div className="logoContainer">
               <img
                 className="profile-pic"
@@ -42,7 +40,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
                 alt="profile pic"
               />
             </div>
-            {/* </div> */}
           </Grid>
         </Grid>
 
@@ -59,12 +56,10 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
         >
           <Grid container item className="ChildTwo-A" xs={3} sm={3}>
             <Typography variant="body1" className="typo-One">
-              {/* Department: */}
               {department}
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              {/* UX Designer */}
               {employeeData?.department}
             </Typography>
           </Grid>
@@ -75,7 +70,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              {/* Mohsin Qurban */}
               {employeeData?.user?.first_name} {employeeData?.user.last_name}
             </Typography>
           </Grid>
@@ -86,7 +80,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              4 years {/* {employeeData.totalExperience} */}
+              4 years
             </Typography>
           </Grid>
 
@@ -95,7 +89,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
               {joiningDate}
             </Typography>
             <Typography variant="body1" className="typo-Two">
-              {/* 17 Jan, 2023 */}
               {employeeData?.date_of_joining}
             </Typography>
           </Grid>
@@ -112,7 +105,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
 
             <Grid className="ChildThree-A-Two" item>
               <Typography className="typo" variant="body1">
-                {/* +123 4567909 */}
                 {employeeData?.emergency_contact_number}
               </Typography>
             </Grid>
@@ -127,7 +119,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
 
             <Grid className="ChildThree-B-Two" item>
               <Typography className="typo" variant="body1">
-                {/* 36044-0935608-8 */}
                 {employeeData?.nic}
               </Typography>
             </Grid>

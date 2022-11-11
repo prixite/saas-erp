@@ -217,11 +217,8 @@ function DataGridTable() {
           "& .MuiDataGrid-cell:hover": {
             color: "black",
           },
-          // boxShadow: 3,
-          // border: 2,
           "& .MuiDataGrid-row:hover": {
             backgroundColor: "#F5F5F5",
-            // color: "red"
           },
           "& .MuiDataGrid-row.Mui-selected:hover, .css-vgcejw-MuiDataGrid-root .MuiDataGrid-row.Mui-selected.Mui-hovered":
             {
@@ -235,9 +232,7 @@ function DataGridTable() {
             {
               outline: "none",
             },
-          "& .css-17jjc08-MuiDataGrid-footerContainer": {
-            // display: "none",
-          },
+          "& .css-17jjc08-MuiDataGrid-footerContainer": {},
         }}
       />
     </div>

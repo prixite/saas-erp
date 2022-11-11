@@ -1,7 +1,5 @@
 .employee-Header-main {
-  // border: 2px solid black;
   background-color: rgba(255, 205, 205, 0.2);
-  // opacity: 0.2;
   border-radius: 12px;
   height: 108px;
   width: 100%;
@@ -31,12 +29,9 @@
     flex-wrap: wrap;
     width: 90%;
     height: 100%;
-    // border: 2px solid blue;
 
     .div-two-child-one {
-      // border: 2px solid pink;
       width: 100%;
-      // height: 50%;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -46,7 +41,6 @@
       margin-bottom: 10px;
 
       .oneItem-one {
-        // border: 1px solid purple;
         width: 154px;
         height: 28px;
 
@@ -55,16 +49,8 @@
         font-weight: 700;
         font-size: 24px;
         line-height: 28px;
-        /* identical to box height, or 117% */
-
         letter-spacing: -0.011em;
-
-        /* Primary/Black Primary */
-
         color: #000000;
-
-        /* Inside auto layout */
-
         flex: none;
         order: 0;
         flex-grow: 0;
@@ -72,11 +58,9 @@
       }
 
       .oneItem-two {
-        // border: 1px solid purple;
         display: flex;
         flex-direction: row;
         align-items: center;
-        /* padding: 4px 12px; */
         gap: 10px;
         width: 57px;
         height: 22px;
@@ -101,7 +85,6 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        /* padding: 4px 12px; */
         gap: 10px;
         width: 82px;
         height: 22px;
@@ -131,7 +114,6 @@
     }
 
     .div-two-child-two {
-      // border: 2px solid pink;
       width: 100%;
       height: 50%;
       display: flex;
@@ -143,8 +125,6 @@
       margin-bottom: 27px;
 
       .twoItem-one {
-        // border: 1px solid purple;
-        // width: 141px;
         width: 161px;
         height: 19px;
         font-family: "Lato";
@@ -160,8 +140,6 @@
       }
 
       .twoItem-two {
-        // border: 1px solid purple;
-        // width: 184px;
         height: 20px;
         font-family: "Lato";
         font-style: normal;
@@ -179,11 +157,9 @@
       }
 
       .twoItem-three {
-        // border: 1px solid purple;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        // border: 1px solid purple;
         display: flex;
         align-items: center;
         justify-content: flex-start;
