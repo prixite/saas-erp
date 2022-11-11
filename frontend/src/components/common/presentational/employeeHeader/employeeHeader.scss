@@ -16,6 +16,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    .profile-pic {
+      height: 60px;
+      width: 60px;
+      margin: 24px 12px 24px 24px;
+    }
   }
 
   .employee-Header-Div-Two {
@@ -83,8 +88,11 @@
         flex-grow: 0;
         justify-content: center;
         margin-right: 12px;
-
-        .textPK {
+        .textPX {
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: -0.011em;
+          color: black;
         }
       }
 
@@ -105,6 +113,20 @@
         justify-content: center;
         flex-grow: 0;
         padding: 4px;
+        .para {
+          width: 58px;
+          height: 14px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: -0.011em;
+          color: #970000;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
       }
     }
 
@@ -202,6 +224,11 @@
       margin-top: 36px;
       margin-bottom: 36px;
       margin-left: auto;
+      .profile-pic {
+        height: 20px;
+        width: 20px;
+        border: none;
+      }
     }
   }
 }
