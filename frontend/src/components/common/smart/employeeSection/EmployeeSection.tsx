@@ -27,7 +27,7 @@ function EmployeeSection() {
       <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       {buttonNameClicked === "BASIC" ? (
         <Grid xs={12} sm={12}>
-          <AdditionalInformation />
+          <AdditionalInformation employeeData={EmployeeData} />
           <Experience />
           <Education />
         </Grid>

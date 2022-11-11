@@ -1,11 +1,15 @@
 import { Grid, Typography } from "@mui/material";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/additionalInformation/additionalInformation.scss";
 
-function AdditionalInformation() {
+interface AdditionalInformationType {
+  employeeData?: EmployeeData;
+}
+function AdditionalInformation({ employeeData }: AdditionalInformationType) {
   const constantData: LocalizationInterface = localizedData();
   const {
     additionalInformationHeading,
@@ -60,7 +64,8 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              UX Designer
+              {/* UX Designer */}
+              {employeeData?.department}
             </Typography>
           </Grid>
 
@@ -70,7 +75,8 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              Mohsin Qurban
+              {/* Mohsin Qurban */}
+              {employeeData?.user?.first_name} {employeeData?.user.last_name}
             </Typography>
           </Grid>
 
@@ -80,7 +86,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="typo-Two">
-              4 years{" "}
+              4 years {/* {employeeData.totalExperience} */}
             </Typography>
           </Grid>
 
@@ -89,7 +95,8 @@ function AdditionalInformation() {
               {joiningDate}
             </Typography>
             <Typography variant="body1" className="typo-Two">
-              17 Jan, 2023
+              {/* 17 Jan, 2023 */}
+              {employeeData?.date_of_joining}
             </Typography>
           </Grid>
         </Grid>
@@ -105,7 +112,8 @@ function AdditionalInformation() {
 
             <Grid className="ChildThree-A-Two" item>
               <Typography className="typo" variant="body1">
-                +123 4567909
+                {/* +123 4567909 */}
+                {employeeData?.emergency_contact_number}
               </Typography>
             </Grid>
           </Grid>
@@ -119,7 +127,8 @@ function AdditionalInformation() {
 
             <Grid className="ChildThree-B-Two" item>
               <Typography className="typo" variant="body1">
-                36044-0935608-8
+                {/* 36044-0935608-8 */}
+                {employeeData?.nic}
               </Typography>
             </Grid>
             <Grid className="ChildThree-B-Three" item>
