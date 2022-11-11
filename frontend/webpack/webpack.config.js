@@ -28,7 +28,7 @@ module.exports = {
   plugins: [
     new EnvironmentPlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
-      REACT_APP_GOOGLE_CLIENT_ID: "fake"
+      REACT_APP_GOOGLE_CLIENT_ID: "fake",
     }),
     new BundleTracker({ filename: "./webpack-stats.json" }),
   ],
