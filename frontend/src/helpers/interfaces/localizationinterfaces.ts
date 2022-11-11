@@ -18,6 +18,15 @@ export interface employeeInterface {
 export interface userInterface {
   userHeading: string;
 }
+export interface modalsInterface {
+  filterHeading: string;
+  filterSubheading: string;
+  filterSalaryHeading: string;
+  filterResetBtn: string;
+  filterSubmitBtn: string;
+  filterNameLabel: string;
+  filterDesignationLabel: string;
+}
 export interface payrollInterface {
   payrollHeading: string;
 }
@@ -59,4 +68,5 @@ export interface LocalizationInterface {
   Education: educationInterface;
   AdditionalInformation: additionalInformationInterface;
   EmployeeButtons: employeeButtons;
+  Modals: modalsInterface;
 }
