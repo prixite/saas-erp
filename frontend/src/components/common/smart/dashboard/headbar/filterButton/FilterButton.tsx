@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
+import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import FilterModal from "@src/components/shared/popUps/filterModal/filterModal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import FilterIcon from "./FilterButtonSVG";
 
 function FilterButton() {
   const constantData: LocalizationInterface = localizedData();
@@ -21,7 +21,9 @@ function FilterButton() {
         className="filter-btn"
         id="filter-btn-id"
         variant="outlined"
-        startIcon={<FilterIcon />}
+        startIcon={
+          <img className="profile-pic" src={FilterIcon} alt="profile pic" />
+        }
         onClick={handleModalOpen}
       >
         {" "}
