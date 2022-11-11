@@ -1,6 +1,6 @@
-import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
+import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import FilterModal from "@src/components/shared/popUps/filterModal/filterModal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
