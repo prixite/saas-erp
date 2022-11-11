@@ -23,7 +23,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
   return (
     <>
       <Grid className="additional-Information-main" container xs={12} sm={12}>
-        {/* Child One  */}
         <Grid container item className="ChildOne" xs={12} sm={12}>
           <Grid item xs={9} sm={9} className="ChildOne-A">
             <Typography variant="body1" className="ChildOne-A-Typo">
@@ -43,7 +42,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
           </Grid>
         </Grid>
 
-        {/* Child Two  */}
         <Grid
           xs={12}
           sm={12}
@@ -94,7 +92,6 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
           </Grid>
         </Grid>
 
-        {/* Child Three  */}
         <Grid xs={12} sm={12} container item className="ChildThree">
           <Grid className="ChildThree-A" container item xs={6} sm={3}>
             <Grid className="ChildThree-A-One" item>
