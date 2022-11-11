@@ -42,6 +42,7 @@ export interface experienceInterface {
 export interface educationInterface {
   educationHeading: string;
 }
+
 export interface additionalInformationInterface {
   additionalInformationHeading: string;
   department: string;
@@ -50,12 +51,18 @@ export interface additionalInformationInterface {
   joiningDate: string;
   emergencyContact: string;
   cnic: string;
+  editBtn: string;
+  deleteBtn: string;
 }
 
 export interface employeeButtons {
   basicBtn: string;
   docsBtn: string;
   compBtn: string;
+}
+export interface menuButtons {
+  editBtn: string;
+  deleteBtn: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
@@ -69,4 +76,5 @@ export interface LocalizationInterface {
   AdditionalInformation: additionalInformationInterface;
   EmployeeButtons: employeeButtons;
   Modals: modalsInterface;
+  MenuButtons: menuButtons;
 }

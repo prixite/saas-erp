@@ -1,16 +1,25 @@
+import { useState } from "react";
+import { Box } from "@mui/material";
 import "./employeeHeader.scss";
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
-import phoneIcon from "@src/assets/svgs/Phone_Frame.svg";
+import phoneIcon from "@src/assets/svgs/Phone.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
 
 function EmployeeHeader() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <div className="employee-Header-main">
         <div className="empoyee-Header-Div-One">
-          {/* <h2>One</h2> */}
-
           <img
             className="profile-pic"
             src={profileIcon}
@@ -83,7 +92,7 @@ function EmployeeHeader() {
                   height: "20px",
                   width: "20px",
                   marginRight: "11.33px",
-                  background: "rgba(255,205,205, 0.2)",
+                  background: "transparent",
                 }}
               />
               03336722892
@@ -91,10 +100,11 @@ function EmployeeHeader() {
           </div>
         </div>
         <div className="employee-Header-Div-Three">
-          <div className="container-Icon">
+          <Box sx={{ cursor: "pointer" }} className="container-Icon">
             <img
               className="profile-pic"
               src={ThreeDotter}
+              onClick={handleClick}
               alt="menu"
               style={{
                 height: "20px",
@@ -102,7 +112,12 @@ function EmployeeHeader() {
                 border: "none",
               }}
             />
-          </div>
+            <MenuButtons
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+            />
+          </Box>
         </div>
       </div>
     </>
