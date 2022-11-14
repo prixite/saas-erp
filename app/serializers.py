@@ -6,6 +6,7 @@ from app import models
 class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
+    image = serializers.ImageField(source="user.image", read_only=True)
 
     class Meta:
         model = models.Employee
@@ -15,36 +16,49 @@ class EmployeeListSerializer(serializers.ModelSerializer):
             "last_name",
             "contact_number",
             "date_of_joining",
+            "image",
         ]
 
 
 class EmployeeUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email"]
+        fields = ["first_name", "last_name", "email", "image"]
+
+
+class DegreeSerializer(serializers.ModelSerializer):
+    program = serializers.CharField(source="program.name")
+    institute = serializers.CharField(source="institute.name")
+
+    class Meta:
+        model = models.Degree
+        fields = ["program", "institute", "year"]
+
+
+class ExperirenceSerializer(serializers.ModelSerializer):
+    company = serializers.CharField(source="company.name")
+
+    class Meta:
+        model = models.Experience
+        fields = ["title", "company", "start_date", "end_date"]
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
+    organization = serializers.CharField(source="organization.name")
+    department = serializers.CharField(source="department.name", default="")
+    manager = serializers.CharField(source="manager.user.get_full_name", default="")
+    type = serializers.CharField(source="type.name", default="")
+    degrees = DegreeSerializer(many=True)
+    experience = ExperirenceSerializer(many=True)
+    benefits = serializers.SlugRelatedField(
+        slug_field="name", read_only=True, many=True
+    )
 
     class Meta:
         model = models.Employee
 
-        fields = [
-            "id",
-            "user",
-            "contact_number",
-            "date_of_joining",
-            "nic",
-            "designation",
-            "degrees",
-            "emergency_contact_number",
-            "organization",
-            "type",
-            "department",
-        ]
-
-        read_only_fields = ["degrees"]
+        fields = "__all__"
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")

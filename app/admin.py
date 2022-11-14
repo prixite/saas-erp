@@ -45,3 +45,35 @@ if settings.DEBUG:
     @admin.register(models.OrganizationModule)
     class OrganizationModuleAdmin(admin.ModelAdmin):
         pass
+
+    @admin.register(models.Degree)
+    class DegreeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Institute)
+    class InstituteAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Program)
+    class ProgramAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Department)
+    class DepartmentAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Benefit)
+    class BenefitAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.EmploymentType)
+    class EmploymentTypeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Company)
+    class CompanyAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Experience)
+    class ExperienceAdmin(admin.ModelAdmin):
+        pass
