@@ -10,17 +10,17 @@ from app.models.core import (
 )
 from app.models.employee import (
     Benefit,
+    Company,
     Degree,
     Department,
     Document,
     DocumentType,
     Employee,
     EmploymentType,
+    Experience,
     Institute,
     Program,
     Team,
-    Company,
-    Experience,
 )
 from app.models.inventory import Asset, AssetType
 from app.models.payroll import (
