@@ -1,5 +1,5 @@
 .education-main {
-  height: 217px;
+  height: auto;
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -7,9 +7,10 @@
   border-radius: 12px;
   justify-content: flex-start;
   margin-top: 16px;
+  box-sizing: border-box;
 
-  .child-div-one {
-    .child-div-one-container-A {
+  .education-Heading-Container {
+    .heading-container {
       .experience-text {
         font-family: "Lato";
         font-style: normal;
@@ -24,7 +25,7 @@
       }
     }
 
-    .child-div-one-container-B {
+    .icon-Container {
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -50,14 +51,14 @@
     }
   }
 
-  .child-div-two {
+  .Education-Card {
     height: 90px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-flow: row;
 
-    .child-div-two-A {
+    .icon-container {
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -70,12 +71,12 @@
         margin-right: 16px;
       }
     }
-    .child-div-two-B {
+    .contentDiv {
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
 
-      .child-div-two-A {
+      .title-container {
         width: 100%;
         margin-bottom: 8px;
 
@@ -90,10 +91,10 @@
         }
       }
 
-      .child-div-three-A {
+      .description-subContainer {
         width: 100%;
 
-        .para-One-Div {
+        .description {
           .para {
             font-family: "Lato";
             font-style: normal;
@@ -105,7 +106,7 @@
           }
         }
 
-        .para-Two-Div {
+        .year {
           margin-left: auto;
           margin-right: 24px;
 

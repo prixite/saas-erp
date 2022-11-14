@@ -1,5 +1,5 @@
 .experience-main {
-  height: 217px;
+  height: auto;
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -8,8 +8,8 @@
   justify-content: flex-start;
   margin-top: 16px;
 
-  .child-div-one {
-    .child-div-one-container-A {
+  .experience-Heading-Container {
+    .experience-container {
       .experience-text {
         font-family: "Lato";
         font-style: normal;
@@ -24,7 +24,7 @@
       }
     }
 
-    .child-div-one-container-B {
+    .icon-container {
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -50,14 +50,14 @@
     }
   }
 
-  .child-div-two {
+  .experience-Card {
     height: 90px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-flow: row;
 
-    .child-div-two-A {
+    .companyLogo-container {
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -70,7 +70,7 @@
         margin-right: 16px;
       }
     }
-    .child-div-two-B {
+    .sub-container {
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
@@ -79,7 +79,7 @@
         width: 100%;
         margin-bottom: 8px;
 
-        .para {
+        .description {
           font-family: "Lato";
           font-style: normal;
           font-weight: 600;
@@ -93,8 +93,8 @@
       .child-div-three-A {
         width: 100%;
 
-        .para-One-Div {
-          .para {
+        .heading-One {
+          .description {
             font-family: "Lato";
             font-style: normal;
             font-weight: 400;
@@ -105,11 +105,11 @@
           }
         }
 
-        .para-Two-Div {
+        .heading-Two {
           margin-left: auto;
           margin-right: 24px;
 
-          .para {
+          .description {
             font-family: "Lato";
             font-style: normal;
             font-weight: 600;

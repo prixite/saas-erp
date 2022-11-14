@@ -11,24 +11,26 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
   return (
     <>
       <div className="employee-Header-main">
-        <div className="empoyee-Header-Div-One">
+        <div className="iconContainer">
           <img className="profile-pic" src={profileIcon} alt="profile pic" />
         </div>
+
         <div className="employee-Header-Div-Two">
-          <div className="div-two-child-one">
-            <div className="oneItem-one">
+          <div className="subContainer-row-one">
+            <div className="name">
               {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
-            <div className="oneItem-two">
+            <div className="userID">
               <p className="userID">PX-01</p>
             </div>
-            <div className="oneItem-three">
+            <div className="userStatus">
               <p className="paragraph">Permanent</p>
             </div>
           </div>
-          <div className="div-two-child-two">
-            <div className="twoItem-one">{employeeData?.designation}</div>
-            <div className="twoItem-two">
+
+          <div className="subContainer-row-two">
+            <div className="designation">{employeeData?.designation}</div>
+            <div className="email">
               <img
                 className="profile-pic"
                 src={emailIcon}
@@ -41,7 +43,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
               />
               <p>{employeeData?.user?.email}</p>
             </div>
-            <div className="twoItem-three">
+            <div className="contact">
               <img
                 className="profile-pic"
                 src={phoneIcon}
@@ -57,6 +59,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
             </div>
           </div>
         </div>
+
         <div className="employee-Header-Div-Three">
           <div className="container-Icon">
             <img className="profile-pic" src={ThreeDotter} alt="menu" />

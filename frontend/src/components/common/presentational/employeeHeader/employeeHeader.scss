@@ -8,7 +8,7 @@
   justify-content: flex-start;
   margin-top: 24px;
 
-  .empoyee-Header-Div-One {
+  .icon-Container {
     width: 96px;
     height: 100%;
     display: flex;
@@ -30,7 +30,7 @@
     width: 90%;
     height: 100%;
 
-    .div-two-child-one {
+    .subContainer-row-one {
       width: 100%;
       display: flex;
       align-items: center;
@@ -40,7 +40,7 @@
       margin-top: 24px;
       margin-bottom: 10px;
 
-      .oneItem-one {
+      .name {
         width: 154px;
         height: 28px;
 
@@ -57,7 +57,7 @@
         margin-right: 20px;
       }
 
-      .oneItem-two {
+      .userID {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -80,7 +80,7 @@
         }
       }
 
-      .oneItem-three {
+      .userStatus {
         border: 1px solid purple;
         display: flex;
         flex-direction: row;
@@ -113,7 +113,7 @@
       }
     }
 
-    .div-two-child-two {
+    .subContainer-row-two {
       width: 100%;
       height: 50%;
       display: flex;
@@ -124,7 +124,7 @@
       margin-top: 0px;
       margin-bottom: 27px;
 
-      .twoItem-one {
+      .designation {
         width: 161px;
         height: 19px;
         font-family: "Lato";
@@ -139,7 +139,7 @@
         flex-grow: 0;
       }
 
-      .twoItem-two {
+      .email {
         height: 20px;
         font-family: "Lato";
         font-style: normal;
@@ -156,7 +156,7 @@
         flex-grow: 0;
       }
 
-      .twoItem-three {
+      .contact {
         display: flex;
         align-items: center;
         justify-content: flex-start;
