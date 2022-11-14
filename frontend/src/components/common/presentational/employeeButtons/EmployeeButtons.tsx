@@ -60,11 +60,11 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
           <ToggleButton
             value="left"
             selectedColor="red"
-            className="buttonOne"
+            className="button-Basic"
             style={{ borderRadius: "12px", marginRight: "12px" }}
           >
             <span
-              className="button-one-text"
+              className="button-Basic__text"
               style={{ color: `${alignment === "left" ? "white" : "black"}` }}
             >
               {basicBtn}
@@ -75,10 +75,10 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
             value="center"
             selectedColor="red"
             style={{ borderRadius: "12px", marginRight: "12px" }}
-            className="buttonTwo"
+            className="button-Docs"
           >
             <span
-              className="button-two-text"
+              className="button-Docs__text"
               style={{ color: `${alignment === "center" ? "white" : "black"}` }}
             >
               {docsBtn}
@@ -89,10 +89,10 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
             value="right"
             selectedColor="red"
             style={{ borderRadius: "12px" }}
-            className="buttonThree"
+            className="button-Comp"
           >
             <span
-              className="button-three-text"
+              className="button-Comp__text"
               style={{ color: `${alignment === "right" ? "white" : "black"}` }}
             >
               {compBtn}
