@@ -30,11 +30,24 @@
       "payrollHeading": "Payroll"
     },
     "Experience":{
-      "experienceHeading": "Experience"
+      "experienceHeading": "Experience",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
     },
     "Education":{
-      "educationHeading": "Education"
+      "educationHeading": "Education",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
     },
+    "EmployeeHeader":{
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+    "MenuButtons":{
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+
     "AdditionalInformation":{
       "additionalInformationHeading": "Additional Information",
       "department": "Department:",
@@ -42,11 +55,13 @@
       "totalExperience": "Total Experience:",
       "joiningDate": "Joining Data:",
       "emergencyContact": "Emergency Contact:",
-      "cnic": "CNIC:"
+      "cnic": "CNIC:",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
-      "docsBtn": "Documnets",
+      "docsBtn": "Documents",
       "compBtn": "Compensation and benefits"
     },
     "Modals":{

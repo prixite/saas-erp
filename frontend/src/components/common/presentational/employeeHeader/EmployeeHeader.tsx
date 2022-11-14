@@ -1,6 +1,6 @@
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
-import phoneIcon from "@src/assets/svgs/Phone_Frame.svg";
+import phoneIcon from "@src/assets/svgs/Phone.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import "@src/components/common/presentational/employeeHeader/employeeHeader.scss";
@@ -52,7 +52,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   height: "20px",
                   width: "20px",
                   marginRight: "11.33px",
-                  background: "rgba(255,205,205, 0.2)",
+                  background: "transparent",
                 }}
               />
               {employeeData?.contact_number}

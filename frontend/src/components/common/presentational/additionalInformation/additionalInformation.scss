@@ -40,6 +40,10 @@
           width: 19px;
           background: inherit;
         }
+        .css-1y8u6dt-MuiButtonBase-root-MuiMenuItem-root {
+          display: flex;
+          justify-content: space-evenly;
+        }
       }
     }
   }
@@ -231,13 +235,14 @@
         align-items: center;
         justify-content: center;
 
+        .btn-cls {
+          width: 5px;
+        }
         .logo {
           height: 19px;
           width: 19px;
           background: inherit;
-          margin-left: 11px;
           padding: 0px;
-          margin-bottom: 2px;
         }
       }
     }
