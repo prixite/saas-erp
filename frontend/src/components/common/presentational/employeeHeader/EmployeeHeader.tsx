@@ -11,7 +11,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
   return (
     <>
       <div className="employee-Header-main">
-        <div className="iconContainer">
+        <div className="icon-Container">
           <img className="profile-pic" src={profileIcon} alt="profile pic" />
         </div>
 
@@ -21,7 +21,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
               {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
             <div className="userID">
-              <p className="userID">PX-01</p>
+              <p className="paragraph">PX-01</p>
             </div>
             <div className="userStatus">
               <p className="paragraph">Permanent</p>
