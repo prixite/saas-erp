@@ -106,7 +106,6 @@ function DataGridTable() {
               id="edit-btn-id"
               className="edit-btn"
             >
-              {/* EditIconSVG  */}
               <img className="profile-pic" src={EditIcon} alt="profile pic" />
             </IconButton>
             <IconButton
@@ -114,7 +113,6 @@ function DataGridTable() {
               id="show-btn-id"
               className="delete-btn"
             >
-              {/* ShowIconSVG */}
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
             <IconButton
@@ -123,7 +121,6 @@ function DataGridTable() {
               id="delete-btn-id"
               className="delete-btn"
             >
-              {/* DeleteIconSVG */}
               <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
             </IconButton>
           </Box>
@@ -138,11 +135,7 @@ function DataGridTable() {
   const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
   };
-  // const [finalCellClickInfo, setFinalCellClickInfo] = useState(null);
   const handleOnCellClick = (params) => {
-    //params => can be used to log click info
-    // setFinalCellClickInfo((prevState) => (prevState = params));
-    // console.log("params", params.row.id);
     navigate(`/react/employees/${params.row.id}`);
   };
   return (
@@ -233,11 +226,8 @@ function DataGridTable() {
                 "& .MuiDataGrid-cell:hover": {
                   color: "black",
                 },
-                // boxShadow: 3,
-                // border: 2,
                 "& .MuiDataGrid-row:hover": {
                   backgroundColor: "#F5F5F5",
-                  // color: "red"
                 },
                 "& .MuiDataGrid-row.Mui-selected:hover, .css-vgcejw-MuiDataGrid-root .MuiDataGrid-row.Mui-selected.Mui-hovered":
                   {
@@ -251,9 +241,7 @@ function DataGridTable() {
                   {
                     outline: "none",
                   },
-                "& .css-17jjc08-MuiDataGrid-footerContainer": {
-                  // display: "none",
-                },
+                "& .css-17jjc08-MuiDataGrid-footerContainer": {},
               }}
             />
           </div>
