@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Divider, Grid, Typography, Box } from "@mui/material";
-import CompanyIconFour from "@src/assets/svgs/CompanyIconFour.svg";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
@@ -23,14 +22,20 @@ function Education() {
     <>
       {/* Education */}
       <Grid className="education-main" container>
-        <Grid className="child-div-one" container item xs={12} sm={12}>
-          <Grid item xs={10} sm={10} className="child-div-one-container-A">
+        <Grid
+          className="education-Heading-Container"
+          container
+          item
+          xs={12}
+          sm={12}
+        >
+          <Grid item xs={10} sm={10} className="heading-container">
             <Typography className="experience-text">
               {educationHeading}
             </Typography>
           </Grid>
 
-          <Grid className="child-div-one-container-B" item xs={2} sm={2}>
+          <Grid className="icon-Container" item xs={2} sm={2}>
             <div className="box">
               <Box sx={{ cursor: "pointer" }} className="subBox">
                 <img
@@ -50,7 +55,7 @@ function Education() {
         </Grid>
 
         <Grid
-          className="child-div-two"
+          className="Education-Card"
           container
           item
           xs={12}
@@ -58,7 +63,7 @@ function Education() {
           height={90}
         >
           {/* B */}
-          <Grid item className="child-div-two-A">
+          <Grid item className="icon-container">
             <img
               className="profile-pic"
               src={CompanyIconThree}
@@ -66,28 +71,28 @@ function Education() {
             />
           </Grid>
 
-          <Grid container item className="child-div-two-B">
-            <Grid className="child-div-two-A" item>
+          <Grid container item className="contentDiv">
+            <Grid className="title-container" item>
               <Typography variant="body1" className="para">
                 Bachelor in Computer Science
               </Typography>
             </Grid>
 
             <Grid
+              className="description-subContainer"
               container
               item
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
-              className="child-div-three-A"
             >
-              <Grid item className="para-One-Div">
+              <Grid item className="description">
                 <Typography variant="body1" className="para">
                   Pakistan Institute of Engineering and Applied Sciences Lahore,
                   Pakistan{" "}
                 </Typography>
               </Grid>
-              <Grid item className="para-Two-Div">
+              <Grid item className="year">
                 <Typography variant="body1" className="para">
                   2016-2022
                 </Typography>
@@ -103,42 +108,44 @@ function Education() {
         </Grid>
 
         <Grid
-          className="child-div-two"
+          className="Education-Card"
           container
           item
           xs={12}
           sm={12}
           height={90}
         >
-          <Grid item className="child-div-two-A">
+          {/* B */}
+          <Grid item className="icon-container">
             <img
               className="profile-pic"
-              src={CompanyIconFour}
+              src={CompanyIconThree}
               alt="profile pic"
             />
           </Grid>
 
-          <Grid container item className="child-div-two-B">
-            <Grid className="child-div-two-A" item>
+          <Grid container item className="contentDiv">
+            <Grid className="title-container" item>
               <Typography variant="body1" className="para">
-                Intermediate in Computer Science
+                Bachelor in Computer Science
               </Typography>
             </Grid>
 
             <Grid
+              className="description-subContainer"
               container
               item
               display="flex"
               alignItems="center"
               justifyContent="flex-start"
-              className="child-div-three-A"
             >
-              <Grid item className="para-One-Div">
+              <Grid item className="description">
                 <Typography variant="body1" className="para">
-                  Kips College Johar Town, Lahore, Pakistan{" "}
+                  Pakistan Institute of Engineering and Applied Sciences Lahore,
+                  Pakistan{" "}
                 </Typography>
               </Grid>
-              <Grid item className="para-Two-Div">
+              <Grid item className="year">
                 <Typography variant="body1" className="para">
                   2016-2022
                 </Typography>

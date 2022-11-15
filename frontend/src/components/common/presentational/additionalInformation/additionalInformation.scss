@@ -7,12 +7,12 @@
   background: #ffffff;
   border-radius: 12px;
 
-  .ChildOne {
+  .headingContainer {
     margin: 18px 16px 12px 18px;
     height: 17px;
 
-    .ChildOne-A {
-      .ChildOne-A-Typo {
+    .headingDiv {
+      .heading {
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -23,7 +23,7 @@
         opacity: 0.5;
       }
     }
-    .ChildOne-B {
+    .imageContainer {
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -48,14 +48,14 @@
     }
   }
 
-  .ChildTwo {
+  .CardOne {
     margin: 0px 16px 18px 18px;
     height: 19px;
 
-    .ChildTwo-A {
+    .department-Heading-container {
       min-width: 25%;
 
-      .typo-One {
+      .department-title {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -67,7 +67,7 @@
         opacity: 0.8;
         margin-right: 16px;
       }
-      .typo-Two {
+      .department-text {
         width: 180px;
         height: 19px;
         font-family: "Lato";
@@ -77,14 +77,12 @@
         line-height: 19px;
         letter-spacing: -0.011em;
         color: #000000;
-        // opacity: 0.5;
-        // margin-right: 16px;
       }
     }
-    .ChildTwo-B {
+    .employee-Name-Container {
       min-width: 25%;
 
-      .typo-One {
+      .employee-title {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -96,7 +94,7 @@
         opacity: 0.8;
         margin-right: 16px;
       }
-      .typo-Two {
+      .employee-text {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -107,10 +105,10 @@
         color: #000000;
       }
     }
-    .ChildTwo-C {
+    .experience-Container {
       min-width: 25%;
 
-      .typo-One {
+      .experience-title {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -123,7 +121,7 @@
         margin-right: 16px;
         overflow: "hidden";
       }
-      .typo-Two {
+      .experience-text {
         width: 180px;
         height: 19px;
         font-family: "Lato";
@@ -135,10 +133,10 @@
         color: #000000;
       }
     }
-    .ChildTwo-D {
+    .data-Container {
       min-width: 25%;
 
-      .typo-One {
+      .data-title {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -151,7 +149,7 @@
         margin-right: 16px;
         overflow: "hidden";
       }
-      .typo-Two {
+      .data-text {
         height: 19px;
         font-family: "Lato";
         font-style: normal;
@@ -164,17 +162,17 @@
     }
   }
 
-  .ChildThree {
+  .CardTwo {
     margin: 0px 16px 0px 18px;
     height: 19px;
 
-    .ChildThree-A {
+    .emergency-Container {
       display: flex;
       align-items: center;
       justify-content: flex-start;
 
-      .ChildThree-A-One {
-        .typo {
+      .emergency-title {
+        .text {
           height: 19px;
           font-family: "Lato";
           font-style: normal;
@@ -188,8 +186,8 @@
           overflow: "hidden";
         }
       }
-      .ChildThree-A-Two {
-        .typo {
+      .emergency-text {
+        .text {
           height: 19px;
           font-family: "Lato";
           font-style: normal;
@@ -201,13 +199,13 @@
         }
       }
     }
-    .ChildThree-B {
+    .cnic-Container {
       display: flex;
       align-items: center;
       justify-content: flex-start;
 
-      .ChildThree-B-One {
-        .typo {
+      .cnic-title {
+        .text {
           height: 19px;
           font-family: "Lato";
           font-style: normal;
@@ -220,12 +218,8 @@
           margin-right: 16px;
         }
       }
-
-      .ChildThree-B-Two {
-        width: 130px;
-        display: flex;
-        justify-content: center;
-        .typo {
+      .cnic-text {
+        .text {
           height: 19px;
           font-family: "Lato";
           font-style: normal;
@@ -235,19 +229,8 @@
           letter-spacing: -0.011em;
           color: #000000;
         }
-        .typo1 {
-          height: 19px;
-          font-family: "Lato";
-          font-style: normal;
-          line-height: 0;
-          font-weight: 700;
-          margin-bottom: 5px;
-          font-size: 44px;
-          letter-spacing: -0.011em;
-          color: #000000;
-        }
       }
-      .ChildThree-B-Three {
+      .cnic-photo {
         display: flex;
         align-items: center;
         justify-content: center;
