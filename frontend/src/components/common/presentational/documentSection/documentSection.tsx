@@ -1,4 +1,5 @@
 import { Divider, Grid, Typography, Box, Button } from "@mui/material";
+// import { useParams } from "react-router-dom";
 import deleteIcon from "@src/assets/svgs/Delete.svg";
 import docIcon from "@src/assets/svgs/doc.svg";
 import uploadIcon from "@src/assets/svgs/paperupload.svg";
@@ -7,10 +8,14 @@ import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/documentSection/documentSection.scss";
+// import { useGetEmployeeDocsQuery } from "@src/store/reducers/employees-api";
 
 const DocumentSection = () => {
   const constantData: LocalizationInterface = localizedData();
   const { employeeExperienceLetters, uploadDocument } = constantData.Employee;
+  // const { employeeId } = useParams();
+  // const { data: EmployeeDocs } = useGetEmployeeDocsQuery({ employeeId });
+
   return (
     <Box className="documentation-main">
       <Box className="documentation-heading">
