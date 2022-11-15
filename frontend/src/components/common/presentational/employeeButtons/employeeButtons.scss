@@ -1,15 +1,15 @@
 .employeeButton-main {
   margin-top: 24px;
   margin-bottom: 24px;
+  box-sizing: border-box;
 
   .toggleGroup {
-    .buttonOne {
+    .button-Basic {
       display: flex;
       flex-direction: row;
       align-items: center;
       padding: 10px 16px;
       gap: 10px;
-      // width: 138px;
       height: 37px;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 8px;
@@ -19,7 +19,7 @@
       cursor: pointer;
       text-transform: none;
 
-      .button-one-text {
+      &__text {
         width: 106px;
         height: 17px;
 
@@ -36,7 +36,7 @@
       }
     }
 
-    .buttonTwo {
+    .button-Docs {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -51,7 +51,7 @@
       cursor: pointer;
       text-transform: none;
 
-      .button-two-text {
+      &__text {
         width: 70px;
         height: 17px;
 
@@ -68,7 +68,7 @@
       }
     }
 
-    .buttonThree {
+    .button-Comp {
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
@@ -85,7 +85,7 @@
       cursor: pointer;
       text-transform: none;
 
-      .button-three-text {
+      &__text {
         width: 164px;
         height: 17px;
         font-family: "Lato";
