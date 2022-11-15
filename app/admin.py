@@ -77,3 +77,11 @@ if settings.DEBUG:
     @admin.register(models.Experience)
     class ExperienceAdmin(admin.ModelAdmin):
         pass
+
+    @admin.register(models.Document)
+    class DocuemntAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.DocumentType)
+    class DocumentTypeAdmin(admin.ModelAdmin):
+        pass

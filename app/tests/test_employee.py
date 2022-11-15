@@ -20,6 +20,7 @@ class EmployeeTestCase(BaseTestCase):
                 "last_name",
                 "contact_number",
                 "date_of_joining",
+                "image",
             ],
         )
 
@@ -28,17 +29,16 @@ class EmployeeTestCase(BaseTestCase):
 
         employee_data = {
             "user": {
-                "first_name": "Waqar Ali",
-                "email": "test@email.com",
+                "first_name": "John",
+                "last_name": "Doe",
+                "email": "user@example.com",
             },
-            "contact_number": "0333 869 3455",
-            "nic": "23470247027420",
-            "emergency_contact_number": "0234324243",
-            "designation": "Software Engineer | Python",
-            "date_of_joining": timezone.now().strftime("%Y-%m-%d"),
+            "contact_number": "234424432",
+            "nic": "213342343242",
+            "date_of_joining": "2022-11-15",
+            "emergency_contact_number": "1234324234",
+            "designation": "Software Engineer",
             "organization": self.organization.id,
-            "type": self.employment_type.id,
-            "department": self.department.id,
         }
 
         response = self.client.post("/api/employees/", data=employee_data)
@@ -56,15 +56,21 @@ class EmployeeTestCase(BaseTestCase):
             [
                 "id",
                 "user",
-                "contact_number",
-                "date_of_joining",
-                "nic",
-                "designation",
                 "degrees",
+                "experience",
+                "benefits",
+                "contact_number",
+                "nic",
+                "date_of_joining",
                 "emergency_contact_number",
+                "designation",
+                "user_allowed",
+                "created_at",
+                "updated_at",
                 "organization",
-                "type",
                 "department",
+                "manager",
+                "type",
             ],
         )
 

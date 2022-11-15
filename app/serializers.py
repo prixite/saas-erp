@@ -45,12 +45,8 @@ class ExperirenceSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
-    organization = serializers.CharField(source="organization.name")
-    department = serializers.CharField(source="department.name", default="")
-    manager = serializers.CharField(source="manager.user.get_full_name", default="")
-    type = serializers.CharField(source="type.name", default="")
-    degrees = DegreeSerializer(many=True)
-    experience = ExperirenceSerializer(many=True)
+    degrees = DegreeSerializer(many=True, read_only=True)
+    experience = ExperirenceSerializer(many=True, read_only=True)
     benefits = serializers.SlugRelatedField(
         slug_field="name", read_only=True, many=True
     )
@@ -67,6 +63,17 @@ class EmployeeSerializer(serializers.ModelSerializer):
             first_name=user_data["first_name"],
         )
         return models.Employee.objects.create(user=user, **validated_data)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["organization"] = instance.organization.name
+        if instance.department:
+            data["department"] = instance.department.name
+        if instance.manager:
+            data["manager"] = instance.manager.user.get_full_name()
+        if instance.type:
+            data["type"] = instance.type.name
+        return data
 
 
 class CompensationSerializer(serializers.ModelSerializer):
