@@ -20,6 +20,7 @@
   }
   .documentation-section {
     margin-top: 24px;
+    cursor: pointer;
     .documentation-grid {
       .doc-box {
         display: flex;
@@ -53,11 +54,13 @@
         .show-img {
           width: 17px;
           height: 18px;
+          cursor: pointer;
         }
         .delete-img {
           width: 17px;
           height: 18px;
           margin-right: 20px;
+          cursor: pointer;
         }
       }
     }
