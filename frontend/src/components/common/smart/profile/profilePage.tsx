@@ -15,7 +15,7 @@ import ProfilePageHeader from "@src/components/common/presentational/profilePage
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 
-import "@src/components/common/smart/profilePage/profilePage.scss";
+import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
