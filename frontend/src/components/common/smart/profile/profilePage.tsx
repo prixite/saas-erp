@@ -27,17 +27,28 @@ function ProfilePage() {
     notificationHeading,
   } = constantData.ProfilePage;
   const [values, setValues] = useState({
-    amount: "",
-    password: "",
-    weight: "",
-    weightRange: "",
-    showPassword: false,
+    currentPassword: "",
+    showCurrentPassword: false,
+    newPassword: false,
+    verifyPassword: false,
   });
 
-  const handleClickShowPassword = () => {
+  const handleClickShowVerifyPassword = () => {
     setValues({
       ...values,
-      showPassword: !values.showPassword,
+      verifyPassword: !values.verifyPassword,
+    });
+  };
+  const handleClickShowNewPassword = () => {
+    setValues({
+      ...values,
+      newPassword: !values.newPassword,
+    });
+  };
+  const handleClickShowCurrentPassword = () => {
+    setValues({
+      ...values,
+      showCurrentPassword: !values.showCurrentPassword,
     });
   };
 
@@ -72,10 +83,9 @@ function ProfilePage() {
                 className="firstName__textfield"
                 id="outlined"
                 label="First Name"
-                defaultValue="First Name"
+                placeholder="First Name"
                 size="medium"
                 InputLabelProps={{
-                  // style: { color: 'red' },
                   style: inputLabelColor,
                 }}
               />
@@ -86,10 +96,9 @@ function ProfilePage() {
                 className="lastName__textfield"
                 id="outlined-required"
                 label="Last Name"
-                defaultValue="Last Name"
+                placeholder="Last Name"
                 size="medium"
                 InputLabelProps={{
-                  // style: { color: 'red' },
                   style: inputLabelColor,
                 }}
               />
@@ -100,10 +109,9 @@ function ProfilePage() {
                 className="email__textfield"
                 id="outlined-required"
                 label="Email Address"
-                defaultValue="rabeel@gmail.com"
+                placeholder="rabeel@gmail.com"
                 size="medium"
                 InputLabelProps={{
-                  // style: { color: 'red' },
                   style: inputLabelColor,
                 }}
               />
@@ -115,11 +123,10 @@ function ProfilePage() {
               className="textfield"
               id="outlined-required"
               label="Phone Number"
-              defaultValue="+92-XXX-4288775"
+              placeholder="+92-XXX-4288775"
               // value={this.state.form_email}
               // onChange={this.handle_change('form_email')}
               InputLabelProps={{
-                // style: { color: 'red' },
                 style: inputLabelColor,
               }}
             />
@@ -137,21 +144,20 @@ function ProfilePage() {
                 className="currentPassword__textfield"
                 id="outlined-required"
                 label="Current Password"
-                defaultValue="Hello World"
+                placeholder="Hello World"
                 onChange={handleChange("password")}
-                type={values.showPassword ? "text" : "password"}
+                type={values.showCurrentPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
                   style: inputLabelColor,
-                  // style: { color: 'blue' },
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={handleClickShowCurrentPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? (
+                        {values.showCurrentPassword ? (
                           <Visibility />
                         ) : (
                           <VisibilityOff />
@@ -167,9 +173,9 @@ function ProfilePage() {
                 className="newPassword__textfield"
                 id="outlined-required"
                 label="New Password Password"
-                defaultValue="Hello World"
+                placeholder="Hello World"
                 onChange={handleChange("password")}
-                type={values.showPassword ? "text" : "password"}
+                type={values.newPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
                   style: inputLabelColor,
@@ -177,10 +183,10 @@ function ProfilePage() {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={handleClickShowNewPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? (
+                        {values.newPassword ? (
                           <Visibility />
                         ) : (
                           <VisibilityOff />
@@ -196,9 +202,9 @@ function ProfilePage() {
                 className="verifyPassword__textfield"
                 id="outlined-required"
                 label="Verify Password"
-                defaultValue="Hello World"
+                placeholder="Hello World"
                 onChange={handleChange("password")}
-                type={values.showPassword ? "text" : "password"}
+                type={values.verifyPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
                   style: inputLabelColor,
@@ -206,10 +212,10 @@ function ProfilePage() {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={handleClickShowVerifyPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? (
+                        {values.verifyPassword ? (
                           <Visibility />
                         ) : (
                           <VisibilityOff />
@@ -236,7 +242,6 @@ function ProfilePage() {
               <div className="A__billUpdates">Bill Updates</div>
               <div className="A__checkBoxContainer">
                 <div className="A__checkBoxContainer__one">
-                  <Typography variant="subtitle1">Email</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -247,10 +252,10 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">Email</Typography>
                 </div>
 
                 <div className="A__checkBoxContainer__two">
-                  <Typography variant="subtitle1">Phone</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -261,6 +266,7 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">Phone</Typography>
                 </div>
               </div>
             </div>
@@ -269,7 +275,6 @@ function ProfilePage() {
               <div className="B__billUpdates">Text 1</div>
               <div className="B__checkBoxContainer">
                 <div className="B__checkBoxContainer__one">
-                  <Typography variant="subtitle1">checkbox 1</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -280,10 +285,10 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">checkbox 1</Typography>
                 </div>
 
                 <div className="B__checkBoxContainer__two">
-                  <Typography variant="subtitle1">checkbox 2</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -294,6 +299,7 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">checkbox 2</Typography>
                 </div>
               </div>
             </div>
@@ -302,7 +308,6 @@ function ProfilePage() {
               <div className="C__billUpdates">Text 2</div>
               <div className="C__checkBoxContainer">
                 <div className="C__checkBoxContainer__one">
-                  <Typography variant="subtitle1">checkbox 3</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -313,10 +318,10 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">checkbox 3</Typography>
                 </div>
 
                 <div className="C__checkBoxContainer__two">
-                  <Typography variant="subtitle1">checkbox 4</Typography>
                   <Checkbox
                     {...label}
                     defaultChecked
@@ -327,6 +332,7 @@ function ProfilePage() {
                       },
                     }}
                   />
+                  <Typography variant="subtitle1">checkbox 4</Typography>
                 </div>
               </div>
             </div>

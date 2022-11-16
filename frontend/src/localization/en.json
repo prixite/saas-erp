@@ -62,7 +62,7 @@
     "ProfilePage":{
       "basicInformationHeading": "Basic Information",
       "changePasswordHeading": "Change Password",
-      "notificationHeading": "Notification Setting"
+      "notificationHeading": "Notification Settings"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",

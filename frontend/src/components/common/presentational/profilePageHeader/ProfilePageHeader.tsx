@@ -1,7 +1,6 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
-import phoneIcon from "@src/assets/svgs/Phone.svg";
-import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import "@src/components/common/presentational/profilePageHeader/profilePageHeader.scss";
 
 function ProfilePageHeader() {
@@ -36,26 +35,10 @@ function ProfilePageHeader() {
               {/* <p>{employeeData?.user?.email}</p> */}
             </div>
             <div className="contact">
-              <img
-                className="profile-pic"
-                src={phoneIcon}
-                alt="phone"
-                style={{
-                  height: "20px",
-                  width: "20px",
-                  marginRight: "11.33px",
-                  background: "transparent",
-                }}
-              />
-              Number
-              {/* {employeeData?.contact_number} */}
-            </div>
-          </div>
-        </div>
+              <AccountCircleIcon />
 
-        <div className="employee-Header-Div-Three">
-          <div className="container-Icon">
-            <img className="profile-pic" src={ThreeDotter} alt="menu" />
+              <p className="contactNumber">Number</p>
+            </div>
           </div>
         </div>
       </div>
