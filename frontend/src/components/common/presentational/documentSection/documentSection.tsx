@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, Box, Button } from "@mui/material";
+import { Divider, Grid, Typography, Box, Button, Link } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 import deleteIcon from "@src/assets/svgs/Delete.svg";
@@ -28,10 +28,10 @@ const DocumentSection = () => {
         <img className="heading-img" src={ThreeDotter} alt="menu" />
       </Box>
       {!isLoading ? (
-        EmployeeDocs?.map((doc: EmployeeDoc) => {
+        EmployeeDocs?.map((doc: EmployeeDoc, index: number) => {
           return (
-            <>
-              <Grid container className="documentation-grid" key={doc?.id}>
+            <Box className="documentation-section" key={doc?.name}>
+              <Grid container className="documentation-grid">
                 <Grid className="doc-box" item xs={6} sm={6}>
                   <Box className="doc-img-box">
                     <img className="doc-img" src={docIcon} alt="doc" />
@@ -43,11 +43,18 @@ const DocumentSection = () => {
                 </Grid>
                 <Grid className="doc-actions" item xs={6} sm={6}>
                   <img className="delete-img" src={deleteIcon} alt="delete" />
-                  <img className="show-img" src={showIcon} alt="show" />
+                  <Link
+                    href={doc?.document_url}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <img className="show-img" src={showIcon} alt="show" />
+                  </Link>
                 </Grid>
               </Grid>
-              <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
-            </>
+              {index !== EmployeeDocs.length - 1 ? (
+                <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
+              ) : null}
+            </Box>
           );
         })
       ) : (
