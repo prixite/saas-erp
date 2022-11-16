@@ -25,3 +25,8 @@ export interface EmployeeData {
   type: number;
   department: number;
 }
+export interface EmployeeDoc {
+  name: string;
+  type: number;
+  document_url: string;
+}
