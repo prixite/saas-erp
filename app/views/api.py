@@ -54,3 +54,33 @@ class MeApiView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class InstitueApiView(ModelViewSet):
+    serializer_class = serializers.InstitueSerializer
+    queryset = models.Institute.objects.all()
+
+
+class ProgramApiView(ModelViewSet):
+    serializer_class = serializers.ProgramSerializer
+    queryset = models.Program.objects.all()
+
+
+class DegreeApiView(ModelViewSet):
+    serializer_class = serializers.DegreeSerializer
+    queryset = models.Degree.objects.all()
+
+
+class CompanyApiView(ModelViewSet):
+    serializer_class = serializers.CompanySerializer
+    queryset = models.Company.objects.all()
+
+
+class ExperienceApiView(ModelViewSet):
+    serializer_class = serializers.ExperirenceSerializer
+    queryset = models.Experience.objects.all()
+
+
+class BenefitApiView(ModelViewSet):
+    serializer_class = serializers.BenefitSerializer
+    queryset = models.Benefit.objects.all()

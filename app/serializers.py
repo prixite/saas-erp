@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db import transaction
 
 from app import models
 
@@ -27,42 +28,68 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
 
 class DegreeSerializer(serializers.ModelSerializer):
-    program = serializers.CharField(source="program.name")
-    institute = serializers.CharField(source="institute.name")
-
     class Meta:
         model = models.Degree
-        fields = ["program", "institute", "year"]
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = instance.program.name
+        data["institute"] = instance.institute.name
+        data["employee"] = instance.employee.user.get_full_name()
+        return data
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Company
+        fields = "__all__"
 
 
 class ExperirenceSerializer(serializers.ModelSerializer):
-    company = serializers.CharField(source="company.name")
-
     class Meta:
         model = models.Experience
-        fields = ["title", "company", "start_date", "end_date"]
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = instance.employee.user.get_full_name()
+        data["company"] = instance.company.name
+        return data
+
+
+class BenefitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Benefit
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["organization"] = instance.organization.name
+        return data
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
     degrees = DegreeSerializer(many=True, read_only=True)
     experience = ExperirenceSerializer(many=True, read_only=True)
-    benefits = serializers.SlugRelatedField(
-        slug_field="name", read_only=True, many=True
-    )
 
     class Meta:
         model = models.Employee
-
         fields = "__all__"
 
+    @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
         user = models.User.objects.create(
-            username=user_data["email"],
-            first_name=user_data["first_name"],
+            username=user_data.get("email"),
+            email=user_data.get("email"),
+            first_name=user_data.get("first_name", ""),
+            last_name=user_data.get("last_name", ""),
+            image=user_data.get("image", ""),
         )
-        return models.Employee.objects.create(user=user, **validated_data)
+        validated_data["user_id"] = user.id
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -116,3 +143,15 @@ class MeSerializer(serializers.ModelSerializer):
             "is_superuser",
             "headline",
         ]
+
+
+class InstitueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Institute
+        fields = "__all__"
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Program
+        fields = "__all__"
