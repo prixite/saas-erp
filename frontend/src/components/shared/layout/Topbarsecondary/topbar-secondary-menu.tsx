@@ -68,7 +68,7 @@ const TopbarSecondaryMenu = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/react/profilePage");
+    navigate("/react/profile");
   };
   return (
     <Box className="topbar-secondary">

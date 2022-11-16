@@ -31,7 +31,7 @@ const routes = {
   },
   profilePage: {
     name: "ProfilePage",
-    path: "/react/profilePage",
+    path: "/react/profile",
     component: "ProfilePage",
   },
 };
