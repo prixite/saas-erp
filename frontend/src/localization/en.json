@@ -59,6 +59,11 @@
       "editBtn":"Edit",
       "deleteBtn":"Delete"
     },
+    "ProfilePage":{
+      "basicInformationHeading": "Basic Information",
+      "changePasswordHeading": "Change Password",
+      "notificationHeading": "Notification Setting"
+    },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
       "docsBtn": "Documents",

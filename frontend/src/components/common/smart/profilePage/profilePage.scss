@@ -1,0 +1,378 @@
+@mixin textfieldCustoms {
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      border: 1px solid #ebebeb;
+    }
+
+    &:hover fieldset {
+      border: 1px solid #d3d3d3;
+    }
+
+    & .Mui-focused fieldset {
+      border-color: #d3d3d3;
+    }
+
+    // & label{
+    // color: #EBEBEB;
+    // }
+  }
+}
+
+@mixin headingText {
+  width: auto;
+  height: 17px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+  letter-spacing: -0.011em;
+  color: #000000;
+  opacity: 0.5;
+}
+
+.profilePage {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 20px;
+
+  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root {
+    font-family: "Lato";
+    color: #000000;
+    opacity: 0.6;
+  }
+
+  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+    font-family: "Lato";
+    font-weight: 400;
+    color: #000000;
+    opacity: 0.6;
+  }
+
+  .basicInfo {
+    margin-bottom: 10px;
+    width: 100%;
+
+    min-height: 221px;
+    background: white;
+    border: 1px solid #e7e7e7;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    // padding: 0px;
+    padding: 18px;
+
+    &__heading {
+      margin-bottom: 26px;
+
+      &__text {
+        @include headingText();
+      }
+    }
+
+    &__namesAndEmails {
+      border: 2px sandybrown;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: row;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+
+      .css-1uys3ph-MuiInputBase-root-MuiOutlinedInput-root {
+        width: 356px;
+      }
+
+      .firstName {
+        margin-right: 16px;
+        margin-bottom: 16px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+
+      .lastName {
+        margin-right: 16px;
+        margin-bottom: 16px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+
+      .email {
+        margin-right: auto;
+        margin-bottom: 16px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+    }
+
+    &__phone {
+      margin-bottom: 10px;
+
+      .css-1uys3ph-MuiInputBase-root-MuiOutlinedInput-root {
+        width: 356px;
+      }
+
+      .textfield {
+        @include textfieldCustoms;
+      }
+    }
+  }
+
+  .password {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #e7e7e7;
+    padding: 18px 18px 0px 18px;
+    border-radius: 12px;
+
+    &__heading {
+      margin-bottom: 26px;
+      @include headingText();
+    }
+
+    &__passwordfield {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-top: 26px;
+
+      .css-1uys3ph-MuiInputBase-root-MuiOutlinedInput-root {
+        width: 356px;
+      }
+
+      .currentPassword {
+        margin-right: 16px;
+        min-width: 356px;
+        margin-bottom: 18px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+
+      .newPassword {
+        margin-right: 16px;
+        min-width: 356px;
+        margin-bottom: 18px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+
+      .verifyPassword {
+        margin-right: auto;
+        min-width: 356px;
+        margin-bottom: 18px;
+
+        &__textfield {
+          @include textfieldCustoms;
+        }
+      }
+    }
+  }
+
+  .notification {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #e7e7e7;
+
+    // min-width: 1315px;
+    min-height: 161px;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 10px;
+
+    &__heading {
+      @include headingText();
+    }
+
+    &__checkBoxDiv {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: -0.011em;
+      color: #000000;
+
+      .A {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        &__billUpdates {
+          min-width: 50%;
+        }
+
+        &__checkBoxContainer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-direction: row;
+          margin-right: auto;
+          margin-left: auto;
+          // min-width: 200px;
+          min-width: 50%;
+
+          &__one {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+
+          &__two {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+        }
+      }
+
+      .B {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        &__billUpdates {
+          min-width: 50%;
+        }
+
+        &__checkBoxContainer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-direction: row;
+          margin-right: auto;
+          margin-left: auto;
+          // min-width: 200px;
+          min-width: 50%;
+
+          &__one {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+
+          &__two {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+        }
+      }
+
+      .C {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        &__billUpdates {
+          min-width: 50%;
+        }
+
+        &__checkBoxContainer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-direction: row;
+          margin-right: auto;
+          margin-left: auto;
+          // min-width: 200px;
+          min-width: 50%;
+
+          &__one {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+
+          &__two {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: nowrap;
+          }
+        }
+      }
+    }
+  }
+
+  .btns {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #e7e7e7;
+    border-radius: 12px;
+    padding: 18px;
+
+    &__cancelBtn {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 24px;
+      gap: 7px;
+
+      width: 139px;
+      height: 47px;
+
+      background: #ffffff;
+      border: 1px solid #e7e7e7;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      color: black;
+
+      &:hover {
+        background: #e7e7e7;
+        opacity: 1;
+      }
+    }
+
+    &__saveBtn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 24px;
+      gap: 7px;
+      width: 139px;
+      height: 47px;
+      background: #ff2f2f;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+
+      &:hover {
+        background: #ff2f2f;
+        opacity: 1;
+      }
+    }
+  }
+}
