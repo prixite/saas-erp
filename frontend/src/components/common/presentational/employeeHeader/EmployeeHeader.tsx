@@ -1,13 +1,24 @@
+import { useState } from "react";
+import { Box } from "@mui/material";
 import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import "@src/components/common/presentational/employeeHeader/employeeHeader.scss";
 interface EmployeeHeaderType {
   employeeData?: EmployeeData;
 }
 function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <div className="employee-Header-main">
@@ -61,9 +72,19 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
         </div>
 
         <div className="employee-Header-Div-Three">
-          <div className="container-Icon">
-            <img className="profile-pic" src={ThreeDotter} alt="menu" />
-          </div>
+          <Box sx={{ cursor: "pointer" }} className="container-Icon">
+            <img
+              onClick={handleClick}
+              className="profile-pic"
+              src={ThreeDotter}
+              alt="menu"
+            />
+            <MenuButtons
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+            />
+          </Box>
         </div>
       </div>
     </>

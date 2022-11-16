@@ -7,7 +7,7 @@ import { localizedData } from "@src/helpers/utils/language";
 interface Props {
   open: boolean;
   handleClose: () => void;
-  anchorEl: null;
+  anchorEl: null | HTMLElement;
 }
 
 const MenuButtons = ({ open, handleClose, anchorEl }: Props) => {

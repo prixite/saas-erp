@@ -1,6 +1,9 @@
-import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
+import { Grid, Typography, Button, Box } from "@mui/material";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
+import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -20,6 +23,15 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
     emergencyContact,
     cnic,
   } = constantData.AdditionalInformation;
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [showResults, setShowResults] = useState(false);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <Grid className="additional-Information-main" container xs={12} sm={12}>
@@ -32,13 +44,19 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
           </Grid>
 
           <Grid item xs={3} sm={3} marginLeft="auto" className="imageContainer">
-            <div className="logoContainer">
+            <Box className="logoContainer" sx={{ cursor: "pointer" }}>
               <img
                 className="profile-pic"
                 src={ThreeDotter}
                 alt="profile pic"
+                onClick={handleClick}
               />
-            </div>
+              <MenuButtons
+                anchorEl={anchorEl}
+                open={open}
+                handleClose={handleClose}
+              />
+            </Box>
           </Grid>
         </Grid>
 
@@ -127,12 +145,24 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
             </Grid>
 
             <Grid className="cnic-text" item>
-              <Typography className="text" variant="body1">
-                {employeeData?.nic}
-              </Typography>
+              {showResults ? (
+                <Typography className="typo" variant="body1">
+                  {employeeData?.nic}
+                </Typography>
+              ) : (
+                <Typography className="typo1" variant="body1">
+                  {Array(employeeData?.nic.length).join(".")}
+                </Typography>
+              )}
             </Grid>
             <Grid className="cnic-photo" item>
-              <img className="logo" src={HideIcon} alt="profile pic" />
+              <Button onClick={() => setShowResults(!showResults)}>
+                <img
+                  className="logo"
+                  src={showResults ? showIcon : HideIcon}
+                  alt="eye"
+                />
+              </Button>
             </Grid>
           </Grid>
         </Grid>

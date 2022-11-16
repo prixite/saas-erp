@@ -10,9 +10,9 @@ import "@src/components/common/presentational/experience/experience.scss";
 function Experience() {
   const constantData: LocalizationInterface = localizedData();
   const { experienceHeading } = constantData.Experience;
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
