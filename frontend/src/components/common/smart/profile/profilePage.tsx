@@ -344,10 +344,10 @@ function ProfilePage() {
         <div className="btns">
           <Stack spacing={2} direction="row">
             <Button className="btns__cancelBtn" variant="contained">
-              Cancel
+              <span className="btns__cancelBtn__btnText">Cancel</span>
             </Button>
             <Button className="btns__saveBtn" variant="contained">
-              Save
+              <span className="btns__saveBtn__btnText">Save</span>
             </Button>
           </Stack>
         </div>

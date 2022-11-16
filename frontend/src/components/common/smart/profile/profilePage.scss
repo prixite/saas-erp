@@ -333,6 +333,7 @@
     padding: 18px 18px 18px 0px;
 
     &__cancelBtn {
+      box-shadow: none;
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
@@ -352,9 +353,14 @@
       &:hover {
         background: #e7e7e7;
       }
+
+      &__btnText {
+        text-transform: capitalize;
+      }
     }
 
     &__saveBtn {
+      box-shadow: none;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -368,6 +374,10 @@
 
       &:hover {
         background: #ff2f2f;
+      }
+
+      &__btnText {
+        text-transform: capitalize;
       }
     }
   }
