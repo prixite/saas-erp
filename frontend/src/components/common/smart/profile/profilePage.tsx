@@ -14,7 +14,6 @@ import Stack from "@mui/material/Stack";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
@@ -127,8 +126,7 @@ function ProfilePage() {
               id="outlined-required"
               label="Phone Number"
               placeholder="XX-XXX-XXXXXXX"
-              // value={this.state.form_email}
-              // onChange={this.handle_change('form_email')}
+              size="medium"
               InputLabelProps={{
                 style: inputLabelColor,
               }}

@@ -192,8 +192,7 @@
     width: 100%;
     margin-bottom: 10px;
     border: 1px solid #e7e7e7;
-
-    // min-width: 1315px;
+    box-sizing: border-box;
     min-height: 161px;
     border-radius: 12px;
     padding: 18px;
@@ -331,7 +330,7 @@
   .btns {
     width: 100%;
     margin-bottom: 10px;
-    padding: 18px;
+    padding: 18px 18px 18px 0px;
 
     &__cancelBtn {
       box-sizing: border-box;
