@@ -17,8 +17,8 @@ export const employeesApi = createApi({
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
       query: ({ id }) => `/employees/${id}`,
     }),
-    getEmployeeDocs: builder.query<EmployeeData, { id: number }>({
-      query: ({ id }) => `/employees/${id}/documents/`,
+    getEmployeeDocs: builder.query({
+      query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
     }),
   }),
 });
