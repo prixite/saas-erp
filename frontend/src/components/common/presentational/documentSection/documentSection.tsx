@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, Box, Button, Link } from "@mui/material";
+import { Divider, Grid, Typography, Box, Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 import deleteIcon from "@src/assets/svgs/Delete.svg";
@@ -19,6 +19,11 @@ const DocumentSection = () => {
   const { data: EmployeeDocs, isLoading } = useGetEmployeeDocsQuery({
     employeeId,
   });
+  const openInNewTab = (url: string) => {
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  };
   return (
     <Box className="documentation-main">
       <Box className="documentation-heading">
@@ -31,7 +36,11 @@ const DocumentSection = () => {
         EmployeeDocs?.map((doc: EmployeeDoc, index: number) => {
           return (
             <Box className="documentation-section" key={doc?.name}>
-              <Grid container className="documentation-grid">
+              <Grid
+                container
+                className="documentation-grid"
+                onClick={() => openInNewTab(doc?.document_url)}
+              >
                 <Grid className="doc-box" item xs={6} sm={6}>
                   <Box className="doc-img-box">
                     <img className="doc-img" src={docIcon} alt="doc" />
@@ -42,13 +51,13 @@ const DocumentSection = () => {
                   </Box>
                 </Grid>
                 <Grid className="doc-actions" item xs={6} sm={6}>
-                  <img className="delete-img" src={deleteIcon} alt="delete" />
-                  <Link
-                    href={doc?.document_url}
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <img className="show-img" src={showIcon} alt="show" />
-                  </Link>
+                  <img
+                    className="delete-img"
+                    src={deleteIcon}
+                    alt="delete"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <img className="show-img" src={showIcon} alt="show" />
                 </Grid>
               </Grid>
               {index !== EmployeeDocs.length - 1 ? (
