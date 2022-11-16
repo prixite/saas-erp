@@ -229,6 +229,26 @@
           letter-spacing: -0.011em;
           color: #000000;
         }
+        width: 130px;
+        display: flex;
+        justify-content: center;
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+        .typo1 {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          line-height: 0;
+          font-weight: 700;
+          margin-bottom: 5px;
+          font-size: 44px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
       }
       .cnic-photo {
         display: flex;
