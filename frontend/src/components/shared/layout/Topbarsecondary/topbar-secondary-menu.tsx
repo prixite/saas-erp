@@ -1,4 +1,5 @@
 import * as React from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -95,7 +96,7 @@ const TopbarSecondaryMenu = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleProfileClick} disableRipple>
-          <EditIcon />
+          <AccountCircleIcon />
           Profile
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>

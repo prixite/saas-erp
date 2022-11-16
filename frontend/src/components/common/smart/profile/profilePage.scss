@@ -331,8 +331,6 @@
   .btns {
     width: 100%;
     margin-bottom: 10px;
-    border: 1px solid #e7e7e7;
-    border-radius: 12px;
     padding: 18px;
 
     &__cancelBtn {
@@ -349,13 +347,11 @@
 
       background: #ffffff;
       border: 1px solid #e7e7e7;
-      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 12px;
       color: black;
 
       &:hover {
         background: #e7e7e7;
-        opacity: 1;
       }
     }
 
@@ -369,12 +365,10 @@
       width: 139px;
       height: 47px;
       background: #ff2f2f;
-      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 12px;
 
       &:hover {
         background: #ff2f2f;
-        opacity: 1;
       }
     }
   }

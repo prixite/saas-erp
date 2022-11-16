@@ -83,7 +83,6 @@
       }
 
       .userStatus {
-        border: 1px solid purple;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -144,6 +143,7 @@
       }
 
       .email {
+        width: auto;
         height: 20px;
         font-family: "Lato";
         font-style: normal;
@@ -176,10 +176,6 @@
         font-family: "Lato";
         flex: none;
         flex-grow: 0;
-
-        .contactNumber {
-          margin-left: 8.5px;
-        }
       }
     }
   }

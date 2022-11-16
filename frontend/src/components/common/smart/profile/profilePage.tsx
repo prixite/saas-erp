@@ -81,10 +81,10 @@ function ProfilePage() {
               {/* FirstName  */}
               <TextField
                 className="firstName__textfield"
-                id="outlined"
+                autoComplete="off"
+                id="outlined-required"
                 label="First Name"
                 placeholder="First Name"
-                size="medium"
                 InputLabelProps={{
                   style: inputLabelColor,
                 }}
@@ -94,6 +94,7 @@ function ProfilePage() {
               {/* Last Name */}
               <TextField
                 className="lastName__textfield"
+                autoComplete="off"
                 id="outlined-required"
                 label="Last Name"
                 placeholder="Last Name"
@@ -107,9 +108,10 @@ function ProfilePage() {
               {/* Email */}
               <TextField
                 className="email__textfield"
+                autoComplete="off"
                 id="outlined-required"
                 label="Email Address"
-                placeholder="rabeel@gmail.com"
+                placeholder="Email"
                 size="medium"
                 InputLabelProps={{
                   style: inputLabelColor,
@@ -121,9 +123,10 @@ function ProfilePage() {
           <div className="basicInfo__phone">
             <TextField
               className="textfield"
+              autoComplete="off"
               id="outlined-required"
               label="Phone Number"
-              placeholder="+92-XXX-4288775"
+              placeholder="XX-XXX-XXXXXXX"
               // value={this.state.form_email}
               // onChange={this.handle_change('form_email')}
               InputLabelProps={{
@@ -142,9 +145,9 @@ function ProfilePage() {
             <div className="currentPassword">
               <TextField
                 className="currentPassword__textfield"
+                autoComplete="off"
                 id="outlined-required"
                 label="Current Password"
-                placeholder="Hello World"
                 onChange={handleChange("password")}
                 type={values.showCurrentPassword ? "text" : "password"}
                 // value={values.password} <--
@@ -171,9 +174,9 @@ function ProfilePage() {
             <div className="newPassword">
               <TextField
                 className="newPassword__textfield"
+                autoComplete="off"
                 id="outlined-required"
-                label="New Password Password"
-                placeholder="Hello World"
+                label="New Password"
                 onChange={handleChange("password")}
                 type={values.newPassword ? "text" : "password"}
                 // value={values.password} <--
@@ -200,9 +203,10 @@ function ProfilePage() {
             <div className="verifyPassword">
               <TextField
                 className="verifyPassword__textfield"
+                autoComplete="off"
+                name="password"
                 id="outlined-required"
                 label="Verify Password"
-                placeholder="Hello World"
                 onChange={handleChange("password")}
                 type={values.verifyPassword ? "text" : "password"}
                 // value={values.password} <--
