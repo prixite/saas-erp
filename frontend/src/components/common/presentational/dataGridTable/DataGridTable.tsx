@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
@@ -84,7 +85,7 @@ function DataGridTable() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.date_of_joining}
+            {moment(cellValues?.row?.date_of_joining).format("LL")}
           </p>
         );
       },

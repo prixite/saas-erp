@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Grid, Typography, Button, Box } from "@mui/material";
+import moment from "moment";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
@@ -117,7 +118,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
               {joiningDate}
             </Typography>
             <Typography variant="body1" className="data-text">
-              {employeeData?.date_of_joining}
+              {moment(employeeData?.date_of_joining).format("LL")}
             </Typography>
           </Grid>
         </Grid>
