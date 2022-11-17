@@ -26,6 +26,10 @@ class Employee(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def _id(self):
+        return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
+
     def __str__(self) -> str:
         return self.user.get_full_name()
 
