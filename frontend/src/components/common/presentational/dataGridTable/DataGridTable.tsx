@@ -85,7 +85,7 @@ function DataGridTable() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.date_of_joining).format("LL")}
+            {moment(cellValues?.row?.date_of_joining).format("ll")}
           </p>
         );
       },

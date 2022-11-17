@@ -118,7 +118,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
               {joiningDate}
             </Typography>
             <Typography variant="body1" className="data-text">
-              {moment(employeeData?.date_of_joining).format("LL")}
+              {moment(employeeData?.date_of_joining).format("ll")}
             </Typography>
           </Grid>
         </Grid>
