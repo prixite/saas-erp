@@ -13,7 +13,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         model = models.Employee
         fields = [
             "id",
-            "_id",
+            "org_id",
             "first_name",
             "last_name",
             "contact_number",
@@ -26,9 +26,14 @@ class EmployeeListSerializer(serializers.ModelSerializer):
 
 
 class EmployeeUserSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
+
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email", "image"]
+        fields = ["first_name", "last_name", "email", "avatar"]
+
+    def get_avatar(self, data):
+        return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
 class DegreeSerializer(serializers.ModelSerializer):
@@ -55,7 +60,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     benefits = serializers.SlugRelatedField(
         slug_field="name", read_only=True, many=True
     )
-    _id = serializers.CharField(read_only=True)
+    org_id = serializers.CharField(read_only=True)
 
     class Meta:
         model = models.Employee

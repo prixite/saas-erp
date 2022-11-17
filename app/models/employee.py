@@ -27,7 +27,7 @@ class Employee(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def _id(self):
+    def org_id(self):
         return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
 
     def __str__(self) -> str:
