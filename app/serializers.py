@@ -76,19 +76,20 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Employee
-        fields = "__all__"
+        exclude = ("organization",)
 
     @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user = models.User.objects.create(
-            username=user_data.get("email"),
-            email=user_data.get("email"),
-            first_name=user_data.get("first_name", ""),
-            last_name=user_data.get("last_name", ""),
-            image=user_data.get("image", ""),
-        )
+        current_user = self.context.get("request").user
+        user_serializer = EmployeeUserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user = models.User.objects.create(**user_serializer.validated_data)
+            user.username = user.email
+            user.organization = current_user.organization
+            user.save()
         validated_data["user_id"] = user.id
+        validated_data["organization"] = current_user.organization
         return super().create(validated_data)
 
     def to_representation(self, instance):
@@ -100,6 +101,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
             data["manager"] = instance.manager.user.get_full_name()
         if instance.type:
             data["type"] = instance.type.name
+        if instance.benefits:
+            data["benefits"] = BenefitSerializer(
+                instance.benefits.all(), many=True
+            ).data
         return data
 
 

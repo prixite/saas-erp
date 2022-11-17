@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 
-from app import models, serializers
+from app import models, serializers, permissions
 
 
 @method_decorator(login_required, name="dispatch")
@@ -14,6 +14,8 @@ class HomeView(TemplateView):
 
 class EmployeeViewSet(ModelViewSet):
     serializer_class = serializers.EmployeeSerializer
+
+    permission_classes = [permissions.OwnerPermission]
 
     def get_serializer_class(self):
         if self.action == "list":

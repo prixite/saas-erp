@@ -15,7 +15,7 @@ class Employee(models.Model):
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
-    benefits = models.ManyToManyField("Benefit")
+    benefits = models.ManyToManyField("Benefit", blank=True)
     type = models.ForeignKey(
         "EmploymentType",
         on_delete=models.PROTECT,

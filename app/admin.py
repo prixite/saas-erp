@@ -12,7 +12,7 @@ class UserAdmin(UserAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ["contact_number", "manager", "date_of_joining"]
+    list_display = ["user", "contact_number", "manager", "date_of_joining"]
     list_filter = ["organization", "type", "benefits"]
     filter_horizontal = ["benefits"]
 
