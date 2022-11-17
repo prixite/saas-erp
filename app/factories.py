@@ -42,6 +42,7 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     emergency_contact_number = factory.Faker("phone_number", locale="hi_IN")
     date_of_joining = factory.Faker("date")
     designation = factory.Faker("job")
+    nic = factory.Faker("random_number", digits=13)
     organization = factory.iterator(models.Organization.objects.all)
     compensation = factory.RelatedFactory(
         "app.factories.CompensationFactory",
