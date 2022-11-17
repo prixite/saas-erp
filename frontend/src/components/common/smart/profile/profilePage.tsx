@@ -357,11 +357,7 @@ function ProfilePage() {
             >
               <span className="btns__cancelBtn__btnText">Cancel</span>
             </Button>
-            <Button
-              className="btns__saveBtn"
-              variant="contained"
-              style={{ backgroundColor: "transparent" }}
-            >
+            <Button className="btns__saveBtn" variant="contained">
               <span className="btns__saveBtn__btnText">Save</span>
             </Button>
           </Stack>
