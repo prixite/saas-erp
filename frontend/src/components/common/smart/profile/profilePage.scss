@@ -11,10 +11,6 @@
     & .Mui-focused fieldset {
       border-color: #d3d3d3;
     }
-
-    // & label{
-    // color: #EBEBEB;
-    // }
   }
 }
 
@@ -352,6 +348,7 @@
 
       &:hover {
         background: #e7e7e7;
+        box-shadow: none;
       }
 
       &__btnText {
@@ -374,6 +371,7 @@
 
       &:hover {
         background: #ff2f2f;
+        box-shadow: none;
       }
 
       &__btnText {

@@ -107,11 +107,14 @@ function ProfilePage() {
               {/* Email */}
               <TextField
                 className="email__textfield"
-                autoComplete="off"
-                id="outlined-required"
+                id=""
+                type="new-password"
                 label="Email Address"
                 placeholder="Email"
                 size="medium"
+                inputProps={{
+                  autoComplete: "new-password",
+                }}
                 InputLabelProps={{
                   style: inputLabelColor,
                 }}
@@ -122,11 +125,14 @@ function ProfilePage() {
           <div className="basicInfo__phone">
             <TextField
               className="textfield"
-              autoComplete="off"
-              id="outlined-required"
+              id=""
+              type="new-password"
               label="Phone Number"
               placeholder="XX-XXX-XXXXXXX"
               size="medium"
+              inputProps={{
+                autoComplete: "new-password",
+              }}
               InputLabelProps={{
                 style: inputLabelColor,
               }}
@@ -143,13 +149,14 @@ function ProfilePage() {
             <div className="currentPassword">
               <TextField
                 className="currentPassword__textfield"
-                autoComplete="off"
-                id="outlined-required"
+                // autoComplete="off"
+                id=""
+                type={values.showCurrentPassword ? "text" : "password"}
                 label="Current Password"
                 onChange={handleChange("password")}
-                type={values.showCurrentPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
+                  autoComplete: "new-password",
                   style: inputLabelColor,
                   endAdornment: (
                     <InputAdornment position="end">
@@ -172,13 +179,13 @@ function ProfilePage() {
             <div className="newPassword">
               <TextField
                 className="newPassword__textfield"
-                autoComplete="off"
-                id="outlined-required"
+                id=""
+                type={values.newPassword ? "text" : "password"}
                 label="New Password"
                 onChange={handleChange("password")}
-                type={values.newPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
+                  autoComplete: "new-password",
                   style: inputLabelColor,
                   endAdornment: (
                     <InputAdornment position="end">
@@ -201,14 +208,14 @@ function ProfilePage() {
             <div className="verifyPassword">
               <TextField
                 className="verifyPassword__textfield"
-                autoComplete="off"
                 name="password"
-                id="outlined-required"
+                id=""
+                type={values.verifyPassword ? "text" : "password"}
                 label="Verify Password"
                 onChange={handleChange("password")}
-                type={values.verifyPassword ? "text" : "password"}
                 // value={values.password} <--
                 InputProps={{
+                  autoComplete: "new-password",
                   style: inputLabelColor,
                   endAdornment: (
                     <InputAdornment position="end">
@@ -343,10 +350,18 @@ function ProfilePage() {
 
         <div className="btns">
           <Stack spacing={2} direction="row">
-            <Button className="btns__cancelBtn" variant="contained">
+            <Button
+              className="btns__cancelBtn"
+              style={{ backgroundColor: "transparent" }}
+              variant="contained"
+            >
               <span className="btns__cancelBtn__btnText">Cancel</span>
             </Button>
-            <Button className="btns__saveBtn" variant="contained">
+            <Button
+              className="btns__saveBtn"
+              variant="contained"
+              style={{ backgroundColor: "transparent" }}
+            >
               <span className="btns__saveBtn__btnText">Save</span>
             </Button>
           </Stack>

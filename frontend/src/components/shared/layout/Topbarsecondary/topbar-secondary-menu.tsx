@@ -70,6 +70,7 @@ const TopbarSecondaryMenu = () => {
 
   const handleProfileClick = () => {
     navigate("/react/profile");
+    handleClose();
   };
   return (
     <Box className="topbar-secondary">
