@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
@@ -23,7 +22,11 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
     <>
       <div className="employee-Header-main">
         <div className="icon-Container">
-          <img className="profile-pic" src={profileIcon} alt="profile pic" />
+          <img
+            className="profile-pic"
+            src={employeeData?.user?.avatar}
+            alt="profile pic"
+          />
         </div>
 
         <div className="employee-Header-Div-Two">
@@ -32,10 +35,12 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
               {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
             <div className="userID">
-              <p className="paragraph">PX-01</p>
+              <p className="paragraph">{employeeData?.org_id}</p>
             </div>
             <div className="userStatus">
-              <p className="paragraph">Permanent</p>
+              <p className="paragraph">
+                {employeeData?.type ? employeeData?.type : "type"}
+              </p>
             </div>
           </div>
 

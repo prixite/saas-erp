@@ -14,6 +14,7 @@ export interface EmployeeData {
     first_name: string;
     last_name: string;
     email: string;
+    avatar: string;
   };
   contact_number: string;
   date_of_joining: string;
@@ -24,6 +25,7 @@ export interface EmployeeData {
   organization: number;
   type: number;
   department: number;
+  org_id: string;
 }
 export interface EmployeeDoc {
   name: string;
