@@ -20,9 +20,7 @@ function ProfilePageHeader() {
           <div className="subContainer-row-one">
             <div className="name">
               {" "}
-              {userData?.first_name && userData?.last_name
-                ? `{userData?.first_name} {userData?.last_name}`
-                : "Name"}{" "}
+              {userData?.first_name} {userData?.last_name}{" "}
             </div>
           </div>
 
@@ -38,7 +36,6 @@ function ProfilePageHeader() {
                   marginRight: "10.5px",
                 }}
               />
-              <p>Email</p>
               <p>{userData?.email}</p>
             </div>
             <div className="contact">
@@ -52,7 +49,7 @@ function ProfilePageHeader() {
                   marginRight: "10.5px",
                 }}
               />
-              <p>{userData?.number ? `{userData?.number}` : "Number"}</p>
+              <p>{userData?.number}</p>
             </div>
           </div>
         </div>
