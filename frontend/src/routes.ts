@@ -29,6 +29,11 @@ const routes = {
     path: "/react/payroll/",
     component: "Payroll",
   },
+  profilePage: {
+    name: "ProfilePage",
+    path: "/react/profile",
+    component: "ProfilePage",
+  },
 };
 
 export default routes;

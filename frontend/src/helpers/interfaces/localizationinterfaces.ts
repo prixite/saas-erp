@@ -55,6 +55,19 @@ export interface additionalInformationInterface {
   deleteBtn: string;
 }
 
+export interface profilePageInterface {
+  basicInformationHeading: string;
+  changePasswordHeading: string;
+  notificationHeading: string;
+  billUpdatesLabel: string;
+  newTeamMembersLabel: string;
+  newsLetterLabel: string;
+  emailSub: string;
+  phoneSub: string;
+  saveBtn: string;
+  cancelBtn: string;
+}
+
 export interface employeeButtons {
   basicBtn: string;
   docsBtn: string;
@@ -74,6 +87,7 @@ export interface LocalizationInterface {
   Experience: experienceInterface;
   Education: educationInterface;
   AdditionalInformation: additionalInformationInterface;
+  ProfilePage: profilePageInterface;
   EmployeeButtons: employeeButtons;
   Modals: modalsInterface;
   MenuButtons: menuButtons;
