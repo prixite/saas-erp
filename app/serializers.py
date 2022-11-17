@@ -1,7 +1,7 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from app import models
-from django.conf import settings
 
 
 class EmployeeListSerializer(serializers.ModelSerializer):
@@ -110,6 +110,7 @@ class MeSerializer(serializers.ModelSerializer):
         source="organization.name",
         default="",
     )
+    avatar = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
@@ -118,7 +119,10 @@ class MeSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "organization",
-            "image",
+            "avatar",
             "is_superuser",
             "headline",
         ]
+
+    def get_avatar(self, data):
+        return f"{settings.DOMAIN_NAME}{data.image.url}"
