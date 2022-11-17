@@ -34,7 +34,6 @@ class Employee(models.Model):
         return self.user.get_full_name()
 
 
-
 class Document(models.Model):
     """
     The documents will be uploaded to cloud storage. We will only store URL of
