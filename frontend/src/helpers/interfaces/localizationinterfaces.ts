@@ -59,6 +59,13 @@ export interface profilePageInterface {
   basicInformationHeading: string;
   changePasswordHeading: string;
   notificationHeading: string;
+  billUpdatesLabel: string;
+  newTeamMembersLabel: string;
+  newsLetterLabel: string;
+  emailSub: string;
+  phoneSub: string;
+  saveBtn: string;
+  cancelBtn: string;
 }
 
 export interface employeeButtons {

@@ -24,6 +24,13 @@ function ProfilePage() {
     basicInformationHeading,
     changePasswordHeading,
     notificationHeading,
+    newsLetterLabel,
+    billUpdatesLabel,
+    newTeamMembersLabel,
+    emailSub,
+    phoneSub,
+    saveBtn,
+    cancelBtn,
   } = constantData.ProfilePage;
   const [values, setValues] = useState({
     currentPassword: "",
@@ -63,13 +70,10 @@ function ProfilePage() {
 
   return (
     <Fragment>
-      {/* <EmployeeHeader /> */}
       <ProfilePageHeader />
       <div className="profilePage">
         <div className="basicInfo">
-          {/* BasicInfo */}
           <div className="basicInfo__heading">
-            {/* Basic Information heading Div */}
             <Typography className="basicInfo__heading__text" gutterBottom>
               {basicInformationHeading}
             </Typography>
@@ -77,7 +81,6 @@ function ProfilePage() {
 
           <div className="basicInfo__namesAndEmails">
             <div className="firstName">
-              {/* FirstName  */}
               <TextField
                 className="firstName__textfield"
                 autoComplete="off"
@@ -90,7 +93,6 @@ function ProfilePage() {
               />
             </div>
             <div className="lastName">
-              {/* Last Name */}
               <TextField
                 className="lastName__textfield"
                 autoComplete="off"
@@ -104,7 +106,6 @@ function ProfilePage() {
               />
             </div>
             <div className="email">
-              {/* Email */}
               <TextField
                 className="email__textfield"
                 id=""
@@ -141,7 +142,6 @@ function ProfilePage() {
         </div>
 
         <div className="password">
-          {/* Change Password */}
           <Typography className="password__heading" gutterBottom>
             {changePasswordHeading}
           </Typography>
@@ -149,12 +149,10 @@ function ProfilePage() {
             <div className="currentPassword">
               <TextField
                 className="currentPassword__textfield"
-                // autoComplete="off"
                 id=""
                 type={values.showCurrentPassword ? "text" : "password"}
                 label="Current Password"
                 onChange={handleChange("password")}
-                // value={values.password} <--
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -183,7 +181,6 @@ function ProfilePage() {
                 type={values.newPassword ? "text" : "password"}
                 label="New Password"
                 onChange={handleChange("password")}
-                // value={values.password} <--
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -213,7 +210,6 @@ function ProfilePage() {
                 type={values.verifyPassword ? "text" : "password"}
                 label="Verify Password"
                 onChange={handleChange("password")}
-                // value={values.password} <--
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -238,7 +234,6 @@ function ProfilePage() {
           </div>
         </div>
         <div className="notification">
-          {/* Notification  */}
           <Typography
             className="notification__heading"
             variant="h4"
@@ -248,7 +243,7 @@ function ProfilePage() {
           </Typography>
           <Grid className="notification__checkBoxDiv" flexDirection="column">
             <div className="A">
-              <div className="A__billUpdates">Bill Updates</div>
+              <div className="A__billUpdates">{billUpdatesLabel}</div>
               <div className="A__checkBoxContainer">
                 <div className="A__checkBoxContainer__one">
                   <Checkbox
@@ -261,7 +256,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">Email</Typography>
+                  <Typography variant="subtitle1">{emailSub}</Typography>
                 </div>
 
                 <div className="A__checkBoxContainer__two">
@@ -275,13 +270,13 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">Phone</Typography>
+                  <Typography variant="subtitle1">{phoneSub}</Typography>
                 </div>
               </div>
             </div>
 
             <div className="B">
-              <div className="B__billUpdates">Text 1</div>
+              <div className="B__billUpdates">{newTeamMembersLabel}</div>
               <div className="B__checkBoxContainer">
                 <div className="B__checkBoxContainer__one">
                   <Checkbox
@@ -294,7 +289,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">checkbox 1</Typography>
+                  <Typography variant="subtitle1"></Typography>
                 </div>
 
                 <div className="B__checkBoxContainer__two">
@@ -308,13 +303,13 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">checkbox 2</Typography>
+                  <Typography variant="subtitle1"></Typography>
                 </div>
               </div>
             </div>
 
             <div className="C">
-              <div className="C__billUpdates">Text 2</div>
+              <div className="C__billUpdates">{newsLetterLabel}</div>
               <div className="C__checkBoxContainer">
                 <div className="C__checkBoxContainer__one">
                   <Checkbox
@@ -327,7 +322,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">checkbox 3</Typography>
+                  <Typography variant="subtitle1"></Typography>
                 </div>
 
                 <div className="C__checkBoxContainer__two">
@@ -341,7 +336,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1">checkbox 4</Typography>
+                  <Typography variant="subtitle1"></Typography>
                 </div>
               </div>
             </div>
@@ -355,10 +350,10 @@ function ProfilePage() {
               style={{ backgroundColor: "transparent" }}
               variant="contained"
             >
-              <span className="btns__cancelBtn__btnText">Cancel</span>
+              <span className="btns__cancelBtn__btnText">{cancelBtn}</span>
             </Button>
             <Button className="btns__saveBtn" variant="contained">
-              <span className="btns__saveBtn__btnText">Save</span>
+              <span className="btns__saveBtn__btnText">{saveBtn}</span>
             </Button>
           </Stack>
         </div>

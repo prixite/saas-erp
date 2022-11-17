@@ -62,7 +62,14 @@
     "ProfilePage":{
       "basicInformationHeading": "Basic Information",
       "changePasswordHeading": "Change Password",
-      "notificationHeading": "Notification Settings"
+      "notificationHeading": "Notification Settings",
+      "billUpdatesLabel": "Bill Updates",
+      "newTeamMembersLabel": "New Team Members",
+      "newsLetterLabel": "NewsLetters",
+      "emailSub": "Email",
+      "phoneSub": "Phone",
+      "cancelBtn": "Cancel",
+      "saveBtn": "Save"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
