@@ -15,6 +15,7 @@ class EmployeeTestCase(BaseTestCase):
             list(response.json()[0].keys()),
             [
                 "id",
+                "_id",
                 "first_name",
                 "last_name",
                 "contact_number",
@@ -58,6 +59,7 @@ class EmployeeTestCase(BaseTestCase):
                 "degrees",
                 "experience",
                 "benefits",
+                "_id",
                 "contact_number",
                 "nic",
                 "date_of_joining",
