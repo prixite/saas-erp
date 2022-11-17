@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
 from app import models
+from django.conf import settings
 
 
 class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
-    image = serializers.ImageField(source="user.image", read_only=True)
-    id = serializers.CharField(read_only=True)
+    avatar = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Employee
@@ -18,8 +18,11 @@ class EmployeeListSerializer(serializers.ModelSerializer):
             "last_name",
             "contact_number",
             "date_of_joining",
-            "image",
+            "avatar",
         ]
+
+    def get_avatar(self, data):
+        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
 
 
 class EmployeeUserSerializer(serializers.ModelSerializer):
