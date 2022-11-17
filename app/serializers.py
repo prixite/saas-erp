@@ -7,7 +7,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
     image = serializers.ImageField(source="user.image", read_only=True)
-    id = serializers.CharField()
+    id = serializers.CharField(read_only=True)
 
     class Meta:
         model = models.Employee
@@ -52,7 +52,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     benefits = serializers.SlugRelatedField(
         slug_field="name", read_only=True, many=True
     )
-    _id = serializers.CharField()
+    _id = serializers.CharField(read_only=True)
 
     class Meta:
         model = models.Employee
