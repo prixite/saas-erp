@@ -33,8 +33,6 @@ class Employee(models.Model):
     def __str__(self) -> str:
         return self.user.get_full_name()
 
-    class Meta:
-        ordering = ["-id"]
 
 
 class Document(models.Model):
