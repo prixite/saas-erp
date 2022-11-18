@@ -93,12 +93,12 @@ function DataGridTable() {
       field: "actions",
       headerName: "Actions",
       headerAlign: "start",
-      width: 400,
+      width: 350,
       renderCell: () => {
         return (
           <Box
             className="renderCell-joiningDate"
-            style={{ marginLeft: "20px" }}
+            style={{ marginLeft: "10px" }}
           >
             <IconButton
               onClick={handleIconClicks}
