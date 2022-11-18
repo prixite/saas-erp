@@ -3,6 +3,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 from app import models, serializers
 
@@ -31,12 +33,14 @@ class EmployeeViewSet(ModelViewSet):
 
 class CompensationViewSet(ModelViewSet):
     serializer_class = serializers.CompensationSerializer
+    queryset = models.Compensation.objects.all()
 
-    def get_queryset(self):
-        return models.Compensation.objects.none
-
-    def get_object(self):
-        return models.Compensation.objects.get(employee=self.kwargs["pk"])
+    def retrieve(self, request, *args, **kwargs):
+        compensation = get_object_or_404(
+            models.Compensation, employee_id=self.kwargs["pk"]
+        )
+        comp_ser = serializers.CompensationSerializer(compensation)
+        return Response(comp_ser.data)
 
 
 class DocumentViewSet(ModelViewSet):
