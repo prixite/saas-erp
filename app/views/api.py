@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from django.shortcuts import get_object_or_404
 
 from app import models, serializers
 
@@ -51,30 +52,18 @@ class DocumentViewSet(ModelViewSet):
         serializer.save(employee_id=self.kwargs["pk"])
 
     def create(self, request, *args, **kwargs):
-        employee = models.Employee.objects.filter(id=kwargs.get("pk")).exists()
-        if not employee:
-            return Response(
-                data={"detail": "Employee does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+        get_object_or_404(models.Employee, id=kwargs.get("pk"))
         return super().create(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
-        employee = models.Employee.objects.filter(id=kwargs.get("pk")).exists()
-        if not employee:
-            return Response(
-                data={"detail": "Employee does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+        get_object_or_404(models.Employee, id=kwargs.get("pk"))
         data = super().list(request, *args, **kwargs)
         res = []
-        doc_types = set()
-        for doc in data.data:
-            doc_types.add(doc.get("type"))
-        for type in doc_types:
+        doc_types = [doc.get("type") for doc in data.data]
+        for type in set(doc_types):
             res.append(
                 {
-                    "type": type,
+                    "type": type if type else "Others",
                     "docs": list(
                         filter(lambda doc: doc.get("type") == type, data.data)
                     ),
