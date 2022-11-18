@@ -24,7 +24,7 @@ function DataGridTable() {
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.id}
+            {cellValues?.row?.org_id}
           </p>
         );
       },

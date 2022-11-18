@@ -62,7 +62,6 @@
         flex-direction: row;
         align-items: center;
         gap: 10px;
-        width: 57px;
         height: 22px;
         background: #ededed;
         border: 1px solid #d8d8d8;
@@ -72,13 +71,13 @@
         flex-grow: 0;
         justify-content: center;
         margin-right: 12px;
+        padding: 4px 12px 4px 12px;
         .paragraph {
           font-size: 12px;
           line-height: 14px;
           letter-spacing: -0.011em;
           color: black;
           margin: 0px;
-          padding-top: 1px;
         }
       }
 
@@ -87,7 +86,6 @@
         flex-direction: row;
         align-items: center;
         gap: 10px;
-        width: 82px;
         height: 22px;
         background: #ffe5b3;
         border: 1px solid #ffc397;
@@ -96,9 +94,8 @@
         order: 1;
         justify-content: center;
         flex-grow: 0;
-        padding: 4px;
+        padding: 4px 12px 4px 12px;
         .paragraph {
-          width: 58px;
           height: 14px;
           font-family: "Lato";
           font-style: normal;
@@ -111,7 +108,6 @@
           order: 0;
           flex-grow: 0;
           margin: 0px;
-          padding-top: 1px;
         }
       }
     }
