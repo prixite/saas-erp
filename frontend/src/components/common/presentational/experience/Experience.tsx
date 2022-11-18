@@ -24,7 +24,7 @@ function Experience({ employeeData }: ExperienceType) {
   };
   return (
     <>
-      <Grid className="experience-main" container>
+      <Grid className="experience-main" sx={{ display: "flow-root" }} container>
         <Grid
           className="experience-Heading-Container"
           container
@@ -58,7 +58,7 @@ function Experience({ employeeData }: ExperienceType) {
         </Grid>
         {employeeData?.experience.map((exp, index) => {
           return (
-            <>
+            <Box key={exp?.title}>
               <Grid
                 className="experience-Card"
                 container
@@ -105,14 +105,14 @@ function Experience({ employeeData }: ExperienceType) {
                 </Grid>
               </Grid>
 
-              <Grid className="divider" xs={12} sm={12}>
+              <Grid item className="divider" xs={12} sm={12}>
                 {index !== employeeData?.experience?.length - 1 ? (
                   <Divider
                     sx={{ color: "#E7E7E7", margin: "0px 24px 0px 24px" }}
                   />
                 ) : null}
               </Grid>
-            </>
+            </Box>
           );
         })}
       </Grid>
