@@ -19,8 +19,7 @@ function ProfilePageHeader() {
         <div className="employee-Header-Div-Two">
           <div className="subContainer-row-one">
             <div className="name">
-              {" "}
-              {userData?.first_name} {userData?.last_name}{" "}
+              {userData?.first_name} {userData?.last_name}
             </div>
           </div>
 
