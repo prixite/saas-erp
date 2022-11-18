@@ -28,6 +28,7 @@ function ProfilePage() {
       firstname: userData?.first_name,
       lastname: userData?.last_name,
       email: userData?.email,
+      phone: userData?.contact_number,
     },
     onSubmit: () => {
       resetForm();
@@ -39,6 +40,7 @@ function ProfilePage() {
       firstname: "",
       lastname: "",
       email: "",
+      phone: "",
     });
   };
   const constantData: LocalizationInterface = localizedData();
@@ -158,10 +160,11 @@ function ProfilePage() {
               <div className="basicInfo__phone">
                 <TextField
                   className="textfield"
-                  id=""
+                  id="phone_id_1"
+                  name="phone"
                   type="new-password"
                   label="Phone Number"
-                  placeholder="XX-XXX-XXXXXXX"
+                  // placeholder="XX-XXX-XXXXXXX"
                   size="medium"
                   inputProps={{
                     autoComplete: "new-password",
@@ -169,6 +172,9 @@ function ProfilePage() {
                   InputLabelProps={{
                     style: inputLabelColor,
                   }}
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  defaultValue={userData?.contact_number}
                 />
               </div>
             </div>

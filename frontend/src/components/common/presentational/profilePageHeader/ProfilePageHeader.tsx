@@ -49,7 +49,7 @@ function ProfilePageHeader() {
                   marginRight: "10.5px",
                 }}
               />
-              <p>{userData?.number}</p>
+              <p>{userData?.contact_number}</p>
             </div>
           </div>
         </div>
