@@ -38,9 +38,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
               <p className="paragraph">{employeeData?.org_id}</p>
             </div>
             <div className="userStatus">
-              <p className="paragraph">
-                {employeeData?.type ? employeeData?.type : "type"}
-              </p>
+              <p className="paragraph">{employeeData?.type}</p>
             </div>
           </div>
 

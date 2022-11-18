@@ -83,9 +83,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
             </Typography>
 
             <Typography variant="body1" className="department-text">
-              {employeeData?.department
-                ? employeeData?.department
-                : "Department"}
+              {employeeData?.department}
             </Typography>
           </Grid>
 
@@ -135,9 +133,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
 
             <Grid className="emergency-text" item>
               <Typography className="text" variant="body1">
-                {employeeData?.emergency_contact_number
-                  ? employeeData?.emergency_contact_number
-                  : "12345671"}
+                {employeeData?.emergency_contact_number}
               </Typography>
             </Grid>
           </Grid>
