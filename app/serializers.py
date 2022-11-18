@@ -104,10 +104,17 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Document
         fields = [
+            "id",
             "name",
             "type",
             "document_url",
         ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.type:
+            data["type"] = instance.type.name
+        return data
 
 
 class MeSerializer(serializers.ModelSerializer):
