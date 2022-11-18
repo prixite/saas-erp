@@ -19,6 +19,6 @@ class MeTestCase(BaseTestCase):
                 "avatar",
                 "is_superuser",
                 "headline",
-                "contact_number"
+                "contact_number",
             ],
         )
