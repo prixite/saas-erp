@@ -5,7 +5,6 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
-import profileIcon from "@src/assets/svgs/profile_pic.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
 import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
@@ -25,7 +24,7 @@ function DataGridTable() {
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.id}
+            {cellValues?.row?.org_id}
           </p>
         );
       },
@@ -48,13 +47,13 @@ function DataGridTable() {
           >
             <img
               style={{
-                width: "32px",
                 height: "32px",
                 left: "241px",
                 top: "154px",
                 marginRight: "8px",
+                borderRadius: "50%",
               }}
-              src={profileIcon}
+              src={`${cellValues.row.avatar}`}
               alt="profile pic"
             />
             <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
@@ -66,7 +65,7 @@ function DataGridTable() {
       field: "contact_Number",
       headerName: "Contact Number",
       sortable: false,
-      width: 400,
+      width: 350,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -80,7 +79,7 @@ function DataGridTable() {
       field: "joining_Date",
       headerName: "Joining Date",
       sortable: false,
-      width: 400,
+      width: 350,
       headerAlign: "start",
       renderCell: (cellValues) => {
         return (
@@ -94,12 +93,12 @@ function DataGridTable() {
       field: "actions",
       headerName: "Actions",
       headerAlign: "start",
-      width: 400,
+      width: 350,
       renderCell: () => {
         return (
           <Box
             className="renderCell-joiningDate"
-            style={{ marginLeft: "20px" }}
+            style={{ marginLeft: "10px" }}
           >
             <IconButton
               onClick={handleIconClicks}
@@ -148,7 +147,7 @@ function DataGridTable() {
               className="dataGrid"
               rowHeight={80}
               autoHeight
-              rows={[...tableData].reverse()}
+              rows={[...tableData]}
               columns={[...columns]}
               disableColumnFilter
               disableColumnMenu
