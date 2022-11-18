@@ -8,6 +8,12 @@ export interface Employee {
   type: number;
   department: number;
 }
+export interface Experience {
+  title: string;
+  company: string;
+  start_date: string;
+  end_date: string;
+}
 export interface EmployeeData {
   id: number;
   user: {
@@ -16,6 +22,8 @@ export interface EmployeeData {
     email: string;
     avatar: string;
   };
+  experience: Experience[];
+
   contact_number: string;
   date_of_joining: string;
   nic: string;

@@ -3,11 +3,15 @@ import { Divider, Grid, Typography, Box } from "@mui/material";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
+import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/experience/experience.scss";
 
-function Experience() {
+interface ExperienceType {
+  employeeData?: EmployeeData;
+}
+function Experience({ employeeData }: ExperienceType) {
   const constantData: LocalizationInterface = localizedData();
   const { experienceHeading } = constantData.Experience;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -18,10 +22,8 @@ function Experience() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
     <>
-      {/* Education */}
       <Grid className="experience-main" container>
         <Grid
           className="experience-Heading-Container"
@@ -54,102 +56,65 @@ function Experience() {
             </div>
           </Grid>
         </Grid>
+        {employeeData?.experience.map((exp, index) => {
+          return (
+            <>
+              <Grid
+                className="experience-Card"
+                container
+                item
+                xs={12}
+                sm={12}
+                height={90}
+              >
+                {/* B */}
+                <Grid item className="companyLogo-container" key={exp?.title}>
+                  <img
+                    className="profile-pic"
+                    src={CompanyLogoOne}
+                    alt="profile pic"
+                  />
+                </Grid>
 
-        <Grid
-          className="experience-Card"
-          container
-          item
-          xs={12}
-          sm={12}
-          height={90}
-        >
-          {/* B */}
-          <Grid item className="companyLogo-container">
-            <img
-              className="profile-pic"
-              src={CompanyLogoOne}
-              alt="profile pic"
-            />
-          </Grid>
+                <Grid container item className="sub-container">
+                  <Grid className="child-div-two-A" item>
+                    <Typography variant="body1" className="description">
+                      {exp?.title}
+                    </Typography>
+                  </Grid>
 
-          <Grid container item className="sub-container">
-            <Grid className="child-div-two-A" item>
-              <Typography variant="body1" className="description">
-                Product Designer
-              </Typography>
-            </Grid>
-
-            <Grid
-              className="child-div-three-A"
-              container
-              item
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Grid item className="heading-One">
-                <Typography variant="body1" className="description">
-                  i2c.inc{" "}
-                </Typography>
+                  <Grid
+                    className="child-div-three-A"
+                    container
+                    item
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-start"
+                  >
+                    <Grid item className="heading-One">
+                      <Typography variant="body1" className="description">
+                        {exp?.company}{" "}
+                      </Typography>
+                    </Grid>
+                    <Grid item className="heading-Two">
+                      <Typography variant="body1" className="description">
+                        {exp.end_date}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item className="heading-Two">
-                <Typography variant="body1" className="description">
-                  2016-2022
-                </Typography>
+
+              <Grid className="divider" xs={12} sm={12}>
+                {index !== employeeData?.experience?.length - 1 ? (
+                  <Divider
+                    sx={{ color: "#E7E7E7", margin: "0px 24px 0px 24px" }}
+                  />
+                ) : null}
               </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid className="divider" xs={12} sm={12}>
-          <Divider sx={{ color: "#E7E7E7", margin: "0px 24px 0px 24px" }} />
-        </Grid>
-
-        <Grid
-          className="experience-Card"
-          container
-          item
-          xs={12}
-          sm={12}
-          height={90}
-        >
-          {/* B */}
-          <Grid item className="companyLogo-container">
-            <img
-              className="profile-pic"
-              src={CompanyLogoOne}
-              alt="profile pic"
-            />
-          </Grid>
-
-          <Grid container item className="sub-container">
-            <Grid className="child-div-two-A" item>
-              <Typography variant="body1" className="description">
-                Product Designer
-              </Typography>
-            </Grid>
-
-            <Grid
-              className="child-div-three-A"
-              container
-              item
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Grid item className="heading-One">
-                <Typography variant="body1" className="description">
-                  i2c.inc{" "}
-                </Typography>
-              </Grid>
-              <Grid item className="heading-Two">
-                <Typography variant="body1" className="description">
-                  2016-2022
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+            </>
+          );
+        })}
       </Grid>
     </>
   );
