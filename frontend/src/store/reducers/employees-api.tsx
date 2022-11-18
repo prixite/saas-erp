@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   Employee,
   EmployeeData,
+  User,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -20,6 +21,9 @@ export const employeesApi = createApi({
     getEmployeeDocs: builder.query({
       query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
     }),
+    getUser: builder.query<User, void>({
+      query: () => `/me`,
+    }),
   }),
 });
 
@@ -27,4 +31,5 @@ export const {
   useGetEmployeesQuery,
   useGetEmployeeDataQuery,
   useGetEmployeeDocsQuery,
+  useGetUserQuery,
 } = employeesApi;
