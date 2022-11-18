@@ -33,7 +33,9 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
   ) => {
-    setAlignment(newAlignment);
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
   };
 
   useMemo(() => {

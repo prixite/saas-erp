@@ -30,3 +30,13 @@ export interface EmployeeDoc {
   type: number;
   document_url: string;
 }
+
+export interface User {
+  avatar: string;
+  email: string;
+  first_name: string;
+  headline: string;
+  is_superuser: boolean;
+  last_name: string;
+  organization: string;
+}
