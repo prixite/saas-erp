@@ -131,3 +131,20 @@ class MeSerializer(serializers.ModelSerializer):
 
     def get_avatar(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
+
+
+class UpsertUserPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(min_length=8, required=True)
+    old_password = serializers.CharField()
+
+    def validate(self, data):
+        old_password = data["old_password"]
+        password = data["password"]
+        if not (
+            self.context["request"].user.check_password(old_password)
+            and password != old_password
+        ):
+            raise serializers.ValidationError(
+                "Password does not match and new password should not match to old password."  # noqa
+            )
+        return data

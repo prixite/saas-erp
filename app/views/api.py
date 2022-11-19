@@ -3,6 +3,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
+from django.contrib.auth import update_session_auth_hash
+from rest_framework.response import Response
+
 
 from app import models, serializers
 
@@ -54,3 +57,19 @@ class MeApiView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class UserPasswordViewSet(ModelViewSet):
+    def get_serializer_class(self):
+        return serializers.UpsertUserPasswordSerializer
+
+    def get_queryset(self):
+        return models.User.objects.filter(id=self.request.user.id)
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, partial=kwargs["partial"])
+        if serializer.is_valid(raise_exception=True):
+            request.user.set_password(serializer.data["password"])
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+        return Response(serializer.errors)
