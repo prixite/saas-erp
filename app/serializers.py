@@ -1,5 +1,6 @@
 from django.conf import settings
 from rest_framework import serializers
+from django.shortcuts import get_object_or_404
 
 from app import models
 
@@ -92,7 +93,18 @@ class CompensationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Compensation
-        fields = "__all__"
+        exclude = ["employee"]
+
+    def validate(self, attrs):
+        get_object_or_404(models.Employee, id=self.context.get("view").kwargs["pk"])
+        if models.Compensation.objects.filter(
+            employee_id=self.context.get("view").kwargs.get("pk")
+        ).exists():
+            raise serializers.ValidationError(
+                "Compensation already exists for this employee"
+            )
+
+        return attrs
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

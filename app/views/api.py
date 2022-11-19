@@ -35,12 +35,11 @@ class CompensationViewSet(ModelViewSet):
     serializer_class = serializers.CompensationSerializer
     queryset = models.Compensation.objects.all()
 
-    def retrieve(self, request, *args, **kwargs):
-        compensation = get_object_or_404(
-            models.Compensation, employee_id=self.kwargs["pk"]
-        )
-        comp_ser = serializers.CompensationSerializer(compensation)
-        return Response(comp_ser.data)
+    def get_object(self):
+        return get_object_or_404(models.Compensation, employee_id=self.kwargs["pk"])
+
+    def perform_create(self, serializer):
+        serializer.save(employee_id=self.kwargs["pk"])
 
 
 class DocumentViewSet(ModelViewSet):
