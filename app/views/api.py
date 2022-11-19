@@ -1,11 +1,10 @@
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.viewsets import ModelViewSet
-from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
-
+from rest_framework.viewsets import ModelViewSet
 
 from app import models, serializers
 
