@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from app import models, serializers
