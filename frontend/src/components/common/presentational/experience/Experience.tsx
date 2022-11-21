@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Divider, Grid, Typography, Box } from "@mui/material";
+import moment from "moment";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
@@ -98,7 +99,8 @@ function Experience({ employeeData }: ExperienceType) {
                     </Grid>
                     <Grid item className="heading-Two">
                       <Typography variant="body1" className="description">
-                        {exp.end_date}
+                        {moment(exp?.start_date).year()} -{" "}
+                        {moment(exp?.end_date).year()}
                       </Typography>
                     </Grid>
                   </Grid>
