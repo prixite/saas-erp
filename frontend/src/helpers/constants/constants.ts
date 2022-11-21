@@ -273,4 +273,5 @@ export const employeeConstants = {
   employeesdetail: "Employee Detail ",
   education: "Employee Degree's ",
   experience: "Employee Experiences ",
+  documents: "Employee Documents ",
 };
