@@ -133,7 +133,7 @@ class MeSerializer(serializers.ModelSerializer):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
-class UpsertUserPasswordSerializer(serializers.Serializer):
+class UserPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=8, required=True)
     old_password = serializers.CharField()
 
