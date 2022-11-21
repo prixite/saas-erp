@@ -11,4 +11,4 @@ class UserTestCase(BaseTestCase):
 
         user_data = {"password": "pakistan123!", "old_password": "admin"}
         response = self.client.patch("/api/change_password/", data=user_data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
