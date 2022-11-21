@@ -14,6 +14,7 @@ export interface employeeInterface {
   mealsAllowance: string;
   employeeExperienceLetters: string;
   uploadDocument: string;
+  notFound: string;
 }
 export interface userInterface {
   userHeading: string;

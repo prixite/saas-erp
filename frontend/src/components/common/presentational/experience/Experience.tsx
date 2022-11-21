@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Divider, Grid, Typography, Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import moment from "moment";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
+import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
+import { employeeConstants } from "@src/helpers/constants/constants";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -11,10 +14,12 @@ import "@src/components/common/presentational/experience/experience.scss";
 
 interface ExperienceType {
   employeeData?: EmployeeData;
+  isLoading: boolean;
 }
-function Experience({ employeeData }: ExperienceType) {
+function Experience({ employeeData, isLoading }: ExperienceType) {
   const constantData: LocalizationInterface = localizedData();
   const { experienceHeading } = constantData.Experience;
+  const { notFound } = constantData.Employee;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,66 +62,107 @@ function Experience({ employeeData }: ExperienceType) {
             </div>
           </Grid>
         </Grid>
-        {employeeData?.experience.map((exp, index) => {
-          return (
-            <Box key={exp?.title}>
-              <Grid
-                className="experience-Card"
-                container
-                item
-                xs={12}
-                sm={12}
-                height={90}
-              >
-                {/* B */}
-                <Grid item className="companyLogo-container" key={exp?.title}>
-                  <img
-                    className="profile-pic"
-                    src={CompanyLogoOne}
-                    alt="profile pic"
-                  />
-                </Grid>
+        {!isLoading ? (
+          <>
+            {employeeData?.experience.length ? (
+              <>
+                {employeeData?.experience.map((exp, index) => {
+                  return (
+                    <Box key={exp?.title}>
+                      <Grid
+                        className="experience-Card"
+                        container
+                        item
+                        xs={12}
+                        sm={12}
+                        height={90}
+                      >
+                        {/* B */}
+                        <Grid
+                          item
+                          className="companyLogo-container"
+                          key={exp?.title}
+                        >
+                          <img
+                            className="profile-pic"
+                            src={CompanyLogoOne}
+                            alt="profile pic"
+                          />
+                        </Grid>
 
-                <Grid container item className="sub-container">
-                  <Grid className="child-div-two-A" item>
-                    <Typography variant="body1" className="description">
-                      {exp?.title}
-                    </Typography>
-                  </Grid>
+                        <Grid container item className="sub-container">
+                          <Grid className="child-div-two-A" item>
+                            <Typography variant="body1" className="description">
+                              {exp?.title}
+                            </Typography>
+                          </Grid>
 
-                  <Grid
-                    className="child-div-three-A"
-                    container
-                    item
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="flex-start"
-                  >
-                    <Grid item className="heading-One">
-                      <Typography variant="body1" className="description">
-                        {exp?.company}{" "}
-                      </Typography>
-                    </Grid>
-                    <Grid item className="heading-Two">
-                      <Typography variant="body1" className="description">
-                        {moment(exp?.start_date).year()} -{" "}
-                        {moment(exp?.end_date).year()}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
+                          <Grid
+                            className="child-div-three-A"
+                            container
+                            item
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-start"
+                          >
+                            <Grid item className="heading-One">
+                              <Typography
+                                variant="body1"
+                                className="description"
+                              >
+                                {exp?.company}{" "}
+                              </Typography>
+                            </Grid>
+                            <Grid item className="heading-Two">
+                              <Typography
+                                variant="body1"
+                                className="description"
+                              >
+                                {moment(exp?.start_date).year()} -{" "}
+                                {moment(exp?.end_date).year()}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
 
-              <Grid item className="divider" xs={12} sm={12}>
-                {index !== employeeData?.experience?.length - 1 ? (
-                  <Divider
-                    sx={{ color: "#E7E7E7", margin: "0px 24px 0px 24px" }}
-                  />
-                ) : null}
-              </Grid>
-            </Box>
-          );
-        })}
+                      <Grid item className="divider" xs={12} sm={12}>
+                        {index !== employeeData?.experience?.length - 1 ? (
+                          <Divider
+                            sx={{
+                              color: "#E7E7E7",
+                              margin: "0px 24px 0px 24px",
+                            }}
+                          />
+                        ) : null}
+                      </Grid>
+                    </Box>
+                  );
+                })}
+              </>
+            ) : (
+              <Box className="error-img">
+                <img src={NotfoundIcon} alt="notfound" />
+                <Typography className="error-msg">
+                  {employeeConstants.experience}
+                  {notFound}
+                </Typography>
+              </Box>
+            )}
+          </>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              mt: "25px",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
       </Grid>
     </>
   );
