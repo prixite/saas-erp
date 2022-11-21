@@ -96,7 +96,7 @@ class DocumentTestCase(BaseTestCase):
         doc_data = {
             "name": "Experience letter",
             "type": self.document_type.id,
-            "document_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            "document_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", #noqa
         }
         response = self.client.post(
             f"/api/employees/{self.employee.id}/documents/", data=doc_data
