@@ -98,7 +98,9 @@ class CompensationTestCase(BaseTestCase):
         self.client.post(
             f"/api/employees/{self.employee.id}/compensation/", data=compensation_data
         )
-        self.assertTrue(models.Employee.objects.filter(**compensation_data).exists())
+        self.assertTrue(
+            models.Compensation.objects.filter(employee=self.employee.id).exists()
+        )
 
 
 class DocumentTestCase(BaseTestCase):
