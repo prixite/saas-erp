@@ -1,0 +1,573 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "The AI powered ERP",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/employees/": {
+      "get": {
+        "operationId": "api_employees_list",
+        "tags": ["api"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeList"
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "api_employees_create",
+        "tags": ["api"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/employees/{id}/": {
+      "get": {
+        "operationId": "api_employees_retrieve",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": ["api"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/employees/{id}/compensation/": {
+      "get": {
+        "operationId": "api_employees_compensation_retrieve",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": ["api"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Compensation"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/employees/{id}/documents/": {
+      "get": {
+        "operationId": "api_employees_documents_list",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": ["api"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Document"
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "api_employees_documents_create",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "tags": ["api"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Document"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Document"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Document"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/me/": {
+      "get": {
+        "operationId": "api_me_retrieve",
+        "tags": ["api"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Me"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Compensation": {
+        "type": "object",
+        "properties": {
+          "current_salary": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "currency": {
+            "type": "integer"
+          },
+          "compensation_type": {
+            "type": "integer"
+          },
+          "compensation_schedule": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "compensation_schedule",
+          "compensation_type",
+          "currency",
+          "current_salary"
+        ]
+      },
+      "Degree": {
+        "type": "object",
+        "properties": {
+          "program": {
+            "type": "string"
+          },
+          "institute": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["institute", "program", "year"]
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "type": {
+            "type": "integer",
+            "nullable": true
+          },
+          "document_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 200
+          }
+        },
+        "required": ["document_url", "name"]
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/EmployeeUser"
+          },
+          "degrees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Degree"
+            },
+            "readOnly": true
+          },
+          "experience": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Experirence"
+            },
+            "readOnly": true
+          },
+          "benefits": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "readOnly": true
+          },
+          "org_id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "contact_number": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "nic": {
+            "type": "string",
+            "maxLength": 25
+          },
+          "date_of_joining": {
+            "type": "string",
+            "format": "date"
+          },
+          "emergency_contact_number": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "designation": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "user_allowed": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "organization": {
+            "type": "integer"
+          },
+          "department": {
+            "type": "integer",
+            "nullable": true
+          },
+          "manager": {
+            "type": "integer",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "required": [
+          "benefits",
+          "contact_number",
+          "created_at",
+          "date_of_joining",
+          "degrees",
+          "designation",
+          "emergency_contact_number",
+          "experience",
+          "id",
+          "nic",
+          "org_id",
+          "organization",
+          "updated_at",
+          "user"
+        ]
+      },
+      "EmployeeList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "org_id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "first_name": {
+            "type": "string",
+            "readOnly": true
+          },
+          "last_name": {
+            "type": "string",
+            "readOnly": true
+          },
+          "contact_number": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "date_of_joining": {
+            "type": "string",
+            "format": "date"
+          },
+          "avatar": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "avatar",
+          "contact_number",
+          "date_of_joining",
+          "first_name",
+          "id",
+          "last_name",
+          "org_id"
+        ]
+      },
+      "EmployeeUser": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email address",
+            "maxLength": 254
+          },
+          "avatar": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": ["avatar", "email"]
+      },
+      "Experirence": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "company": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["company", "end_date", "start_date", "title"]
+      },
+      "Me": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email address",
+            "maxLength": 254
+          },
+          "organization": {
+            "type": "string",
+            "default": ""
+          },
+          "avatar": {
+            "type": "string",
+            "readOnly": true
+          },
+          "is_superuser": {
+            "type": "boolean",
+            "title": "Superuser status",
+            "description": "Designates that this user has all permissions without explicitly assigning them."
+          },
+          "headline": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": ["avatar", "email", "headline"]
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionid"
+      }
+    }
+  }
+}
