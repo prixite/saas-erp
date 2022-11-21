@@ -85,8 +85,21 @@ class CompensationTestCase(BaseTestCase):
 
 
 class DocumentTestCase(BaseTestCase):
-    def test_document_list(self):
+    def test_document_get(self):
         self.client.force_login(self.super_user)
         response = self.client.get(f"/api/employees/{self.employee.id}/documents/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_document_post(self):
+        self.client.force_login(self.super_user)
+        doc_data = {
+            "name": "Experience letter",
+            "type": self.document_type.id,
+            "document_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        }
+        response = self.client.post(
+            f"/api/employees/{self.employee.id}/documents/", data=doc_data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

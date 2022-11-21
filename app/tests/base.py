@@ -27,6 +27,7 @@ class BaseTestCase(TestCase):
             organization=self.organization,
             type=self.employment_type,
         )
+        self.document_type = factories.DocumentTypeFactory(organization=self.organization)
 
         self.degree = factories.DegreeFactory(
             employee=self.employee, program=self.program, institute=self.institute
