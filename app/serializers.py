@@ -81,16 +81,29 @@ class EmployeeSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        current_user = self.context.get("request").user
+        organization = self.context.get("request").user.organization
         user_serializer = EmployeeUserSerializer(data=user_data)
         if user_serializer.is_valid():
             user = models.User.objects.create(**user_serializer.validated_data)
             user.username = user.email
-            user.organization = current_user.organization
+            user.organization = organization
             user.save()
         validated_data["user_id"] = user.id
-        validated_data["organization"] = current_user.organization
+        validated_data["organization"] = organization
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop("user")
+        organization = self.context.get("request").user.organization
+        user_serializer = EmployeeUserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user = models.User.objects.get(id=self.kwargs["pk"])
+            user.username = user.email
+            user.organization = organization
+            user.save()
+        validated_data["user_id"] = user.id
+        validated_data["organization"] = organization
+        return super().update(instance, validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
