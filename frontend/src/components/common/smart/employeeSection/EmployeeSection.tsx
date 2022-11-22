@@ -13,7 +13,7 @@ import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
 function EmployeeSection() {
   const param = useParams();
   const [paramValue, setParamValue] = useState<number>(0);
-  const { data: EmployeeData, isLoading } = useGetEmployeeDataQuery({
+  const { data: EmployeeData } = useGetEmployeeDataQuery({
     id: paramValue,
   });
   useEffect(() => {
@@ -24,13 +24,13 @@ function EmployeeSection() {
   const [buttonNameClicked, setButtonNameClicked] = useState<string>("BASIC");
   return (
     <>
-      <EmployeeHeader isLoading={isLoading} employeeData={EmployeeData} />
+      <EmployeeHeader employeeData={EmployeeData} />
       <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       {buttonNameClicked === "BASIC" ? (
         <Grid>
           <AdditionalInformation employeeData={EmployeeData} />
-          <Experience isLoading={isLoading} employeeData={EmployeeData} />
-          <Education isLoading={isLoading} employeeData={EmployeeData} />
+          <Experience employeeData={EmployeeData} />
+          <Education employeeData={EmployeeData} />
         </Grid>
       ) : buttonNameClicked === "DOCS" ? (
         <DocumentSection />
