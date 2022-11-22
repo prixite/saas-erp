@@ -12,16 +12,35 @@ import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
+import * as yup from "yup";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import "@src/components/common/smart/profile/profilePage.scss";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
+import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
+
+  const constantData: LocalizationInterface = localizedData();
+  const {
+    basicInformationHeading,
+    changePasswordHeading,
+    notificationHeading,
+    newsLetterLabel,
+    billUpdatesLabel,
+    newTeamMembersLabel,
+    emailSub,
+    phoneSub,
+    saveBtn,
+    cancelBtn,
+    firstNameRequired,
+    lastNameRequired,
+    emailRequired,
+    phoneRequired,
+  } = constantData.ProfilePage;
 
   const formik = useFormik({
     initialValues: {
@@ -30,6 +49,13 @@ function ProfilePage() {
       email: userData?.email,
       phone: userData?.contact_number,
     },
+    validationSchema: yup.object({
+      firstname: yup.string().required(firstNameRequired),
+      lastname: yup.string().required(lastNameRequired),
+      email: yup.string().required(emailRequired),
+      phone: yup.number().required(phoneRequired),
+    }),
+    validateOnChange: true,
     onSubmit: () => {
       resetForm();
     },
@@ -43,19 +69,6 @@ function ProfilePage() {
       phone: "",
     });
   };
-  const constantData: LocalizationInterface = localizedData();
-  const {
-    basicInformationHeading,
-    changePasswordHeading,
-    notificationHeading,
-    newsLetterLabel,
-    billUpdatesLabel,
-    newTeamMembersLabel,
-    emailSub,
-    phoneSub,
-    saveBtn,
-    cancelBtn,
-  } = constantData.ProfilePage;
   const [values, setValues] = useState({
     currentPassword: "",
     showCurrentPassword: false,
@@ -119,6 +132,9 @@ function ProfilePage() {
                     onChange={formik.handleChange}
                     defaultValue={userData.first_name}
                   />
+                  <p className="requiredText">
+                    {formik.touched.firstname && formik.errors.firstname}
+                  </p>
                 </div>
                 <div className="lastName">
                   <TextField
@@ -135,6 +151,9 @@ function ProfilePage() {
                     onChange={formik.handleChange}
                     defaultValue={userData.last_name}
                   />
+                  <p className="requiredText">
+                    {formik.touched.lastname && formik.errors.lastname}
+                  </p>
                 </div>
                 <div className="email">
                   <TextField
@@ -154,6 +173,9 @@ function ProfilePage() {
                     onChange={formik.handleChange}
                     defaultValue={userData.email}
                   />
+                  <p className="requiredText">
+                    {formik.touched.email && formik.errors.email}
+                  </p>
                 </div>
               </div>
 
@@ -176,6 +198,10 @@ function ProfilePage() {
                   onChange={formik.handleChange}
                   defaultValue={userData?.contact_number}
                 />
+                <p className="requiredText">
+                  {formik.touched.contact_number &&
+                    formik.errors.contact_number}
+                </p>
               </div>
             </div>
 

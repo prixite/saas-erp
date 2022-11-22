@@ -69,7 +69,11 @@
       "emailSub": "Email",
       "phoneSub": "Phone",
       "cancelBtn": "Cancel",
-      "saveBtn": "Save"
+      "saveBtn": "Save",
+      "firstNameRequired": "First name is required!",
+      "lastNameRequired": "Last name is required!",
+      "emailRequired": "Email is required!",
+      "phoneRequired":"Phone number is is required!"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
