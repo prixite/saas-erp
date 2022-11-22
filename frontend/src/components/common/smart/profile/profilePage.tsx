@@ -47,13 +47,32 @@ function ProfilePage() {
       firstname: userData?.first_name,
       lastname: userData?.last_name,
       email: userData?.email,
-      phone: userData?.contact_number,
+      phone: userData?.contact_number || "",
     },
     validationSchema: yup.object({
-      firstname: yup.string().required(firstNameRequired),
-      lastname: yup.string().required(lastNameRequired),
-      email: yup.string().required(emailRequired),
-      phone: yup.number().required(phoneRequired),
+      firstname: yup
+        .string()
+        /* eslint-disable-next-line */
+        .matches(/^[A-Za-z ]*$/, "First Name must contain pure letters.")
+        .required(firstNameRequired),
+      lastname: yup
+        .string()
+        /* eslint-disable-next-line */
+        .matches(/^[A-Za-z ]*$/, "Last Name must contain pure letters.")
+        .required(lastNameRequired),
+      email: yup
+        .string()
+        .matches(
+          /* eslint-disable-next-line */
+          /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+          "Incorrect E-mail format!"
+        )
+        .required(emailRequired),
+      phone: yup
+        .string()
+        /* eslint-disable-next-line */
+        .matches(/^(\+1)[0-9]{10}$/, "Phone number must contain numbers only!")
+        .required(phoneRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -199,8 +218,7 @@ function ProfilePage() {
                   defaultValue={userData?.contact_number}
                 />
                 <p className="requiredText">
-                  {formik.touched.contact_number &&
-                    formik.errors.contact_number}
+                  {formik.touched.phone && formik.errors.phone}
                 </p>
               </div>
             </div>
