@@ -84,7 +84,7 @@ function Education({ employeeData }: ExperienceType) {
 
                   <Grid container item className="contentDiv">
                     <Grid className="title-container" item>
-                      <Typography variant="body1" className="para">
+                      <Typography variant="body1" className="text-cls">
                         {degree?.program}
                       </Typography>
                     </Grid>
@@ -98,12 +98,12 @@ function Education({ employeeData }: ExperienceType) {
                       justifyContent="flex-start"
                     >
                       <Grid item className="description">
-                        <Typography variant="body1" className="para">
+                        <Typography variant="body1" className="text-cls">
                           {degree?.institute}{" "}
                         </Typography>
                       </Grid>
                       <Grid item className="year">
-                        <Typography variant="body1" className="para">
+                        <Typography variant="body1" className="text-cls">
                           {degree?.year}
                         </Typography>
                       </Grid>
