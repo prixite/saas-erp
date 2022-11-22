@@ -12,24 +12,72 @@ import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
+import * as yup from "yup";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import "@src/components/common/smart/profile/profilePage.scss";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
+import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
 
+  const constantData: LocalizationInterface = localizedData();
+  const {
+    basicInformationHeading,
+    changePasswordHeading,
+    notificationHeading,
+    newsLetterLabel,
+    billUpdatesLabel,
+    newTeamMembersLabel,
+    emailSub,
+    phoneSub,
+    saveBtn,
+    cancelBtn,
+    firstNameRequired,
+    lastNameRequired,
+    emailRequired,
+    phoneRequired,
+  } = constantData.ProfilePage;
+
+  /* eslint-disable-next-line */
+  const nameRegex = /^[A-Za-z]*$/;
+  const phoneRegex =
+    /* eslint-disable-next-line */
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  /* eslint-disable-next-line */
+  const emailRegex =
+    /* eslint-disable-next-line */
+    /^[^<>()[\]\\,;:\%#^\s@\"$*&/!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const formik = useFormik({
     initialValues: {
-      firstname: userData?.first_name,
-      lastname: userData?.last_name,
-      email: userData?.email,
-      phone: userData?.contact_number,
+      firstname: userData?.first_name || "",
+      lastname: userData?.last_name || "",
+      email: userData?.email || "",
+      phone: userData?.contact_number || "",
     },
+    validationSchema: yup.object({
+      firstname: yup
+        .string()
+        .matches(nameRegex, "First Name is required!")
+        .required(firstNameRequired),
+      lastname: yup
+        .string()
+        .matches(nameRegex, "Last Name is required!")
+        .required(lastNameRequired),
+      email: yup
+        .string()
+        .matches(emailRegex, "Invalid email!")
+        .required(emailRequired),
+      phone: yup
+        .string()
+        .matches(phoneRegex, "Invalid phone number!")
+        .required(phoneRequired),
+    }),
+    validateOnChange: true,
     onSubmit: () => {
       resetForm();
     },
@@ -43,19 +91,6 @@ function ProfilePage() {
       phone: "",
     });
   };
-  const constantData: LocalizationInterface = localizedData();
-  const {
-    basicInformationHeading,
-    changePasswordHeading,
-    notificationHeading,
-    newsLetterLabel,
-    billUpdatesLabel,
-    newTeamMembersLabel,
-    emailSub,
-    phoneSub,
-    saveBtn,
-    cancelBtn,
-  } = constantData.ProfilePage;
   const [values, setValues] = useState({
     currentPassword: "",
     showCurrentPassword: false,
@@ -116,9 +151,16 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.firstname}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      if (nameRegex.test(e.target.value)) {
+                        formik.handleChange(e);
+                      }
+                    }}
                     defaultValue={userData.first_name}
                   />
+                  <p className="requiredText">
+                    {formik.touched.firstname && formik.errors.firstname}
+                  </p>
                 </div>
                 <div className="lastName">
                   <TextField
@@ -132,9 +174,16 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.lastname}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      if (nameRegex.test(e.target.value)) {
+                        formik.handleChange(e);
+                      }
+                    }}
                     defaultValue={userData.last_name}
                   />
+                  <p className="requiredText">
+                    {formik.touched.lastname && formik.errors.lastname}
+                  </p>
                 </div>
                 <div className="email">
                   <TextField
@@ -151,9 +200,15 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.email}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.setFieldTouched("email");
+                      formik.handleChange(e);
+                    }}
                     defaultValue={userData.email}
                   />
+                  <p className="requiredText">
+                    {formik.touched.email && formik.errors.email}
+                  </p>
                 </div>
               </div>
 
@@ -162,7 +217,7 @@ function ProfilePage() {
                   className="textfield"
                   id="phone_id_1"
                   name="phone"
-                  type="new-password"
+                  type="phone"
                   label="Phone Number"
                   // placeholder="XX-XXX-XXXXXXX"
                   size="medium"
@@ -173,9 +228,17 @@ function ProfilePage() {
                     style: inputLabelColor,
                   }}
                   value={formik.values.phone}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    // if (phoneRegex.test(e.target.value)) {
+                    formik.setFieldTouched("phone");
+                    formik.handleChange(e);
+                    // }
+                  }}
                   defaultValue={userData?.contact_number}
                 />
+                <p className="requiredText">
+                  {formik.touched.phone && formik.errors.phone}
+                </p>
               </div>
             </div>
 

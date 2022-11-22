@@ -67,6 +67,11 @@ export interface profilePageInterface {
   phoneSub: string;
   saveBtn: string;
   cancelBtn: string;
+
+  firstNameRequired: string;
+  lastNameRequired: string;
+  emailRequired: string;
+  phoneRequired: number;
 }
 
 export interface employeeButtons {

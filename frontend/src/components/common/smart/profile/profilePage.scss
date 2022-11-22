@@ -35,6 +35,12 @@
   flex-direction: column;
   margin-top: 20px;
 
+  .requiredText {
+    color: red;
+    margin-top: 1px;
+    margin-bottom: 0px;
+  }
+
   .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root {
     font-family: "Lato";
     color: #000000;
