@@ -35,7 +35,7 @@ function AdditionalInformation({ employeeData }: AdditionalInformationType) {
   };
   return (
     <>
-      <Grid className="additional-Information-main" container xs={12} sm={12}>
+      <Grid className="additional-Information-main">
         <Grid container item className="headingContainer" xs={12} sm={12}>
           <Grid item xs={9} sm={9} className="headingDiv">
             <Typography variant="body1" className="heading">

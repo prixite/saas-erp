@@ -25,10 +25,10 @@ function EmployeeSection() {
       <EmployeeHeader employeeData={EmployeeData} />
       <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       {buttonNameClicked === "BASIC" ? (
-        <Grid xs={12} sm={12}>
+        <Grid>
           <AdditionalInformation employeeData={EmployeeData} />
-          <Experience />
-          <Education />
+          <Experience employeeData={EmployeeData} />
+          <Education employeeData={EmployeeData} />
         </Grid>
       ) : buttonNameClicked === "DOCS" ? (
         <DocumentSection />

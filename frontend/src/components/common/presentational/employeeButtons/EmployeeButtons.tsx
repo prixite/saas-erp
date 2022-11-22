@@ -12,13 +12,13 @@ interface EmployeeButtonType {
 }
 
 interface toggleButtonType {
-  selectedColor: string;
+  selectedcolor: string;
 }
 const ToggleButton = styled(MuiToggleButton)(
-  ({ selectedColor }: toggleButtonType) => ({
+  ({ selectedcolor }: toggleButtonType) => ({
     "&.Mui-selected, &.Mui-selected:hover": {
       color: "white",
-      backgroundColor: selectedColor,
+      backgroundColor: selectedcolor,
     },
   })
 );
@@ -61,7 +61,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
         >
           <ToggleButton
             value="left"
-            selectedColor="red"
+            selectedcolor="red"
             className="button-Basic"
             style={{ borderRadius: "12px", marginRight: "12px" }}
           >
@@ -75,7 +75,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
 
           <ToggleButton
             value="center"
-            selectedColor="red"
+            selectedcolor="red"
             style={{ borderRadius: "12px", marginRight: "12px" }}
             className="button-Docs"
           >
@@ -89,7 +89,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
 
           <ToggleButton
             value="right"
-            selectedColor="red"
+            selectedcolor="red"
             style={{ borderRadius: "12px" }}
             className="button-Comp"
           >

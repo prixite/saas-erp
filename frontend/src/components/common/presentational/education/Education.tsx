@@ -3,11 +3,15 @@ import { Box, Divider, Grid, Typography } from "@mui/material";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
+import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/education/education.scss";
 
-function Education() {
+interface ExperienceType {
+  employeeData?: EmployeeData;
+}
+function Education({ employeeData }: ExperienceType) {
   const constantData: LocalizationInterface = localizedData();
   const { educationHeading } = constantData.Education;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -21,7 +25,7 @@ function Education() {
   return (
     <>
       {/* Education */}
-      <Grid className="education-main" container>
+      <Grid className="education-main" sx={{ display: "flow-root" }} container>
         <Grid
           className="education-Heading-Container"
           container
@@ -53,106 +57,68 @@ function Education() {
             </div>
           </Grid>
         </Grid>
+        {employeeData?.degrees.map((degree, index) => {
+          return (
+            <Box key={degree?.program}>
+              <Grid
+                className="Education-Card"
+                container
+                item
+                xs={12}
+                sm={12}
+                height={90}
+              >
+                {/* B */}
+                <Grid item className="icon-container">
+                  <img
+                    className="profile-pic"
+                    src={CompanyIconThree}
+                    alt="profile pic"
+                  />
+                </Grid>
 
-        <Grid
-          className="Education-Card"
-          container
-          item
-          xs={12}
-          sm={12}
-          height={90}
-        >
-          {/* B */}
-          <Grid item className="icon-container">
-            <img
-              className="profile-pic"
-              src={CompanyIconThree}
-              alt="profile pic"
-            />
-          </Grid>
+                <Grid container item className="contentDiv">
+                  <Grid className="title-container" item>
+                    <Typography variant="body1" className="text-cls">
+                      {degree?.program}
+                    </Typography>
+                  </Grid>
 
-          <Grid container item className="contentDiv">
-            <Grid className="title-container" item>
-              <Typography variant="body1" className="para">
-                Bachelor in Computer Science
-              </Typography>
-            </Grid>
-
-            <Grid
-              className="description-subContainer"
-              container
-              item
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Grid item className="description">
-                <Typography variant="body1" className="para">
-                  Pakistan Institute of Engineering and Applied Sciences Lahore,
-                  Pakistan{" "}
-                </Typography>
+                  <Grid
+                    className="description-subContainer"
+                    container
+                    item
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-start"
+                  >
+                    <Grid item className="description">
+                      <Typography variant="body1" className="text-cls">
+                        {degree?.institute}{" "}
+                      </Typography>
+                    </Grid>
+                    <Grid item className="year">
+                      <Typography variant="body1" className="text-cls">
+                        {degree?.year}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item className="year">
-                <Typography variant="body1" className="para">
-                  2016-2022
-                </Typography>
+              <Grid className="divider" item xs={12} sm={12}>
+                {index !== employeeData?.experience?.length - 1 ? (
+                  <Divider
+                    sx={{
+                      color: "#E7E7E7",
+                      marginLeft: "24px",
+                      marginRight: "24px",
+                    }}
+                  />
+                ) : null}
               </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid className="divider" xs={12} sm={12}>
-          <Divider
-            sx={{ color: "#E7E7E7", marginLeft: "24px", marginRight: "24px" }}
-          />
-        </Grid>
-
-        <Grid
-          className="Education-Card"
-          container
-          item
-          xs={12}
-          sm={12}
-          height={90}
-        >
-          {/* B */}
-          <Grid item className="icon-container">
-            <img
-              className="profile-pic"
-              src={CompanyIconThree}
-              alt="profile pic"
-            />
-          </Grid>
-
-          <Grid container item className="contentDiv">
-            <Grid className="title-container" item>
-              <Typography variant="body1" className="para">
-                Bachelor in Computer Science
-              </Typography>
-            </Grid>
-
-            <Grid
-              className="description-subContainer"
-              container
-              item
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Grid item className="description">
-                <Typography variant="body1" className="para">
-                  Pakistan Institute of Engineering and Applied Sciences Lahore,
-                  Pakistan{" "}
-                </Typography>
-              </Grid>
-              <Grid item className="year">
-                <Typography variant="body1" className="para">
-                  2016-2022
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+            </Box>
+          );
+        })}
       </Grid>
     </>
   );
