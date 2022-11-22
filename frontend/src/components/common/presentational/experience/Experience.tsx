@@ -25,99 +25,111 @@ function Experience({ employeeData }: ExperienceType) {
   };
   return (
     <>
-      <Grid className="experience-main" sx={{ display: "flow-root" }} container>
+      {employeeData?.experience.length ? (
         <Grid
-          className="experience-Heading-Container"
+          className="experience-main"
+          sx={{ display: "flow-root" }}
           container
-          item
-          xs={12}
-          sm={12}
         >
-          <Grid item xs={10} sm={10} className="experience-container">
-            <Typography className="experience-text">
-              {experienceHeading}
-            </Typography>
-          </Grid>
+          <Grid
+            className="experience-Heading-Container"
+            container
+            item
+            xs={12}
+            sm={12}
+          >
+            <Grid item xs={10} sm={10} className="experience-container">
+              <Typography className="experience-text">
+                {experienceHeading}
+              </Typography>
+            </Grid>
 
-          <Grid className="icon-container" item xs={2} sm={2}>
-            <div className="box">
-              <Box sx={{ cursor: "pointer" }} className="subBox">
-                <img
-                  className="profile-pic"
-                  src={ThreeDotter}
-                  alt="profile pic"
-                  onClick={handleClick}
-                />
-                <MenuButtons
-                  anchorEl={anchorEl}
-                  open={open}
-                  handleClose={handleClose}
-                />
-              </Box>
-            </div>
-          </Grid>
-        </Grid>
-        {employeeData?.experience.map((exp, index) => {
-          return (
-            <Box key={exp?.title}>
-              <Grid
-                className="experience-Card"
-                container
-                item
-                xs={12}
-                sm={12}
-                height={90}
-              >
-                {/* B */}
-                <Grid item className="companyLogo-container" key={exp?.title}>
+            <Grid className="icon-container" item xs={2} sm={2}>
+              <div className="box">
+                <Box sx={{ cursor: "pointer" }} className="subBox">
                   <img
                     className="profile-pic"
-                    src={CompanyLogoOne}
+                    src={ThreeDotter}
                     alt="profile pic"
+                    onClick={handleClick}
                   />
-                </Grid>
+                  <MenuButtons
+                    anchorEl={anchorEl}
+                    open={open}
+                    handleClose={handleClose}
+                  />
+                </Box>
+              </div>
+            </Grid>
+          </Grid>
 
-                <Grid container item className="sub-container">
-                  <Grid className="child-div-two-A" item>
-                    <Typography variant="body1" className="description">
-                      {exp?.title}
-                    </Typography>
+          {employeeData?.experience.map((exp, index) => {
+            return (
+              <Box key={exp?.title}>
+                <Grid
+                  className="experience-Card"
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  height={90}
+                >
+                  {/* B */}
+                  <Grid item className="companyLogo-container" key={exp?.title}>
+                    <img
+                      className="profile-pic"
+                      src={CompanyLogoOne}
+                      alt="profile pic"
+                    />
                   </Grid>
 
-                  <Grid
-                    className="child-div-three-A"
-                    container
-                    item
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="flex-start"
-                  >
-                    <Grid item className="heading-One">
+                  <Grid container item className="sub-container">
+                    <Grid className="child-div-two-A" item>
                       <Typography variant="body1" className="description">
-                        {exp?.company}{" "}
+                        {exp?.title}
                       </Typography>
                     </Grid>
-                    <Grid item className="heading-Two">
-                      <Typography variant="body1" className="description">
-                        {moment(exp?.start_date).year()} -{" "}
-                        {moment(exp?.end_date).year()}
-                      </Typography>
+
+                    <Grid
+                      className="child-div-three-A"
+                      container
+                      item
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="flex-start"
+                    >
+                      <Grid item className="heading-One">
+                        <Typography variant="body1" className="description">
+                          {exp?.company}{" "}
+                        </Typography>
+                      </Grid>
+                      <Grid item className="heading-Two">
+                        <Typography variant="body1" className="description">
+                          {moment(exp?.start_date).year()} -{" "}
+                          {moment(exp?.end_date).year()}
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
 
-              <Grid item className="divider" xs={12} sm={12}>
-                {index !== employeeData?.experience?.length - 1 ? (
-                  <Divider
-                    sx={{ color: "#E7E7E7", margin: "0px 24px 0px 24px" }}
-                  />
-                ) : null}
-              </Grid>
-            </Box>
-          );
-        })}
-      </Grid>
+                <Grid item className="divider" xs={12} sm={12}>
+                  {index !== employeeData?.experience?.length - 1 ? (
+                    <Divider
+                      sx={{
+                        color: "#E7E7E7",
+                        margin: "0px 24px 0px 24px",
+                      }}
+                    />
+                  ) : null}
+                </Grid>
+              </Box>
+            );
+          })}
+        </Grid>
+      ) : (
+        ""
+      )}
     </>
   );
 }

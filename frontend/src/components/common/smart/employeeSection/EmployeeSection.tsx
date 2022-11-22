@@ -13,7 +13,9 @@ import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
 function EmployeeSection() {
   const param = useParams();
   const [paramValue, setParamValue] = useState<number>(0);
-  const { data: EmployeeData } = useGetEmployeeDataQuery({ id: paramValue });
+  const { data: EmployeeData } = useGetEmployeeDataQuery({
+    id: paramValue,
+  });
   useEffect(() => {
     if (param && param.employeeId !== undefined) {
       setParamValue(parseInt(param.employeeId));
