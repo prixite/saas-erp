@@ -44,8 +44,9 @@ function ProfilePage() {
 
   /* eslint-disable-next-line */
   const nameRegex = /^[A-Za-z]*$/;
-  /* eslint-disable-next-line */
-  const phoneRegex = /^(\(\d{3}\)|\d{3})-?\d{3}-?\d{5}$/;
+  const phoneRegex =
+    /* eslint-disable-next-line */
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
   /* eslint-disable-next-line */
   const emailRegex =
     /* eslint-disable-next-line */
@@ -65,15 +66,15 @@ function ProfilePage() {
         .required(firstNameRequired),
       lastname: yup
         .string()
-        .matches(nameRegex, "Last Name is required.")
+        .matches(nameRegex, "Last Name is required!")
         .required(lastNameRequired),
       email: yup
         .string()
-        .matches(emailRegex, "eg. rabeelqaiser543215@gmail.com")
+        .matches(emailRegex, "Invalid email!")
         .required(emailRequired),
       phone: yup
         .string()
-        .matches(phoneRegex, "eg. 0334466534!")
+        .matches(phoneRegex, "Invalid phone number!")
         .required(phoneRequired),
     }),
     validateOnChange: true,

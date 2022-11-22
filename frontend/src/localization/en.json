@@ -73,7 +73,7 @@
       "firstNameRequired": "First name is required!",
       "lastNameRequired": "Last name is required!",
       "emailRequired": "Email is required!",
-      "phoneRequired":"Phone number is is required!"
+      "phoneRequired":"Phone number is required!"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
