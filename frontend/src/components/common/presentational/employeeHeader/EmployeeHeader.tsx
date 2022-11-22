@@ -20,83 +20,76 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
   };
   return (
     <>
-      {employeeData ? (
-        <>
-          <div className="employee-Header-main">
-            <div className="icon-Container">
-              <img
-                className="profile-pic"
-                src={employeeData?.user?.avatar}
-                alt="profile pic"
-              />
+      <div className="employee-Header-main">
+        <div className="icon-Container">
+          <img
+            className="profile-pic"
+            src={employeeData?.user?.avatar}
+            alt="profile pic"
+          />
+        </div>
+
+        <div className="employee-Header-Div-Two">
+          <div className="subContainer-row-one">
+            <div className="name">
+              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
-
-            <div className="employee-Header-Div-Two">
-              <div className="subContainer-row-one">
-                <div className="name">
-                  {employeeData?.user?.first_name}{" "}
-                  {employeeData?.user?.last_name}
-                </div>
-                <div className="userID">
-                  <p className="paragraph">{employeeData?.org_id}</p>
-                </div>
-                <div className="userStatus">
-                  <p className="paragraph">{employeeData?.type}</p>
-                </div>
-              </div>
-
-              <div className="subContainer-row-two">
-                <div className="designation">{employeeData?.designation}</div>
-                <div className="email">
-                  <img
-                    className="profile-pic"
-                    src={emailIcon}
-                    alt="email"
-                    style={{
-                      height: "20px",
-                      width: "20px",
-                      marginRight: "10.5px",
-                    }}
-                  />
-                  <p>{employeeData?.user?.email}</p>
-                </div>
-                <div className="contact">
-                  <img
-                    className="profile-pic"
-                    src={phoneIcon}
-                    alt="phone"
-                    style={{
-                      height: "20px",
-                      width: "20px",
-                      marginRight: "11.33px",
-                      background: "transparent",
-                    }}
-                  />
-                  {employeeData?.contact_number}
-                </div>
-              </div>
+            <div className="userID">
+              <p className="paragraph">{employeeData?.org_id}</p>
             </div>
-
-            <div className="employee-Header-Div-Three">
-              <Box sx={{ cursor: "pointer" }} className="container-Icon">
-                <img
-                  onClick={handleClick}
-                  className="profile-pic"
-                  src={ThreeDotter}
-                  alt="menu"
-                />
-                <MenuButtons
-                  anchorEl={anchorEl}
-                  open={open}
-                  handleClose={handleClose}
-                />
-              </Box>
+            <div className="userStatus">
+              <p className="paragraph">{employeeData?.type}</p>
             </div>
           </div>
-        </>
-      ) : (
-        ""
-      )}
+
+          <div className="subContainer-row-two">
+            <div className="designation">{employeeData?.designation}</div>
+            <div className="email">
+              <img
+                className="profile-pic"
+                src={emailIcon}
+                alt="email"
+                style={{
+                  height: "20px",
+                  width: "20px",
+                  marginRight: "10.5px",
+                }}
+              />
+              <p>{employeeData?.user?.email}</p>
+            </div>
+            <div className="contact">
+              <img
+                className="profile-pic"
+                src={phoneIcon}
+                alt="phone"
+                style={{
+                  height: "20px",
+                  width: "20px",
+                  marginRight: "11.33px",
+                  background: "transparent",
+                }}
+              />
+              {employeeData?.contact_number}
+            </div>
+          </div>
+        </div>
+
+        <div className="employee-Header-Div-Three">
+          <Box sx={{ cursor: "pointer" }} className="container-Icon">
+            <img
+              onClick={handleClick}
+              className="profile-pic"
+              src={ThreeDotter}
+              alt="menu"
+            />
+            <MenuButtons
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+            />
+          </Box>
+        </div>
+      </div>
     </>
   );
 }
