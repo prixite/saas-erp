@@ -42,6 +42,15 @@ function ProfilePage() {
     phoneRequired,
   } = constantData.ProfilePage;
 
+  /* eslint-disable-next-line */
+  const nameRegex = /^[A-Za-z ]*$/;
+  /* eslint-disable-next-line */
+  const phoneRegex = /^[0-9]/;
+  /* eslint-disable-next-line */
+  const emailRegex =
+    /* eslint-disable-next-line */
+    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
   const formik = useFormik({
     initialValues: {
       firstname: userData?.first_name,
@@ -52,26 +61,19 @@ function ProfilePage() {
     validationSchema: yup.object({
       firstname: yup
         .string()
-        /* eslint-disable-next-line */
-        .matches(/^[A-Za-z ]*$/, "First Name must contain pure letters.")
+        .matches(nameRegex, "First Name must contain pure letters.")
         .required(firstNameRequired),
       lastname: yup
         .string()
-        /* eslint-disable-next-line */
-        .matches(/^[A-Za-z ]*$/, "Last Name must contain pure letters.")
+        .matches(nameRegex, "Last Name must contain pure letters.")
         .required(lastNameRequired),
       email: yup
         .string()
-        .matches(
-          /* eslint-disable-next-line */
-          /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
-          "Incorrect E-mail format!"
-        )
+        .matches(emailRegex, "Incorrect E-mail format!")
         .required(emailRequired),
       phone: yup
         .string()
-        /* eslint-disable-next-line */
-        .matches(/^(\+1)[0-9]{10}$/, "Phone number must contain numbers only!")
+        .matches(phoneRegex, "Phone number must contain numbers only!")
         .required(phoneRequired),
     }),
     validateOnChange: true,
@@ -148,7 +150,11 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.firstname}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      if (nameRegex.test(e.target.value)) {
+                        formik.handleChange(e);
+                      }
+                    }}
                     defaultValue={userData.first_name}
                   />
                   <p className="requiredText">
@@ -167,7 +173,11 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.lastname}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      if (nameRegex.test(e.target.value)) {
+                        formik.handleChange(e);
+                      }
+                    }}
                     defaultValue={userData.last_name}
                   />
                   <p className="requiredText">
@@ -189,7 +199,11 @@ function ProfilePage() {
                       style: inputLabelColor,
                     }}
                     value={formik.values.email}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      if (emailRegex.test(e.target.value)) {
+                        formik.handleChange(e);
+                      }
+                    }}
                     defaultValue={userData.email}
                   />
                   <p className="requiredText">
@@ -214,7 +228,11 @@ function ProfilePage() {
                     style: inputLabelColor,
                   }}
                   value={formik.values.phone}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    if (phoneRegex.test(e.target.value)) {
+                      formik.handleChange(e);
+                    }
+                  }}
                   defaultValue={userData?.contact_number}
                 />
                 <p className="requiredText">
