@@ -43,37 +43,37 @@ function ProfilePage() {
   } = constantData.ProfilePage;
 
   /* eslint-disable-next-line */
-  const nameRegex = /^[A-Za-z ]*$/;
+  const nameRegex = /^[A-Za-z]*$/;
   /* eslint-disable-next-line */
-  const phoneRegex = /^[0-9]/;
+  const phoneRegex = /^(\(\d{3}\)|\d{3})-?\d{3}-?\d{5}$/;
   /* eslint-disable-next-line */
   const emailRegex =
     /* eslint-disable-next-line */
-    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    /^[^<>()[\]\\,;:\%#^\s@\"$*&/!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const formik = useFormik({
     initialValues: {
-      firstname: userData?.first_name,
-      lastname: userData?.last_name,
-      email: userData?.email,
+      firstname: userData?.first_name || "",
+      lastname: userData?.last_name || "",
+      email: userData?.email || "",
       phone: userData?.contact_number || "",
     },
     validationSchema: yup.object({
       firstname: yup
         .string()
-        .matches(nameRegex, "First Name must contain pure letters.")
+        .matches(nameRegex, "First Name is required!")
         .required(firstNameRequired),
       lastname: yup
         .string()
-        .matches(nameRegex, "Last Name must contain pure letters.")
+        .matches(nameRegex, "Last Name is required.")
         .required(lastNameRequired),
       email: yup
         .string()
-        .matches(emailRegex, "Incorrect E-mail format!")
+        .matches(emailRegex, "eg. rabeelqaiser543215@gmail.com")
         .required(emailRequired),
       phone: yup
         .string()
-        .matches(phoneRegex, "Phone number must contain numbers only!")
+        .matches(phoneRegex, "eg. 0334466534!")
         .required(phoneRequired),
     }),
     validateOnChange: true,
@@ -200,9 +200,8 @@ function ProfilePage() {
                     }}
                     value={formik.values.email}
                     onChange={(e) => {
-                      if (emailRegex.test(e.target.value)) {
-                        formik.handleChange(e);
-                      }
+                      formik.setFieldTouched("email");
+                      formik.handleChange(e);
                     }}
                     defaultValue={userData.email}
                   />
@@ -217,7 +216,7 @@ function ProfilePage() {
                   className="textfield"
                   id="phone_id_1"
                   name="phone"
-                  type="new-password"
+                  type="phone"
                   label="Phone Number"
                   // placeholder="XX-XXX-XXXXXXX"
                   size="medium"
@@ -229,9 +228,10 @@ function ProfilePage() {
                   }}
                   value={formik.values.phone}
                   onChange={(e) => {
-                    if (phoneRegex.test(e.target.value)) {
-                      formik.handleChange(e);
-                    }
+                    // if (phoneRegex.test(e.target.value)) {
+                    formik.setFieldTouched("phone");
+                    formik.handleChange(e);
+                    // }
                   }}
                   defaultValue={userData?.contact_number}
                 />
