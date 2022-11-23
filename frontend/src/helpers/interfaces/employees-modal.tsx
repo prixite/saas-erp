@@ -27,6 +27,7 @@ export interface EmployeeData {
     email: string;
     avatar: string;
   };
+  total_experience: string;
   experience: Experience[];
   degrees: Education[];
   contact_number: string;
