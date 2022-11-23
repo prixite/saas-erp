@@ -3,7 +3,7 @@
   background: #ffffff;
   border: 1px solid #e7e7e7;
   border-radius: 12px;
-  padding: 18px;
+  padding: 0px 18px 18px 18px;
   .documentation-heading {
     display: flex;
     justify-content: space-between;
@@ -16,6 +16,8 @@
       letter-spacing: -0.011em;
       color: #000000;
       opacity: 0.5;
+      margin-top: 18px;
+      text-transform: capitalize;
     }
   }
   .documentation-section {
