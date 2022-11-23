@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from app import models, serializers
@@ -47,6 +49,26 @@ class DocumentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(employee_id=self.kwargs["pk"])
+
+    def create(self, request, *args, **kwargs):
+        get_object_or_404(models.Employee, id=kwargs.get("pk"))
+        return super().create(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        get_object_or_404(models.Employee, id=kwargs.get("pk"))
+        data = super().list(request, *args, **kwargs)
+        res = []
+        doc_types = [doc.get("type") for doc in data.data]
+        for type in set(doc_types):
+            res.append(
+                {
+                    "type": type if type else "Others",
+                    "docs": list(
+                        filter(lambda doc: doc.get("type") == type, data.data)
+                    ),
+                }
+            )
+        return Response(res)
 
 
 class MeApiView(RetrieveAPIView):
