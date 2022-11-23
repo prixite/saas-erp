@@ -9,6 +9,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { useParams } from "react-router-dom";
 import circleIcon from "@src/assets/svgs/redcircle.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import { toPkrFormat } from "@src/helpers/constants/constants";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -57,7 +58,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
               {currentSalary}: {"\u00A0"}
             </Typography>
             <Typography className="txt-cls">
-              {compensationData?.current_salary}
+              {toPkrFormat(compensationData?.current_salary)}
             </Typography>
           </Box>
         </Grid>
