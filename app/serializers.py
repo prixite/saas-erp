@@ -1,7 +1,8 @@
+from datetime import date
+
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from datetime import date
 
 from app import models
 
