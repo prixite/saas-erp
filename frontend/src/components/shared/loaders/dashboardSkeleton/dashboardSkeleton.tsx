@@ -8,7 +8,6 @@ export default function DashboardSkeleton() {
       container
       rowSpacing={2}
       columnSpacing={2}
-      xs={12}
       sm={12}
       md={12}
       lg={12}
