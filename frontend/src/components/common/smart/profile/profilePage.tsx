@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Grid,
@@ -83,6 +83,17 @@ function ProfilePage() {
     },
   });
 
+  useEffect(() => {
+    if (userData && isSuccess) {
+      formik.setValues({
+        email: userData?.email,
+        firstname: userData?.first_name,
+        lastname: userData?.last_name,
+        phone: userData?.contact_number,
+      });
+    }
+  }, [userData, isSuccess]);
+
   const resetForm = () => {
     formik.setValues({
       firstname: "",
@@ -154,7 +165,6 @@ function ProfilePage() {
                     formik.handleChange(e);
                   }
                 }}
-                defaultValue={isSuccess ? userData.first_name : ""}
               />
               <p className="requiredText">
                 {formik.touched.firstname && formik.errors.firstname}
@@ -177,7 +187,6 @@ function ProfilePage() {
                     formik.handleChange(e);
                   }
                 }}
-                defaultValue={isSuccess ? userData.last_name : ""}
               />
               <p className="requiredText">
                 {formik.touched.lastname && formik.errors.lastname}
@@ -202,7 +211,6 @@ function ProfilePage() {
                   formik.setFieldTouched("email");
                   formik.handleChange(e);
                 }}
-                defaultValue={isSuccess ? userData.email : ""}
               />
               <p className="requiredText">
                 {formik.touched.email && formik.errors.email}
@@ -232,7 +240,6 @@ function ProfilePage() {
                 formik.handleChange(e);
                 // }
               }}
-              defaultValue={isSuccess ? userData?.contact_number : ""}
             />
             <p className="requiredText">
               {formik.touched.phone && formik.errors.phone}
@@ -380,7 +387,6 @@ function ProfilePage() {
                 <div className="B__checkBoxContainer__one">
                   <Checkbox
                     {...label}
-                    defaultChecked
                     sx={{
                       color: pink[800],
                       "&.Mui-checked": {
@@ -394,7 +400,6 @@ function ProfilePage() {
                 <div className="B__checkBoxContainer__two">
                   <Checkbox
                     {...label}
-                    defaultChecked
                     sx={{
                       color: pink[800],
                       "&.Mui-checked": {
@@ -413,7 +418,6 @@ function ProfilePage() {
                 <div className="C__checkBoxContainer__one">
                   <Checkbox
                     {...label}
-                    defaultChecked
                     sx={{
                       color: pink[800],
                       "&.Mui-checked": {
@@ -427,7 +431,6 @@ function ProfilePage() {
                 <div className="C__checkBoxContainer__two">
                   <Checkbox
                     {...label}
-                    defaultChecked
                     sx={{
                       color: pink[800],
                       "&.Mui-checked": {
