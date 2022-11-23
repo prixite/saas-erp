@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 
 from app import models
 
