@@ -32,18 +32,11 @@ class DegreeSerializer(serializers.ModelSerializer):
         model = models.Degree
         fields = "__all__"
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
-        data["employee"] = instance.employee.user.get_full_name()
-        return data
-
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Company
-        fields = "__all__"
+        exclude = ("organization",)
 
 
 class ExperirenceSerializer(serializers.ModelSerializer):
@@ -51,22 +44,24 @@ class ExperirenceSerializer(serializers.ModelSerializer):
         model = models.Experience
         fields = "__all__"
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["employee"] = instance.employee.user.get_full_name()
-        data["company"] = instance.company.name
-        return data
-
 
 class BenefitSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Benefit
-        fields = "__all__"
+        exclude = ("organization",)
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["organization"] = instance.organization.name
-        return data
+
+class EmployeeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = [
+            "department",
+            "designation",
+            "manager",
+            "benefits",
+            "type",
+            "user_allowed",
+        ]
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -89,21 +84,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             user.organization = organization
             user.save()
         validated_data["user_id"] = user.id
-        validated_data["organization"] = organization
         return super().create(validated_data)
-
-    def update(self, instance, validated_data):
-        user_data = validated_data.pop("user")
-        organization = self.context.get("request").user.organization
-        user_serializer = EmployeeUserSerializer(data=user_data)
-        if user_serializer.is_valid():
-            user = models.User.objects.get(id=self.kwargs["pk"])
-            user.username = user.email
-            user.organization = organization
-            user.save()
-        validated_data["user_id"] = user.id
-        validated_data["organization"] = organization
-        return super().update(instance, validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -166,10 +147,22 @@ class MeSerializer(serializers.ModelSerializer):
 class InstitueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Institute
-        fields = "__all__"
+        exclude = ("organization",)
 
 
 class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Program
-        fields = "__all__"
+        exclude = ("organization",)
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Department
+        exclude = ("organization",)
+
+
+class EmployeementTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.EmploymentType
+        exclude = ("organization",)

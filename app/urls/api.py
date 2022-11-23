@@ -64,6 +64,14 @@ urlpatterns = [
         api.BenefitApiView.as_view({"get": "list", "post": "create"}),
     ),
     path(
+        "department/",
+        api.DepartmentApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "employeement_type/",
+        api.EmployeementType.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
         "me/",
         api.MeApiView.as_view(),
     ),

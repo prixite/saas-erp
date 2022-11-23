@@ -3,8 +3,10 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.pagination import LimitOffsetPagination
 
 from app import models, serializers, permissions
+from app.views import mixins
 
 
 @method_decorator(login_required, name="dispatch")
@@ -12,23 +14,21 @@ class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
 
-class EmployeeViewSet(ModelViewSet):
-    serializer_class = serializers.EmployeeSerializer
+class EmployeeViewSet(ModelViewSet, mixins.OrganizationMixin):
 
     permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.EmployeeSerializer
+    queryset = models.Employee.objects.all()
+    pagination_class = LimitOffsetPagination
 
     def get_serializer_class(self):
         if self.action == "list":
             return serializers.EmployeeListSerializer
 
-        return super().get_serializer_class()
+        if self.action == "partial_update":
+            return serializers.EmployeeUpdateSerializer
 
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return models.Employee.objects.all()
-        return models.Employee.objects.filter(
-            organization=self.request.user.organization
-        )
+        return super().get_serializer_class()
 
 
 class CompensationViewSet(ModelViewSet):
@@ -58,31 +58,61 @@ class MeApiView(RetrieveAPIView):
         return self.request.user
 
 
-class InstitueApiView(ModelViewSet):
+class InstitueApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.InstitueSerializer
     queryset = models.Institute.objects.all()
 
 
-class ProgramApiView(ModelViewSet):
+class ProgramApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.ProgramSerializer
     queryset = models.Program.objects.all()
 
 
 class DegreeApiView(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.DegreeSerializer
-    queryset = models.Degree.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return models.Degree.objects.all()
+        return models.Degree.objects.filter(
+            employee__organization=self.request.user.organization
+        )
 
 
-class CompanyApiView(ModelViewSet):
+class CompanyApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.CompanySerializer
     queryset = models.Company.objects.all()
 
 
 class ExperienceApiView(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.ExperirenceSerializer
-    queryset = models.Experience.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return models.Experience.objects.all()
+        return models.Experience.objects.filter(
+            employee__organization=self.request.user.organization
+        )
 
 
-class BenefitApiView(ModelViewSet):
+class BenefitApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.BenefitSerializer
     queryset = models.Benefit.objects.all()
+
+
+class DepartmentApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.DepartmentSerializer
+    queryset = models.Department.objects.all()
+
+
+class EmployeementType(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.EmployeementTypeSerializer
+    queryset = models.EmploymentType.objects.all()

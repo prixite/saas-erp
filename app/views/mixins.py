@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 
 from app import models
 
@@ -55,3 +56,13 @@ class AddGetFormMixin:
             organization=self.request.user.organization,
         )
         return form
+
+
+class OrganizationMixin(CreateModelMixin, ListModelMixin):
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return self.queryset.all()
+        return self.queryset.filter(organization=self.request.user.organization)
+
+    def perform_create(self, serializer):
+        serializer.save(organization=self.request.user.organization)
