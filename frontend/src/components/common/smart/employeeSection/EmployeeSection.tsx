@@ -35,7 +35,7 @@ function EmployeeSection() {
       ) : buttonNameClicked === "DOCS" ? (
         <DocumentSection />
       ) : buttonNameClicked === "COMP" ? (
-        <BenefitsSection />
+        <BenefitsSection employeeData={EmployeeData} />
       ) : (
         ""
       )}
