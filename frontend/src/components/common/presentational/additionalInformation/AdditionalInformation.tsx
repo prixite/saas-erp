@@ -119,7 +119,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="experience-text">
-              4 years
+              {employeeData?.total_experience}
             </Typography>
           </Grid>
 
