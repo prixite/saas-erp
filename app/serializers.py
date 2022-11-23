@@ -87,19 +87,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
         if total_days < 30:
             return "No experience yet."
 
-        if years:
-            if years == 1:
-                return (
-                    f"{years} year {months} months"
-                    if months > 1
-                    else f"{years} year {months} month"
-                )
-            return (
-                f"{years} years {months} months"
-                if months > 1
-                else f"{years} year {months} month"
-            )
-        return f"{months} month" if months == 1 else f"{months} months"
+        total_experience = ""
+
+        total_experience = (
+            f"{years} years " if years > 1 else "" if not years else f"{years} year "
+        )
+        total_experience += f"{months} months" if months > 1 else f"{months} month"
+        return total_experience
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
