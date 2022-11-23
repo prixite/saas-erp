@@ -60,6 +60,7 @@ class EmployeeTestCase(BaseTestCase):
                 "experience",
                 "benefits",
                 "org_id",
+                "total_experience",
                 "contact_number",
                 "nic",
                 "date_of_joining",
