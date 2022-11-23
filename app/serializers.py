@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from app import models
@@ -92,12 +93,25 @@ class CompensationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Compensation
-        fields = [
-            "current_salary",
-            "currency",
-            "compensation_type",
-            "compensation_schedule",
-        ]
+        exclude = ["employee"]
+
+    def validate(self, attrs):
+        get_object_or_404(models.Employee, id=self.context.get("view").kwargs["pk"])
+        if models.Compensation.objects.filter(
+            employee_id=self.context.get("view").kwargs.get("pk")
+        ).exists():
+            raise serializers.ValidationError(
+                "Compensation already exists for this employee"
+            )
+
+        return attrs
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["compensation_type"] = instance.compensation_type.name
+        data["compensation_schedule"] = instance.compensation_schedule.name
+        data["currency"] = instance.currency.symbol
+        return data
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -123,6 +137,7 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
     avatar = serializers.SerializerMethodField()
+    contact_number = serializers.CharField(source="employee.contact_number")
 
     class Meta:
         model = models.User
@@ -134,6 +149,7 @@ class MeSerializer(serializers.ModelSerializer):
             "avatar",
             "is_superuser",
             "headline",
+            "contact_number",
         ]
 
     def get_avatar(self, data):

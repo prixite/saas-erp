@@ -33,12 +33,13 @@ class EmployeeViewSet(ModelViewSet):
 
 class CompensationViewSet(ModelViewSet):
     serializer_class = serializers.CompensationSerializer
-
-    def get_queryset(self):
-        return models.Compensation.objects.none
+    queryset = models.Compensation.objects.all()
 
     def get_object(self):
-        return models.Compensation.objects.get(employee=self.kwargs["pk"])
+        return get_object_or_404(models.Compensation, employee_id=self.kwargs["pk"])
+
+    def perform_create(self, serializer):
+        serializer.save(employee_id=self.kwargs["pk"])
 
 
 class DocumentViewSet(ModelViewSet):

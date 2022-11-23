@@ -17,6 +17,13 @@ class BaseTestCase(TestCase):
         )
         self.program = factories.ProgramFactory(organization=self.organization)
         self.institute = factories.InstituteFactory(organization=self.organization)
+        self.compensation_type = factories.CompensationTypeFactory(
+            organization=self.organization
+        )
+        self.compensation_schedule = factories.CompensationScheduleFactory(
+            organization=self.organization
+        )
+        self.currency = factories.CurrencyFactory()
 
         factories.CurrencyFactory.create_batch(size=3)
         self.add_compensation_type_instances()

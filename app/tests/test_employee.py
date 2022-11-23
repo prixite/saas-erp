@@ -77,11 +77,30 @@ class EmployeeTestCase(BaseTestCase):
 
 
 class CompensationTestCase(BaseTestCase):
-    def test_compensation_list(self):
+    def test_compensation_get(self):
         self.client.force_login(self.super_user)
         response = self.client.get(f"/api/employees/{self.employee.id}/compensation/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_compensation_post(self):
+        self.client.force_login(self.org_user)
+
+        compensation_data = {
+            "rate": "10",
+            "max_hours_per_week": "5",
+            "expected_hours_per_week": "5",
+            "compensation_type": self.compensation_type.id,
+            "compensation_schedule": self.compensation_schedule.id,
+            "currency": self.currency.id,
+        }
+
+        self.client.post(
+            f"/api/employees/{self.employee.id}/compensation/", data=compensation_data
+        )
+        self.assertTrue(
+            models.Compensation.objects.filter(employee=self.employee.id).exists()
+        )
 
 
 class DocumentTestCase(BaseTestCase):

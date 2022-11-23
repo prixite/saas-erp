@@ -107,3 +107,15 @@ if settings.DEBUG:
     @admin.register(models.DocumentType)
     class DocumentTypeAdmin(admin.ModelAdmin):
         pass
+
+    @admin.register(models.Currency)
+    class CurrencyAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.CompensationType)
+    class CompensationTypeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.CompensationSchedule)
+    class CompensationScheduleAdmin(admin.ModelAdmin):
+        pass
