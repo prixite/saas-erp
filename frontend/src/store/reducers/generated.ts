@@ -31,6 +31,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/employees/${queryArg.id}/compensation/`,
       }),
     }),
+    apiEmployeesCompensationCreate: build.mutation<
+      ApiEmployeesCompensationCreateApiResponse,
+      ApiEmployeesCompensationCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/employees/${queryArg.id}/compensation/`,
+        method: "POST",
+        body: queryArg.compensation,
+      }),
+    }),
     apiEmployeesDocumentsList: build.query<
       ApiEmployeesDocumentsListApiResponse,
       ApiEmployeesDocumentsListApiArg
@@ -70,6 +80,12 @@ export type ApiEmployeesCompensationRetrieveApiResponse =
   /** status 200  */ Compensation;
 export type ApiEmployeesCompensationRetrieveApiArg = {
   id: number;
+};
+export type ApiEmployeesCompensationCreateApiResponse =
+  /** status 201  */ Compensation;
+export type ApiEmployeesCompensationCreateApiArg = {
+  id: number;
+  compensation: Compensation;
 };
 export type ApiEmployeesDocumentsListApiResponse =
   /** status 200  */ Document[];
@@ -131,12 +147,18 @@ export type Employee = {
   type?: number | null;
 };
 export type Compensation = {
+  id: number;
   current_salary: number;
-  currency: number;
+  rate: number;
+  max_hours_per_week?: number | null;
+  expected_hours_per_week?: number | null;
+  updated_at: string;
   compensation_type: number;
   compensation_schedule: number;
+  currency: number;
 };
 export type Document = {
+  id: number;
   name: string;
   type?: number | null;
   document_url: string;
@@ -149,12 +171,14 @@ export type Me = {
   avatar: string;
   is_superuser?: boolean;
   headline: string;
+  contact_number: string;
 };
 export const {
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
   useApiEmployeesCompensationRetrieveQuery,
+  useApiEmployeesCompensationCreateMutation,
   useApiEmployeesDocumentsListQuery,
   useApiEmployeesDocumentsCreateMutation,
   useApiMeRetrieveQuery,

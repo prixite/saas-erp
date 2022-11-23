@@ -156,6 +156,62 @@
                         "description": ""
                     }
                 }
+            },
+            "post": {
+                "operationId": "api_employees_compensation_create",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Compensation"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
             }
         },
         "/api/employees/{id}/documents/": {
@@ -289,18 +345,39 @@
             "Compensation": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "current_salary": {
                         "type": "number",
                         "format": "double",
                         "readOnly": true
                     },
-                    "currency": {
-                        "type": "integer"
+                    "rate": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "max_hours_per_week": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "expected_hours_per_week": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
                     },
                     "compensation_type": {
                         "type": "integer"
                     },
                     "compensation_schedule": {
+                        "type": "integer"
+                    },
+                    "currency": {
                         "type": "integer"
                     }
                 },
@@ -308,7 +385,10 @@
                     "compensation_schedule",
                     "compensation_type",
                     "currency",
-                    "current_salary"
+                    "current_salary",
+                    "id",
+                    "rate",
+                    "updated_at"
                 ]
             },
             "Degree": {
@@ -334,6 +414,10 @@
             "Document": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "name": {
                         "type": "string",
                         "maxLength": 128
@@ -350,6 +434,7 @@
                 },
                 "required": [
                     "document_url",
+                    "id",
                     "name"
                 ]
             },
@@ -582,10 +667,14 @@
                     "headline": {
                         "type": "string",
                         "maxLength": 255
+                    },
+                    "contact_number": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "avatar",
+                    "contact_number",
                     "email",
                     "headline"
                 ]
