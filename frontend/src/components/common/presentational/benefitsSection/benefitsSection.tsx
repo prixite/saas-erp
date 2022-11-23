@@ -6,14 +6,20 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
+import { useParams } from "react-router-dom";
 import circleIcon from "@src/assets/svgs/redcircle.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useApiEmployeesCompensationRetrieveQuery } from "@src/store/api";
 
 const BenefitsSection = () => {
   const [perks, setPerks] = useState<string[]>([]);
   const constantData: LocalizationInterface = localizedData();
+  const { employeeId } = useParams();
+  const { data: compensationData } = useApiEmployeesCompensationRetrieveQuery({
+    id: Number(employeeId!),
+  });
   const {
     employeeBenefitsHeading,
     currentSalary,
@@ -49,7 +55,9 @@ const BenefitsSection = () => {
             <Typography className="heading-cls">
               {currentSalary}: {"\u00A0"}
             </Typography>
-            <Typography className="txt-cls"> Rs.75,000</Typography>
+            <Typography className="txt-cls">
+              {compensationData?.current_salary}
+            </Typography>
           </Box>
         </Grid>
         <Grid className="compensation-type-box" item xs={3} sm={3}>
@@ -57,7 +65,9 @@ const BenefitsSection = () => {
             <Typography className="heading-cls">
               {compensationType}: {"\u00A0"}
             </Typography>
-            <Typography className="txt-cls"> Full Time</Typography>
+            <Typography className="txt-cls">
+              {compensationData?.compensation_type}
+            </Typography>
           </Box>
         </Grid>
         <Grid className="compensation-schedule-box" item xs={3} sm={3}>
@@ -65,7 +75,9 @@ const BenefitsSection = () => {
             <Typography className="heading-cls">
               {compensationScheule}: {"\u00A0"}
             </Typography>
-            <Typography className="txt-cls"> Monthly</Typography>
+            <Typography className="txt-cls">
+              {compensationData?.compensation_schedule}
+            </Typography>
           </Box>
         </Grid>
       </Grid>
