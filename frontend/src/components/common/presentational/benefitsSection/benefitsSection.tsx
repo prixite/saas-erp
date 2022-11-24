@@ -103,7 +103,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
                               "&:hover": {
                                 backgroundColor: "transparent !important",
                               },
-                              cursor: "auto",
+                              cursor: "default",
                             }}
                             checked={true}
                             onChange={handleAllowanceChange}
@@ -111,7 +111,10 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
                         }
                         value={fuelAllowance}
                         label={
-                          <Typography className="label-cls">
+                          <Typography
+                            sx={{ cursor: "default" }}
+                            className="label-cls"
+                          >
                             {benefit}
                           </Typography>
                         }
