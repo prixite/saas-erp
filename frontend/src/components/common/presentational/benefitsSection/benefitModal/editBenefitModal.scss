@@ -22,17 +22,17 @@
   letter-spacing: -0.011em;
   color: #000000;
 
-  .css-e758u2-MuiTypography-root-MuiDialogTitle-root {
+  .MuiDialogTitle-root {
     padding-bottom: 0px;
   }
 
-  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root {
+  .MuiInputLabel-root {
     font-family: "Lato";
     color: #000000;
     opacity: 0.6;
   }
 
-  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  .MuiInputLabel-root.Mui-focused {
     font-family: "Lato";
     font-weight: 400;
     color: #000000;
@@ -153,13 +153,9 @@
     .ticks {
       margin-bottom: 30px;
 
-      .css-1hhrhvv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+      .Mui-checked {
         color: red;
       }
-
-      // .css-ptiqhd-MuiSvgIcon-root {
-      //   color: red;
-      // }
 
       .tickContainer {
         display: flex;

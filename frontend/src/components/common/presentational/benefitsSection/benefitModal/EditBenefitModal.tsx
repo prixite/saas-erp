@@ -1,3 +1,4 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
   Box,
   Checkbox,
@@ -118,6 +119,12 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Compensation Type"
+                    IconComponent={(props) => (
+                      <KeyboardArrowDownIcon
+                        {...props}
+                        sx={{ color: "black !important" }}
+                      />
+                    )}
                   >
                     <MenuItem value={10}>Type One</MenuItem>
                     <MenuItem value={20}>Type Two</MenuItem>
@@ -142,6 +149,12 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Compensation Schedule"
+                    IconComponent={(props) => (
+                      <KeyboardArrowDownIcon
+                        {...props}
+                        sx={{ color: "black !important" }}
+                      />
+                    )}
                   >
                     <MenuItem value={10}>Schedule One</MenuItem>
                     <MenuItem value={20}>Schedule Two</MenuItem>
@@ -156,6 +169,12 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="Date:"
+                    IconComponent={(props) => (
+                      <KeyboardArrowDownIcon
+                        {...props}
+                        sx={{ color: "black !important" }}
+                      />
+                    )}
                   >
                     <MenuItem value={10}>Date One</MenuItem>
                     <MenuItem value={20}>Date Two</MenuItem>
