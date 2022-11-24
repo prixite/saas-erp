@@ -6,7 +6,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from app import models, serializers, permissions
+from app import models, permissions, serializers
 
 
 @method_decorator(login_required, name="dispatch")
