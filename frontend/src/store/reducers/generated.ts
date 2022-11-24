@@ -1,6 +1,16 @@
 import { emptySplitApi as api } from "@src/store/emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    apiChangePasswordPartialUpdate: build.mutation<
+      ApiChangePasswordPartialUpdateApiResponse,
+      ApiChangePasswordPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/change_password/`,
+        method: "PATCH",
+        body: queryArg.patchedUserPassword,
+      }),
+    }),
     apiEmployeesList: build.query<
       ApiEmployeesListApiResponse,
       ApiEmployeesListApiArg
@@ -31,6 +41,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/employees/${queryArg.id}/compensation/`,
       }),
     }),
+    apiEmployeesCompensationCreate: build.mutation<
+      ApiEmployeesCompensationCreateApiResponse,
+      ApiEmployeesCompensationCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/employees/${queryArg.id}/compensation/`,
+        method: "POST",
+        body: queryArg.compensation,
+      }),
+    }),
     apiEmployeesDocumentsList: build.query<
       ApiEmployeesDocumentsListApiResponse,
       ApiEmployeesDocumentsListApiArg
@@ -56,6 +76,11 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as rtk };
+export type ApiChangePasswordPartialUpdateApiResponse =
+  /** status 200  */ UserPassword;
+export type ApiChangePasswordPartialUpdateApiArg = {
+  patchedUserPassword: PatchedUserPassword;
+};
 export type ApiEmployeesListApiResponse = /** status 200  */ EmployeeList[];
 export type ApiEmployeesListApiArg = void;
 export type ApiEmployeesCreateApiResponse = /** status 201  */ Employee;
@@ -71,6 +96,12 @@ export type ApiEmployeesCompensationRetrieveApiResponse =
 export type ApiEmployeesCompensationRetrieveApiArg = {
   id: number;
 };
+export type ApiEmployeesCompensationCreateApiResponse =
+  /** status 201  */ Compensation;
+export type ApiEmployeesCompensationCreateApiArg = {
+  id: number;
+  compensation: Compensation;
+};
 export type ApiEmployeesDocumentsListApiResponse =
   /** status 200  */ Document[];
 export type ApiEmployeesDocumentsListApiArg = {
@@ -84,6 +115,14 @@ export type ApiEmployeesDocumentsCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type UserPassword = {
+  password: string;
+  old_password: string;
+};
+export type PatchedUserPassword = {
+  password?: string;
+  old_password?: string;
+};
 export type EmployeeList = {
   id: number;
   org_id: string;
@@ -117,6 +156,7 @@ export type Employee = {
   experience: Experirence[];
   benefits: string[];
   org_id: string;
+  total_experience: string;
   contact_number: string;
   nic: string;
   date_of_joining: string;
@@ -131,12 +171,18 @@ export type Employee = {
   type?: number | null;
 };
 export type Compensation = {
+  id: number;
   current_salary: number;
-  currency: number;
+  rate: number;
+  max_hours_per_week?: number | null;
+  expected_hours_per_week?: number | null;
+  updated_at: string;
   compensation_type: number;
   compensation_schedule: number;
+  currency: number;
 };
 export type Document = {
+  id: number;
   name: string;
   type?: number | null;
   document_url: string;
@@ -149,12 +195,15 @@ export type Me = {
   avatar: string;
   is_superuser?: boolean;
   headline: string;
+  contact_number: string;
 };
 export const {
+  useApiChangePasswordPartialUpdateMutation,
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
   useApiEmployeesCompensationRetrieveQuery,
+  useApiEmployeesCompensationCreateMutation,
   useApiEmployeesDocumentsListQuery,
   useApiEmployeesDocumentsCreateMutation,
   useApiMeRetrieveQuery,
