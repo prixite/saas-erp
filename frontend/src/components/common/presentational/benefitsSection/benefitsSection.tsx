@@ -1,19 +1,22 @@
 import { useState } from "react";
-import { Divider, Grid, Typography, Box } from "@mui/material";
-import "@src/components/common/presentational/benefitsSection/benefitsSection.scss";
+import { Divider, Grid, Typography, Box, MenuItem, Menu } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import { useParams } from "react-router-dom";
+import deleteIcon from "@src/assets/svgs/Delete.svg";
+import editIcon from "@src/assets/svgs/Edit.svg";
 import circleIcon from "@src/assets/svgs/redcircle.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
+import EditBenefitModal from "@src/components/common/presentational/benefitsSection/benefitModal/EditBenefitModal";
 import { toPkrFormat } from "@src/helpers/constants/constants";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { useApiEmployeesCompensationRetrieveQuery } from "@src/store/api";
+import "@src/components/common/presentational/benefitsSection/benefitsSection.scss";
 
 interface benefitCompensationType {
   employeeData?: EmployeeData;
@@ -43,14 +46,87 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
       setPerks(perks.filter((perk) => perk !== event.target.value));
     }
   };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClickThreeDotter = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
+  const handleModalClose = () => {
+    setOpenModal(false);
+    handleClose();
+  };
+  const handleEditClick = () => {
+    handleModalOpen();
+  };
+
   return (
     <Box className="benefits-main">
       <Box className="benefits-heading">
         <Typography className="heading-text">
           {employeeBenefitsHeading}
         </Typography>
-        <img className="heading-img" src={ThreeDotter} alt="menu" />
+
+        <img
+          className="heading-img"
+          onClick={handleClickThreeDotter}
+          src={ThreeDotter}
+          alt="menu"
+        />
+        <Box className="Menu_DropDown">
+          <Menu
+            PaperProps={{
+              sx: { width: "115px", height: "95px", overflow: "hidden" },
+            }}
+            id="demo-positioned-menu"
+            aria-labelledby="client-options-button"
+            anchorEl={anchorEl}
+            open={open}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            className="dropdownMenu"
+            onClose={handleClose}
+          >
+            <MenuItem
+              sx={{
+                display: "flex",
+                fontSize: "14px",
+                fontWeight: "400",
+                marginTop: "3px",
+              }}
+              onClick={handleEditClick}
+            >
+              <img src={editIcon} alt="edit" />
+              <Typography sx={{ ml: "18px" }}>Edit</Typography>
+            </MenuItem>
+            <MenuItem
+              sx={{
+                display: "flex",
+                fontSize: "14px",
+                fontWeight: "400",
+              }}
+              onClick={handleClose}
+            >
+              <img src={deleteIcon} alt="delete" />
+              <Typography sx={{ ml: "18px" }}>Delete</Typography>
+            </MenuItem>
+          </Menu>
+          <EditBenefitModal open={openModal} handleClose={handleModalClose} />
+        </Box>
       </Box>
+
       <Grid container className="benefits-status-grid">
         <Grid className="current-salary-box" item xs={3} sm={3}>
           <Box className="current-salary">

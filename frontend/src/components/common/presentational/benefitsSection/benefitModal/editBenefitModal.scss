@@ -1,0 +1,206 @@
+@mixin textfieldCustoms {
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      border: 1px solid #ebebeb;
+    }
+
+    &:hover fieldset {
+      border: 1px solid #d3d3d3;
+    }
+
+    & .Mui-focused fieldset {
+      border-color: #d3d3d3;
+    }
+  }
+}
+
+.editBenefitModal {
+  .css-e758u2-MuiTypography-root-MuiDialogTitle-root {
+    padding-bottom: 0px;
+  }
+
+  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root {
+    font-family: "Lato";
+    color: #000000;
+    opacity: 0.6;
+  }
+
+  .css-7k4hlh-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+    font-family: "Lato";
+    font-weight: 400;
+    color: #000000;
+    opacity: 0.6;
+  }
+
+  .MuiDialog-paper {
+    padding: 24px;
+    width: 726px;
+    height: auto;
+    align-items: center;
+    box-shadow: unset;
+    border-radius: 12px;
+  }
+
+  .MuiDialogTitle-root {
+    width: 100%;
+
+    .modal-header-cls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .heading-text-box {
+        .heading-text {
+          font-weight: 600;
+          font-size: 20px;
+          color: #000;
+          padding: 0px;
+        }
+
+        .subheading-text {
+          font-weight: 400;
+          font-size: 14px;
+          color: #6c6c6c;
+        }
+      }
+
+      .cross-icon-box {
+        height: 42px;
+        width: 42px;
+        border: 1px solid #ebebeb;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f5f5;
+      }
+    }
+  }
+
+  &__Content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0px;
+
+    .firstDiv {
+      .textFieldContainer {
+        &__currentSalary {
+          @include textfieldCustoms();
+        }
+      }
+
+      .compTypeContainer {
+        &__compType {
+          @include textfieldCustoms();
+        }
+      }
+    }
+
+    .secondGrid {
+      .scheduleContainer {
+        &__textField {
+          @include textfieldCustoms();
+        }
+      }
+
+      .dataContainer {
+        &__textField {
+          @include textfieldCustoms();
+        }
+      }
+    }
+
+    .toggle {
+      margin-bottom: 19px;
+
+      &__icon {
+      }
+
+      &__textDiv {
+        .toggleHeading {
+          margin: 0px;
+        }
+      }
+    }
+
+    .ticks {
+      margin-bottom: 30px;
+
+      .css-1hhrhvv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+        color: blue;
+      }
+
+      .css-ptiqhd-MuiSvgIcon-root {
+        color: red;
+      }
+
+      .tickContainer {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+      }
+    }
+
+    .comment {
+      &__commentsField {
+        @include textfieldCustoms();
+      }
+    }
+  }
+
+  .editBenefitModal__Actions {
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 24px;
+    padding-left: 24px;
+
+    .cancelBtn {
+      color: black;
+      background: white;
+      width: 123px;
+      height: 48px;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid #e7e7e7;
+      text-transform: capitalize;
+      border-radius: 12px;
+
+      &:hover {
+        background: white;
+        color: grey;
+      }
+
+      .cancel-img {
+        margin-right: 10px;
+        display: flex;
+      }
+    }
+
+    .submitBtn {
+      color: white;
+      background: #ff2f2f;
+      width: 108px;
+      height: 48px;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 400;
+      border-radius: 12px;
+      text-transform: capitalize;
+
+      &:hover {
+        background: #ffcdcd;
+        color: white;
+      }
+
+      .submit-img {
+        margin-left: 10px;
+        display: flex;
+      }
+    }
+  }
+}
