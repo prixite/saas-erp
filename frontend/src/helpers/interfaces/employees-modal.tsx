@@ -28,6 +28,7 @@ export interface EmployeeData {
     avatar: string;
   };
   total_experience: string;
+  benefits: string[];
   experience: Experience[];
   degrees: Education[];
   contact_number: string;
