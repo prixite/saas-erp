@@ -1,3 +1,4 @@
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -80,7 +81,6 @@ class MeApiView(RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-
 class InstitueApiView(ModelViewSet):
     serializer_class = serializers.InstitueSerializer
     queryset = models.Institute.objects.all()
@@ -109,3 +109,18 @@ class ExperienceApiView(ModelViewSet):
 class BenefitApiView(ModelViewSet):
     serializer_class = serializers.BenefitSerializer
     queryset = models.Benefit.objects.all()
+
+class UserPasswordViewSet(ModelViewSet):
+    serializer_class = serializers.UserPasswordSerializer
+
+    def get_queryset(self):
+        return models.User.objects.filter(id=self.request.user.id)
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, partial=kwargs["partial"])
+        if serializer.is_valid(raise_exception=True):
+            request.user.set_password(serializer.data["password"])
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+        return Response(serializer.errors)
+

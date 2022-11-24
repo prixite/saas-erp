@@ -201,7 +201,6 @@ class MeSerializer(serializers.ModelSerializer):
             "contact_number",
         ]
 
-
 class InstitueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Institute
@@ -212,3 +211,19 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Program
         fields = "__all__"
+
+
+class UserPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(min_length=8, required=True)
+    old_password = serializers.CharField()
+
+    def validate(self, data):
+        old_password = data["old_password"]
+        password = data["password"]
+        if not (self.context["request"].user.check_password(old_password)):
+            raise serializers.ValidationError("Old password does not match.")  # noqa
+        if password == old_password:
+            raise serializers.ValidationError(
+                "New password can not be same as new password."
+            )
+        return data
