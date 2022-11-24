@@ -18,48 +18,54 @@
       opacity: 0.5;
     }
   }
-  .documentation-grid {
-    .doc-box {
-      display: flex;
-      margin-top: 12px;
-      .doc-img-box {
-        height: 48px;
-        width: 48px;
-        background-color: #f5f5f5;
+  .documentation-section {
+    margin-top: 24px;
+    cursor: pointer;
+    .documentation-grid {
+      .doc-box {
         display: flex;
-        justify-content: center;
+        .doc-img-box {
+          height: 48px;
+          width: 48px;
+          background-color: #f5f5f5;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+        .doc-info-box {
+          margin-left: 12px;
+          .file-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+          }
+          .file-size {
+            font-weight: 400;
+            font-size: 16px;
+            color: #000000;
+          }
+        }
+      }
+      .doc-actions {
+        display: flex;
+        justify-content: flex-end;
         align-items: center;
-        border-radius: 50%;
-      }
-      .doc-info-box {
-        margin-left: 12px;
-        .file-name {
-          font-size: 16px;
-          font-weight: 600;
-          color: #000000;
+        .show-img {
+          width: 17px;
+          height: 18px;
+          cursor: pointer;
         }
-        .file-size {
-          font-weight: 400;
-          font-size: 16px;
-          color: #000000;
+        .delete-img {
+          width: 17px;
+          height: 18px;
+          margin-right: 20px;
+          cursor: pointer;
         }
-      }
-    }
-    .doc-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .show-img {
-        width: 17px;
-        height: 18px;
-      }
-      .delete-img {
-        width: 17px;
-        height: 18px;
-        margin-right: 20px;
       }
     }
   }
+
   .upload-box {
     margin-top: 24px;
     .upload-btn {

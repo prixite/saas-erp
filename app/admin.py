@@ -12,9 +12,31 @@ class UserAdmin(UserAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ["user", "contact_number", "manager", "date_of_joining"]
-    list_filter = ["organization", "type", "benefits"]
+    list_display = [
+        "user",
+        "organization",
+        "designation",
+        "department",
+        "manager",
+        "date_of_joining",
+    ]
+    search_fields = [
+        "user__email",
+        "organization__name",
+        "nic",
+        "designation",
+        "department",
+    ]
+    list_filter = ["organization", "type", "department", "user_allowed"]
     filter_horizontal = ["benefits"]
+    raw_id_fields = (
+        "user",
+        "organization",
+        "department",
+        "manager",
+        "benefits",
+        "type",
+    )
 
 
 @admin.register(models.Compensation)
@@ -84,4 +106,16 @@ if settings.DEBUG:
 
     @admin.register(models.DocumentType)
     class DocumentTypeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Currency)
+    class CurrencyAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.CompensationType)
+    class CompensationTypeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.CompensationSchedule)
+    class CompensationScheduleAdmin(admin.ModelAdmin):
         pass

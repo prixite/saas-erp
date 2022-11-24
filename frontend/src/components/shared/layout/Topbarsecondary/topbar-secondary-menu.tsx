@@ -1,4 +1,5 @@
 import * as React from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -11,6 +12,7 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
+import { useNavigate } from "react-router-dom";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -56,6 +58,7 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 const TopbarSecondaryMenu = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -65,6 +68,10 @@ const TopbarSecondaryMenu = () => {
     setAnchorEl(null);
   };
 
+  const handleProfileClick = () => {
+    navigate("/react/profile");
+    handleClose();
+  };
   return (
     <Box className="topbar-secondary">
       <Button
@@ -89,6 +96,10 @@ const TopbarSecondaryMenu = () => {
         open={open}
         onClose={handleClose}
       >
+        <MenuItem onClick={handleProfileClick} disableRipple>
+          <AccountCircleIcon />
+          Profile
+        </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
           Edit

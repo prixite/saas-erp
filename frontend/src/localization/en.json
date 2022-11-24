@@ -15,7 +15,8 @@
       "overtimeAllowance":"Overtime Allowance",
       "mealsAllowance": "Meals Allowance",
       "employeeExperienceLetters":"Experience Letters",
-      "uploadDocument": "Upload Document"
+      "uploadDocument": "Upload Document",
+      "notFound": "Not Found"
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"
@@ -58,6 +59,22 @@
       "cnic": "CNIC:",
       "editBtn":"Edit",
       "deleteBtn":"Delete"
+    },
+    "ProfilePage":{
+      "basicInformationHeading": "Basic Information",
+      "changePasswordHeading": "Change Password",
+      "notificationHeading": "Notification Settings",
+      "billUpdatesLabel": "Bill Updates",
+      "newTeamMembersLabel": "New Team Members",
+      "newsLetterLabel": "NewsLetters",
+      "emailSub": "Email",
+      "phoneSub": "Phone",
+      "cancelBtn": "Cancel",
+      "saveBtn": "Save",
+      "firstNameRequired": "First name is required!",
+      "lastNameRequired": "Last name is required!",
+      "emailRequired": "Email is required!",
+      "phoneRequired":"Phone number is required!"
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",

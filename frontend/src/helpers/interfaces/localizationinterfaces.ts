@@ -14,6 +14,7 @@ export interface employeeInterface {
   mealsAllowance: string;
   employeeExperienceLetters: string;
   uploadDocument: string;
+  notFound: string;
 }
 export interface userInterface {
   userHeading: string;
@@ -55,6 +56,24 @@ export interface additionalInformationInterface {
   deleteBtn: string;
 }
 
+export interface profilePageInterface {
+  basicInformationHeading: string;
+  changePasswordHeading: string;
+  notificationHeading: string;
+  billUpdatesLabel: string;
+  newTeamMembersLabel: string;
+  newsLetterLabel: string;
+  emailSub: string;
+  phoneSub: string;
+  saveBtn: string;
+  cancelBtn: string;
+
+  firstNameRequired: string;
+  lastNameRequired: string;
+  emailRequired: string;
+  phoneRequired: number;
+}
+
 export interface employeeButtons {
   basicBtn: string;
   docsBtn: string;
@@ -74,6 +93,7 @@ export interface LocalizationInterface {
   Experience: experienceInterface;
   Education: educationInterface;
   AdditionalInformation: additionalInformationInterface;
+  ProfilePage: profilePageInterface;
   EmployeeButtons: employeeButtons;
   Modals: modalsInterface;
   MenuButtons: menuButtons;

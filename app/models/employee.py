@@ -26,11 +26,12 @@ class Employee(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def org_id(self):
+        return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
+
     def __str__(self) -> str:
         return self.user.get_full_name()
-
-    class Meta:
-        ordering = ["-id"]
 
 
 class Document(models.Model):

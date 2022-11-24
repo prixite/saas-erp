@@ -25,6 +25,7 @@ urlpatterns = [
         api.CompensationViewSet.as_view(
             {
                 "get": "retrieve",
+                "post": "create",
             }
         ),
     ),

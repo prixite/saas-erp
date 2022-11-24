@@ -3,14 +3,12 @@
 
 .additional-Information-main {
   border: 1px solid #e7e7e7;
-  height: 160px;
+  padding: 18px;
+  height: 123px;
   background: #ffffff;
   border-radius: 12px;
 
   .headingContainer {
-    margin: 18px 16px 12px 18px;
-    height: 17px;
-
     .headingDiv {
       .heading {
         font-family: "Lato";
@@ -49,14 +47,11 @@
   }
 
   .CardOne {
-    margin: 0px 16px 18px 18px;
-    height: 19px;
-
-    .department-Heading-container {
+    margin-top: 12px;
+    .department-Heading-Container {
       min-width: 25%;
 
       .department-title {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -69,7 +64,6 @@
       }
       .department-text {
         width: 180px;
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 700;
@@ -83,7 +77,6 @@
       min-width: 25%;
 
       .employee-title {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -95,7 +88,6 @@
         margin-right: 16px;
       }
       .employee-text {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 700;
@@ -109,7 +101,6 @@
       min-width: 25%;
 
       .experience-title {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -123,7 +114,6 @@
       }
       .experience-text {
         width: 180px;
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 700;
@@ -137,7 +127,6 @@
       min-width: 25%;
 
       .data-title {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -150,7 +139,6 @@
         overflow: "hidden";
       }
       .data-text {
-        height: 19px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 700;
@@ -163,9 +151,7 @@
   }
 
   .CardTwo {
-    margin: 0px 16px 0px 18px;
-    height: 19px;
-
+    margin-top: 11px;
     .emergency-Container {
       display: flex;
       align-items: center;
@@ -226,6 +212,30 @@
           font-weight: 700;
           font-size: 16px;
           line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+        width: 130px;
+        display: flex;
+        justify-content: center;
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+        .typo1 {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          line-height: 0;
+          font-weight: 700;
+          margin-bottom: 5px;
+          font-size: 44px;
           letter-spacing: -0.011em;
           color: #000000;
         }

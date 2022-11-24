@@ -268,3 +268,6 @@ export const datarows = [
     actions: "xyz",
   },
 ];
+export const employeeConstants = {
+  employees: "Employee's Data ",
+};

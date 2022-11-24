@@ -16,8 +16,9 @@ class MeTestCase(BaseTestCase):
                 "last_name",
                 "email",
                 "organization",
-                "image",
+                "avatar",
                 "is_superuser",
                 "headline",
+                "contact_number",
             ],
         )
