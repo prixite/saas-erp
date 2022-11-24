@@ -5,6 +5,53 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/change_password/": {
+            "patch": {
+                "operationId": "api_change_password_partial_update",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserPassword"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/employees/": {
             "get": {
                 "operationId": "api_employees_list",
@@ -473,6 +520,10 @@
                         "type": "string",
                         "readOnly": true
                     },
+                    "total_experience": {
+                        "type": "string",
+                        "readOnly": true
+                    },
                     "contact_number": {
                         "type": "string",
                         "maxLength": 20
@@ -535,6 +586,7 @@
                     "nic",
                     "org_id",
                     "organization",
+                    "total_experience",
                     "updated_at",
                     "user"
                 ]
@@ -677,6 +729,34 @@
                     "contact_number",
                     "email",
                     "headline"
+                ]
+            },
+            "PatchedUserPassword": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "minLength": 8
+                    },
+                    "old_password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserPassword": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "minLength": 8
+                    },
+                    "old_password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "old_password",
+                    "password"
                 ]
             }
         },

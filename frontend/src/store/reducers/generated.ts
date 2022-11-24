@@ -1,6 +1,16 @@
 import { emptySplitApi as api } from "@src/store/emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    apiChangePasswordPartialUpdate: build.mutation<
+      ApiChangePasswordPartialUpdateApiResponse,
+      ApiChangePasswordPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/change_password/`,
+        method: "PATCH",
+        body: queryArg.patchedUserPassword,
+      }),
+    }),
     apiEmployeesList: build.query<
       ApiEmployeesListApiResponse,
       ApiEmployeesListApiArg
@@ -66,6 +76,11 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as rtk };
+export type ApiChangePasswordPartialUpdateApiResponse =
+  /** status 200  */ UserPassword;
+export type ApiChangePasswordPartialUpdateApiArg = {
+  patchedUserPassword: PatchedUserPassword;
+};
 export type ApiEmployeesListApiResponse = /** status 200  */ EmployeeList[];
 export type ApiEmployeesListApiArg = void;
 export type ApiEmployeesCreateApiResponse = /** status 201  */ Employee;
@@ -100,6 +115,14 @@ export type ApiEmployeesDocumentsCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type UserPassword = {
+  password: string;
+  old_password: string;
+};
+export type PatchedUserPassword = {
+  password?: string;
+  old_password?: string;
+};
 export type EmployeeList = {
   id: number;
   org_id: string;
@@ -133,6 +156,7 @@ export type Employee = {
   experience: Experirence[];
   benefits: string[];
   org_id: string;
+  total_experience: string;
   contact_number: string;
   nic: string;
   date_of_joining: string;
@@ -174,6 +198,7 @@ export type Me = {
   contact_number: string;
 };
 export const {
+  useApiChangePasswordPartialUpdateMutation,
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
