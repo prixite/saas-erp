@@ -96,6 +96,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
                         key={benefit}
                         control={
                           <Checkbox
+                            disableRipple
                             size="small"
                             sx={{
                               "& .MuiSvgIcon-root": { fontSize: 18 },
