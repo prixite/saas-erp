@@ -3,7 +3,7 @@ on:
   push:
     branches:
       # When someone push to `staging` branch
-      - staging
+      - master
 
 jobs:
   pre-commit_and_test:
