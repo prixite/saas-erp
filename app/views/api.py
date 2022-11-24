@@ -59,8 +59,7 @@ class MeApiView(RetrieveAPIView):
 
 
 class UserPasswordViewSet(ModelViewSet):
-    def get_serializer_class(self):
-        return serializers.UserPasswordSerializer
+    serializer_class = serializers.UserPasswordSerializer
 
     def get_queryset(self):
         return models.User.objects.filter(id=self.request.user.id)

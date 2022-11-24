@@ -140,11 +140,10 @@ class UserPasswordSerializer(serializers.Serializer):
     def validate(self, data):
         old_password = data["old_password"]
         password = data["password"]
-        if not (
-            self.context["request"].user.check_password(old_password)
-            and password != old_password
-        ):
+        if not (self.context["request"].user.check_password(old_password)):
+            raise serializers.ValidationError("Old password does not match.")  # noqa
+        if password == old_password:
             raise serializers.ValidationError(
-                "Password does not match and new password should not match to old password."  # noqa
+                "New password can not be same as new password."
             )
         return data
