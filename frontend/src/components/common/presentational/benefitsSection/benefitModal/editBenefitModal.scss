@@ -15,6 +15,13 @@
 }
 
 .editBenefitModal {
+  font-family: "Lato";
+  font-style: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.011em;
+  color: #000000;
+
   .css-e758u2-MuiTypography-root-MuiDialogTitle-root {
     padding-bottom: 0px;
   }
@@ -43,17 +50,21 @@
 
   .MuiDialogTitle-root {
     width: 100%;
+    padding: 0px;
 
     .modal-header-cls {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      padding: 0px;
 
       .heading-text-box {
+        line-height: 24px;
+        color: #000;
+
         .heading-text {
           font-weight: 600;
           font-size: 20px;
-          color: #000;
           padding: 0px;
         }
 
@@ -115,6 +126,9 @@
 
     .toggle {
       margin-bottom: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
 
       &__icon {
       }
@@ -122,6 +136,16 @@
       &__textDiv {
         .toggleHeading {
           margin: 0px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+
+          /* Primary/Black Primary */
+
+          color: #000000;
         }
       }
     }
@@ -130,17 +154,27 @@
       margin-bottom: 30px;
 
       .css-1hhrhvv-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
-        color: blue;
-      }
-
-      .css-ptiqhd-MuiSvgIcon-root {
         color: red;
       }
+
+      // .css-ptiqhd-MuiSvgIcon-root {
+      //   color: red;
+      // }
 
       .tickContainer {
         display: flex;
         align-items: center;
         justify-content: start;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+
+        /* Secondary/Gray 1 */
+
+        color: #6c6c6c;
       }
     }
 
@@ -155,8 +189,7 @@
     width: 100%;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 24px;
-    padding-left: 24px;
+    padding: 20px 0px 0px 20px;
 
     .cancelBtn {
       color: black;

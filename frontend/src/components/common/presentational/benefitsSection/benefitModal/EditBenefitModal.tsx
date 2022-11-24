@@ -65,7 +65,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle paddingBottom={0}>
+        <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
               <Typography className="heading-text">
@@ -84,6 +84,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
         </DialogTitle>
 
         <DialogContent
+          sx={{ padding: "0px" }}
           className="editBenefitModal__Content"
           aria-label="customized-dialog-title"
         >
