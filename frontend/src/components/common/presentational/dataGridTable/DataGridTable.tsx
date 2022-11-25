@@ -18,7 +18,6 @@ function DataGridTable() {
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
   const { notFound } = constantData.Employee;
-  const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
   const columns = [
     {
@@ -159,24 +158,12 @@ function DataGridTable() {
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
-                pageSize={pageSize}
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[10, 20]}
-                rowCount={10}
+                pageSize={pageSize}
+                rowsPerPageOptions={[10, 13, 16, 19]}
                 pagination
-                paginationMode="server"
                 density="standard"
                 onCellClick={handleOnCellClick}
-                page={page}
-                onPageChange={(_page) => {
-                  setPage(_page);
-                }}
-                initialState={{
-                  pagination: {
-                    page: 0,
-                    pageSize: 10,
-                  },
-                }}
                 loading={isLoading}
                 sx={{
                   cursor: "pointer",
