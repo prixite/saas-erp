@@ -5,7 +5,7 @@ services:
     image: postgres:13.4-alpine
     restart: always
     env_file:
-      - ./docker/env.db
+      - ./env.db
     volumes:
       - db_data:/var/lib/postgresql/data
 
