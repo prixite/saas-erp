@@ -6,18 +6,18 @@ import docIcon from "@src/assets/svgs/doc.svg";
 import uploadIcon from "@src/assets/svgs/paperupload.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
-import { EmployeeDoc, Doc } from "@src/helpers/interfaces/employees-modal";
+import { EmployeeDoc } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/common/presentational/documentSection/documentSection.scss";
-import { useApiEmployeesDocumentsListQuery } from "@src/store/api";
+import { useGetEmployeeDocsQuery } from "@src/store/reducers/employees-api";
 
 const DocumentSection = () => {
   const constantData: LocalizationInterface = localizedData();
   const { uploadDocument } = constantData.Employee;
   const { employeeId } = useParams();
-  const { data: EmployeeDocs, isLoading } = useApiEmployeesDocumentsListQuery({
-    id: Number(employeeId),
+  const { data: EmployeeDocs, isLoading } = useGetEmployeeDocsQuery({
+    employeeId,
   });
   const openInNewTab = (url: string) => {
     if (url) {
@@ -25,21 +25,21 @@ const DocumentSection = () => {
     }
   };
   return (
-    <Box className="documentation-main">
+    <Box className="documentation-cls">
       {!isLoading ? (
         <>
           {EmployeeDocs?.map((doc: EmployeeDoc) => {
             return (
-              <>
+              <Box className="documentation-main" key={doc?.type}>
                 <Box className="documentation-heading">
                   <Typography className="heading-text">{doc?.type}</Typography>
                   <img className="heading-img" src={ThreeDotter} alt="menu" />
                 </Box>
-                {doc?.docs.map((employeedoc: Doc) => {
+                {doc?.docs.map((employeedoc, index) => {
                   return (
                     <Box
                       className="documentation-section"
-                      key={employeedoc?.name}
+                      key={employeedoc?.id}
                     >
                       <Grid
                         container
@@ -71,12 +71,15 @@ const DocumentSection = () => {
                           <img className="show-img" src={showIcon} alt="show" />
                         </Grid>
                       </Grid>
-                      {}
-                      <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
+                      {index !== doc?.docs.length - 1 ? (
+                        <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
+                      ) : (
+                        ""
+                      )}
                     </Box>
                   );
                 })}
-              </>
+              </Box>
             );
           })}
         </>
