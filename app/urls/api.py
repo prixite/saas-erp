@@ -65,6 +65,10 @@ urlpatterns = [
         api.InstitueApiView.as_view({"get": "list", "post": "create"}),
     ),
     path(
+        "programs/",
+        api.ProgramApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
         "employeement_type/",
         api.EmployeementType.as_view({"get": "list", "post": "create"}),
     ),

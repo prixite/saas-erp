@@ -3,25 +3,21 @@ from datetime import date
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from django.db import transaction
 
 from app import models
 
 
 class DegreeSerializer(serializers.ModelSerializer):
-    program = serializers.CharField(source="program.name")
-    institute = serializers.CharField(source="institute.name")
-
     class Meta:
         model = models.Degree
-        fields = ["program", "institute", "year"]
+        fields = ["employee", "program", "institute", "year"]
 
 
 class ExperirenceSerializer(serializers.ModelSerializer):
-    company = serializers.CharField(source="company.name")
-
     class Meta:
         model = models.Experience
-        fields = ["title", "company", "start_date", "end_date"]
+        fields = ["employee", "title", "company", "start_date", "end_date"]
 
 
 class BenefitSerializer(serializers.ModelSerializer):
@@ -75,17 +71,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
     degrees = DegreeSerializer(many=True, read_only=True)
     experience = ExperirenceSerializer(many=True, read_only=True)
-    benefits = serializers.SlugRelatedField(
-        slug_field="name", read_only=True, many=True
-    )
     org_id = serializers.CharField(read_only=True)
 
     total_experience = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Employee
-
-        fields = "__all__"
+        exclude = ("organization",)
 
     def get_total_experience(self, data):
         total_days = 0
@@ -110,13 +102,18 @@ class EmployeeSerializer(serializers.ModelSerializer):
         total_experience += f"{months} months" if months > 1 else f"{months} month"
         return total_experience
 
+    @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user = models.User.objects.create(
-            username=user_data["email"],
-            first_name=user_data["first_name"],
-        )
-        return models.Employee.objects.create(user=user, **validated_data)
+        organization = self.context.get("request").user.organization
+        user_serializer = EmployeeUserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user = models.User.objects.create(**user_serializer.validated_data)
+            user.username = user.email
+            user.organization = organization
+            user.save()
+        validated_data["user_id"] = user.id
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -127,6 +124,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
             data["manager"] = instance.manager.user.get_full_name()
         if instance.type:
             data["type"] = instance.type.name
+        if instance.benefits:
+            data["benefits"] = BenefitSerializer(
+                instance.benefits.all(), many=True
+            ).data
         return data
 
 

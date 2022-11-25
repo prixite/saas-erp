@@ -1,10 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
-from rest_framework.permissions import BasePermission
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.views import status
+from django.http import JsonResponse
 
-# from rest_framework.authentication.mix
 
 from app import models
 
@@ -63,15 +61,19 @@ class AddGetFormMixin:
         return form
 
 
-class PrivateApiMixin(APIView):
+class PrivateApiMixin:
+    allow_superuser = False
     module = None
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return self.permission_denied(request)
+            return JsonResponse(
+                data={"detail": "You must be logged in first to perform this action"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
 
         if request.user.is_superuser and self.allow_superuser:
-            return True
+            return super().dispatch(request, *args, **kwargs)
 
         if self.module in [x.slug for x in request.user.member_modules]:
             if self.module in [x.slug for x in request.user.admin_modules]:
@@ -81,13 +83,14 @@ class PrivateApiMixin(APIView):
 
             return super().dispatch(request, *args, **kwargs)
 
-        return self.permission_denied(request)
+        return JsonResponse(
+            data={"detail": "Not allowed"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
 
 
 class OrganizationMixin(CreateModelMixin, ListModelMixin):
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return self.queryset.all()
         return self.queryset.filter(organization=self.request.user.organization)
 
     def perform_create(self, serializer):
