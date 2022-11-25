@@ -7,38 +7,6 @@ from rest_framework import serializers
 from app import models
 
 
-class EmployeeListSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source="user.first_name", read_only=True)
-    last_name = serializers.CharField(source="user.last_name", read_only=True)
-    avatar = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.Employee
-        fields = [
-            "id",
-            "org_id",
-            "first_name",
-            "last_name",
-            "contact_number",
-            "date_of_joining",
-            "avatar",
-        ]
-
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
-
-
-class EmployeeUserSerializer(serializers.ModelSerializer):
-    avatar = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.User
-        fields = ["first_name", "last_name", "email", "avatar"]
-
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
-
-
 class DegreeSerializer(serializers.ModelSerializer):
     program = serializers.CharField(source="program.name")
     institute = serializers.CharField(source="institute.name")
@@ -54,6 +22,53 @@ class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
+
+
+class BenefitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Benefit
+        exclude = ("organization",)
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Company
+        exclude = ("organization",)
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Program
+        exclude = ("organization",)
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Department
+        exclude = ("organization",)
+
+
+class EmployeementTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.EmploymentType
+        exclude = ("organization",)
+
+
+class InstitueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Institute
+        exclude = ("organization",)
+
+
+class EmployeeUserSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.User
+        fields = ["first_name", "last_name", "email", "avatar"]
+
+    def get_avatar(self, data):
+        return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -113,6 +128,40 @@ class EmployeeSerializer(serializers.ModelSerializer):
         if instance.type:
             data["type"] = instance.type.name
         return data
+
+
+class EmployeeListSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.first_name", read_only=True)
+    last_name = serializers.CharField(source="user.last_name", read_only=True)
+    avatar = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Employee
+        fields = [
+            "id",
+            "org_id",
+            "first_name",
+            "last_name",
+            "contact_number",
+            "date_of_joining",
+            "avatar",
+        ]
+
+    def get_avatar(self, data):
+        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
+
+
+class EmployeeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = [
+            "department",
+            "designation",
+            "manager",
+            "benefits",
+            "type",
+            "user_allowed",
+        ]
 
 
 class CompensationSerializer(serializers.ModelSerializer):

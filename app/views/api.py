@@ -7,7 +7,8 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from app import models, serializers
+from app import models, permissions, serializers
+from app.views import mixins
 
 
 @method_decorator(login_required, name="dispatch")
@@ -15,14 +16,13 @@ class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
 
-class EmployeeViewSet(ModelViewSet):
+class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet):
+    # module = models.Module.ModuleType.EMPLOYEES
+
+    # permission_classes = [permissions.OwnerPermission]
+
     serializer_class = serializers.EmployeeSerializer
-
-    def get_serializer_class(self):
-        if self.action == "list":
-            return serializers.EmployeeListSerializer
-
-        return super().get_serializer_class()
+    queryset = models.Employee.objects.all()
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -31,8 +31,16 @@ class EmployeeViewSet(ModelViewSet):
             organization=self.request.user.organization
         )
 
+    def get_serializer_class(self):
+        if self.action == "list":
+            return serializers.EmployeeListSerializer
+        if self.action == "partial_update":
+            return serializers.EmployeeUpdateSerializer
+        return super().get_serializer_class()
+
 
 class CompensationViewSet(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.CompensationSerializer
     queryset = models.Compensation.objects.all()
 
@@ -44,6 +52,7 @@ class CompensationViewSet(ModelViewSet):
 
 
 class DocumentViewSet(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
     serializer_class = serializers.DocumentSerializer
 
     def get_queryset(self):
@@ -93,3 +102,63 @@ class UserPasswordViewSet(ModelViewSet):
             request.user.save()
             update_session_auth_hash(request, request.user)
         return Response(serializer.errors)
+
+
+class InstitueApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.InstitueSerializer
+    queryset = models.Institute.objects.all()
+
+
+class ProgramApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.ProgramSerializer
+    queryset = models.Program.objects.all()
+
+
+class DegreeApiView(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.DegreeSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return models.Degree.objects.all()
+        return models.Degree.objects.filter(
+            employee__organization=self.request.user.organization
+        )
+
+
+class CompanyApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.CompanySerializer
+    queryset = models.Company.objects.all()
+
+
+class ExperienceApiView(ModelViewSet):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.ExperirenceSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return models.Experience.objects.all()
+        return models.Experience.objects.filter(
+            employee__organization=self.request.user.organization
+        )
+
+
+class BenefitApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.BenefitSerializer
+    queryset = models.Benefit.objects.all()
+
+
+class DepartmentApiView(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.DepartmentSerializer
+    queryset = models.Department.objects.all()
+
+
+class EmployeementType(ModelViewSet, mixins.OrganizationMixin):
+    permission_classes = [permissions.OwnerPermission]
+    serializer_class = serializers.EmployeementTypeSerializer
+    queryset = models.EmploymentType.objects.all()
