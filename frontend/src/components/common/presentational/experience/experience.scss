@@ -1,0 +1,125 @@
+.experience-main {
+  height: auto;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  justify-content: flex-start;
+  margin-top: 16px;
+
+  .experience-Heading-Container {
+    .experience-container {
+      .experience-text {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.5;
+        margin-top: 18px;
+        margin-left: 18px;
+      }
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .box {
+        margin-right: 18px;
+        margin-top: 18px;
+
+        .subBox {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          width: 36px;
+          background: white;
+
+          .profile-pic {
+            height: 19px;
+            width: 19px;
+            background: inheirt;
+          }
+        }
+      }
+    }
+  }
+
+  .experience-Card {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row;
+
+    .companyLogo-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .profile-pic {
+        background: inherit;
+        width: 48px;
+        height: 48px;
+        margin-left: 18px;
+        margin-right: 16px;
+      }
+    }
+    .sub-container {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      .child-div-two-A {
+        width: 100%;
+        margin-bottom: 8px;
+
+        .description {
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 18px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+      }
+
+      .child-div-three-A {
+        width: 100%;
+
+        .heading-One {
+          .description {
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 22px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
+        }
+
+        .heading-Two {
+          margin-left: auto;
+          margin-right: 24px;
+
+          .description {
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 22px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,17 @@
       "filterButton": "Filter"
     },
     "Employee": {
-        "heading": "Employee’s Module"
+        "heading": "Employee’s Module",
+        "employeeBenefitsHeading": "Salary & Increment History",
+        "currentSalary":"Current Salary",
+        "compensationType":"Compensation Type",
+        "compensationScheule": "Compensation Scheule",
+        "fuelAllowance":"Fuel Allowance",
+        "phoneAllowance":"Phone Allowance",
+        "overtimeAllowance":"Overtime Allowance",
+        "mealsAllowance": "Meals Allowance",
+        "employeeExperienceLetters":"Experience Letters",
+        "uploadDocument": "Upload Document"
       },
       "Dashboard": {
         "dashboardHeading": "Dashboard"
@@ -17,6 +27,15 @@
       },
       "Payroll": {
         "payrollHeading": "Payroll"
+      },
+      "Modals":{
+        "filterHeading": "Filter",
+        "filterSubheading": "Can optimize your result by applying filters",
+        "filterSalaryHeading":"Salary Range",
+        "filterResetBtn":"Reset",
+        "filterSubmitBtn":"Submit",
+        "filterNameLabel":"Please Enter Name",
+        "filterDesignationLabel":"Please Enter Designation"
       }
 
   }

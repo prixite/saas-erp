@@ -1,110 +1,93 @@
-import "./employeeHeader.scss";
-import profileIcon from "@src/assets/svgs/Ellipse20Pic.svg";
+import { useState } from "react";
+import { Box } from "@mui/material";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
-import phoneIcon from "@src/assets/svgs/Phone_Frame.svg";
+import phoneIcon from "@src/assets/svgs/Phone.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
-
-function EmployeeHeader() {
+import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
+import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
+import "@src/components/common/presentational/employeeHeader/employeeHeader.scss";
+interface EmployeeHeaderType {
+  employeeData?: EmployeeData;
+}
+function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <div className="employee-Header-main">
-        <div className="empoyee-Header-Div-One">
-          {/* <h2>One</h2> */}
+        <div className="icon-Container">
           <img
             className="profile-pic"
-            src={profileIcon}
+            src={employeeData?.user?.avatar}
             alt="profile pic"
-            style={{
-              height: "60px",
-              width: "60px",
-              margin: "24px 12px 24px 24px",
-            }}
           />
-          {/* <div className="profile-pic"> */}
-          {/* Pic */}
-          {/* </div> */}
         </div>
+
         <div className="employee-Header-Div-Two">
-          <div className="div-two-child-one">
-            <div className="oneItem-one">Nolan Aminoff</div>
-            <div className="oneItem-two">
-              <p
-                className="textPX"
-                style={{
-                  fontSize: "12px",
-                  lineHeight: "14px",
-                  letterSpacing: "-0.011rem",
-                  color: "black",
-                }}
-              >
-                PX-01
-              </p>
+          <div className="subContainer-row-one">
+            <div className="name">
+              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
-            <div className="oneItem-three">
-              <p
-                style={{
-                  width: "58px",
-                  height: "14px",
-                  fontFamily: "Lato",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  fontSize: "12px",
-                  lineHeight: "14px",
-                  letterSpacing: "-0.011em",
-                  color: "#970000",
-                  flex: "none",
-                  order: "0",
-                  flexGrow: "0",
-                }}
-              >
-                Permanent
-              </p>
+            <div className="userID">
+              <p className="paragraph">{employeeData?.org_id}</p>
+            </div>
+            <div className="userStatus">
+              <p className="paragraph">{employeeData?.type}</p>
             </div>
           </div>
-          <div className="div-two-child-two">
-            <div className="twoItem-one">Sr Software Engineer</div>
-            <div className="twoItem-two">
+
+          <div className="subContainer-row-two">
+            <div className="designation">{employeeData?.designation}</div>
+            <div className="email">
               <img
                 className="profile-pic"
                 src={emailIcon}
-                alt="profile pic"
+                alt="email"
                 style={{
                   height: "20px",
                   width: "20px",
                   marginRight: "10.5px",
                 }}
               />
-              <p>nolan.aminoff@gamil.com</p>
+              <p>{employeeData?.user?.email}</p>
             </div>
-            <div className="twoItem-three">
+            <div className="contact">
               <img
                 className="profile-pic"
                 src={phoneIcon}
-                alt="profile pic"
+                alt="phone"
                 style={{
                   height: "20px",
                   width: "20px",
                   marginRight: "11.33px",
-                  background: "rgba(255,205,205, 0.2)",
+                  background: "transparent",
                 }}
               />
-              03336722892
+              {employeeData?.contact_number}
             </div>
           </div>
         </div>
+
         <div className="employee-Header-Div-Three">
-          <div className="container-Icon">
+          <Box sx={{ cursor: "pointer" }} className="container-Icon">
             <img
+              onClick={handleClick}
               className="profile-pic"
               src={ThreeDotter}
-              alt="profile pic"
-              style={{
-                height: "20px",
-                width: "20px",
-                border: "none",
-              }}
+              alt="menu"
             />
-          </div>
+            <MenuButtons
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+            />
+          </Box>
         </div>
       </div>
     </>

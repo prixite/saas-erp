@@ -1,0 +1,260 @@
+@mixin fontOne {
+}
+
+.additional-Information-main {
+  border: 1px solid #e7e7e7;
+  padding: 18px;
+  height: auto;
+  background: #ffffff;
+  border-radius: 12px;
+
+  .headingContainer {
+    .headingDiv {
+      .heading {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.5;
+      }
+    }
+    .imageContainer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .logoContainer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 36px;
+        background: white;
+
+        .profile-pic {
+          height: 19px;
+          width: 19px;
+          background: inherit;
+        }
+        .css-1y8u6dt-MuiButtonBase-root-MuiMenuItem-root {
+          display: flex;
+          justify-content: space-evenly;
+        }
+      }
+    }
+  }
+
+  .CardOne {
+    margin-top: 12px;
+    .department-Heading-Container {
+      min-width: 25%;
+
+      .department-title {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+      }
+      .department-text {
+        width: 180px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+    .employee-Name-Container {
+      min-width: 25%;
+
+      .employee-title {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+      }
+      .employee-text {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+    .experience-Container {
+      min-width: 25%;
+
+      .experience-title {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+        overflow: "hidden";
+      }
+      .experience-text {
+        width: 180px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+    .data-Container {
+      min-width: 25%;
+
+      .data-title {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        opacity: 0.8;
+        margin-right: 16px;
+        overflow: "hidden";
+      }
+      .data-text {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #000000;
+      }
+    }
+  }
+
+  .CardTwo {
+    margin-top: 11px;
+    .emergency-Container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .emergency-title {
+        .text {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          opacity: 0.8;
+          margin-right: 16px;
+          overflow: "hidden";
+        }
+      }
+      .emergency-text {
+        .text {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+      }
+    }
+    .cnic-Container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .cnic-title {
+        .text {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          opacity: 0.8;
+          margin-right: 16px;
+        }
+      }
+      .cnic-text {
+        .text {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+        width: 130px;
+        display: flex;
+        justify-content: center;
+        .typo {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+        .typo1 {
+          height: 19px;
+          font-family: "Lato";
+          font-style: normal;
+          line-height: 0;
+          font-weight: 700;
+          margin-bottom: 5px;
+          font-size: 44px;
+          letter-spacing: -0.011em;
+          color: #000000;
+        }
+      }
+      .cnic-photo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .btn-cls {
+          width: 5px;
+        }
+        .logo {
+          height: 19px;
+          width: 19px;
+          background: inherit;
+          padding: 0px;
+        }
+      }
+    }
+  }
+}

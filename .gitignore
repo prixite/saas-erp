@@ -12,6 +12,6 @@ __pycache__
 venv
 .vscode/*
 .DS_Store
-media
-static
+/media
+/static
 webpack-stats.json

@@ -6,7 +6,7 @@ from project.settings import AUTH_USER_MODEL
 class Employee(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     contact_number = models.CharField(max_length=20)
-    nic = models.CharField(max_length=25)
+    nic = models.CharField(max_length=25, unique=True)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
@@ -26,11 +26,12 @@ class Employee(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def org_id(self):
+        return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
+
     def __str__(self) -> str:
         return self.user.get_full_name()
-
-    class Meta:
-        ordering = ["-id"]
 
 
 class Document(models.Model):
@@ -181,3 +182,32 @@ class EmploymentType(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Company(models.Model):
+    """
+    Employee previous companies.
+    """
+
+    name = models.CharField(max_length=128)
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Experience(models.Model):
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="experience"
+    )
+    title = models.CharField(max_length=255)
+    company = models.ForeignKey(Company, on_delete=models.PROTECT)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.title

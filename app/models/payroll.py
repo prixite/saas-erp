@@ -50,7 +50,7 @@ class Compensation(models.Model):
         return self.rate * self.max_hours_per_week
 
     def __str__(self) -> str:
-        return self.employee
+        return self.employee.user.get_full_name()
 
 
 class CompensationChange(models.Model):

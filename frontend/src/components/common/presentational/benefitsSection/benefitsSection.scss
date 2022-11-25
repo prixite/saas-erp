@@ -1,0 +1,107 @@
+.benefits-main {
+  height: auto;
+  background: #ffffff;
+  border: 2px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 18px;
+  .benefits-heading {
+    display: flex;
+    justify-content: space-between;
+    .heading-text {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.011em;
+      color: #000000;
+      opacity: 0.5;
+    }
+    .heading-img {
+      cursor: pointer;
+      margin-left: auto;
+      margin-right: 16px;
+    }
+  }
+  .benefits-status-grid {
+    margin-top: 12px;
+    .heading-cls {
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+    }
+    .txt-cls {
+      font-weight: 700;
+      font-size: 16px;
+      color: #000000;
+    }
+    .current-salary-box {
+      .current-salary {
+        display: flex;
+      }
+    }
+    .compensation-type-box {
+      .compensation-type {
+        display: flex;
+      }
+    }
+    .compensation-schedule-box {
+      .comopensation-schdule {
+        display: flex;
+      }
+    }
+  }
+  .perks-box {
+    margin-top: 12px;
+    background-color: rgba(255, 205, 205, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    height: 60px;
+    .MuiFormGroup-root {
+      margin-right: 20px;
+      .MuiFormControlLabel-root {
+        margin-right: 133px;
+        margin-left: 10px;
+      }
+      .label-cls {
+        color: #000000;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+  }
+  .perks-activity-section {
+    margin-top: 24px;
+    .perks-activity-box {
+      display: flex;
+      flex-direction: row;
+      .activity-description {
+        margin-left: 10px;
+
+        .date-cls {
+          font-size: 18px;
+          font-weight: 500;
+          color: #000000;
+        }
+        .description-cls {
+          font-size: 16px;
+          font-weight: 400;
+          color: #6c6c6c;
+        }
+      }
+      .activity-icons {
+        display: flex;
+        flex-direction: column;
+        margin-top: 7px;
+        .divider-cls {
+          height: 100%;
+          border-style: dashed;
+          margin-top: 0px;
+          margin-right: 6px;
+          border-color: #ffcdcd;
+        }
+      }
+    }
+  }
+}

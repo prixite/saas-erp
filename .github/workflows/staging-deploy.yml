@@ -2,8 +2,7 @@ name: deploy-to-staging
 on:
   push:
     branches:
-      # When someone push to `master` branch
-      - staging
+      - master
 
 jobs:
   pre-commit_and_test:
@@ -13,7 +12,6 @@ jobs:
       group: ${{ github.ref }}
     needs: pre-commit_and_test
     name: "Deploy to staging"
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - name: Configure SSH
@@ -38,7 +36,7 @@ jobs:
 
       - name: Start containers
         run: |
-          ssh staging 'cd saas-erp && && bash scripts/start_server.sh'
+          ssh staging 'cd saas-erp && bash scripts/start_server.sh'
 
       - name: Test the App
         run: |

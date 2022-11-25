@@ -5,7 +5,18 @@
 
     },
     "Employee": {
-      "employeeHeading": "Employee’s Module"
+      "employeeHeading": "Employee’s Module",
+      "employeeBenefitsHeading": "Salary & Increment History",
+      "currentSalary":"Current Salary",
+      "compensationType":"Compensation Type",
+      "compensationScheule": "Compensation Scheule",
+      "fuelAllowance":"Fuel Allowance",
+      "phoneAllowance":"Phone Allowance",
+      "overtimeAllowance":"Overtime Allowance",
+      "mealsAllowance": "Meals Allowance",
+      "employeeExperienceLetters":"Experience Letters",
+      "uploadDocument": "Upload Document",
+      "notFound": "Not Found"
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"
@@ -18,6 +29,79 @@
     },
     "Payroll": {
       "payrollHeading": "Payroll"
+    },
+    "Experience":{
+      "experienceHeading": "Experience",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+    "Education":{
+      "educationHeading": "Education",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+    "EmployeeHeader":{
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+    "MenuButtons":{
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+
+    "AdditionalInformation":{
+      "additionalInformationHeading": "Additional Information",
+      "department": "Department:",
+      "manager": "Manager:",
+      "totalExperience": "Total Experience:",
+      "joiningDate": "Joining Data:",
+      "emergencyContact": "Emergency Contact:",
+      "cnic": "CNIC:",
+      "editBtn":"Edit",
+      "deleteBtn":"Delete"
+    },
+    "ProfilePage":{
+      "basicInformationHeading": "Basic Information",
+      "changePasswordHeading": "Change Password",
+      "notificationHeading": "Notification Settings",
+      "billUpdatesLabel": "Bill Updates",
+      "newTeamMembersLabel": "New Team Members",
+      "newsLetterLabel": "NewsLetters",
+      "emailSub": "Email",
+      "phoneSub": "Phone",
+      "cancelBtn": "Cancel",
+      "saveBtn": "Save",
+      "firstNameRequired": "First name is required!",
+      "lastNameRequired": "Last name is required!",
+      "emailRequired": "Email is required!",
+      "phoneRequired":"Phone number is required!"
+    },
+    "EmployeeButtons":{
+      "basicBtn": "Basic Information",
+      "docsBtn": "Documents",
+      "compBtn": "Compensation and benefits"
+    },
+    "Modals":{
+      "filterHeading": "Filter",
+      "filterSubheading": "Can optimize your result by applying filters",
+      "filterSalaryHeading":"Salary Range",
+      "filterResetBtn":"Reset",
+      "filterSubmitBtn":"Submit",
+      "filterNameLabel":"Please Enter Name",
+      "filterDesignationLabel":"Please Enter Designation"
+    },
+    "EditBenefitModal":{
+      "Heading":"Compensation & Benefits",
+      "HeadingText":"While adding compensation please do add comments",
+      "CompensationAndHeading":"Compensation & Benefits",
+      "CancelBtn":"Cancel",
+      "SaveBtn": "Save",
+      "FuelAllowance": "Fuel Allowance",
+      "PhoneAllowance": "Phone Allowance",
+      "OvertimeAllowance": "Overtime Allowance",
+      "DinnerAllowance": "Dinner Allowance",
+      "MealAllowance": "Meal Allowance"
+
     }
 
   }

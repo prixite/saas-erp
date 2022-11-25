@@ -1,17 +1,35 @@
 /* eslint-disable import/no-unresolved */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Employee } from "@src/helpers/interfaces/employees-modal";
+import {
+  Employee,
+  EmployeeData,
+  User,
+} from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
   reducerPath: "employeesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}/api`,
+    baseUrl: `/api`,
   }),
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees",
     }),
+    getEmployeeData: builder.query<EmployeeData, { id: number }>({
+      query: ({ id }) => `/employees/${id}`,
+    }),
+    getEmployeeDocs: builder.query({
+      query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
+    }),
+    getUser: builder.query<User, void>({
+      query: () => `/me`,
+    }),
   }),
 });
 
-export const { useGetEmployeesQuery } = employeesApi;
+export const {
+  useGetEmployeesQuery,
+  useGetEmployeeDataQuery,
+  useGetEmployeeDocsQuery,
+  useGetUserQuery,
+} = employeesApi;

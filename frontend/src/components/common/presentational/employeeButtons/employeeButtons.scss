@@ -1,84 +1,103 @@
 .employeeButton-main {
   margin-top: 24px;
   margin-bottom: 24px;
+  box-sizing: border-box;
 
-  .button-container-one {
-    margin-right: 12px;
-    .buttonOne {
+  .toggleGroup {
+    .button-Basic {
       display: flex;
       flex-direction: row;
       align-items: center;
       padding: 10px 16px;
       gap: 10px;
-      // width: 138px;
       height: 37px;
-      background: #ff2f2f;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 8px;
       flex: none;
       order: 0;
       flex-grow: 0;
       cursor: pointer;
-      color: white;
       text-transform: none;
-      .button-one-text {
+
+      &__text {
+        width: 106px;
+        height: 17px;
+
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #ffffff;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
       }
     }
-  }
-  .button-container-two {
-    margin-right: 12px;
 
-    .buttonTwo {
+    .button-Docs {
       display: flex;
       flex-direction: row;
       align-items: center;
       padding: 10px 16px;
       gap: 10px;
-      // width: 102px;
       height: 37px;
-      background: #ffffff;
-      border: 1px solid #e7e7e7;
+      border: 1px solid #e7e7e7 !important;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 8px;
-      /* Inside auto layout */
       flex: none;
-      order: 1;
       flex-grow: 0;
       cursor: pointer;
-      color: black;
       text-transform: none;
 
-      .button-two-text {
+      &__text {
+        width: 70px;
+        height: 17px;
+
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
       }
     }
-  }
 
-  .button-container-three {
-    margin-right: 12px;
-
-    .buttonThree {
+    .button-Comp {
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
-      // align-items: flex-start;
       align-items: center;
       padding: 10px 16px;
       gap: 10px;
-      // width: 196px;
       height: 37px;
-      background: #ffffff;
-      border: 1px solid #e7e7e7;
+      border: 1px solid #e7e7e7 !important;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
       border-radius: 8px;
-      /* Inside auto layout */
       flex: none;
       order: 2;
       flex-grow: 0;
       cursor: pointer;
-      color: black;
       text-transform: none;
 
-      .button-three-text {
+      &__text {
+        width: 164px;
+        height: 17px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
       }
     }
   }

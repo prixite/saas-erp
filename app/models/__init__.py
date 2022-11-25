@@ -10,12 +10,14 @@ from app.models.core import (
 )
 from app.models.employee import (
     Benefit,
+    Company,
     Degree,
     Department,
     Document,
     DocumentType,
     Employee,
     EmploymentType,
+    Experience,
     Institute,
     Program,
     Team,
@@ -57,4 +59,6 @@ __all__ = [
     "Team",
     "User",
     "UserModuleRole",
+    "Company",
+    "Experience",
 ]
