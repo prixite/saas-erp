@@ -38,7 +38,6 @@ class OrganizationFactory(factory.django.DjangoModelFactory):
 
 class EmployeeFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(factory=UserFactory)
-    contact_number = factory.Faker("phone_number", locale="hi_IN")
     emergency_contact_number = factory.Faker("phone_number", locale="hi_IN")
     date_of_joining = factory.Faker("date")
     designation = factory.Faker("job")
