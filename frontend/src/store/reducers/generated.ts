@@ -137,6 +137,7 @@ export type EmployeeUser = {
   last_name?: string;
   email: string;
   avatar: string;
+  contact_number: string;
 };
 export type Degree = {
   program: string;
@@ -157,7 +158,6 @@ export type Employee = {
   benefits: string[];
   org_id: string;
   total_experience: string;
-  contact_number: string;
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
