@@ -524,10 +524,6 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "contact_number": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -575,7 +571,6 @@
                 },
                 "required": [
                     "benefits",
-                    "contact_number",
                     "created_at",
                     "date_of_joining",
                     "degrees",
@@ -612,7 +607,7 @@
                     },
                     "contact_number": {
                         "type": "string",
-                        "maxLength": 20
+                        "readOnly": true
                     },
                     "date_of_joining": {
                         "type": "string",
@@ -653,10 +648,15 @@
                     "avatar": {
                         "type": "string",
                         "readOnly": true
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     }
                 },
                 "required": [
                     "avatar",
+                    "contact_number",
                     "email"
                 ]
             },
@@ -721,7 +721,8 @@
                         "maxLength": 255
                     },
                     "contact_number": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 20
                     }
                 },
                 "required": [

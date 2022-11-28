@@ -1,32 +1,18 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.admin import UserAdmin as CoreUserAdmin
 
 from app import models
 
 
 @admin.register(models.User)
-class CustomUserAdmin(UserAdmin):
-    fieldsets = (
-        (None, {"fields": ("username", "password")}),
+class CustomUserAdmin(CoreUserAdmin):
+    list_display = ["username", "email"]
+    fieldsets = CoreUserAdmin.fieldsets + (
         (
-            _("Personal info"),
-            {"fields": ("first_name", "last_name", "email", "contact_number")},
+            "More Info",
+            {"fields": ("contact_number",)},
         ),
-        (
-            _("Permissions"),
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                ),
-            },
-        ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
 
 
