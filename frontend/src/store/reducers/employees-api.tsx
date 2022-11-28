@@ -1,10 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  Employee,
-  EmployeeData,
-  User,
-} from "@src/helpers/interfaces/employees-modal";
+import { EmployeeData, User } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
   reducerPath: "employeesApi",
@@ -12,7 +8,7 @@ export const employeesApi = createApi({
     baseUrl: `/api`,
   }),
   endpoints: (builder) => ({
-    getEmployees: builder.query<Employee[], void>({
+    getEmployees: builder.query<EmployeeData[], void>({
       query: () => "/employees",
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
