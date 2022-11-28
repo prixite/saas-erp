@@ -24,6 +24,8 @@ class User(AbstractUser):
         default="../static/app/assets/profile_default.png",
     )
 
+    contact_number = models.CharField(max_length=20)
+
     headline = models.CharField(_("headline"), max_length=255)
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)

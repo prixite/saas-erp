@@ -1,13 +1,19 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as CoreUserAdmin
 
 from app import models
 
 
 @admin.register(models.User)
-class UserAdmin(UserAdmin):
-    pass
+class CustomUserAdmin(CoreUserAdmin):
+    list_display = ["username", "email"]
+    fieldsets = CoreUserAdmin.fieldsets + (
+        (
+            "More Info",
+            {"fields": ("contact_number",)},
+        ),
+    )
 
 
 @admin.register(models.Employee)
