@@ -20,7 +20,6 @@
     "babel-loader": "^9.1.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.2",
-    "debounce": "^1.2.1",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "react": "^18.2.0",

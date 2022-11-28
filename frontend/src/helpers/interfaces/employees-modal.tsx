@@ -21,12 +21,11 @@ export interface Experience {
 }
 export interface EmployeeData {
   id: number;
-  user: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    avatar: string;
-  };
+
+  first_name: string;
+  last_name: string;
+  email: string;
+  avatar: string;
   total_experience: string;
   benefits: string[];
   experience: Experience[];
