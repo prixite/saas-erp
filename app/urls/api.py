@@ -50,4 +50,8 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "waffle/",
+        api.WaffleApiView.as_view(),
+    ),
 ]
