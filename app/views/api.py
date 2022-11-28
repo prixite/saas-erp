@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -5,11 +7,11 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from waffle import get_waffle_switch_model
+
 from app import models, serializers
-import json
 
 
 @method_decorator(login_required, name="dispatch")
