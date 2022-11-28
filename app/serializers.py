@@ -188,8 +188,8 @@ class UserPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField()
 
     def validate(self, data):
-        old_password = data["old_password"]
-        password = data["password"]
+        old_password = data.get("old_password")
+        password = data.get("password")
         if not (self.context["request"].user.check_password(old_password)):
             raise serializers.ValidationError("Old password does not match.")  # noqa
         if password == old_password:
