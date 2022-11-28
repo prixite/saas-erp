@@ -16,13 +16,16 @@ import * as yup from "yup";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useApiChangePasswordPartialUpdateMutation } from "@src/store/api";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
+
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
+  const [changePassword] = useApiChangePasswordPartialUpdateMutation();
 
   const constantData: LocalizationInterface = localizedData();
   const {
@@ -79,6 +82,10 @@ function ProfilePage() {
     }),
     validateOnChange: true,
     onSubmit: () => {
+      changePassword({
+        password: "fdg",
+        old_password: "df",
+      });
       resetForm();
     },
   });
