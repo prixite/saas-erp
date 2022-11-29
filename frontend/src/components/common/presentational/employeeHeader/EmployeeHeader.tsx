@@ -69,7 +69,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   background: "transparent",
                 }}
               />
-              {employeeData?.contact_number}
+              {employeeData?.user?.contact_number}
             </div>
           </div>
         </div>

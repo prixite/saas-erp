@@ -73,7 +73,7 @@ const Topbar = (props) => {
                 component="h2"
                 className="user-title"
               >
-                Hey Umair
+                Hey {userData?.first_name}
               </Typography>
               <img className="hey-img" src={wavingIcon} />
             </Box>
