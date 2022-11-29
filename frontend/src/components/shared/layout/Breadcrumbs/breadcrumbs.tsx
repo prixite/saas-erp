@@ -12,7 +12,7 @@ const BreadCrumbs = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [paramValue, setParamValue] = useState<string>("");
-  const { data: EmployeeData } = useGetEmployeeDataQuery({
+  const { data: EmployeeData, isLoading } = useGetEmployeeDataQuery({
     id: parseInt(paramValue),
   });
   const pathnames = location.pathname.split("/").filter((x) => x);
@@ -46,7 +46,11 @@ const BreadCrumbs = () => {
               : name === "react"
               ? capitalizeFirstLowercaseRest("home")
               : parseInt(name)
-              ? `${EmployeeData?.user.first_name} ${EmployeeData?.user.last_name}`
+              ? `${
+                  isLoading
+                    ? ""
+                    : `${EmployeeData?.user.first_name} ${EmployeeData?.user.last_name}`
+                } `
               : capitalizeFirstLowercaseRest(name)}
           </Typography>
         ) : (
