@@ -19,6 +19,9 @@ export interface employeeInterface {
 export interface userInterface {
   userHeading: string;
 }
+export interface breadcrumbsInterface {
+  Home: string;
+}
 export interface modalsInterface {
   filterHeading: string;
   filterSubheading: string;
@@ -110,4 +113,5 @@ export interface LocalizationInterface {
   Modals: modalsInterface;
   MenuButtons: menuButtons;
   EditBenefitModal: editBenefitModal;
+  BreadCrumbs: breadcrumbsInterface;
 }
