@@ -269,7 +269,7 @@ export const datarows = [
   },
 ];
 export const employeeConstants = {
-  employees: "Employee's Data ",
+  employees: "Data ",
 };
 
 export const toPkrFormat = (enumber: number | undefined) => {

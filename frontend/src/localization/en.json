@@ -16,7 +16,7 @@
       "mealsAllowance": "Meals Allowance",
       "employeeExperienceLetters":"Experience Letters",
       "uploadDocument": "Upload Document",
-      "notFound": "Not Found"
+      "notFound": "Not Found!"
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"
@@ -89,6 +89,19 @@
       "filterSubmitBtn":"Submit",
       "filterNameLabel":"Please Enter Name",
       "filterDesignationLabel":"Please Enter Designation"
+    },
+    "EditBenefitModal":{
+      "Heading":"Compensation & Benefits",
+      "HeadingText":"While adding compensation please do add comments",
+      "CompensationAndHeading":"Compensation & Benefits",
+      "CancelBtn":"Cancel",
+      "SaveBtn": "Save",
+      "FuelAllowance": "Fuel Allowance",
+      "PhoneAllowance": "Phone Allowance",
+      "OvertimeAllowance": "Overtime Allowance",
+      "DinnerAllowance": "Dinner Allowance",
+      "MealAllowance": "Meal Allowance"
+
     }
 
   }

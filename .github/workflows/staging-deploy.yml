@@ -2,8 +2,7 @@ name: deploy-to-staging
 on:
   push:
     branches:
-      # When someone push to `staging` branch
-      - staging
+      - master
 
 jobs:
   pre-commit_and_test:
@@ -13,7 +12,6 @@ jobs:
       group: ${{ github.ref }}
     needs: pre-commit_and_test
     name: "Deploy to staging"
-    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
       - name: Configure SSH

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 docker-compose -f docker-compose.staging.yml build;
 docker-compose -f docker-compose.staging.yml up -d;
 docker-compose -f docker-compose.staging.yml exec app ./manage.py migrate;

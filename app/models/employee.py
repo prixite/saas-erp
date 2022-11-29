@@ -5,7 +5,6 @@ from project.settings import AUTH_USER_MODEL
 
 class Employee(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    contact_number = models.CharField(max_length=20)
     nic = models.CharField(max_length=25, unique=True)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)

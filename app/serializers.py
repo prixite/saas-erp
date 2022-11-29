@@ -61,7 +61,7 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email", "avatar"]
+        fields = ["first_name", "last_name", "email", "avatar", "contact_number"]
 
     def get_avatar(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
@@ -134,6 +134,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
+    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
     avatar = serializers.SerializerMethodField()
 
     class Meta:
@@ -214,7 +215,6 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
     avatar = serializers.SerializerMethodField()
-    contact_number = serializers.CharField(source="employee.contact_number")
 
     class Meta:
         model = models.User
