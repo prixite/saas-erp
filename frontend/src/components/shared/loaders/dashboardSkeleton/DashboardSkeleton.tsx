@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
-import "./dashboardSkeleton.scss";
+import "@src/components/shared/loaders/dashboardSkeleton/dashboardSkeleton.scss";
 
 export default function DashboardSkeleton() {
   return (

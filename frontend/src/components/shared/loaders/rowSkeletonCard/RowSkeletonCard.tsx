@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
-import "./rowSkeletonCard.scss";
+import "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard.scss";
 
 function RowSkeletonCard() {
   return (
