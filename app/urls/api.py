@@ -51,7 +51,7 @@ urlpatterns = [
         ),
     ),
     path(
-        "waffle/",
+        "flags/",
         api.WaffleApiView.as_view(),
     ),
 ]
