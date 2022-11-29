@@ -92,9 +92,9 @@ urlpatterns = accounts + [
         SpectacularSwaggerView.as_view(url_name="schema_docs"),
         name="api_docs",
     ),
-    path("react/", HomeView.as_view(), name="home"),
-    re_path(r"^react/.+/$", HomeView.as_view(), name="home"),
-    path("", include("app.urls.html")),
+    path("views/", include("app.urls.html")),
+    re_path(r".+/$", HomeView.as_view(), name="home"),
+    path("", HomeView.as_view(), name="home"),
 ]
 
 urlpatterns = urlpatterns + static(

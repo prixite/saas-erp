@@ -19,6 +19,11 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements-dev.txt
+      - name: Check missing migrations
+        # https://stackoverflow.com/a/49794873/402560
+        # NOTE: makemigrations will warn it can't "check a consistent migration history" because the database doesn't
+        # exist. The warning doesn't impact the check for missing migrations
+        run: python manage.py makemigrations --check --dry-run
       - name: Run Tests
         env:
           SECRET_KEY: fake_key
@@ -38,5 +43,9 @@ jobs:
         with:
           node-version: "18"
           cache: npm
-      - run: npm install
+      - name: Install Node Dependencies
+        run: npm ci
+      - name: Build Front-end
+        run: |
+          npm run build
       - uses: pre-commit/action@v3.0.0

@@ -86,10 +86,10 @@ function ProfilePage() {
   useEffect(() => {
     if (userData && isSuccess) {
       formik.setValues({
-        email: userData?.email,
-        firstname: userData?.first_name,
-        lastname: userData?.last_name,
-        phone: userData?.contact_number,
+        email: userData?.email || "",
+        firstname: userData?.first_name || "",
+        lastname: userData?.last_name || "",
+        phone: userData?.contact_number || "",
       });
     }
   }, [userData, isSuccess]);

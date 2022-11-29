@@ -1,6 +1,9 @@
+from datetime import date
+
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from waffle import get_waffle_switch_model
 
 from app import models
 
@@ -8,6 +11,7 @@ from app import models
 class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
+    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
     avatar = serializers.SerializerMethodField()
 
     class Meta:
@@ -31,7 +35,7 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email", "avatar"]
+        fields = ["first_name", "last_name", "email", "avatar", "contact_number"]
 
     def get_avatar(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
@@ -63,10 +67,35 @@ class EmployeeSerializer(serializers.ModelSerializer):
     )
     org_id = serializers.CharField(read_only=True)
 
+    total_experience = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Employee
 
         fields = "__all__"
+
+    def get_total_experience(self, data):
+        total_days = 0
+        for exp in data.experience.all():
+            start_date = date(
+                exp.start_date.year, exp.start_date.month, exp.start_date.day
+            )
+            end_date = date(exp.end_date.year, exp.end_date.month, exp.end_date.day)
+            delta = end_date - start_date
+            total_days = total_days + delta.days
+        years = total_days // 365
+        months = (total_days - years * 365) // 30
+
+        if total_days < 30:
+            return "No experience yet."
+
+        total_experience = ""
+
+        total_experience = (
+            f"{years} years " if years > 1 else "" if not years else f"{years} year "
+        )
+        total_experience += f"{months} months" if months > 1 else f"{months} month"
+        return total_experience
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
@@ -137,7 +166,6 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
     avatar = serializers.SerializerMethodField()
-    contact_number = serializers.CharField(source="employee.contact_number")
 
     class Meta:
         model = models.User
@@ -154,3 +182,25 @@ class MeSerializer(serializers.ModelSerializer):
 
     def get_avatar(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
+
+
+class UserPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(min_length=8, required=True)
+    old_password = serializers.CharField()
+
+    def validate(self, data):
+        old_password = data["old_password"]
+        password = data["password"]
+        if not (self.context["request"].user.check_password(old_password)):
+            raise serializers.ValidationError("Old password does not match.")  # noqa
+        if password == old_password:
+            raise serializers.ValidationError(
+                "New password can not be same as new password."
+            )
+        return data
+
+
+class WaffleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_waffle_switch_model()
+        fields = ["name", "active"]

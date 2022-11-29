@@ -28,6 +28,7 @@ export interface EmployeeData {
     avatar: string;
   };
   total_experience: string;
+  benefits: string[];
   experience: Experience[];
   degrees: Education[];
   contact_number: string;
@@ -40,10 +41,15 @@ export interface EmployeeData {
   department: number;
   org_id: string;
 }
-export interface EmployeeDoc {
+export interface Doc {
+  id: number;
   name: string;
-  type: number;
+  type: string;
   document_url: string;
+}
+export interface EmployeeDoc {
+  type: string;
+  docs: Doc[];
 }
 
 export interface User {

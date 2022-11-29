@@ -14,7 +14,7 @@ import { useGetEmployeeDocsQuery } from "@src/store/reducers/employees-api";
 
 const DocumentSection = () => {
   const constantData: LocalizationInterface = localizedData();
-  const { employeeExperienceLetters, uploadDocument } = constantData.Employee;
+  const { uploadDocument } = constantData.Employee;
   const { employeeId } = useParams();
   const { data: EmployeeDocs, isLoading } = useGetEmployeeDocsQuery({
     employeeId,
@@ -25,47 +25,64 @@ const DocumentSection = () => {
     }
   };
   return (
-    <Box className="documentation-main">
-      <Box className="documentation-heading">
-        <Typography className="heading-text">
-          {employeeExperienceLetters}
-        </Typography>
-        <img className="heading-img" src={ThreeDotter} alt="menu" />
-      </Box>
+    <Box className="documentation-cls">
       {!isLoading ? (
-        EmployeeDocs?.map((doc: EmployeeDoc, index: number) => {
-          return (
-            <Box className="documentation-section" key={doc?.name}>
-              <Grid
-                container
-                className="documentation-grid"
-                onClick={() => openInNewTab(doc?.document_url)}
-              >
-                <Grid className="doc-box" item xs={6} sm={6}>
-                  <Box className="doc-img-box">
-                    <img className="doc-img" src={docIcon} alt="doc" />
-                  </Box>
-                  <Box className="doc-info-box">
-                    <Typography className="file-name"> {doc?.name}</Typography>
-                    <Typography className="file-szie"> 250 KB</Typography>
-                  </Box>
-                </Grid>
-                <Grid className="doc-actions" item xs={6} sm={6}>
-                  <img
-                    className="delete-img"
-                    src={deleteIcon}
-                    alt="delete"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  <img className="show-img" src={showIcon} alt="show" />
-                </Grid>
-              </Grid>
-              {index !== EmployeeDocs.length - 1 ? (
-                <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
-              ) : null}
-            </Box>
-          );
-        })
+        <>
+          {EmployeeDocs?.map((doc: EmployeeDoc) => {
+            return (
+              <Box className="documentation-main" key={doc?.type}>
+                <Box className="documentation-heading">
+                  <Typography className="heading-text">{doc?.type}</Typography>
+                  <img className="heading-img" src={ThreeDotter} alt="menu" />
+                </Box>
+                {doc?.docs.map((employeedoc, index) => {
+                  return (
+                    <Box
+                      className="documentation-section"
+                      key={employeedoc?.id}
+                    >
+                      <Grid
+                        container
+                        className="documentation-grid"
+                        onClick={() => openInNewTab(employeedoc?.document_url)}
+                      >
+                        <Grid className="doc-box" item xs={6} sm={6}>
+                          <Box className="doc-img-box">
+                            <img className="doc-img" src={docIcon} alt="doc" />
+                          </Box>
+                          <Box className="doc-info-box">
+                            <Typography className="file-name">
+                              {" "}
+                              {employeedoc?.name}
+                            </Typography>
+                            <Typography className="file-szie">
+                              {" "}
+                              250 KB
+                            </Typography>
+                          </Box>
+                        </Grid>
+                        <Grid className="doc-actions" item xs={6} sm={6}>
+                          <img
+                            className="delete-img"
+                            src={deleteIcon}
+                            alt="delete"
+                            onClick={(e) => e.stopPropagation()}
+                          />
+                          <img className="show-img" src={showIcon} alt="show" />
+                        </Grid>
+                      </Grid>
+                      {index !== doc?.docs.length - 1 ? (
+                        <Divider sx={{ color: "#E7E7E7", mt: "25px" }} />
+                      ) : (
+                        ""
+                      )}
+                    </Box>
+                  );
+                })}
+              </Box>
+            );
+          })}
+        </>
       ) : (
         <Box
           sx={{

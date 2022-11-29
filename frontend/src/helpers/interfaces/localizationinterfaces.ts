@@ -83,6 +83,18 @@ export interface menuButtons {
   editBtn: string;
   deleteBtn: string;
 }
+export interface editBenefitModal {
+  Heading: string;
+  HeadingText: string;
+  CompensationAndHeading: string;
+  CancelBtn: string;
+  SaveBtn: string;
+  FuelAllowance: string;
+  PhoneAllowance: string;
+  OvertimeAllowance: string;
+  DinnerAllowance: string;
+  MealAllowance: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -97,4 +109,5 @@ export interface LocalizationInterface {
   EmployeeButtons: employeeButtons;
   Modals: modalsInterface;
   MenuButtons: menuButtons;
+  EditBenefitModal: editBenefitModal;
 }

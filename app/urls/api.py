@@ -42,4 +42,16 @@ urlpatterns = [
         "me/",
         api.MeApiView.as_view(),
     ),
+    path(
+        "change_password/",
+        api.UserPasswordViewSet.as_view(
+            {
+                "patch": "partial_update",
+            }
+        ),
+    ),
+    path(
+        "flags/",
+        api.WaffleApiView.as_view(),
+    ),
 ]
