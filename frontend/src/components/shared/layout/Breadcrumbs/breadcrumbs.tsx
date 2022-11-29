@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ArrowIcon from "@src/assets/svgs/ArrowDown.svg";
 import { capitalizeFirstLowercaseRest } from "@src/helpers/utils/utils";
 import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
@@ -11,19 +10,11 @@ import "@src/components/shared/layout/Breadcrumbs/breadcrumbs.scss";
 const BreadCrumbs = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [paramValue, setParamValue] = useState<string>("");
+  const { employeeId } = useParams();
   const { data: EmployeeData, isLoading } = useGetEmployeeDataQuery({
-    id: parseInt(paramValue),
+    id: Number(employeeId || ""),
   });
   const pathnames = location.pathname.split("/").filter((x) => x);
-
-  useEffect(() => {
-    const pathnames = location.pathname.split("/").filter((x) => x);
-    if (pathnames && pathnames[2] !== undefined) {
-      setParamValue(pathnames[2]);
-    }
-  }, [paramValue, location]);
-
   return (
     <Breadcrumbs
       separator={<img src={ArrowIcon} style={{ marginTop: "10px" }} />}
@@ -49,7 +40,7 @@ const BreadCrumbs = () => {
               ? `${
                   isLoading
                     ? ""
-                    : `${EmployeeData?.user.first_name} ${EmployeeData?.user.last_name}`
+                    : `${EmployeeData?.user?.first_name} ${EmployeeData?.user?.last_name}`
                 } `
               : capitalizeFirstLowercaseRest(name)}
           </Typography>

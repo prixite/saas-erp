@@ -142,7 +142,7 @@ function DataGridTable() {
     event.stopPropagation();
   };
   const handleOnCellClick = (params: GridCellParams) => {
-    navigate(`/react/employees/${params.row.id}`);
+    navigate(`/employees/${params.row.id}`);
   };
   return (
     <Box className="dataGridTable-section">
