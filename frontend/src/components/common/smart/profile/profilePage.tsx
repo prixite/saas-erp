@@ -46,6 +46,8 @@ function ProfilePage() {
   } = constantData.ProfilePage;
 
   /* eslint-disable-next-line */
+  const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  /* eslint-disable-next-line */
   const nameRegex = /^[A-Za-z]*$/;
   const phoneRegex =
     /* eslint-disable-next-line */
@@ -61,6 +63,9 @@ function ProfilePage() {
       lastname: "",
       email: "",
       phone: "",
+      currentPassword: "",
+      password: "",
+      verifyPassword: "",
     },
     validationSchema: yup.object({
       firstname: yup
@@ -79,13 +84,31 @@ function ProfilePage() {
         .string()
         .matches(phoneRegex, "Invalid phone number!")
         .required(phoneRequired),
+      currentPassword: yup.string(),
+      password: yup.string().matches(passwordReg, "Not a strong password!"),
+      verifyPassword: yup.string().when("password", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: yup
+          .string()
+          .oneOf([yup.ref("password")], "Typed password does not match!"),
+      }),
     }),
     validateOnChange: true,
-    onSubmit: () => {
-      changePassword({
-        password: "fdg",
-        old_password: "df",
-      });
+    onSubmit: async (values) => {
+      if (
+        values.currentPassword.length &&
+        values.password.length &&
+        values.verifyPassword.length
+      ) {
+        const PatchedUserPassword = await {
+          password: values.password.toString(), // New Password
+          old_password: values.currentPassword.toString(), //current Password
+        };
+        await changePassword({
+          patchedUserPassword: PatchedUserPassword,
+        });
+        resetForm();
+      }
       resetForm();
     },
   });
@@ -97,6 +120,9 @@ function ProfilePage() {
         firstname: userData?.first_name || "",
         lastname: userData?.last_name || "",
         phone: userData?.contact_number || "",
+        currentPassword: "",
+        password: "",
+        verifyPassword: "",
       });
     }
   }, [userData, isSuccess]);
@@ -107,6 +133,9 @@ function ProfilePage() {
       lastname: "",
       email: "",
       phone: "",
+      currentPassword: "",
+      password: "",
+      verifyPassword: "",
     });
   };
   const [values, setValues] = useState({
@@ -140,10 +169,6 @@ function ProfilePage() {
   ) => {
     event.preventDefault();
   };
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
   return (
     <>
       <ProfilePageHeader />
@@ -232,7 +257,6 @@ function ProfilePage() {
               name="phone"
               type="phone"
               label="Phone Number"
-              // placeholder="XX-XXX-XXXXXXX"
               size="medium"
               inputProps={{
                 autoComplete: "new-password",
@@ -242,10 +266,8 @@ function ProfilePage() {
               }}
               value={formik.values.phone}
               onChange={(e) => {
-                // if (phoneRegex.test(e.target.value)) {
                 formik.setFieldTouched("phone");
                 formik.handleChange(e);
-                // }
               }}
             />
             <p className="requiredText">
@@ -263,9 +285,14 @@ function ProfilePage() {
               <TextField
                 className="currentPassword__textfield"
                 id="currPass_1"
+                name="currentPassword"
                 type={values.showCurrentPassword ? "text" : "password"}
                 label="Current Password"
-                onChange={handleChange("password")}
+                value={formik.values.currentPassword}
+                onChange={(e) => {
+                  formik.setFieldTouched("currentPassword");
+                  formik.handleChange(e);
+                }}
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -286,14 +313,23 @@ function ProfilePage() {
                   ),
                 }}
               />
+              <p className="requiredText">
+                {formik.touched.currentPassword &&
+                  formik.errors.currentPassword}
+              </p>
             </div>
             <div className="newPassword">
               <TextField
                 className="newPassword__textfield"
-                id="newPass_1"
+                id="password"
+                name="password"
                 type={values.newPassword ? "text" : "password"}
                 label="New Password"
-                onChange={handleChange("password")}
+                value={formik.values.password}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  formik.setFieldTouched("password");
+                }}
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -314,15 +350,22 @@ function ProfilePage() {
                   ),
                 }}
               />
+              <p className="requiredText">
+                {formik.touched.password && formik.errors.password}
+              </p>
             </div>
             <div className="verifyPassword">
               <TextField
                 className="verifyPassword__textfield"
-                name="password"
                 id="verifyPass_1"
+                name="verifyPassword"
                 type={values.verifyPassword ? "text" : "password"}
                 label="Verify Password"
-                onChange={handleChange("password")}
+                value={formik.values.verifyPassword}
+                onChange={(e) => {
+                  formik.setFieldTouched("verifyPassword");
+                  formik.handleChange(e);
+                }}
                 InputProps={{
                   autoComplete: "new-password",
                   style: inputLabelColor,
@@ -343,6 +386,9 @@ function ProfilePage() {
                   ),
                 }}
               />
+              <p className="requiredText">
+                {formik.touched.verifyPassword && formik.errors.verifyPassword}
+              </p>
             </div>
           </div>
         </div>
