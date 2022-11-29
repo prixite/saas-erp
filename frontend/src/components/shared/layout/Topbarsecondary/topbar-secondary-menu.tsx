@@ -71,7 +71,7 @@ const TopbarSecondaryMenu = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/react/profile");
+    navigate("/profile");
     handleClose();
   };
   return (

@@ -87,14 +87,14 @@ const Sidebar = (props) => {
         <List className="icon-lists" component="nav">
           <ListItemButton
             onClick={() => {
-              navigate("/react/");
+              navigate("/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
               <img
                 className="icon-img"
-                src={currentPath === "/react/" ? categoryIconRed : categoryIcon}
+                src={currentPath === "/" ? categoryIconRed : categoryIcon}
               />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
@@ -116,16 +116,14 @@ const Sidebar = (props) => {
           </ListItemButton> */}
           <ListItemButton
             onClick={() => {
-              navigate("/react/employees/");
+              navigate("employees/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
               <img
                 className="icon-img"
-                src={
-                  currentPath === "/react/employees/" ? workIconRed : workIcon
-                }
+                src={currentPath === "/employees/" ? workIconRed : workIcon}
               />
             </ListItemIcon>
             <ListItemText primary="Employees" />

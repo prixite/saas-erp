@@ -12,7 +12,7 @@ const AppRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/react/" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="employees/" element={<Employee />} />
           <Route path="employees/:employeeId" element={<EmployeeSection />} />
