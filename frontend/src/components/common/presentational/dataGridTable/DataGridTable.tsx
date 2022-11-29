@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
-import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
+import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -141,7 +141,7 @@ function DataGridTable() {
   const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
   };
-  const handleOnCellClick = (params) => {
+  const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/react/employees/${params.row.id}`);
   };
   return (

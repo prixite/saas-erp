@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import "./employeeButtons.scss";
 import { styled } from "@mui/material/styles";
@@ -38,7 +38,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
     }
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (alignment === "left") {
       setButtonNameClicked("BASIC");
     } else if (alignment === "center") {
