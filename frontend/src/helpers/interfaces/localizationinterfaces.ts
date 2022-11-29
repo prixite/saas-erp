@@ -71,7 +71,7 @@ export interface profilePageInterface {
   firstNameRequired: string;
   lastNameRequired: string;
   emailRequired: string;
-  phoneRequired: number;
+  phoneRequired: string;
 }
 
 export interface employeeButtons {

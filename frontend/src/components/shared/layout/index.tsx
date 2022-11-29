@@ -3,11 +3,11 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
+import { Outlet } from "react-router-dom";
 import Sidebar from "@src/components/shared/layout/Sidebar/Sidebar";
 import Topbar from "@src/components/shared/layout/Topbar/Topbar";
 
-const Layout = (props) => {
-  const { children } = props;
+const Layout = () => {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -38,7 +38,10 @@ const Layout = (props) => {
       >
         <Toolbar />
 
-        <main>{children}</main>
+        <main>
+          {" "}
+          <Outlet />{" "}
+        </main>
       </Box>
     </Box>
   );
