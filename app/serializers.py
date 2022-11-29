@@ -1,9 +1,9 @@
 from datetime import date
 
 from django.conf import settings
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from django.db import transaction
 
 from app import models
 
