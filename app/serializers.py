@@ -3,6 +3,7 @@ from datetime import date
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from waffle import get_waffle_switch_model
 
 from app import models
 
@@ -10,6 +11,7 @@ from app import models
 class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
+    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
     avatar = serializers.SerializerMethodField()
 
     class Meta:
@@ -33,7 +35,7 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email", "avatar"]
+        fields = ["first_name", "last_name", "email", "avatar", "contact_number"]
 
     def get_avatar(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
@@ -164,7 +166,6 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
     avatar = serializers.SerializerMethodField()
-    contact_number = serializers.CharField(source="employee.contact_number")
 
     class Meta:
         model = models.User
@@ -197,3 +198,9 @@ class UserPasswordSerializer(serializers.Serializer):
                 "New password can not be same as new password."
             )
         return data
+
+
+class WaffleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_waffle_switch_model()
+        fields = ["name", "active"]
