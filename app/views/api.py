@@ -5,7 +5,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from waffle import get_waffle_switch_model
 
 from app import models, serializers
 
@@ -93,3 +95,10 @@ class UserPasswordViewSet(ModelViewSet):
             request.user.save()
             update_session_auth_hash(request, request.user)
         return Response(serializer.errors)
+
+
+class WaffleApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        switches = get_waffle_switch_model().get_all()
+        switche_serializer = serializers.WaffleSerializer(switches, many=True)
+        return Response(switche_serializer.data)

@@ -5,6 +5,53 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/change_password/": {
+            "patch": {
+                "operationId": "api_change_password_partial_update",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedUserPassword"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserPassword"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/employees/": {
             "get": {
                 "operationId": "api_employees_list",
@@ -156,6 +203,62 @@
                         "description": ""
                     }
                 }
+            },
+            "post": {
+                "operationId": "api_employees_compensation_create",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Compensation"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Compensation"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
             }
         },
         "/api/employees/{id}/documents/": {
@@ -289,18 +392,39 @@
             "Compensation": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "current_salary": {
                         "type": "number",
                         "format": "double",
                         "readOnly": true
                     },
-                    "currency": {
-                        "type": "integer"
+                    "rate": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "max_hours_per_week": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "expected_hours_per_week": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
                     },
                     "compensation_type": {
                         "type": "integer"
                     },
                     "compensation_schedule": {
+                        "type": "integer"
+                    },
+                    "currency": {
                         "type": "integer"
                     }
                 },
@@ -308,7 +432,10 @@
                     "compensation_schedule",
                     "compensation_type",
                     "currency",
-                    "current_salary"
+                    "current_salary",
+                    "id",
+                    "rate",
+                    "updated_at"
                 ]
             },
             "Degree": {
@@ -334,6 +461,10 @@
             "Document": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "name": {
                         "type": "string",
                         "maxLength": 128
@@ -350,6 +481,7 @@
                 },
                 "required": [
                     "document_url",
+                    "id",
                     "name"
                 ]
             },
@@ -388,9 +520,9 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "contact_number": {
+                    "total_experience": {
                         "type": "string",
-                        "maxLength": 20
+                        "readOnly": true
                     },
                     "nic": {
                         "type": "string",
@@ -439,7 +571,6 @@
                 },
                 "required": [
                     "benefits",
-                    "contact_number",
                     "created_at",
                     "date_of_joining",
                     "degrees",
@@ -450,6 +581,7 @@
                     "nic",
                     "org_id",
                     "organization",
+                    "total_experience",
                     "updated_at",
                     "user"
                 ]
@@ -475,7 +607,7 @@
                     },
                     "contact_number": {
                         "type": "string",
-                        "maxLength": 20
+                        "readOnly": true
                     },
                     "date_of_joining": {
                         "type": "string",
@@ -516,10 +648,15 @@
                     "avatar": {
                         "type": "string",
                         "readOnly": true
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     }
                 },
                 "required": [
                     "avatar",
+                    "contact_number",
                     "email"
                 ]
             },
@@ -582,12 +719,45 @@
                     "headline": {
                         "type": "string",
                         "maxLength": 255
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     }
                 },
                 "required": [
                     "avatar",
+                    "contact_number",
                     "email",
                     "headline"
+                ]
+            },
+            "PatchedUserPassword": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "minLength": 8
+                    },
+                    "old_password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserPassword": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "minLength": 8
+                    },
+                    "old_password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "old_password",
+                    "password"
                 ]
             }
         },

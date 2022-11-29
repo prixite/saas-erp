@@ -16,9 +16,9 @@
     <h6 class="h6">{{ object.email }}</h6>
     <h6 class="h6">{{ object.headline }}</h6>
     <img src={{ object.image.url }} class="img-thumbnail img" alt="image">
+    <p class="lead mt-3">{{ object.contact_number }}</p>
 
     {% if object.employee %}
-    <p class="lead mt-3">{{ object.employee.contact_number }}</p>
     <p class="lead">{{ object.employee.designation }}</p>
     <p class="lead">{{ object.employee.nic }}</p>
     {% endif %}

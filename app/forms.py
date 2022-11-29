@@ -8,7 +8,14 @@ from app.lib.user import create_and_send_invite
 class UserForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = ["email", "first_name", "last_name", "default_role", "image"]
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "default_role",
+            "image",
+            "contact_number",
+        ]
 
     @transaction.atomic
     def save(self):
@@ -58,7 +65,6 @@ class EmployeeForm(forms.ModelForm):
         model = models.Employee
         fields = [
             "nic",
-            "contact_number",
             "designation",
             "date_of_joining",
             "can_login",
