@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='currency',
             name='organization',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='app.organization'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='app.organization'), #noqa
             preserve_default=False,
         ),
         migrations.AddField(
