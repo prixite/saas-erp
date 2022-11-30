@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from waffle import get_waffle_switch_model
 
 from app import models
 
@@ -296,3 +297,9 @@ class UserPasswordSerializer(serializers.Serializer):
                 "New password can not be same as new password."
             )
         return data
+
+
+class WaffleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_waffle_switch_model()
+        fields = ["name", "active"]

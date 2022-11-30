@@ -1,7 +1,6 @@
 import { Suspense, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import Routes from "@src/components/hoc/AppRoutes";
-import Layout from "@src/components/shared/layout";
+import AppRoutes from "@src/components/hoc/AppRoutes";
 import baseTheme from "@src/theme/base-theme";
 
 const loading = <span>Loading....</span>;
@@ -14,9 +13,7 @@ const App = () => {
     <>
       <Suspense fallback={loading}>
         <ThemeProvider theme={baseTheme}>
-          <Layout>
-            <Routes />
-          </Layout>
+          <AppRoutes />
         </ThemeProvider>
       </Suspense>
     </>

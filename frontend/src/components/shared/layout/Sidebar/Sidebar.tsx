@@ -14,18 +14,18 @@ import PropTypes from "prop-types";
 import { useNavigate, useLocation } from "react-router-dom";
 import CloseBtn from "@src/assets/images/back.png";
 import OpenBtn from "@src/assets/images/forward.png";
-import vectorIcon from "@src/assets/svgs/24px.svg";
-import vectorIconRed from "@src/assets/svgs/24pxred.svg";
-import userIcon from "@src/assets/svgs/3 User.svg";
-import userIconRed from "@src/assets/svgs/3 Userred.svg";
-import bagIcon from "@src/assets/svgs/Bag.svg";
+// import vectorIcon from "@src/assets/svgs/24px.svg";
+// import vectorIconRed from "@src/assets/svgs/24pxred.svg";
+// import userIcon from "@src/assets/svgs/3 User.svg";
+// import userIconRed from "@src/assets/svgs/3 Userred.svg";
+// import bagIcon from "@src/assets/svgs/Bag.svg";
+// import bagIconRed from "@src/assets/svgs/workred.svg";
 import workIconRed from "@src/assets/svgs/bagred.svg";
 import categoryIcon from "@src/assets/svgs/Category.svg";
 import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
 import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
-import bagIconRed from "@src/assets/svgs/workred.svg";
 
 import "@src/components/shared/layout/Sidebar/Sidebar.scss";
 
@@ -87,19 +87,19 @@ const Sidebar = (props) => {
         <List className="icon-lists" component="nav">
           <ListItemButton
             onClick={() => {
-              navigate("/react/");
+              navigate("/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
               <img
                 className="icon-img"
-                src={currentPath === "/react/" ? categoryIconRed : categoryIcon}
+                src={currentPath === "/" ? categoryIconRed : categoryIcon}
               />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
-          <ListItemButton
+          {/* <ListItemButton
             onClick={() => {
               navigate("/react/users/");
             }}
@@ -113,24 +113,22 @@ const Sidebar = (props) => {
               />
             </ListItemIcon>
             <ListItemText primary="Users" />
-          </ListItemButton>
+          </ListItemButton> */}
           <ListItemButton
             onClick={() => {
-              navigate("/react/employees/");
+              navigate("employees/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
               <img
                 className="icon-img"
-                src={
-                  currentPath === "/react/employees/" ? workIconRed : workIcon
-                }
+                src={currentPath === "/employees/" ? workIconRed : workIcon}
               />
             </ListItemIcon>
             <ListItemText primary="Employees" />
           </ListItemButton>
-          <ListItemButton
+          {/* <ListItemButton
             onClick={() => {
               navigate("/react/accounts/");
             }}
@@ -143,8 +141,8 @@ const Sidebar = (props) => {
               />
             </ListItemIcon>
             <ListItemText primary="Accounts" />
-          </ListItemButton>
-          <ListItemButton
+          </ListItemButton> */}
+          {/* <ListItemButton
             onClick={() => {
               navigate("/react/payroll/");
             }}
@@ -159,7 +157,7 @@ const Sidebar = (props) => {
               />
             </ListItemIcon>
             <ListItemText primary="Payroll" />
-          </ListItemButton>
+          </ListItemButton> */}
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
               {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}

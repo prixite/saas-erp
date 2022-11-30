@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
+from waffle.mixins import WaffleSwitchMixin
 
 from app import models
 from app.views.html.employees import (
@@ -89,8 +90,9 @@ class Home(LoginRequiredMixin, TemplateView):
     template_name = "app/html/home.html"
 
 
-class Payroll(PrivateViewMixin, TemplateView):
+class Payroll(WaffleSwitchMixin, PrivateViewMixin, TemplateView):
     template_name = "app/html/payroll.html"
+    waffle_switch = "show_payroll_module"
 
 
 class Inventory(PrivateViewMixin, TemplateView):

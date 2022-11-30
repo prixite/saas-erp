@@ -6,7 +6,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.views import mixins
@@ -204,3 +206,10 @@ class RoleApiView(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin)
     serializer_class = serializers.RoleSerializer
     queryset = models.Role.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+
+class WaffleApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        switches = get_waffle_switch_model().get_all()
+        switche_serializer = serializers.WaffleSerializer(switches, many=True)
+        return Response(switche_serializer.data)

@@ -104,4 +104,8 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "flags/",
+        api.WaffleApiView.as_view(),
+    ),
 ]

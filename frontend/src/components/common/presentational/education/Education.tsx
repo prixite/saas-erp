@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Divider, Grid, Typography } from "@mui/material";
+import moment from "moment";
+import { useParams } from "react-router-dom";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
-import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/education/education.scss";
 
-interface ExperienceType {
-  employeeData?: EmployeeData;
-}
-function Education({ employeeData }: ExperienceType) {
+function Education() {
+  const param = useParams();
+  const [paramValue, setParamValue] = useState<string>("");
+  const { data: employeeData } = useGetEmployeeDataQuery({
+    id: parseInt(paramValue),
+  });
+  useEffect(() => {
+    if (param.employeeId) {
+      setParamValue(param.employeeId);
+    }
+  }, [employeeData]);
+
   const constantData: LocalizationInterface = localizedData();
   const { educationHeading } = constantData.Education;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -104,7 +114,7 @@ function Education({ employeeData }: ExperienceType) {
                       </Grid>
                       <Grid item className="year">
                         <Typography variant="body1" className="text-cls">
-                          {degree?.year}
+                          {moment(degree?.year).year()}
                         </Typography>
                       </Grid>
                     </Grid>
