@@ -85,7 +85,7 @@ const TopbarSecondaryMenu = () => {
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ color: "#130F26" }}
+        sx={{ color: "#130F26", textTransform: "capitalize" }}
       >
         {userData?.first_name} {userData?.last_name}
       </Button>
