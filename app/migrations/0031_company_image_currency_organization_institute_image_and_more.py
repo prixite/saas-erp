@@ -7,29 +7,33 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0030_remove_employee_contact_number_user_contact_number'),
+        ("app", "0030_remove_employee_contact_number_user_contact_number"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='company',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='companies'),
+            model_name="company",
+            name="image",
+            field=models.ImageField(blank=True, null=True, upload_to="companies"),
         ),
         migrations.AddField(
-            model_name='currency',
-            name='organization',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='app.organization'), #noqa
+            model_name="currency",
+            name="organization",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="app.organization",
+            ),  # noqa
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='institute',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='institutes'),
+            model_name="institute",
+            name="image",
+            field=models.ImageField(blank=True, null=True, upload_to="institutes"),
         ),
         migrations.AlterField(
-            model_name='employee',
-            name='benefits',
-            field=models.ManyToManyField(blank=True, to='app.benefit'),
+            model_name="employee",
+            name="benefits",
+            field=models.ManyToManyField(blank=True, to="app.benefit"),
         ),
     ]
