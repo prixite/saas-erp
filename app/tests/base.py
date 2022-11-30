@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from app import factories
+from app import factories, models
 from app.tests.client import Client
 
 
@@ -10,6 +10,26 @@ class BaseTestCase(TestCase):
 
         self.super_user = factories.UserFactory(is_superuser=True)
         self.organization = factories.OrganizationFactory()
+        self.owner_role = factories.RoleFactory(
+            name="Employee Owner",
+            permission=models.Role.Permission.ADMIN,
+            is_default=True,
+            organization=self.organization,
+        )
+        self.owner = factories.UserFactory(
+            organization=self.organization, default_role=self.owner_role
+        )
+        self.employee_module = factories.ModuleFactory(
+            name="Employee", slug=models.Module.ModuleType.EMPLOYEES, is_enabled=True
+        )
+        self.org_module = factories.OrganizationModuleFactory(
+            module=self.employee_module, organization=self.organization, is_enabled=True
+        )
+        self.owner_employee_module = factories.UserModuleRoleFactory(
+            module=self.employee_module,
+            user=self.owner,
+            role=self.owner_role,
+        )
         self.org_user = factories.UserFactory(organization=self.organization)
         self.department = factories.DepartmentFactory(organization=self.organization)
         self.employment_type = factories.EmploymentTypeFactory(
@@ -23,7 +43,7 @@ class BaseTestCase(TestCase):
         self.compensation_schedule = factories.CompensationScheduleFactory(
             organization=self.organization
         )
-        self.currency = factories.CurrencyFactory()
+        self.currency = factories.CurrencyFactory(organization=self.organization)
 
         factories.CurrencyFactory.create_batch(size=3)
         self.add_compensation_type_instances()

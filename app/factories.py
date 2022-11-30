@@ -36,6 +36,11 @@ class OrganizationFactory(factory.django.DjangoModelFactory):
         model = models.Organization
 
 
+class OrganizationModuleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.OrganizationModule
+
+
 class EmployeeFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(factory=UserFactory)
     emergency_contact_number = factory.Faker("phone_number", locale="hi_IN")
@@ -57,6 +62,21 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
         model = models.Employee
 
 
+class ModuleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Module
+
+
+class RoleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Role
+
+
+class UserModuleRoleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.UserModuleRole
+
+
 class DepartmentFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
     organization = factory.iterator(models.Organization.objects.all)
@@ -76,6 +96,8 @@ class EmploymentTypeFactory(factory.django.DjangoModelFactory):
 
 
 class CurrencyFactory(factory.django.DjangoModelFactory):
+    organization = factory.iterator(models.Organization.objects.all)
+
     class Meta:
         model = models.Currency
 
@@ -113,7 +135,6 @@ class ProgramFactory(factory.django.DjangoModelFactory):
 
 class InstituteFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
     updated_at = factory.LazyFunction(timezone.now)
 
     class Meta:

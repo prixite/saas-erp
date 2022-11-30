@@ -70,7 +70,27 @@ urlpatterns = [
     ),
     path(
         "employeement_type/",
-        api.EmployeementType.as_view({"get": "list", "post": "create"}),
+        api.EmployeementTypeApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "compensation_type/",
+        api.CompensationTypeApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "compensation_schedule/",
+        api.CompensationScheduleApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "currency/",
+        api.CurrencyApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "document_type/",
+        api.DocumentTypeApiView.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "role/",
+        api.RoleApiView.as_view(),
     ),
     path(
         "me/",

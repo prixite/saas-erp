@@ -95,6 +95,7 @@ class Payroll(PrivateViewMixin, TemplateView):
 
 class Inventory(PrivateViewMixin, TemplateView):
     template_name = "app/html/inventory.html"
+    module = "inventory"
 
 
 class Settings(PrivateViewMixin, TemplateView):

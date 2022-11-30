@@ -3,9 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from django.db import transaction
 
 from app import models, serializers
 from app.views import mixins
@@ -29,6 +30,12 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
         if self.action == "partial_update":
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
+
+    @transaction.atomic
+    def perform_destroy(self, instance):
+        user = get_object_or_404(models.User, employee=instance)
+        user.delete()
+        return super().perform_destroy(instance)
 
 
 class CompensationViewSet(mixins.PrivateApiMixin, ModelViewSet):
@@ -155,7 +162,45 @@ class DepartmentApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.Organizatio
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class EmployeementType(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+class EmployeementTypeApiView(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
     serializer_class = serializers.EmployeementTypeSerializer
     queryset = models.EmploymentType.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class CompensationTypeApiView(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.CompensationTypeSerializer
+    queryset = models.CompensationType.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class CompensationScheduleApiView(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.CompensationScheduleSerializer
+    queryset = models.CompensationSchedule.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.CurrencySerializer
+    queryset = models.Currency.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class DocumentTypeApiView(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.DocumentTypeSerializer
+    queryset = models.DocumentType.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class RoleApiView(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
+    serializer_class = serializers.RoleSerializer
+    queryset = models.Role.objects.all()
     module = models.Module.ModuleType.EMPLOYEES

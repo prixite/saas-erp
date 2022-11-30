@@ -43,6 +43,7 @@ class User(AbstractUser):
 
     def get_modules(self, permission):
         module_roles = self.module_roles.filter(module__is_enabled=True)
+
         if self.default_role and self.default_role.permission >= permission:
             module_roles = module_roles.filter(
                 role__permission__lte=self.default_role.permission,
@@ -127,6 +128,9 @@ class OrganizationModule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.organization.name} {self.module.name}"
+
     def validate_unique(self, exclude):
         if (
             self.__class__.objects.filter(
@@ -155,6 +159,9 @@ class UserModuleRole(models.Model):
     role = models.ForeignKey("Role", on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} {self.module.name} {self.role.permission}"
 
 
 class Module(models.Model):
@@ -216,7 +223,7 @@ class Role(models.Model):
         ]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.organization.name}"
 
 
 class Currency(models.Model):
@@ -228,5 +235,6 @@ class Currency(models.Model):
 
     code = models.CharField(max_length=3)
     symbol = models.CharField(max_length=1)
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

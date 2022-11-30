@@ -24,7 +24,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
         <div className="icon-Container">
           <img
             className="profile-pic"
-            src={employeeData?.user?.avatar}
+            src={employeeData?.user?.image}
             alt="profile pic"
           />
         </div>
@@ -69,7 +69,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
                   background: "transparent",
                 }}
               />
-              {employeeData?.contact_number}
+              {employeeData?.user.contact_number}
             </div>
           </div>
         </div>

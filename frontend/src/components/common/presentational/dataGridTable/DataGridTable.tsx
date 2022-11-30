@@ -59,7 +59,7 @@ function DataGridTable() {
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row.avatar}`}
+              src={`${cellValues.row.image}`}
               alt="profile pic"
             />
             <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>

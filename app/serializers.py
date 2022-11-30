@@ -13,11 +13,22 @@ class DegreeSerializer(serializers.ModelSerializer):
         model = models.Degree
         fields = ["employee", "program", "institute", "year"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = instance.program.name
+        data["institute"] = instance.institute.name
+        return data
+
 
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["employee", "title", "company", "start_date", "end_date"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["company"] = instance.company.name
+        return data
 
 
 class BenefitSerializer(serializers.ModelSerializer):
@@ -56,14 +67,49 @@ class InstitueSerializer(serializers.ModelSerializer):
         exclude = ("organization",)
 
 
-class EmployeeUserSerializer(serializers.ModelSerializer):
-    avatar = serializers.SerializerMethodField()
+class CompensationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationType
+        exclude = ("organization",)
 
+
+class CompensationScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationSchedule
+        exclude = ("organization",)
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Currency
+        exclude = ("organization",)
+
+
+class DocumentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DocumentType
+        exclude = ("organization",)
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Role
+        exclude = ("organization",)
+
+
+class EmployeeUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ["first_name", "last_name", "email", "avatar", "contact_number"]
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
 
-    def get_avatar(self, data):
+    def get_image(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
@@ -107,13 +153,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop("user")
         organization = self.context.get("request").user.organization
         user_serializer = EmployeeUserSerializer(data=user_data)
-        if user_serializer.is_valid():
+        if user_serializer.is_valid(raise_exception=True):
             user = models.User.objects.create(**user_serializer.validated_data)
             user.username = user.email
             user.organization = organization
             user.save()
-        validated_data["user_id"] = user.id
-        return super().create(validated_data)
+            validated_data["user_id"] = user.id
+            return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -135,7 +181,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
     contact_number = serializers.CharField(source="user.contact_number", read_only=True)
-    avatar = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Employee
@@ -146,10 +192,10 @@ class EmployeeListSerializer(serializers.ModelSerializer):
             "last_name",
             "contact_number",
             "date_of_joining",
-            "avatar",
+            "image",
         ]
 
-    def get_avatar(self, data):
+    def get_image(self, data):
         return f"{settings.DOMAIN_NAME}{data.user.image.url}"
 
 
@@ -214,7 +260,6 @@ class MeSerializer(serializers.ModelSerializer):
         source="organization.name",
         default="",
     )
-    avatar = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
@@ -223,13 +268,13 @@ class MeSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "organization",
-            "avatar",
+            "image",
             "is_superuser",
             "headline",
             "contact_number",
         ]
 
-    def get_avatar(self, data):
+    def get_image(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
