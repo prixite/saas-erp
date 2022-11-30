@@ -1,0 +1,5 @@
+.dashboardSkeleton {
+  .MuiSkeleton-root::after {
+    background: linear-gradient(90deg, #ffb4b461, #ec67675c, #ffb4b43b);
+  }
+}

@@ -4,3 +4,5 @@ export const capitalizeFirstLowercaseRest = (str: string) => {
 
 export const objectToArray = (object) =>
   Object.keys(object).map((key) => object[key]);
+
+export const mobileWidth = 600;
