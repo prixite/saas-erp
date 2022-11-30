@@ -128,13 +128,13 @@ class DocumentTestCase(BaseTestCase):
 class BenefitsTestCase(BaseTestCase):
     def test_document_get(self):
         self.client.force_login(self.owner)
-        response = self.client.get(f"/api/benefits/")
+        response = self.client.get("/api/benefits/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_document_post(self):
         self.client.force_login(self.owner)
         benefit_data = {"name": "PAid leaves"}
-        response = self.client.post(f"/api/benefits/", data=benefit_data)
+        response = self.client.post("/api/benefits/", data=benefit_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
