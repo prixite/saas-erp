@@ -17,7 +17,6 @@ function AdditionalInformation() {
   const { data: employeeData } = useGetEmployeeDataQuery({
     id: parseInt(paramValue),
   });
-
   useEffect(() => {
     if (param.employeeId) {
       setParamValue(param.employeeId);
