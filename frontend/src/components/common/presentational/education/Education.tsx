@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Divider, Grid, Typography } from "@mui/material";
+import moment from "moment";
 import { useParams } from "react-router-dom";
 import CompanyIconThree from "@src/assets/svgs/CompanyIconThree.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
@@ -113,7 +114,7 @@ function Education() {
                       </Grid>
                       <Grid item className="year">
                         <Typography variant="body1" className="text-cls">
-                          {degree?.year}
+                          {moment(degree?.year).year()}
                         </Typography>
                       </Grid>
                     </Grid>
