@@ -151,15 +151,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
         organization = self.context.get("request").user.organization
-        user_serializer = EmployeeUserSerializer(data=user_data)
-        if user_serializer.is_valid(raise_exception=True):
-            user = models.User.objects.create(**user_serializer.validated_data)
-            user.username = user.email
-            user.organization = organization
-            user.save()
-            validated_data["user_id"] = user.id
-            return super().create(validated_data)
+        user_ser = EmployeeUserSerializer(data=user_data)
+
+        user_ser.is_valid(raise_exception=True)
+        user = user_ser.save()
+
+        user.username = user.email
+        user.organization = organization
+        user.save()
+        validated_data["user_id"] = user.id
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

@@ -1,5 +1,4 @@
 def accessible_modules(request):
-    print("CONTEXT:::::::::::::::::::")
 
     allowed_modules = []
 
