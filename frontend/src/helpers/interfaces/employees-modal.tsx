@@ -61,3 +61,11 @@ export interface User {
   last_name: string;
   organization: string;
 }
+export interface Flags {
+  show_users_module: string;
+  show_employees_module: string;
+  show_payroll_module: string;
+  show_accounts_module: string;
+  show_dashboard_module: boolean;
+  show_setting_module: string;
+}
