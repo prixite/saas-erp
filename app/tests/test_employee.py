@@ -5,34 +5,16 @@ from app.tests.base import BaseTestCase
 
 
 class EmployeeTestCase(BaseTestCase):
-    def test_employee_list(self):
-        self.client.force_login(self.super_user)
-        response = self.client.get("/api/employees/")
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 11)
-        self.assertEqual(
-            list(response.json()[0].keys()),
-            [
-                "id",
-                "org_id",
-                "first_name",
-                "last_name",
-                "contact_number",
-                "date_of_joining",
-                "avatar",
-            ],
-        )
-
     def test_employee_post(self):
-        self.client.force_login(self.super_user)
+        self.client.force_login(self.owner)
 
         employee_data = {
             "user": {
                 "first_name": "John",
                 "last_name": "Doe",
-                "email": "user@example.com",
-                "contact_number": "234424432",
+                "email": "employee@example.com",
+                "contact_number": "+424234424432",
+                "default_role": self.member_role.id,
             },
             "nic": "213342343242",
             "date_of_joining": "2022-11-15",
@@ -42,12 +24,13 @@ class EmployeeTestCase(BaseTestCase):
         }
 
         response = self.client.post("/api/employees/", data=employee_data)
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         employee_data.pop("user")
         self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
 
     def test_employee_detail(self):
-        self.client.force_login(self.super_user)
+        self.client.force_login(self.owner)
         response = self.client.get(f"/api/employees/{self.employee.id}/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -58,7 +41,6 @@ class EmployeeTestCase(BaseTestCase):
                 "user",
                 "degrees",
                 "experience",
-                "benefits",
                 "org_id",
                 "total_experience",
                 "nic",
@@ -68,23 +50,49 @@ class EmployeeTestCase(BaseTestCase):
                 "user_allowed",
                 "created_at",
                 "updated_at",
-                "organization",
                 "department",
                 "manager",
                 "type",
+                "benefits",
+                "organization",
             ],
         )
 
-
-class CompensationTestCase(BaseTestCase):
-    def test_compensation_get(self):
-        self.client.force_login(self.super_user)
-        response = self.client.get(f"/api/employees/{self.employee.id}/compensation/")
+    def test_employee_list(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/employees/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 2)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "org_id",
+                "first_name",
+                "last_name",
+                "contact_number",
+                "date_of_joining",
+                "image",
+            ],
+        )
 
+    def test_employee_detail_negative(self):
+        self.client.force_login(self.org_user_2)
+        response = self.client.get(f"/api/employees/{self.employee.id}/")
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_employee_list_neagtive(self):
+        self.client.force_login(self.super_user)
+        response = self.client.get("/api/employees/")
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class CompensationTestCase(BaseTestCase):
     def test_compensation_post(self):
-        self.client.force_login(self.org_user)
+        self.client.force_login(self.owner)
 
         compensation_data = {
             "rate": "10",
@@ -102,16 +110,22 @@ class CompensationTestCase(BaseTestCase):
             models.Compensation.objects.filter(employee=self.employee.id).exists()
         )
 
+    def test_compensation_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/employees/{self.employee.id}/compensation/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class DocumentTestCase(BaseTestCase):
     def test_document_get(self):
-        self.client.force_login(self.super_user)
+        self.client.force_login(self.owner)
         response = self.client.get(f"/api/employees/{self.employee.id}/documents/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_document_post(self):
-        self.client.force_login(self.super_user)
+        self.client.force_login(self.owner)
         doc_data = {
             "name": "Experience letter",
             "type": self.document_type.id,
@@ -122,3 +136,214 @@ class DocumentTestCase(BaseTestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class BenefitsTestCase(BaseTestCase):
+    def test_benefits_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/benefits/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_benefit_post(self):
+        self.client.force_login(self.owner)
+        benefit_data = {"name": "Paid leaves"}
+        response = self.client.post("/api/benefits/", data=benefit_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class CompanyTestCase(BaseTestCase):
+    def test_companies_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/companies/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_company_post(self):
+        self.client.force_login(self.owner)
+        company_data = {"name": "Netsol"}
+        response = self.client.post("/api/companies/", data=company_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class CompensationTypeTestCase(BaseTestCase):
+    def test_compensation_types_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/compensation_type/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_compensation_type_post(self):
+        self.client.force_login(self.owner)
+        compensation_type_data = {
+            "name": "Hourly compensation",
+            "is_hourly": True,
+        }
+        response = self.client.post(
+            "/api/compensation_type/", data=compensation_type_data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class CompensationScheduleTestCase(BaseTestCase):
+    def test_compensation_schedules_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/compensation_schedule/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_compensation_schedule_post(self):
+        self.client.force_login(self.owner)
+        compensation_schedule_data = {
+            "name": "Weekly Schedule",
+            "is_weekly": True,
+        }
+        response = self.client.post(
+            "/api/compensation_schedule/", data=compensation_schedule_data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class CurrencyTestCase(BaseTestCase):
+    def test_currencies_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/currency/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_currency_post(self):
+        self.client.force_login(self.owner)
+        currency_data = {"code": "USD", "symbol": "$"}
+        response = self.client.post("/api/currency/", data=currency_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class DegreeTestCase(BaseTestCase):
+    def test_degree_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/degrees/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_degrees_post(self):
+        self.client.force_login(self.owner)
+        degree_data = {
+            "employee": self.employee.id,
+            "program": self.program.id,
+            "institute": self.institute.id,
+            "year": "2022-11-30",
+        }
+        response = self.client.post("/api/degrees/", data=degree_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class DepartmentTestCase(BaseTestCase):
+    def test_departments_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/department/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_department_post(self):
+        self.client.force_login(self.owner)
+        department_data = {"name": "Frontend"}
+        response = self.client.post("/api/department/", data=department_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class DocumentTypeTestCase(BaseTestCase):
+    def test_document_types_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/document_type/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_document_type_post(self):
+        self.client.force_login(self.owner)
+        document_type_data = {"name": "Contracts"}
+        response = self.client.post("/api/document_type/", data=document_type_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class EmployeementTypeTestCase(BaseTestCase):
+    def test_employeement_types_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/employeement_type/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_employeement_type_post(self):
+        self.client.force_login(self.owner)
+        employeement_type_data = {"name": "Contracts"}
+        response = self.client.post(
+            "/api/employeement_type/", data=employeement_type_data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class ExperienceTestCase(BaseTestCase):
+    def test_experiencies_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/experiences/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_experiences_post(self):
+        self.client.force_login(self.owner)
+        experience_data = {
+            "employee": self.employee.id,
+            "title": "Internee",
+            "company": self.company.id,
+            "start_date": "2018-11-30",
+            "end_date": "2022-11-30",
+        }
+        response = self.client.post("/api/experiences/", data=experience_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class InstitueTestCase(BaseTestCase):
+    def test_institue_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/institues/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_institues_post(self):
+        self.client.force_login(self.owner)
+        institue_data = {"name": "NUST"}
+        response = self.client.post("/api/institues/", data=institue_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class ProgamTestCase(BaseTestCase):
+    def test_programs_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/programs/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_program_post(self):
+        self.client.force_login(self.owner)
+        program_data = {"name": "NUST"}
+        response = self.client.post("/api/programs/", data=program_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class RoleTestCase(BaseTestCase):
+    def test_programs_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/role/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

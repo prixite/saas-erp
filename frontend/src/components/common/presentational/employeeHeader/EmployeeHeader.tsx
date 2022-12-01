@@ -24,7 +24,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
         <div className="icon-Container">
           <img
             className="profile-pic"
-            src={employeeData?.user?.avatar}
+            src={employeeData?.user?.image}
             alt="profile pic"
           />
         </div>

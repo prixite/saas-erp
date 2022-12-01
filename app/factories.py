@@ -1,7 +1,4 @@
-import random
-
 import factory
-from django.utils import timezone
 from faker import Faker
 
 from app import models
@@ -9,13 +6,8 @@ from app import models
 fake = Faker()
 fake.seed_instance(1234)
 
-dummy_grades = ["A", "B", "C", "D"]
-
 
 class UserFactory(factory.django.DjangoModelFactory):
-    email = factory.Sequence(lambda x: fake.unique.email())
-    username = factory.LazyAttribute(lambda x: x.email)
-
     class Meta:
         model = models.User
 
@@ -29,48 +21,41 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class OrganizationFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("company")
-    address = factory.Faker("address")
-
     class Meta:
         model = models.Organization
 
 
-class EmployeeFactory(factory.django.DjangoModelFactory):
-    user = factory.SubFactory(factory=UserFactory)
-    emergency_contact_number = factory.Faker("phone_number", locale="hi_IN")
-    date_of_joining = factory.Faker("date")
-    designation = factory.Faker("job")
-    nic = factory.Faker("random_number", digits=13)
-    organization = factory.iterator(models.Organization.objects.all)
-    compensation = factory.RelatedFactory(
-        "app.factories.CompensationFactory",
-        rate=random.randint(10, 50),
-        factory_related_name="employee",
-    )
-    degrees = factory.RelatedFactory(
-        "app.factories.DegreeFactory",
-        factory_related_name="employee",
-    )
+class OrganizationModuleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.OrganizationModule
 
+
+class EmployeeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Employee
 
 
-class DepartmentFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
+class ModuleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Module
 
+
+class RoleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Role
+
+
+class UserModuleRoleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.UserModuleRole
+
+
+class DepartmentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Department
 
 
 class EmploymentTypeFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
-
     class Meta:
         model = models.EmploymentType
 
@@ -81,13 +66,6 @@ class CurrencyFactory(factory.django.DjangoModelFactory):
 
 
 class CompensationFactory(factory.django.DjangoModelFactory):
-    max_hours_per_week = 40
-    expected_hours_per_week = 38
-    compensation_type = factory.iterator(models.CompensationType.objects.all)
-    compensation_schedule = factory.iterator(models.CompensationSchedule.objects.all)
-    currency = factory.iterator(models.Currency.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
-
     class Meta:
         model = models.Compensation
 
@@ -103,43 +81,25 @@ class CompensationScheduleFactory(factory.django.DjangoModelFactory):
 
 
 class ProgramFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
-
     class Meta:
         model = models.Program
 
 
 class InstituteFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
-
     class Meta:
         model = models.Institute
 
 
 class DegreeFactory(factory.django.DjangoModelFactory):
-    employee = factory.iterator(models.Employee.objects.all)
-    program = factory.SubFactory(
-        "app.factories.ProgramFactory",
-    )
-    institute = factory.iterator(models.Institute.objects.all)
-    grade = factory.Sequence(
-        lambda x: fake.sentence(nb_words=1, ext_word_list=dummy_grades)
-    )
-    year = factory.Faker("date_time")
-    updated_at = factory.LazyFunction(timezone.now)
-
     class Meta:
         model = models.Degree
 
 
-class DocumentTypeFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("name")
-    organization = factory.iterator(models.Organization.objects.all)
-    updated_at = factory.LazyFunction(timezone.now)
+class CompanyFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Company
 
+
+class DocumentTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.DocumentType
