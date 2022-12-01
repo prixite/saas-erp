@@ -15,3 +15,4 @@ venv
 /media
 /static
 webpack-stats.json
+htmlcov/
