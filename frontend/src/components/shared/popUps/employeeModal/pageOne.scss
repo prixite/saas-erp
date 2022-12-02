@@ -1,0 +1,53 @@
+.pageone-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 10px;
+  .grid-container-cls {
+    .grid-item-cls {
+      .text-field-box {
+        .text-field-cls {
+          .MuiOutlinedInput-notchedOutline {
+            border: 1px solid #d4d6db;
+          }
+          .MuiFormLabel-root-MuiInputLabel-root {
+            color: #6c6c6c;
+          }
+          input {
+            border: 1px solid transparent;
+          }
+          .textfield_label {
+            color: #6c6c6c;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: -0.011em;
+          }
+        }
+      }
+    }
+  }
+  .switch-section {
+    .switch-cls {
+      display: flex;
+      align-items: center;
+    }
+    .checkbox-section {
+      margin-top: 19px;
+
+      .checkbox-cls {
+        .MuiFormGroup-root {
+          margin-right: 20px;
+          .MuiFormControlLabel-root {
+            margin-right: 133px;
+            margin-left: 10px;
+          }
+          .label-cls {
+            color: red;
+            font-weight: 400;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
