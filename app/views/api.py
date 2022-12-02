@@ -212,4 +212,7 @@ class WaffleApiView(APIView):
     def get(self, request, *args, **kwargs):
         switches = get_waffle_switch_model().get_all()
         switche_serializer = serializers.WaffleSerializer(switches, many=True)
-        return Response(switche_serializer.data)
+        response = []
+        for x in switche_serializer.data:
+            response.append({x.get("name"): x.get("active")})
+        return Response(response)
