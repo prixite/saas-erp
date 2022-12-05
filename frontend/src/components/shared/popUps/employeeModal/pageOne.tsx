@@ -154,11 +154,11 @@ const PageOne = () => {
               className="text-field-cls"
               options={assets}
               getOptionLabel={(option) => option.title}
+              defaultValue={[assets[0]]}
               filterSelectedOptions
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  InputProps={{ sx: { height: 56 } }}
                   InputLabelProps={{ className: "textfield_label" }}
                   label={employeeAssetLabel}
                   placeholder={employeeAssetLabel}
