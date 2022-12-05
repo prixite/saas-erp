@@ -37,6 +37,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     experience,
     createEmployeeBack,
     createEmployeeSave,
+    addNewEducation,
     education,
     addNewExperience,
   } = constantData.Modals;
@@ -199,22 +200,41 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
               </Box>
             </Box>
           ) : (
-            <>
-              <Button className="resetBtn" onClick={() => setPage("2")}>
-                <span>
-                  {" "}
-                  <img className="reset-img" src={backIcon} alt="reset" />
-                </span>{" "}
-                {createEmployeeBack}
-              </Button>
-              <Button onClick={moveToNextPage} className="submitBtn">
-                {createEmployeeSave}
-                <span>
-                  {" "}
-                  <img className="submit-img" src={submitIcon} alt="submit" />
-                </span>{" "}
-              </Button>
-            </>
+            <Box className="actions-btns-wrapper">
+              <Box className="add-new-sec">
+                <Button className="upload-btn">
+                  <span>
+                    {" "}
+                    <img className="upload-img" src={uploadIcon} alt="doc" />
+                  </span>{" "}
+                  {addNewEducation}
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  className="resetBtn"
+                  onClick={() => setPage("2")}
+                  sx={{ mr: "12px" }}
+                >
+                  <span>
+                    {" "}
+                    <img className="reset-img" src={backIcon} alt="reset" />
+                  </span>{" "}
+                  {createEmployeeBack}
+                </Button>
+                <Button
+                  onClick={moveToNextPage}
+                  className="submitBtn"
+                  sx={{ m: "0px" }}
+                >
+                  {createEmployeeSave}
+                  <span>
+                    {" "}
+                    <img className="submit-img" src={submitIcon} alt="submit" />
+                  </span>{" "}
+                </Button>
+              </Box>
+            </Box>
           )}
         </DialogActions>
       </Dialog>
