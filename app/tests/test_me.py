@@ -20,5 +20,6 @@ class MeTestCase(BaseTestCase):
                 "is_superuser",
                 "headline",
                 "contact_number",
+                "allowed_modules",
             ],
         )
