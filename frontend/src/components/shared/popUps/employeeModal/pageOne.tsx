@@ -281,7 +281,7 @@ const PageOne = () => {
           />
           <Typography
             sx={{
-              color: "black",
+              color: checked ? "black" : "#6C6C6C",
               fontSize: "16px",
               fontWeight: "400",
               ml: "10px",
