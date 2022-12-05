@@ -108,7 +108,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="employee-text">
-              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
+              {employeeData?.manager || ""}
             </Typography>
           </Grid>
 

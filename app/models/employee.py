@@ -14,7 +14,7 @@ class Employee(models.Model):
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
-    benefits = models.ManyToManyField("Benefit")
+    benefits = models.ManyToManyField("Benefit", blank=True)
     type = models.ForeignKey(
         "EmploymentType",
         on_delete=models.PROTECT,
@@ -122,6 +122,7 @@ class Institute(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="institutes", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -190,6 +191,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="companies", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

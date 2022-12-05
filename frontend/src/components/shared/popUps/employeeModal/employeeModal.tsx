@@ -176,7 +176,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
               <Box>
                 <Button
                   className="resetBtn"
-                  onClick={handleClose}
+                  onClick={() => setPage("1")}
                   sx={{ mr: "12px" }}
                 >
                   <span>
@@ -200,12 +200,12 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
             </Box>
           ) : (
             <>
-              <Button className="resetBtn" onClick={handleClose}>
+              <Button className="resetBtn" onClick={() => setPage("2")}>
                 <span>
                   {" "}
                   <img className="reset-img" src={backIcon} alt="reset" />
                 </span>{" "}
-                {createEmployeeClose}
+                {createEmployeeBack}
               </Button>
               <Button onClick={moveToNextPage} className="submitBtn">
                 {createEmployeeSave}

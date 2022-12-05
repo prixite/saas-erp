@@ -154,8 +154,8 @@ const PageOne = () => {
               className="text-field-cls"
               options={assets}
               getOptionLabel={(option) => option.title}
-              filterSelectedOptions
               defaultValue={[assets[0]]}
+              filterSelectedOptions
               renderInput={(params) => (
                 <TextField
                   {...params}

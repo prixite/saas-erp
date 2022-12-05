@@ -19,16 +19,23 @@ export interface Experience {
   start_date: string;
   end_date: string;
 }
+export type Benefit = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
 export interface EmployeeData {
   id: number;
   user: {
     first_name: string;
     last_name: string;
     email: string;
-    avatar: string;
+    image: string;
+    contact_number: string;
   };
   total_experience: string;
-  benefits: string[];
+  benefits: Benefit[];
   experience: Experience[];
   degrees: Education[];
   contact_number: string;
@@ -38,6 +45,7 @@ export interface EmployeeData {
   emergency_contact_number: string;
   organization: number;
   type: number;
+  manager?: string;
   department: number;
   org_id: string;
 }
@@ -53,11 +61,19 @@ export interface EmployeeDoc {
 }
 
 export interface User {
-  avatar: string;
+  image: string;
   email: string;
   first_name: string;
   headline: string;
   is_superuser: boolean;
   last_name: string;
   organization: string;
+}
+export interface Flags {
+  show_users_module: string;
+  show_employees_module: string;
+  show_payroll_module: string;
+  show_accounts_module: string;
+  show_dashboard_module: boolean;
+  show_setting_module: string;
 }
