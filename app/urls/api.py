@@ -54,4 +54,8 @@ urlpatterns = [
         "flags/",
         api.WaffleApiView.as_view(),
     ),
+    path(
+        "slack/events/",
+        api.SlackApiView.as_view(),
+    ),
 ]

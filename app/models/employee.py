@@ -21,6 +21,8 @@ class Employee(models.Model):
         null=True,
     )
 
+    slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
+
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

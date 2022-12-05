@@ -8,8 +8,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from waffle import get_waffle_switch_model
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+from datetime import datetime
+
+import pprint
 
 from app import models, serializers
+from project.settings import SLACK_TOKEN, SLACK_SIGNING_SECRET
+
+import slack
+from slackeventsapi import SlackEventAdapter
+
+slack_enevt_adapter = SlackEventAdapter(SLACK_SIGNING_SECRET, "/api/slack/events/")
+
+client = slack.WebClient(token=SLACK_TOKEN)
+# client = slack.WebClient(token="SLACK_TOKEN")
 
 
 @method_decorator(login_required, name="dispatch")
@@ -102,3 +116,24 @@ class WaffleApiView(APIView):
         switches = get_waffle_switch_model().get_all()
         switche_serializer = serializers.WaffleSerializer(switches, many=True)
         return Response(switche_serializer.data)
+
+
+class SlackApiView(APIView):
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        pprint.pprint(request.data)
+        slack_id = request.data.get("event").get("user")
+        try:
+            employee1 = models.Employee.objects.get(slack_id=slack_id)
+            # print("I found employee:::::::", employee1)
+        except models.Employee.DoesNotExist:
+            user_info = client.users_info(user=slack_id)
+            employee = get_object_or_404(
+                models.Employee,
+                user__email=user_info.get("user").get("profile").get("email"),
+            )
+            employee.slack_id = slack_id
+            employee.save()
+            # print("I found user:::::::", employee)
+
+        return Response(request.data.get("challenge"))
