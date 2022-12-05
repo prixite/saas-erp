@@ -5,11 +5,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import backIcon from "@src/assets/svgs/back.svg";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import "@src/components/shared/popUps/employeeModal/employeeModal.scss";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import lineIcon from "@src/assets/svgs/line.svg";
 import lineredIcon from "@src/assets/svgs/linered.svg";
+import uploadIcon from "@src/assets/svgs/plus.svg";
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
@@ -33,7 +35,10 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     stepThree,
     basicInformation,
     experience,
+    createEmployeeBack,
+    createEmployeeSave,
     education,
+    addNewExperience,
   } = constantData.Modals;
   const [page, setPage] = useState("1");
 
@@ -136,20 +141,81 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           </Box>
         </DialogContent>
         <DialogActions className="EmployeeModal__Actions">
-          <Button className="resetBtn" onClick={handleClose}>
-            <span>
-              {" "}
-              <img className="reset-img" src={crossIcon} alt="reset" />
-            </span>{" "}
-            {createEmployeeClose}
-          </Button>
-          <Button onClick={moveToNextPage} className="submitBtn">
-            {createEmployeeNext}
-            <span>
-              {" "}
-              <img className="submit-img" src={submitIcon} alt="submit" />
-            </span>{" "}
-          </Button>
+          {page === "1" ? (
+            <>
+              <Button className="resetBtn" onClick={handleClose}>
+                <span>
+                  {" "}
+                  <img className="reset-img" src={crossIcon} alt="reset" />
+                </span>{" "}
+                {createEmployeeClose}
+              </Button>
+              <Button
+                onClick={moveToNextPage}
+                className="submitBtn"
+                sx={{ ml: "12px !important" }}
+              >
+                {createEmployeeNext}
+                <span>
+                  {" "}
+                  <img className="submit-img" src={submitIcon} alt="submit" />
+                </span>{" "}
+              </Button>
+            </>
+          ) : page === "2" ? (
+            <Box className="actions-btns-wrapper">
+              <Box className="add-new-sec">
+                <Button className="upload-btn">
+                  <span>
+                    {" "}
+                    <img className="upload-img" src={uploadIcon} alt="doc" />
+                  </span>{" "}
+                  {addNewExperience}
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  className="resetBtn"
+                  onClick={() => setPage("1")}
+                  sx={{ mr: "12px" }}
+                >
+                  <span>
+                    {" "}
+                    <img className="reset-img" src={backIcon} alt="reset" />
+                  </span>{" "}
+                  {createEmployeeBack}
+                </Button>
+                <Button
+                  onClick={moveToNextPage}
+                  className="submitBtn"
+                  sx={{ m: "0px" }}
+                >
+                  {createEmployeeNext}
+                  <span>
+                    {" "}
+                    <img className="submit-img" src={submitIcon} alt="submit" />
+                  </span>{" "}
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <>
+              <Button className="resetBtn" onClick={() => setPage("2")}>
+                <span>
+                  {" "}
+                  <img className="reset-img" src={backIcon} alt="reset" />
+                </span>{" "}
+                {createEmployeeBack}
+              </Button>
+              <Button onClick={moveToNextPage} className="submitBtn">
+                {createEmployeeSave}
+                <span>
+                  {" "}
+                  <img className="submit-img" src={submitIcon} alt="submit" />
+                </span>{" "}
+              </Button>
+            </>
+          )}
         </DialogActions>
       </Dialog>
     </>

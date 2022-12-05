@@ -94,6 +94,7 @@
       "createEmployeeClose": "Close",
       "createEmployeeNext": "Next",
       "createEmployeeSave": "Save",
+      "createEmployeeBack": "Back",
       "employeeNameLabel": "Name",
       "employeeEmailLabel": "Email Address",
       "employeePhoneLabel": "Phone Number",
@@ -112,7 +113,21 @@
       "stepThree": "Step 3.",
       "basicInformation":"Basic Information",
       "experience":"Experience",
-      "education":"Education"
+      "education":"Education",
+      "addNewExperience":"Add New Experience",
+      "addNewEducation":"Add New Education",
+      "uploadExperienceLetter": "Upload Experience Letter",
+      "uploadReleventDegree": "Upload Relevent Degree",
+      "CurrentlyWorking": "Currently working here.",
+      "CurrentlyProgress": "Currently InProgress.",
+      "employeeCompnay": "Company",
+      "dateStart": "Date Started",
+      "dateEnd": "Date Ended",
+      "employeeDegree": "Degree",
+      "employeeUniveristy": "University"
+
+
+
 
 
 

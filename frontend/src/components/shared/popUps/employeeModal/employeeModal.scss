@@ -112,5 +112,30 @@
         display: flex;
       }
     }
+    .actions-btns-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .add-new-sec {
+        .upload-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 12px;
+          opacity: 0.5;
+          color: #aaaaaa;
+          text-transform: capitalize;
+          font-size: 16px;
+          font-weight: 500;
+          width: 100%;
+          .upload-img {
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            display: flex;
+          }
+        }
+      }
+    }
   }
 }
