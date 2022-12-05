@@ -88,8 +88,36 @@
       "filterResetBtn":"Reset",
       "filterSubmitBtn":"Submit",
       "filterNameLabel":"Please Enter Name",
-      "filterDesignationLabel":"Please Enter Designation"
+      "filterDesignationLabel":"Please Enter Designation",
+      "createEmployeeHeading": "Create an Employee",
+      "createEmployeeSubheading": "Fill the following fields to add an employee",
+      "createEmployeeClose": "Close",
+      "createEmployeeNext": "Next",
+      "createEmployeeSave": "Save",
+      "employeeNameLabel": "Name",
+      "employeeEmailLabel": "Email Address",
+      "employeePhoneLabel": "Phone Number",
+      "employeeCnicLabel": "CNIC",
+      "employeeDateLabel": "Date Started",
+      "employeeManagerLabel": "Manager",
+      "employeeDesignationLabel": "Designation",
+      "employeeSalaryLabel": "Salary",
+      "employeeManagingLabel": "Managing",
+      "employeeEmployementLabel": "Employment Type",
+      "employeeAssetLabel": "Assets",
+      "employeeEmergencyContactLabel": "Emergency Contact",
+      "employeeCompensationLabel": "Compensation & Benefits",
+      "stepOne": "Step 1.",
+      "stepTwo": "Step 2.",
+      "stepThree": "Step 3.",
+      "basicInformation":"Basic Information",
+      "experience":"Experience",
+      "education":"Education"
+
+
+
     },
+
     "EditBenefitModal":{
       "Heading":"Compensation & Benefits",
       "HeadingText":"While adding compensation please do add comments",

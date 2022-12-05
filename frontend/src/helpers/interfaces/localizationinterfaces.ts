@@ -30,6 +30,30 @@ export interface modalsInterface {
   filterSubmitBtn: string;
   filterNameLabel: string;
   filterDesignationLabel: string;
+  createEmployeeHeading: string;
+  createEmployeeSubheading: string;
+  createEmployeeClose: string;
+  createEmployeeNext: string;
+  createEmployeeSave: string;
+  employeeNameLabel: string;
+  employeeEmailLabel: string;
+  employeePhoneLabel: string;
+  employeeCnicLabel: string;
+  employeeDateLabel: string;
+  employeeManagerLabel: string;
+  employeeDesignationLabel: string;
+  employeeSalaryLabel: string;
+  employeeManagingLabel: string;
+  employeeEmployementLabel: string;
+  employeeAssetLabel: string;
+  employeeEmergencyContactLabel: string;
+  employeeCompensationLabel: string;
+  stepOne: string;
+  stepTwo: string;
+  stepThree: string;
+  basicInformation: string;
+  experience: string;
+  education: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
