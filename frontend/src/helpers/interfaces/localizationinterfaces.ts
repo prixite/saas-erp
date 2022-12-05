@@ -35,6 +35,7 @@ export interface modalsInterface {
   createEmployeeClose: string;
   createEmployeeNext: string;
   createEmployeeSave: string;
+  createEmployeeBack: string;
   employeeNameLabel: string;
   employeeEmailLabel: string;
   employeePhoneLabel: string;
@@ -54,6 +55,17 @@ export interface modalsInterface {
   basicInformation: string;
   experience: string;
   education: string;
+  addNewExperience: string;
+  addNewEducation: string;
+  uploadExperienceLetter: string;
+  uploadReleventDegree: string;
+  CurrentlyWorking: string;
+  CurrentlyProgress: string;
+  employeeCompnay: string;
+  dateStart: string;
+  dateEnd: string;
+  employeeDegree: string;
+  employeeUniveristy: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
