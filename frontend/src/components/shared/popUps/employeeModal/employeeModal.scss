@@ -1,0 +1,141 @@
+.EmployeeModal {
+  .MuiDialog-paper {
+    width: 776px;
+    height: auto;
+    align-items: center;
+    box-shadow: unset;
+    border-radius: 12px;
+  }
+  .MuiDialogTitle-root + .MuiDialogContent-root {
+    padding-bottom: 0px;
+  }
+  .MuiDialogTitle-root {
+    width: 100%;
+    padding-bottom: 0px;
+    .modal-header-cls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .heading-text-box {
+        .heading-text {
+          font-weight: 600;
+          font-size: 20px;
+          color: #000;
+        }
+        .subheading-text {
+          font-weight: 400;
+          font-size: 14px;
+          color: #6c6c6c;
+        }
+      }
+      .cross-icon-box {
+        cursor: pointer;
+        height: 42px;
+        width: 42px;
+        border: 1px solid #ebebeb;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f5f5;
+      }
+    }
+    .steps-btns-cls {
+      margin-top: 32px;
+      display: flex;
+      .step-box {
+        width: 232px;
+        .step-cls {
+          font-weight: 400;
+          font-size: 12px;
+          color: #6c6c6c;
+        }
+        .step-value-cls {
+          font-weight: 700;
+          font-size: 16px;
+          color: #6c6c6c;
+        }
+        .divider-cls {
+          color: #ff2f2f;
+          width: 97%;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  &__Content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  &__Actions {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    .resetBtn {
+      color: black;
+      background: white;
+      width: 123;
+      height: 48px;
+      padding: 13px 20px;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid #e7e7e7;
+      text-transform: capitalize;
+      border-radius: 12px;
+      &:hover {
+        background: white;
+        color: grey;
+      }
+      .reset-img {
+        margin-right: 10px;
+        display: flex;
+      }
+    }
+    .submitBtn {
+      color: white;
+      background: #ff2f2f;
+      width: 123px;
+      height: 48px;
+      margin-right: 20px;
+      padding: 13px 20px;
+      font-size: 16px;
+      font-weight: 400;
+      border-radius: 12px;
+      text-transform: capitalize;
+      &:hover {
+        background: #ffcdcd;
+        color: white;
+      }
+      .submit-img {
+        margin-left: 10px;
+        display: flex;
+      }
+    }
+    .actions-btns-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .add-new-sec {
+        .upload-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 12px;
+          opacity: 0.5;
+          color: #aaaaaa;
+          text-transform: capitalize;
+          font-size: 16px;
+          font-weight: 500;
+          width: 100%;
+          .upload-img {
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

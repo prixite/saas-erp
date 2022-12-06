@@ -169,7 +169,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
                   {employeeData?.benefits?.map((benefit) => {
                     return (
                       <FormControlLabel
-                        key={benefit}
+                        key={benefit.id}
                         control={
                           <Checkbox
                             disableRipple
@@ -191,7 +191,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
                             sx={{ cursor: "default" }}
                             className="label-cls"
                           >
-                            {benefit}
+                            {benefit.name}
                           </Typography>
                         }
                       />

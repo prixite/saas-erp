@@ -14,9 +14,12 @@ import "@src/components/common/presentational/additionalInformation/additionalIn
 function AdditionalInformation() {
   const param = useParams();
   const [paramValue, setParamValue] = useState<string>("");
-  const { data: employeeData } = useGetEmployeeDataQuery({
-    id: parseInt(paramValue),
-  });
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: parseInt(paramValue),
+    },
+    { skip: !parseInt(paramValue) }
+  );
   useEffect(() => {
     if (param.employeeId) {
       setParamValue(param.employeeId);
@@ -108,7 +111,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="employee-text">
-              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
+              {employeeData?.manager || ""}
             </Typography>
           </Grid>
 

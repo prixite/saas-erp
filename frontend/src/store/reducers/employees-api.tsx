@@ -4,6 +4,7 @@ import {
   Employee,
   EmployeeData,
   User,
+  Flags,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -24,6 +25,9 @@ export const employeesApi = createApi({
     getUser: builder.query<User, void>({
       query: () => `/me`,
     }),
+    getFlags: builder.query<Flags[], void>({
+      query: () => "/flags",
+    }),
   }),
 });
 
@@ -32,4 +36,5 @@ export const {
   useGetEmployeeDataQuery,
   useGetEmployeeDocsQuery,
   useGetUserQuery,
+  useGetFlagsQuery,
 } = employeesApi;

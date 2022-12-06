@@ -23,12 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     SECRET_KEY=(str, ""),
     DEBUG=(bool, True),
-    ALLOWED_HOSTS=(list, []),
+    ALLOWED_HOSTS=(list, ["https://87a1-182-190-254-137.ap.ngrok.io"]),
     DATABASE_URL=(str, ""),
-    CSRF_TRUSTED_ORIGINS=(
-        list,
-        ["https://erp.prixite.com", "https://ee0f-182-190-254-137.in.ngrok.io/"],
-    ),
+    CSRF_TRUSTED_ORIGINS=(list, ["https://erp.prixite.com"]),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
     EMAIL_HOST=(str, None),
     EMAIL_PORT=(int, 587),
@@ -55,8 +52,7 @@ DEBUG = env("DEBUG")
 SLACK_TOKEN = env("SLACK_TOKEN")
 SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 
-# ALLOWED_HOSTS = env("ALLOWED_HOSTS")
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
@@ -190,12 +186,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-#     "DEFAULT_PERMISSION_CLASSES": [
-#         "rest_framework.permissions.IsAuthenticated",
-#     ],
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "The AI powered ERP",

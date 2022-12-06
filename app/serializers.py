@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.conf import settings
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from waffle import get_waffle_switch_model
@@ -8,71 +9,124 @@ from waffle import get_waffle_switch_model
 from app import models
 
 
-class EmployeeListSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source="user.first_name", read_only=True)
-    last_name = serializers.CharField(source="user.last_name", read_only=True)
-    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
-    avatar = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.Employee
-        fields = [
-            "id",
-            "org_id",
-            "first_name",
-            "last_name",
-            "contact_number",
-            "date_of_joining",
-            "avatar",
-        ]
-
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
-
-
-class EmployeeUserSerializer(serializers.ModelSerializer):
-    avatar = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.User
-        fields = ["first_name", "last_name", "email", "avatar", "contact_number"]
-
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
-
-
 class DegreeSerializer(serializers.ModelSerializer):
-    program = serializers.CharField(source="program.name")
-    institute = serializers.CharField(source="institute.name")
-
     class Meta:
         model = models.Degree
-        fields = ["program", "institute", "year"]
+        fields = ["employee", "program", "institute", "year"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = instance.program.name
+        data["institute"] = instance.institute.name
+        return data
 
 
 class ExperirenceSerializer(serializers.ModelSerializer):
-    company = serializers.CharField(source="company.name")
-
     class Meta:
         model = models.Experience
-        fields = ["title", "company", "start_date", "end_date"]
+        fields = ["employee", "title", "company", "start_date", "end_date"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["company"] = instance.company.name
+        return data
+
+
+class BenefitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Benefit
+        exclude = ("organization",)
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Company
+        exclude = ("organization",)
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Program
+        exclude = ("organization",)
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Department
+        exclude = ("organization",)
+
+
+class EmployeementTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.EmploymentType
+        exclude = ("organization",)
+
+
+class InstitueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Institute
+        exclude = ("organization",)
+
+
+class CompensationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationType
+        exclude = ("organization",)
+
+
+class CompensationScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationSchedule
+        exclude = ("organization",)
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Currency
+        exclude = ("organization",)
+
+
+class DocumentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DocumentType
+        exclude = ("organization",)
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Role
+        exclude = ("organization",)
+
+
+class EmployeeUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["image"] = f"{settings.DOMAIN_NAME}{instance.image.url}"
+        return data
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
     degrees = DegreeSerializer(many=True, read_only=True)
     experience = ExperirenceSerializer(many=True, read_only=True)
-    benefits = serializers.SlugRelatedField(
-        slug_field="name", read_only=True, many=True
-    )
     org_id = serializers.CharField(read_only=True)
 
     total_experience = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Employee
-
-        fields = "__all__"
+        exclude = ("organization",)
 
     def get_total_experience(self, data):
         total_days = 0
@@ -97,13 +151,22 @@ class EmployeeSerializer(serializers.ModelSerializer):
         total_experience += f"{months} months" if months > 1 else f"{months} month"
         return total_experience
 
+    @transaction.atomic
     def create(self, validated_data):
         user_data = validated_data.pop("user")
-        user = models.User.objects.create(
-            username=user_data["email"],
-            first_name=user_data["first_name"],
-        )
-        return models.Employee.objects.create(user=user, **validated_data)
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        organization = self.context.get("request").user.organization
+        user_ser = EmployeeUserSerializer(data=user_data)
+
+        user_ser.is_valid(raise_exception=True)
+        user = user_ser.save()
+
+        user.username = user.email
+        user.organization = organization
+        user.save()
+        validated_data["user_id"] = user.id
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -114,7 +177,46 @@ class EmployeeSerializer(serializers.ModelSerializer):
             data["manager"] = instance.manager.user.get_full_name()
         if instance.type:
             data["type"] = instance.type.name
+        if instance.benefits:
+            data["benefits"] = BenefitSerializer(
+                instance.benefits.all(), many=True
+            ).data
         return data
+
+
+class EmployeeListSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.first_name", read_only=True)
+    last_name = serializers.CharField(source="user.last_name", read_only=True)
+    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Employee
+        fields = [
+            "id",
+            "org_id",
+            "first_name",
+            "last_name",
+            "contact_number",
+            "date_of_joining",
+            "image",
+        ]
+
+    def get_image(self, data):
+        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
+
+
+class EmployeeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = [
+            "department",
+            "designation",
+            "manager",
+            "benefits",
+            "type",
+            "user_allowed",
+        ]
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -165,7 +267,10 @@ class MeSerializer(serializers.ModelSerializer):
         source="organization.name",
         default="",
     )
-    avatar = serializers.SerializerMethodField()
+
+    image = serializers.SerializerMethodField()
+
+    allowed_modules = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
@@ -174,13 +279,28 @@ class MeSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "organization",
-            "avatar",
+            "image",
             "is_superuser",
             "headline",
             "contact_number",
+            "allowed_modules",
         ]
 
-    def get_avatar(self, data):
+    def get_allowed_modules(self, data):
+        allowed_modules = set()
+
+        for module in self.context.get("request").user.member_modules:
+            allowed_modules.add(module.slug)
+        for module in self.context.get("request").user.admin_modules:
+            allowed_modules.add(module.slug)
+        for module in self.context.get("request").user.owner_modules:
+            allowed_modules.add(module.slug)
+
+        allowed_modules = list(allowed_modules)
+
+        return allowed_modules
+
+    def get_image(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
@@ -207,6 +327,10 @@ class WaffleSerializer(serializers.ModelSerializer):
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
+
+    time_in = serializers.DateTimeField(format="%x %H:%M:%S")
+    time_out = serializers.DateTimeField(format="%x %H:%M:%S")
+
     class Meta:
         model = models.Attendance
-        exclude = ("organization",)
+        fields = ["employee", "time_in", "time_out"]

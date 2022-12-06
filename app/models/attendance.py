@@ -7,4 +7,5 @@ class Attendance(models.Model):
     time_in = models.DateTimeField(auto_now_add=True)
     time_out = models.DateTimeField(null=True, blank=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
