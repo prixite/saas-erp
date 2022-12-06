@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Grid,
@@ -22,6 +22,7 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 const PageOne = () => {
   const constantData: LocalizationInterface = localizedData();
   const [name, setName] = useState("");
+  const [checked, setChecked] = useState(false);
   const [designation, setDesignation] = useState("");
   const [dateStarted, setDateStarted] = useState<Date | null>(null);
   const [nameError, setNameError] = useState("");
@@ -54,6 +55,9 @@ const PageOne = () => {
       setDesignationError("");
     }
     setDesignation(e.target?.value);
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
   };
   return (
     <Box className="pageone-section">
@@ -272,12 +276,12 @@ const PageOne = () => {
             size="small"
             {...label}
             sx={{ paddingLeft: "5px" }}
-            defaultChecked
-            color="default"
+            checked={checked}
+            onChange={handleChange}
           />
           <Typography
             sx={{
-              color: "black",
+              color: checked ? "black" : "#6C6C6C",
               fontSize: "16px",
               fontWeight: "400",
               ml: "10px",
@@ -286,87 +290,111 @@ const PageOne = () => {
             {employeeCompensationLabel}
           </Typography>
         </Box>
-        <Box
-          className="checkbox-section"
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        {checked ? (
           <Box
-            className="checkbox-cls"
-            sx={{ display: "flex", flexDirection: "column" }}
+            className="checkbox-section"
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" />}
-              label={
-                <Typography
-                  sx={{ color: "#6C6C6C", fontSize: "16px", fontWeight: "400" }}
-                  className="label-cls"
-                >
-                  Meals Allowance
-                </Typography>
-              }
-            />
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" />}
-              label={
-                <Typography
-                  sx={{ color: "#6C6C6C", fontSize: "16px", fontWeight: "400" }}
-                  className="label-cls"
-                >
-                  Fuel Allowance
-                </Typography>
-              }
-            />
+            <Box
+              className="checkbox-cls"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" />}
+                label={
+                  <Typography
+                    sx={{
+                      color: "#6C6C6C",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                    className="label-cls"
+                  >
+                    Meals Allowance
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" />}
+                label={
+                  <Typography
+                    sx={{
+                      color: "#6C6C6C",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                    className="label-cls"
+                  >
+                    Fuel Allowance
+                  </Typography>
+                }
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" checked={true} />}
+                label={
+                  <Typography
+                    sx={{
+                      color: "#6C6C6C",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                    className="label-cls"
+                  >
+                    Dinner Allowance
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" checked={true} />}
+                label={
+                  <Typography sx={{ color: "#6C6C6C" }} className="label-cls">
+                    Phone Allowance
+                  </Typography>
+                }
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" checked={true} />}
+                label={
+                  <Typography
+                    sx={{
+                      color: "#6C6C6C",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                    className="label-cls"
+                  >
+                    Fuel Allowance
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                control={<Checkbox disableRipple size="small" />}
+                label={
+                  <Typography
+                    sx={{
+                      color: "#6C6C6C",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                    className="label-cls"
+                  >
+                    Meal Allowance
+                  </Typography>
+                }
+              />
+            </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" checked={true} />}
-              label={
-                <Typography
-                  sx={{ color: "#6C6C6C", fontSize: "16px", fontWeight: "400" }}
-                  className="label-cls"
-                >
-                  Dinner Allowance
-                </Typography>
-              }
-            />
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" checked={true} />}
-              label={
-                <Typography sx={{ color: "#6C6C6C" }} className="label-cls">
-                  Phone Allowance
-                </Typography>
-              }
-            />
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" checked={true} />}
-              label={
-                <Typography
-                  sx={{ color: "#6C6C6C", fontSize: "16px", fontWeight: "400" }}
-                  className="label-cls"
-                >
-                  Fuel Allowance
-                </Typography>
-              }
-            />
-            <FormControlLabel
-              control={<Checkbox disableRipple size="small" />}
-              label={
-                <Typography
-                  sx={{ color: "#6C6C6C", fontSize: "16px", fontWeight: "400" }}
-                  className="label-cls"
-                >
-                  Meal Allowance
-                </Typography>
-              }
-            />
-          </Box>
-        </Box>
+        ) : (
+          ""
+        )}
       </Box>
     </Box>
   );
