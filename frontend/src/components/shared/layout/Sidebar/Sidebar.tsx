@@ -26,7 +26,10 @@ import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
 import bagIconRed from "@src/assets/svgs/workred.svg";
-import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
+import {
+  useGetUserQuery,
+  useGetFlagsQuery,
+} from "@src/store/reducers/employees-api";
 
 import "@src/components/shared/layout/Sidebar/Sidebar.scss";
 
@@ -64,6 +67,7 @@ const Sidebar = (props) => {
   const { data: Flags = [] } = useGetFlagsQuery();
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: userData } = useGetUserQuery();
   const [currentPath, setCurrentPath] = useState("");
   useEffect(() => {
     setCurrentPath(location.pathname);
@@ -87,93 +91,107 @@ const Sidebar = (props) => {
 
         <Divider sx={{ mt: "16px" }} />
         <List className="icon-lists" component="nav">
-          {allFlags.show_dashboard_module ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={currentPath === "/" ? categoryIconRed : categoryIcon}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-          ) : (
-            ""
-          )}
+          <ListItemButton
+            onClick={() => {
+              navigate("/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon className="list-item-icon">
+              <img
+                className="icon-img"
+                src={currentPath === "/" ? categoryIconRed : categoryIcon}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItemButton>
           {allFlags.show_users_module ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("users/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={currentPath === "/users/" ? userIconRed : userIcon}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Users" />
-            </ListItemButton>
+            userData?.allowed_modules.includes("user") ? (
+              <ListItemButton
+                onClick={() => {
+                  navigate("users/");
+                }}
+                className="list-items-btn"
+              >
+                <ListItemIcon className="list-item-icon">
+                  <img
+                    className="icon-img"
+                    src={currentPath === "/users/" ? userIconRed : userIcon}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItemButton>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
           {allFlags.show_employees_module ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("employees/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={currentPath === "/employees/" ? workIconRed : workIcon}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Employees" />
-            </ListItemButton>
+            userData?.allowed_modules.includes("employees") ? (
+              <ListItemButton
+                onClick={() => {
+                  navigate("employees/");
+                }}
+                className="list-items-btn"
+              >
+                <ListItemIcon className="list-item-icon">
+                  <img
+                    className="icon-img"
+                    src={currentPath === "/employees/" ? workIconRed : workIcon}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Employees" />
+              </ListItemButton>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
           {allFlags.show_accounts_module ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("accounts/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={currentPath === "/accounts/" ? bagIconRed : bagIcon}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Accounts" />
-            </ListItemButton>
+            userData?.allowed_modules.includes("Inventory") ? (
+              <ListItemButton
+                onClick={() => {
+                  navigate("accounts/");
+                }}
+                className="list-items-btn"
+              >
+                <ListItemIcon className="list-item-icon">
+                  <img
+                    className="icon-img"
+                    src={currentPath === "/accounts/" ? bagIconRed : bagIcon}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Accounts" />
+              </ListItemButton>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
           {allFlags.show_payroll_module ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("payroll/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={currentPath === "/payroll/" ? vectorIconRed : vectorIcon}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Payroll" />
-            </ListItemButton>
+            userData?.allowed_modules.includes("payroll") ? (
+              <ListItemButton
+                onClick={() => {
+                  navigate("payroll/");
+                }}
+                className="list-items-btn"
+              >
+                <ListItemIcon className="list-item-icon">
+                  <img
+                    className="icon-img"
+                    src={
+                      currentPath === "/payroll/" ? vectorIconRed : vectorIcon
+                    }
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Payroll" />
+              </ListItemButton>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}
