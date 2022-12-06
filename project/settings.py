@@ -25,7 +25,10 @@ env = environ.Env(
     DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, []),
     DATABASE_URL=(str, ""),
-    CSRF_TRUSTED_ORIGINS=(list, ["https://erp.prixite.com"]),
+    CSRF_TRUSTED_ORIGINS=(
+        list,
+        ["https://erp.prixite.com", "https://ee0f-182-190-254-137.in.ngrok.io/"],
+    ),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
     EMAIL_HOST=(str, None),
     EMAIL_PORT=(int, 587),
@@ -36,6 +39,7 @@ env = environ.Env(
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
     SLACK_TOKEN=(str, None),
     SLACK_SIGNING_SECRET=(str, None),
+    SLACK_ATTENDACE_CHANNEL=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -57,6 +61,8 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 DOMAIN_NAME = env("DOMAIN_NAME")
+
+SLACK_ATTENDACE_CHANNEL = env("SLACK_ATTENDACE_CHANNEL")
 
 # Application definition
 
@@ -152,7 +158,7 @@ AUTH_USER_MODEL = "app.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Karachi"
 
 USE_I18N = True
 

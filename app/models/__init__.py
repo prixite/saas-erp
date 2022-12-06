@@ -31,6 +31,7 @@ from app.models.payroll import (
     CompensationSchedule,
     CompensationType,
 )
+from app.models.attendance import Attendance
 
 __all__ = [
     "Asset",
@@ -61,4 +62,5 @@ __all__ = [
     "UserModuleRole",
     "Company",
     "Experience",
+    "Attendance",
 ]

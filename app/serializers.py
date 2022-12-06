@@ -204,3 +204,9 @@ class WaffleSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_waffle_switch_model()
         fields = ["name", "active"]
+
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Attendance
+        exclude = ("organization",)
