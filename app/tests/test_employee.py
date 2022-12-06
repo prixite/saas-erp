@@ -349,7 +349,7 @@ class RoleTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-class RoleTestCase(BaseTestCase):
+class AttendaceTestCase(BaseTestCase):
     def test_programs_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/attendance/")
