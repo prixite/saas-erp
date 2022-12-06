@@ -287,16 +287,16 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        allowed_modules = []
+        allowed_modules = set()
 
         for module in self.context.get("request").user.member_modules:
-            allowed_modules.append(module.slug)
+            allowed_modules.add(module.slug)
         for module in self.context.get("request").user.admin_modules:
-            allowed_modules.append(module.slug)
+            allowed_modules.add(module.slug)
         for module in self.context.get("request").user.owner_modules:
-            allowed_modules.append(module.slug)
+            allowed_modules.add(module.slug)
 
-        allowed_modules = list(set(allowed_modules))
+        allowed_modules = list(allowed_modules)
 
         return allowed_modules
 
