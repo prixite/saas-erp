@@ -1,3 +1,4 @@
+from app.models.attendance import Attendance
 from app.models.core import (
     Currency,
     Invitation,
@@ -31,7 +32,6 @@ from app.models.payroll import (
     CompensationSchedule,
     CompensationType,
 )
-from app.models.attendance import Attendance
 
 __all__ = [
     "Asset",
