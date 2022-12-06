@@ -66,6 +66,12 @@ export interface modalsInterface {
   dateEnd: string;
   employeeDegree: string;
   employeeUniveristy: string;
+  newEmployeeCreated: string;
+  congrats: string;
+  backToListing: string;
+  wantToDelete: string;
+  yes: string;
+  no: string;
 }
 export interface payrollInterface {
   payrollHeading: string;

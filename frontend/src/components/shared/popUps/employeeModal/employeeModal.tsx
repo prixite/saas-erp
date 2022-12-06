@@ -12,6 +12,7 @@ import submitIcon from "@src/assets/svgs/Frame.svg";
 import lineIcon from "@src/assets/svgs/line.svg";
 import lineredIcon from "@src/assets/svgs/linered.svg";
 import uploadIcon from "@src/assets/svgs/plus.svg";
+import CongratsModal from "@src/components/shared/popUps/congratsModal/congratsModal";
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
@@ -25,6 +26,7 @@ interface Props {
 
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
+  const [openSuccessModal, setOpenSucessModal] = useState(false);
   const {
     createEmployeeHeading,
     createEmployeeSubheading,
@@ -49,12 +51,16 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     } else if (page === "2") {
       setPage("3");
     } else {
+      handleClose();
+      setOpenSucessModal(true);
       setPage("1");
     }
   };
-
+  const handleModalClose = () => {
+    setOpenSucessModal(false);
+  };
   return (
-    <>
+    <Box>
       <Dialog open={open} onClose={handleClose} className="EmployeeModal">
         <DialogTitle>
           <Box className="modal-header-cls">
@@ -238,7 +244,8 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           )}
         </DialogActions>
       </Dialog>
-    </>
+      <CongratsModal open={openSuccessModal} handleClose={handleModalClose} />
+    </Box>
   );
 };
 
