@@ -248,6 +248,12 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.experirence,
       }),
     }),
+    apiFlagsRetrieve: build.query<
+      ApiFlagsRetrieveApiResponse,
+      ApiFlagsRetrieveApiArg
+    >({
+      query: () => ({ url: `/api/flags/` }),
+    }),
     apiInstituesList: build.query<
       ApiInstituesListApiResponse,
       ApiInstituesListApiArg
@@ -282,6 +288,9 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
         body: queryArg.program,
       }),
+    }),
+    apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
+      query: () => ({ url: `/api/role/` }),
     }),
   }),
   overrideExisting: false,
@@ -400,6 +409,8 @@ export type ApiExperiencesCreateApiResponse = /** status 201  */ Experirence;
 export type ApiExperiencesCreateApiArg = {
   experirence: Experirence;
 };
+export type ApiFlagsRetrieveApiResponse = unknown;
+export type ApiFlagsRetrieveApiArg = void;
 export type ApiInstituesListApiResponse = /** status 200  */ Institue[];
 export type ApiInstituesListApiArg = void;
 export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
@@ -414,6 +425,8 @@ export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
 export type ApiProgramsCreateApiArg = {
   program: Program;
 };
+export type ApiRoleListApiResponse = /** status 200  */ Role[];
+export type ApiRoleListApiArg = void;
 export type Benefit = {
   id: number;
   name: string;
@@ -498,6 +511,7 @@ export type EmployeeUser = {
   email: string;
   image?: string | null;
   contact_number: string;
+  default_role?: number | null;
 };
 export type Experirence = {
   employee: number;
@@ -570,14 +584,24 @@ export type Me = {
   last_name?: string;
   email: string;
   organization?: string;
-  image?: string | null;
+  image: string;
   is_superuser?: boolean;
   headline: string;
   contact_number: string;
+  allowed_modules: string;
 };
 export type Program = {
   id: number;
   name: string;
+  created_at: string;
+  updated_at: string;
+};
+export type PermissionEnum = "c" | "b" | "a";
+export type Role = {
+  id: number;
+  name: string;
+  permission?: PermissionEnum;
+  is_default?: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -612,9 +636,11 @@ export const {
   useApiEmployeesDocumentsCreateMutation,
   useApiExperiencesListQuery,
   useApiExperiencesCreateMutation,
+  useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
   useApiMeRetrieveQuery,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
+  useApiRoleListQuery,
 } = injectedRtkApi;

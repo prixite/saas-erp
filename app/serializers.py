@@ -110,8 +110,10 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def get_image(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["image"] = f"{settings.DOMAIN_NAME}{instance.image.url}"
+        return data
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -266,6 +268,10 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
 
+    image = serializers.SerializerMethodField()
+
+    allowed_modules = serializers.SerializerMethodField()
+
     class Meta:
         model = models.User
         fields = [
@@ -277,7 +283,22 @@ class MeSerializer(serializers.ModelSerializer):
             "is_superuser",
             "headline",
             "contact_number",
+            "allowed_modules",
         ]
+
+    def get_allowed_modules(self, data):
+        allowed_modules = set()
+
+        for module in self.context.get("request").user.member_modules:
+            allowed_modules.add(module.slug)
+        for module in self.context.get("request").user.admin_modules:
+            allowed_modules.add(module.slug)
+        for module in self.context.get("request").user.owner_modules:
+            allowed_modules.add(module.slug)
+
+        allowed_modules = list(allowed_modules)
+
+        return allowed_modules
 
     def get_image(self, data):
         return f"{settings.DOMAIN_NAME}{data.image.url}"
