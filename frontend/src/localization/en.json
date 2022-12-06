@@ -124,13 +124,13 @@
       "dateStart": "Date Started",
       "dateEnd": "Date Ended",
       "employeeDegree": "Degree",
-      "employeeUniveristy": "University"
-
-
-
-
-
-
+      "employeeUniveristy": "University",
+      "newEmployeeCreated":"A new employee is created.",
+      "congrats": "Congratulations",
+      "backToListing": "Back to Listing",
+      "wantToDelete": "Want to Delete?",
+      "yes": "Yes",
+      "no": "No"
     },
 
     "EditBenefitModal":{
