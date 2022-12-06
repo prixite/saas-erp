@@ -15,9 +15,12 @@ const BreadCrumbs = () => {
   const { employeeId } = useParams();
   const constantData: LocalizationInterface = localizedData();
   const { Home } = constantData.BreadCrumbs;
-  const { data: EmployeeData, isLoading } = useGetEmployeeDataQuery({
-    id: Number(employeeId || ""),
-  });
+  const { data: EmployeeData, isLoading } = useGetEmployeeDataQuery(
+    {
+      id: Number(employeeId || ""),
+    },
+    { skip: !Number(employeeId || "") }
+  );
   const pathnames = location.pathname.split("/").filter((x) => x);
   return (
     <Breadcrumbs

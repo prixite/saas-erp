@@ -13,9 +13,12 @@ import "@src/components/common/presentational/experience/experience.scss";
 function Experience() {
   const param = useParams();
   const [paramValue, setParamValue] = useState<string>("");
-  const { data: employeeData } = useGetEmployeeDataQuery({
-    id: parseInt(paramValue),
-  });
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: parseInt(paramValue),
+    },
+    { skip: !parseInt(paramValue) }
+  );
   useEffect(() => {
     if (param.employeeId) {
       setParamValue(param.employeeId);
