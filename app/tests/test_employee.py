@@ -47,6 +47,7 @@ class EmployeeTestCase(BaseTestCase):
                 "date_of_joining",
                 "emergency_contact_number",
                 "designation",
+                "slack_id",
                 "user_allowed",
                 "created_at",
                 "updated_at",
