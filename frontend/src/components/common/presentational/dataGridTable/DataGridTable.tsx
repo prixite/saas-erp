@@ -8,7 +8,7 @@ import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
+import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -18,8 +18,7 @@ function DataGridTable() {
   const navigate = useNavigate();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [openModal, setOpenModal] = useState(false);
   const { notFound } = constantData.Employee;
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -111,7 +110,7 @@ function DataGridTable() {
             style={{ marginLeft: "10px" }}
           >
             <IconButton
-              onClick={handleClick}
+              onClick={handleModalOpen}
               aria-label="edit"
               id="edit-btn-id"
               className="edit-btn"
@@ -142,12 +141,12 @@ function DataGridTable() {
         }`,
     },
   ];
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
-    setAnchorEl(event.currentTarget);
+    setOpenModal(true);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleModalClose = () => {
+    setOpenModal(false);
   };
   const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -278,7 +277,7 @@ function DataGridTable() {
           <RowSkeletonCard />
         </>
       )}
-      <MenuButtons anchorEl={anchorEl} open={open} handleClose={handleClose} />
+      <EmployeeModal open={openModal} handleClose={handleModalClose} />
     </Box>
   );
 }
