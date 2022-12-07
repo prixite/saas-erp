@@ -1,10 +1,15 @@
+from datetime import datetime
+
+import slack
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -12,6 +17,9 @@ from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.views import mixins
+from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_TOKEN
+
+client = slack.WebClient(token=SLACK_TOKEN)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -216,3 +224,62 @@ class WaffleApiView(APIView):
         for x in switche_serializer.data:
             response.append({x.get("name"): x.get("active")})
         return Response(response)
+
+
+class SlackApiView(APIView):
+    permission_classes = [AllowAny]
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        try:
+            channel_id = request.data.get("channel_id")
+            user_id = request.data.get("user_id")
+            command = request.data.get("command")
+            if channel_id == SLACK_ATTENDACE_CHANNEL:
+                try:
+                    employee = models.Employee.objects.get(slack_id=user_id)
+                except models.Employee.DoesNotExist:
+                    user = client.users_profile_get(user=user_id)
+                    employee = models.Employee.objects.get(
+                        user__email=user.get("profile").get("email")
+                    )
+
+                    employee.slack_id = user_id
+
+                    employee.save()
+                if command == "/timein":
+                    attendance = models.Attendance.objects.create(
+                        employee=employee, organization=employee.organization
+                    )
+                elif command == "/timeout":
+                    attendance = models.Attendance.objects.filter(
+                        employee=employee
+                    ).last()
+                    attendance.time_out = datetime.now()
+                    attendance.save()
+
+                return Response(
+                    data={"response_type": "in_channel"},
+                    status=status.HTTP_200_OK,
+                )
+
+            return Response(
+                data={
+                    "text": "Please user this command in attendance channel",
+                },
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            print(e)
+            return Response(
+                data={
+                    "text": "Something went wrong. Please try again.",
+                },
+                status=status.HTTP_200_OK,
+            )
+
+
+class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
+    serializer_class = serializers.AttendanceSerializer
+    queryset = models.Attendance.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES

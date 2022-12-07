@@ -1,6 +1,12 @@
 import { emptySplitApi as api } from "@src/store/emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    apiAttendanceList: build.query<
+      ApiAttendanceListApiResponse,
+      ApiAttendanceListApiArg
+    >({
+      query: () => ({ url: `/api/attendance/` }),
+    }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
       ApiBenefitsListApiArg
@@ -292,10 +298,18 @@ const injectedRtkApi = api.injectEndpoints({
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
+    apiSlackAttendanceCreate: build.mutation<
+      ApiSlackAttendanceCreateApiResponse,
+      ApiSlackAttendanceCreateApiArg
+    >({
+      query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
+    }),
   }),
   overrideExisting: false,
 });
 export { injectedRtkApi as rtk };
+export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
+export type ApiAttendanceListApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -427,6 +441,13 @@ export type ApiProgramsCreateApiArg = {
 };
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
+export type ApiSlackAttendanceCreateApiResponse = unknown;
+export type ApiSlackAttendanceCreateApiArg = void;
+export type Attendance = {
+  employee: number;
+  time_in: string;
+  time_out?: string | null;
+};
 export type Benefit = {
   id: number;
   name: string;
@@ -531,6 +552,7 @@ export type Employee = {
   date_of_joining: string;
   emergency_contact_number: string;
   designation: string;
+  slack_id?: string | null;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -606,6 +628,7 @@ export type Role = {
   updated_at: string;
 };
 export const {
+  useApiAttendanceListQuery,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiChangePasswordPartialUpdateMutation,
@@ -643,4 +666,5 @@ export const {
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
+  useApiSlackAttendanceCreateMutation,
 } = injectedRtkApi;

@@ -108,4 +108,12 @@ urlpatterns = [
         "flags/",
         api.WaffleApiView.as_view(),
     ),
+    path(
+        "attendance/",
+        api.AttendanceViewSet.as_view(),
+    ),
+    path(
+        "slack/attendance/",
+        api.SlackApiView.as_view(),
+    ),
 ]

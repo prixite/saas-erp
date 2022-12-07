@@ -47,6 +47,7 @@ class EmployeeTestCase(BaseTestCase):
                 "date_of_joining",
                 "emergency_contact_number",
                 "designation",
+                "slack_id",
                 "user_allowed",
                 "created_at",
                 "updated_at",
@@ -345,5 +346,13 @@ class RoleTestCase(BaseTestCase):
     def test_programs_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/role/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class AttendaceTestCase(BaseTestCase):
+    def test_programs_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/attendance/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

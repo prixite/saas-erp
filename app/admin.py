@@ -125,3 +125,7 @@ if settings.DEBUG:
     @admin.register(models.CompensationSchedule)
     class CompensationScheduleAdmin(admin.ModelAdmin):
         pass
+
+    @admin.register(models.Attendance)
+    class AttendanceAdmin(admin.ModelAdmin):
+        readonly_fields = ("time_in", "time_out")

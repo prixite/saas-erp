@@ -34,6 +34,8 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str, None),
     DEFAULT_FROM_EMAIL=(str, "no-reply@prixite.com"),
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
+    SLACK_TOKEN=(str, None),
+    SLACK_ATTENDACE_CHANNEL=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -51,6 +53,10 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 DOMAIN_NAME = env("DOMAIN_NAME")
+
+SLACK_TOKEN = env("SLACK_TOKEN")
+
+SLACK_ATTENDACE_CHANNEL = env("SLACK_ATTENDACE_CHANNEL")
 
 # Application definition
 
@@ -146,7 +152,7 @@ AUTH_USER_MODEL = "app.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Karachi"
 
 USE_I18N = True
 
