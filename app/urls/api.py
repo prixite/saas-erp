@@ -110,7 +110,7 @@ urlpatterns = [
     ),
     path(
         "attendance/",
-        api.Attendance.as_view(),
+        api.AttendanceViewSet.as_view(),
     ),
     path(
         "slack/attendance/",

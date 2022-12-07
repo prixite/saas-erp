@@ -279,7 +279,7 @@ class SlackApiView(APIView):
             )
 
 
-class Attendance(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
+class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
