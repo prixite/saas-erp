@@ -5,6 +5,37 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/attendance/": {
+            "get": {
+                "operationId": "api_attendance_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Attendance"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/benefits/": {
             "get": {
                 "operationId": "api_benefits_list",
@@ -1445,10 +1476,54 @@
                     }
                 }
             }
+        },
+        "/api/slack/attendance/": {
+            "post": {
+                "operationId": "api_slack_attendance_create",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Attendance": {
+                "type": "object",
+                "properties": {
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "time_in": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "time_out": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "employee",
+                    "time_in"
+                ]
+            },
             "Benefit": {
                 "type": "object",
                 "properties": {
@@ -1824,6 +1899,11 @@
                     "designation": {
                         "type": "string",
                         "maxLength": 50
+                    },
+                    "slack_id": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 11
                     },
                     "user_allowed": {
                         "type": "boolean"

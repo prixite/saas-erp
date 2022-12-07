@@ -1,7 +1,7 @@
 from django.db import models
 
-from .employee import Employee
 from .core import Organization
+from .employee import Employee
 
 
 class Attendance(models.Model):
