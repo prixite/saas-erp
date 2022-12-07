@@ -99,7 +99,7 @@ const Topbar = (props) => {
 
           <img
             className="profile-pic"
-            src={userData?.avatar}
+            src={userData?.image}
             alt="profile pic"
             style={{ height: "32px", borderRadius: "50%" }}
           />
