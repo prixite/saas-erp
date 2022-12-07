@@ -35,7 +35,6 @@ env = environ.Env(
     DEFAULT_FROM_EMAIL=(str, "no-reply@prixite.com"),
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
     SLACK_TOKEN=(str, None),
-    SLACK_SIGNING_SECRET=(str, None),
     SLACK_ATTENDACE_CHANNEL=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
@@ -50,7 +49,6 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 
 SLACK_TOKEN = env("SLACK_TOKEN")
-SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
