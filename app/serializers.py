@@ -327,10 +327,6 @@ class WaffleSerializer(serializers.ModelSerializer):
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
-
-    time_in = serializers.DateTimeField(format="%x %H:%M:%S")
-    time_out = serializers.DateTimeField(format="%x %H:%M:%S")
-
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]

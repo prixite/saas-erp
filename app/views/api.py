@@ -13,14 +13,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from slackeventsapi import SlackEventAdapter
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.views import mixins
-from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
+from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_TOKEN
 
-slack_enevt_adapter = SlackEventAdapter(SLACK_SIGNING_SECRET, "/api/slack/attendance/")
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
@@ -241,12 +239,11 @@ class SlackApiView(APIView):
                 try:
                     employee = models.Employee.objects.get(slack_id=user_id)
                 except models.Employee.DoesNotExist:
-                    # user = client.users_info(user=user_id)
+                    user = client.users_profile_get(user=user_id)
                     employee = models.Employee.objects.get(
-                        user__email="aftab.ahmad@prixite.com"
+                        user__email=user.get("profile").get("email")
                     )
 
-                    print("EMP", employee)
                     employee.slack_id = user_id
 
                     employee.save()
