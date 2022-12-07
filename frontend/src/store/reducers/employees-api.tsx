@@ -14,19 +14,19 @@ export const employeesApi = createApi({
   }),
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
-      query: () => "/employees",
+      query: () => "/employees/",
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
-      query: ({ id }) => `/employees/${id}`,
+      query: ({ id }) => `/employees/${id}/`,
     }),
     getEmployeeDocs: builder.query({
       query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
     }),
     getUser: builder.query<User, void>({
-      query: () => `/me`,
+      query: () => `/me/`,
     }),
     getFlags: builder.query<Flags[], void>({
-      query: () => "/flags",
+      query: () => "/flags/",
     }),
   }),
 });

@@ -8,6 +8,7 @@ import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
@@ -19,6 +20,7 @@ function DataGridTable() {
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const { notFound } = constantData.Employee;
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -125,7 +127,7 @@ function DataGridTable() {
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
             <IconButton
-              onClick={handleIconClicks}
+              onClick={handleDeleteModalOpen}
               aria-label="delete"
               id="delete-btn-id"
               className="delete-btn"
@@ -148,8 +150,12 @@ function DataGridTable() {
   const handleModalClose = () => {
     setOpenModal(false);
   };
-  const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteModalOpen = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
+    setOpenDeleteModal(true);
+  };
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
   };
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
@@ -278,6 +284,10 @@ function DataGridTable() {
         </>
       )}
       <EmployeeModal open={openModal} handleClose={handleModalClose} />
+      <DeleteModal
+        open={openDeleteModal}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }
