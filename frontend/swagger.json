@@ -5,6 +5,83 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/asset_type/": {
+            "get": {
+                "operationId": "api_asset_type_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AssetType"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_asset_type_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssetType"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssetType"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssetType"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetType"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/attendance/": {
             "get": {
                 "operationId": "api_attendance_list",
@@ -460,83 +537,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Currency"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/degrees/": {
-            "get": {
-                "operationId": "api_degrees_list",
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Degree"
-                                    }
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            },
-            "post": {
-                "operationId": "api_degrees_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Degree"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Degree"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Degree"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Degree"
                                 }
                             }
                         },
@@ -1166,83 +1166,6 @@
                 }
             }
         },
-        "/api/experiences/": {
-            "get": {
-                "operationId": "api_experiences_list",
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Experirence"
-                                    }
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            },
-            "post": {
-                "operationId": "api_experiences_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Experirence"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Experirence"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Experirence"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Experirence"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/api/flags/": {
             "get": {
                 "operationId": "api_flags_retrieve",
@@ -1502,6 +1425,78 @@
     },
     "components": {
         "schemas": {
+            "Asset": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128
+                    },
+                    "attribute_values": {
+                        "type": "object",
+                        "additionalProperties": {}
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "type": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "attribute_values",
+                    "created_at",
+                    "id",
+                    "name",
+                    "type",
+                    "updated_at"
+                ]
+            },
+            "AssetType": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "additionalProperties": {}
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "created_at",
+                    "id",
+                    "name",
+                    "updated_at"
+                ]
+            },
             "Attendance": {
                 "type": "object",
                 "properties": {
@@ -1746,9 +1741,6 @@
             "Degree": {
                 "type": "object",
                 "properties": {
-                    "employee": {
-                        "type": "integer"
-                    },
                     "program": {
                         "type": "integer"
                     },
@@ -1761,7 +1753,6 @@
                     }
                 },
                 "required": [
-                    "employee",
                     "institute",
                     "program",
                     "year"
@@ -1866,22 +1857,41 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/Degree"
-                        },
-                        "readOnly": true
+                        }
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
                     },
                     "experience": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/Experirence"
-                        },
-                        "readOnly": true
+                        }
                     },
                     "org_id": {
                         "type": "string",
                         "readOnly": true
                     },
+                    "managing": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "writeOnly": true
+                        },
+                        "writeOnly": true
+                    },
                     "total_experience": {
                         "type": "string",
+                        "readOnly": true
+                    },
+                    "manages": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
                         "readOnly": true
                     },
                     "nic": {
@@ -1900,10 +1910,9 @@
                         "type": "string",
                         "maxLength": 50
                     },
-                    "slack_id": {
-                        "type": "string",
-                        "nullable": true,
-                        "maxLength": 11
+                    "salary": {
+                        "type": "integer",
+                        "nullable": true
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -1938,6 +1947,7 @@
                     }
                 },
                 "required": [
+                    "assets",
                     "created_at",
                     "date_of_joining",
                     "degrees",
@@ -1945,6 +1955,8 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
+                    "manages",
+                    "managing",
                     "nic",
                     "org_id",
                     "total_experience",
@@ -2095,9 +2107,6 @@
             "Experirence": {
                 "type": "object",
                 "properties": {
-                    "employee": {
-                        "type": "integer"
-                    },
                     "title": {
                         "type": "string",
                         "maxLength": 255
@@ -2116,7 +2125,6 @@
                 },
                 "required": [
                     "company",
-                    "employee",
                     "end_date",
                     "start_date",
                     "title"
