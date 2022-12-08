@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { useNavigate } from "react-router-dom";
-import deleteIcon from "@src/assets/svgs/delete.svg";
+import deleteIcon from "@src/assets/svgs/deleteone.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/shared/popUps/deleteModal/deleteModal.scss";

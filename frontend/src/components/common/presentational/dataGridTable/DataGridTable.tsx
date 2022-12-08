@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
@@ -13,11 +13,16 @@ import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeM
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
+import {
+  useGetEmployeesQuery,
+  useGetFlagsQuery,
+} from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 function DataGridTable() {
   const navigate = useNavigate();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const { data: Flags = [] } = useGetFlagsQuery();
+  const allFlags = Object.assign({}, ...Flags);
   const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -25,13 +30,12 @@ function DataGridTable() {
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: "id",
       headerName: "ID",
       sortable: false,
       width: 200,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
@@ -45,12 +49,11 @@ function DataGridTable() {
       headerName: "Name",
       sortable: false,
       width: 400,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <div
             style={{
-              marginLeft: "20px",
+              marginLeft: "16px",
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
@@ -77,7 +80,6 @@ function DataGridTable() {
       headerName: "Contact Number",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -91,7 +93,6 @@ function DataGridTable() {
       headerName: "Joining Date",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -103,7 +104,6 @@ function DataGridTable() {
     {
       field: "actions",
       headerName: "Actions",
-      headerAlign: "start",
       width: 350,
       renderCell: () => {
         return (
@@ -137,10 +137,6 @@ function DataGridTable() {
           </Box>
         );
       },
-      valueGetter: (params) =>
-        `${params.getValue(params.id, "firstName") || ""} ${
-          params.getValue(params.id, "contact_Number") || ""
-        }`,
     },
   ];
   const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -170,8 +166,8 @@ function DataGridTable() {
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...tableData]}
-                columns={[...columns]}
+                rows={tableData}
+                columns={columns}
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
@@ -207,6 +203,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
+                    cursor: "default",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
@@ -264,7 +261,9 @@ function DataGridTable() {
                     {
                       outline: "none",
                     },
-                  "& .css-17jjc08-MuiDataGrid-footerContainer": {},
+                  "& .MuiTablePagination-root:last-child": {
+                    display: allFlags.show_pagination_module ? "block" : "none",
+                  },
                 }}
               />
             </div>
