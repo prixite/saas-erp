@@ -54,7 +54,7 @@ class EmployeeTestCase(BaseTestCase):
         employee_data.pop("experience")
         employee_data.pop("assets")
         employee_data.pop("managing")
-        self.assertTrue(models.Employee.objects.filter(**employee_data).esxists())
+        self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
 
     def test_employee_detail(self):
         self.client.force_login(self.owner)
