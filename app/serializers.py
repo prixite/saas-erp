@@ -12,7 +12,7 @@ from app import models
 class DegreeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Degree
-        fields = ["employee", "program", "institute", "year"]
+        fields = ["program", "institute", "year"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -24,7 +24,7 @@ class DegreeSerializer(serializers.ModelSerializer):
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
-        fields = ["employee", "title", "company", "start_date", "end_date"]
+        fields = ["title", "company", "start_date", "end_date"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -98,6 +98,18 @@ class RoleSerializer(serializers.ModelSerializer):
         exclude = ("organization",)
 
 
+class AssetTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AssetType
+        exclude = ("organization",)
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Asset
+        exclude = ("organization", "employee")
+
+
 class EmployeeUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
@@ -118,15 +130,53 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
-    degrees = DegreeSerializer(many=True, read_only=True)
-    experience = ExperirenceSerializer(many=True, read_only=True)
+    degrees = DegreeSerializer(many=True)
+    assets = AssetSerializer(many=True)
+    experience = ExperirenceSerializer(many=True)
     org_id = serializers.CharField(read_only=True)
-
+    managing = serializers.PrimaryKeyRelatedField(
+        write_only=True, queryset=models.Employee.objects.all(), many=True
+    )
     total_experience = serializers.SerializerMethodField()
+    manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
-        exclude = ("organization",)
+        exclude = ("organization", "slack_id")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        organization = self.context.get("request").user.organization
+        user_ser = EmployeeUserSerializer(data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user = user_ser.save()
+        user.username = user.email
+        user.organization = organization
+        user.save()
+        validated_data["user_id"] = user.id
+        employee = super().create(validated_data)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = employee
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=employee)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=employee)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=employee, organization=organization
+            )
+
+        return employee
 
     def get_total_experience(self, data):
         total_days = 0
@@ -151,22 +201,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
         total_experience += f"{months} months" if months > 1 else f"{months} month"
         return total_experience
 
-    @transaction.atomic
-    def create(self, validated_data):
-        user_data = validated_data.pop("user")
-        if user_data.get("default_role"):
-            user_data["default_role"] = user_data.pop("default_role").id
+    def validate(self, data):
         organization = self.context.get("request").user.organization
-        user_ser = EmployeeUserSerializer(data=user_data)
 
-        user_ser.is_valid(raise_exception=True)
-        user = user_ser.save()
-
-        user.username = user.email
-        user.organization = organization
-        user.save()
-        validated_data["user_id"] = user.id
-        return super().create(validated_data)
+        if data.get("manager") and not data.get("manager").organization == organization:
+            raise serializers.ValidationError("Manager employee does not exists.")
+        for manages in data.get("managing"):
+            if not manages.organization == organization:
+                raise serializers.ValidationError("Managing employee does not exists.")
+            if manages == data.get("manager"):
+                raise serializers.ValidationError(
+                    "Employee can not be the manager of his own manager."
+                )
+        return data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

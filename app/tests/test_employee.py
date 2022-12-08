@@ -20,6 +20,29 @@ class EmployeeTestCase(BaseTestCase):
             "date_of_joining": "2022-11-15",
             "emergency_contact_number": "1234324234",
             "designation": "Software Engineer",
+            "degrees": [
+                {
+                    "program": self.program.id,
+                    "institute": self.institute.id,
+                    "year": "2018-12-08",
+                }
+            ],
+            "experience": [
+                {
+                    "title": "Internee",
+                    "company": self.company.id,
+                    "start_date": "2018-12-08",
+                    "end_date": "2020-12-08",
+                }
+            ],
+            "assets": [
+                {
+                    "name": "Dell latitude",
+                    "attribute_values": {},
+                    "type": self.asset_type.id,
+                }
+            ],
+            "managing": [self.employee.id],
             "organization": self.organization.id,
         }
 
@@ -27,7 +50,11 @@ class EmployeeTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         employee_data.pop("user")
-        self.assertTrue(models.Employee.objects.filter(**employee_data).exists())
+        employee_data.pop("degrees")
+        employee_data.pop("experience")
+        employee_data.pop("assets")
+        employee_data.pop("managing")
+        self.assertTrue(models.Employee.objects.filter(**employee_data).esxists())
 
     def test_employee_detail(self):
         self.client.force_login(self.owner)
@@ -40,14 +67,16 @@ class EmployeeTestCase(BaseTestCase):
                 "id",
                 "user",
                 "degrees",
+                "assets",
                 "experience",
                 "org_id",
                 "total_experience",
+                "manages",
                 "nic",
                 "date_of_joining",
                 "emergency_contact_number",
                 "designation",
-                "slack_id",
+                "salary",
                 "user_allowed",
                 "created_at",
                 "updated_at",
@@ -224,26 +253,6 @@ class CurrencyTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class DegreeTestCase(BaseTestCase):
-    def test_degree_get(self):
-        self.client.force_login(self.owner)
-        response = self.client.get("/api/degrees/")
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_degrees_post(self):
-        self.client.force_login(self.owner)
-        degree_data = {
-            "employee": self.employee.id,
-            "program": self.program.id,
-            "institute": self.institute.id,
-            "year": "2022-11-30",
-        }
-        response = self.client.post("/api/degrees/", data=degree_data)
-
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-
 class DepartmentTestCase(BaseTestCase):
     def test_departments_get(self):
         self.client.force_login(self.owner)
@@ -291,27 +300,6 @@ class EmployeementTypeTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class ExperienceTestCase(BaseTestCase):
-    def test_experiencies_get(self):
-        self.client.force_login(self.owner)
-        response = self.client.get("/api/experiences/")
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_experiences_post(self):
-        self.client.force_login(self.owner)
-        experience_data = {
-            "employee": self.employee.id,
-            "title": "Internee",
-            "company": self.company.id,
-            "start_date": "2018-11-30",
-            "end_date": "2022-11-30",
-        }
-        response = self.client.post("/api/experiences/", data=experience_data)
-
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-
 class InstitueTestCase(BaseTestCase):
     def test_institue_get(self):
         self.client.force_login(self.owner)
@@ -338,6 +326,21 @@ class ProgamTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         program_data = {"name": "NUST"}
         response = self.client.post("/api/programs/", data=program_data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class AssetTypeTestCase(BaseTestCase):
+    def asset_types_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/asset_type/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def asset_type_post(self):
+        self.client.force_login(self.owner)
+        asset_Type_data = {"name": "LCD", "attributes": {}}
+        response = self.client.post("/api/asset_type/", data=asset_Type_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 

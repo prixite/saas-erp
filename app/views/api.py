@@ -132,32 +132,10 @@ class ProgramApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class DegreeApiView(mixins.PrivateApiMixin, ModelViewSet):
-    serializer_class = serializers.DegreeSerializer
-    module = models.Module.ModuleType.EMPLOYEES
-
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return models.Degree.objects.all()
-        return models.Degree.objects.filter(
-            employee__organization=self.request.user.organization
-        )
-
-
 class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CompanySerializer
     queryset = models.Company.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
-
-
-class ExperienceApiView(mixins.PrivateApiMixin, ModelViewSet):
-    serializer_class = serializers.ExperirenceSerializer
-    module = models.Module.ModuleType.EMPLOYEES
-
-    def get_queryset(self):
-        return models.Experience.objects.filter(
-            employee__organization=self.request.user.organization
-        )
 
 
 class BenefitApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -199,6 +177,12 @@ class CompensationScheduleApiView(
 class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.AssetTypeSerializer
+    queryset = models.AssetType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
 

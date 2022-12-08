@@ -35,6 +35,11 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
         model = models.Employee
 
 
+class AssetTypeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.AssetType
+
+
 class ModuleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Module
@@ -88,11 +93,6 @@ class ProgramFactory(factory.django.DjangoModelFactory):
 class InstituteFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Institute
-
-
-class DegreeFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = models.Degree
 
 
 class CompanyFactory(factory.django.DjangoModelFactory):
