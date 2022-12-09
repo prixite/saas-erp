@@ -5,6 +5,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import backIcon from "@src/assets/svgs/back.svg";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import "@src/components/shared/popUps/employeeModal/employeeModal.scss";
@@ -16,13 +18,57 @@ import CongratsModal from "@src/components/shared/popUps/congratsModal/congratsM
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
-import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import {
+  LocalizationInterface,
+  EmployeeForm,
+} from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
 }
+
+const employeeFormInitialState: EmployeeForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  image: null,
+  contactNumber: "",
+  defaultRole: undefined,
+  degrees: [],
+  assets: [],
+  experience: [],
+  orgId: "",
+  managing: [],
+  totalExperience: "",
+  manages: [],
+  nic: "",
+  dateOfJoining: "",
+  emergencyContactNumber: "",
+  designation: "",
+  salary: undefined,
+  userAllowed: false,
+  createdAt: "",
+  updatedAt: "",
+  department: undefined,
+  manager: undefined,
+  type: undefined,
+  benefits: [],
+};
+const employeeFormValidationSchema = yup.object({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  contactNumber: yup.string().required(),
+  email: yup.string().required(),
+  nic: yup.string().required(),
+  createdAt: yup.string().required(),
+  manager: yup.string().required(),
+  designation: yup.string().required(),
+  salary: yup.string().required(),
+  emergencyContactNumber: yup.string().required(),
+  type: yup.string().required(),
+});
 
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
@@ -44,16 +90,23 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     addNewExperience,
   } = constantData.Modals;
   const [page, setPage] = useState("1");
-
-  const moveToNextPage = () => {
-    if (page == "1") {
+  const [onChangeValidation, setOnChangeValidation] = useState(false);
+  const formik = useFormik<EmployeeForm>({
+    initialValues: employeeFormInitialState,
+    validationSchema: employeeFormValidationSchema,
+    validateOnChange: onChangeValidation,
+    // onSubmit: () => {
+    //   console.log("values are", formik.values);
+    // },
+  });
+  const moveToNextPage = async () => {
+    const errors = await formik.validateForm();
+    if (page == "1" && !Object.keys(errors).length) {
       setPage("2");
-    } else if (page === "2") {
+    } else if (page === "2" && !Object.keys(errors).length) {
       setPage("3");
     } else {
-      handleClose();
-      setOpenSucessModal(true);
-      setPage("1");
+      setOnChangeValidation(true);
     }
   };
   const handleModalClose = () => {
@@ -139,7 +192,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         <DialogContent className="FilterModal__Content">
           <Box className="content-cls">
             {page === "1" ? (
-              <PageOne />
+              <PageOne formik={formik} />
             ) : page === "2" ? (
               <PageTwo />
             ) : (

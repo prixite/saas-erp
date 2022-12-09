@@ -1,3 +1,4 @@
+import { FormikErrors } from "formik";
 export interface btnsInterface {
   createButton: string;
   filterButton: string;
@@ -72,6 +73,8 @@ export interface modalsInterface {
   wantToDelete: string;
   yes: string;
   no: string;
+  employeeFirstName: string;
+  employeeLastName: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -139,6 +142,69 @@ export interface editBenefitModal {
   OvertimeAllowance: string;
   DinnerAllowance: string;
   MealAllowance: string;
+}
+export type Degree = {
+  program: number;
+  institute: number;
+  year: string;
+};
+export type Asset = {
+  id: number;
+  name: string;
+  attribute_values: {
+    [key: string]: string;
+  };
+  created_at: string;
+  updated_at: string;
+  type: number;
+};
+export type Experirence = {
+  title: string;
+  company: number;
+  start_date: string;
+  end_date: string;
+};
+export type EmployeeForm = {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  image?: string | null;
+  contactNumber: string;
+  defaultRole?: number | null;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  orgId: string;
+  managing: [];
+  totalExperience: string;
+  manages: string[];
+  nic: string;
+  dateOfJoining: string;
+  emergencyContactNumber: string;
+  designation: string;
+  salary?: number | null;
+  userAllowed?: boolean;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
+};
+export interface Formik {
+  initialValues: EmployeeForm;
+  initialStatus: EmployeeForm;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: EmployeeForm;
+  errors?: FormikErrors<EmployeeForm>;
+  setFieldValue: (
+    field: string,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<EmployeeForm>> | Promise<void>;
+  submitCount: number;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

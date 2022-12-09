@@ -10,7 +10,7 @@ import deleteIcon from "@src/assets/svgs/Delete.svg";
 import editIcon from "@src/assets/svgs/Edit.svg";
 import circleIcon from "@src/assets/svgs/redcircle.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
-import EditBenefitModal from "@src/components/common/presentational/benefitsSection/benefitModal/EditBenefitModal";
+import EditBenefitModal from "@src/components/shared/popUps/benefitModal/EditBenefitModal";
 import { toPkrFormat } from "@src/helpers/constants/constants";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";

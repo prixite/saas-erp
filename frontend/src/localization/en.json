@@ -107,7 +107,7 @@
       "employeeEmployementLabel": "Employment Type",
       "employeeAssetLabel": "Assets",
       "employeeEmergencyContactLabel": "Emergency Contact",
-      "employeeCompensationLabel": "Compensation & Benefits",
+      "employeeCompensationLabel": "Benefits",
       "stepOne": "Step 1.",
       "stepTwo": "Step 2.",
       "stepThree": "Step 3.",
@@ -130,7 +130,9 @@
       "backToListing": "Back to Listing",
       "wantToDelete": "Want to Delete?",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "employeeFirstName":"First Name",
+      "employeeLastName": "Last Name"
     },
 
     "EditBenefitModal":{

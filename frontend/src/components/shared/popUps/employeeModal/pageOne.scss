@@ -3,9 +3,11 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 10px;
+  height: auto;
   .grid-container-cls {
     .grid-item-cls {
       .text-field-box {
+        height: 85px !important;
         .text-field-cls {
           .MuiOutlinedInput-notchedOutline {
             border: 1px solid #d4d6db;
@@ -20,13 +22,19 @@
             color: #6c6c6c;
             font-weight: 400;
             font-size: 16px;
-            letter-spacing: -0.011em;
           }
+        }
+        .errorText {
+          color: #ff1744;
+          font-size: 0.8rem;
+          margin-top: 2px;
+          margin-bottom: 0px;
         }
       }
     }
   }
   .switch-section {
+    margin-top: 18px;
     .switch-cls {
       display: flex;
       align-items: center;

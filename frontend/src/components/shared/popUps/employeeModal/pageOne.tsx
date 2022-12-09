@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   Grid,
-  Autocomplete,
   TextField,
   Switch,
   Typography,
@@ -14,22 +13,23 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "@src/components/shared/popUps/employeeModal/pageOne.scss";
-import { assets } from "@src/helpers/constants/constants";
-import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import {
+  LocalizationInterface,
+  Formik,
+} from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
-const PageOne = () => {
+interface Props {
+  formik: Formik;
+}
+const PageOne = ({ formik }: Props) => {
   const constantData: LocalizationInterface = localizedData();
-  const [name, setName] = useState("");
   const [checked, setChecked] = useState(false);
-  const [designation, setDesignation] = useState("");
-  const [dateStarted, setDateStarted] = useState<Date | null>(null);
-  const [nameError, setNameError] = useState("");
-  const [designationErrror, setDesignationError] = useState("");
 
   const {
-    employeeNameLabel,
+    employeeFirstName,
+    employeeLastName,
     employeeEmailLabel,
     employeePhoneLabel,
     employeeCnicLabel,
@@ -43,19 +43,6 @@ const PageOne = () => {
     employeeEmergencyContactLabel,
     employeeCompensationLabel,
   } = constantData.Modals;
-
-  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length) {
-      setNameError("");
-    }
-    setName(e.target?.value);
-  };
-  const handleDesignation = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length) {
-      setDesignationError("");
-    }
-    setDesignation(e.target?.value);
-  };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
@@ -66,41 +53,36 @@ const PageOne = () => {
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              required
               fullWidth
-              name="Name"
-              InputProps={{ sx: { height: 56 } }}
-              label={employeeNameLabel}
-              onChange={handleName}
-              value={name}
-              autoComplete="family-name"
+              name="firstName"
+              label={employeeFirstName}
+              onChange={formik.handleChange}
+              value={formik.values.firstName}
               InputLabelProps={{ className: "textfield_label" }}
             />
-            <p className="errorText">{nameError}</p>
+            <p className="errorText">{formik.errors?.firstName}</p>
           </Box>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
               required
               fullWidth
+              name="contactNumber"
               label={employeePhoneLabel}
-              InputProps={{ sx: { height: 56 } }}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
+              onChange={formik.handleChange}
+              value={formik.values.contactNumber}
               InputLabelProps={{ className: "textfield_label" }}
             />
-            <p className="errorText">{designationErrror}</p>
+            <p className="errorText">{formik.errors?.contactNumber}</p>
           </Box>
           <Box className="text-field-box">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 className="text-field-cls"
                 label={employeeDateLabel}
-                value={dateStarted}
+                value={formik.values.createdAt}
                 onChange={(newValue) => {
-                  setDateStarted(newValue);
+                  formik.setFieldValue("createdAt", newValue);
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -114,159 +96,168 @@ const PageOne = () => {
                   />
                 )}
               />
-              <p className="errorText">{designationErrror}</p>
+              <p className="errorText">{formik.errors?.createdAt}</p>
             </LocalizationProvider>
           </Box>
-          <Box className="text-field-box" sx={{ minWidth: 120 }}>
+          <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              required
               select
               fullWidth
-              InputProps={{ sx: { height: 56 } }}
+              name="designation"
               label={employeeDesignationLabel}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
+              onChange={formik.handleChange}
+              value={formik.values.designation}
               InputLabelProps={{ className: "textfield_label" }}
             >
               <MenuItem value={10}>Seniort Developer</MenuItem>
               <MenuItem value={20}>Project Manager</MenuItem>
               <MenuItem value={30}>Juinor Developer</MenuItem>
             </TextField>
-            <p className="errorText">{designationErrror}</p>
+            <p className="errorText">{formik.errors?.designation}</p>
           </Box>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              required
-              fullWidth
-              label={employeeManagingLabel}
-              InputProps={{ sx: { height: 56 } }}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{designationErrror}</p>
-          </Box>
-          <Box className="text-field-box">
-            <Autocomplete
-              multiple
-              className="text-field-cls"
-              options={assets}
-              getOptionLabel={(option) => option.title}
-              defaultValue={[assets[0]]}
-              filterSelectedOptions
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  InputLabelProps={{ className: "textfield_label" }}
-                  label={employeeAssetLabel}
-                  placeholder={employeeAssetLabel}
-                />
-              )}
-            />
-            <p className="errorText">{designationErrror}</p>
-          </Box>
-        </Grid>
-        <Grid className="grid-item-cls " item xs={6}>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              required
-              fullWidth
-              name="Name"
-              InputProps={{ sx: { height: 56 } }}
-              label={employeeEmailLabel}
-              onChange={handleName}
-              value={name}
-              autoComplete="family-name"
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{nameError}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              required
-              fullWidth
-              label={employeeCnicLabel}
-              name="Designation"
-              InputProps={{ sx: { height: 56 } }}
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{designationErrror}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              required
-              fullWidth
-              label={employeeManagerLabel}
-              InputProps={{ sx: { height: 56 } }}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{designationErrror}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              required
-              fullWidth
-              InputProps={{ sx: { height: 56 } }}
-              label={employeeSalaryLabel}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{designationErrror}</p>
-          </Box>
-          <Box className="text-field-box" sx={{ minWidth: 120 }}>
-            <TextField
-              className="text-field-cls"
-              required
               select
               fullWidth
-              InputProps={{ sx: { height: 56 } }}
+              name="managing"
+              label={employeeManagingLabel}
+              onChange={formik.handleChange}
+              value={formik.values.managing}
+              SelectProps={{
+                multiple: true,
+              }}
+              InputLabelProps={{ className: "textfield_label" }}
+            >
+              <MenuItem value={10}>Umair Khan</MenuItem>
+              <MenuItem value={20}>Umair Khan</MenuItem>
+              <MenuItem value={30}>Umair Khan</MenuItem>
+            </TextField>
+            <p className="errorTexte">{formik.errors?.managing}</p>
+          </Box>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              select
+              fullWidth
+              name="type"
               label={employeeEmployementLabel}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
+              onChange={formik.handleChange}
+              value={formik.values.type}
               InputLabelProps={{ className: "textfield_label" }}
             >
               <MenuItem value={10}>Full Time</MenuItem>
               <MenuItem value={20}>Part Time</MenuItem>
               <MenuItem value={30}>Hourly Base</MenuItem>
             </TextField>
-            <p className="errorText">{designationErrror}</p>
+            <p className="errorText">{formik.errors?.type}</p>
+          </Box>
+        </Grid>
+        <Grid className="grid-item-cls " item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="lastName"
+              label={employeeLastName}
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.lastName}</p>
           </Box>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              required
               fullWidth
-              InputProps={{ sx: { height: 56 } }}
-              label={employeeEmergencyContactLabel}
-              name="Designation"
-              onChange={handleDesignation}
-              value={designation}
-              autoComplete="family-name"
+              name="email"
+              label={employeeEmailLabel}
+              onChange={formik.handleChange}
+              value={formik.values.email}
               InputLabelProps={{ className: "textfield_label" }}
             />
-            <p className="errorText">{designationErrror}</p>
+            <p className="errorText">{formik.errors?.email}</p>
+          </Box>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="nic"
+              label={employeeCnicLabel}
+              onChange={formik.handleChange}
+              value={formik.values.nic}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.nic}</p>
+          </Box>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              select
+              fullWidth
+              name="manager"
+              label={employeeManagerLabel}
+              onChange={formik.handleChange}
+              value={formik.values.manager}
+              InputLabelProps={{ className: "textfield_label" }}
+            >
+              <MenuItem value={10}>Umair Khan</MenuItem>
+              <MenuItem value={20}>Umair Jameel</MenuItem>
+              <MenuItem value={30}>Ali Hassan</MenuItem>
+            </TextField>
+            <p className="errorText">{formik.errors?.manager}</p>
+          </Box>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="salary"
+              label={employeeSalaryLabel}
+              onChange={formik.handleChange}
+              value={formik.values.salary}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.salary}</p>
+          </Box>
+
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="emergencyContactNumber"
+              label={employeeEmergencyContactLabel}
+              onChange={formik.handleChange}
+              value={formik.values.emergencyContactNumber}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.emergencyContactNumber}</p>
+          </Box>
+        </Grid>
+        <Grid
+          className="grid-item-cls "
+          item
+          xs={12}
+          sx={{ pt: "0px !important" }}
+        >
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              select
+              fullWidth
+              name="assets"
+              label={employeeAssetLabel}
+              onChange={formik.handleChange}
+              value={formik.values.assets}
+              SelectProps={{
+                multiple: true,
+              }}
+              InputLabelProps={{ className: "textfield_label" }}
+            >
+              <MenuItem value={10}>Laptop</MenuItem>
+              <MenuItem value={20}>Mouse</MenuItem>
+              <MenuItem value={30}>Handfree</MenuItem>
+            </TextField>
           </Box>
         </Grid>
       </Grid>
