@@ -29,6 +29,10 @@ module.exports = {
     new EnvironmentPlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
       REACT_APP_GOOGLE_CLIENT_ID: "fake",
+      AWS_STORAGE_BUCKET_NAME: "something",
+      AWS_ACCESS_KEY_ID: "something",
+      AWS_SECRET_ACCESS_KEY: "something",
+      AWS_DEFAULT_REGION: "something",
     }),
     new BundleTracker({ filename: "./webpack-stats.json" }),
   ],
