@@ -44,17 +44,12 @@ class User(AbstractUser):
     def get_modules(self, permission):
         module_roles = self.module_roles.filter(module__is_enabled=True)
 
-        if self.default_role and self.default_role.permission >= permission:
-            module_roles = module_roles.filter(
-                role__permission__lte=self.default_role.permission,
-            )
-        else:
-            module_roles = module_roles.filter(role__permission=permission)
-
         if self.default_role and self.default_role.permission == Role.Permission.OWNER:
             return self.organization_modules
 
-        return {x.module for x in module_roles} & self.organization_modules
+        module_roles = module_roles.filter(role__permission=permission)
+
+        return {x.module for x in module_roles}
 
     @property
     def organization_modules(self):
