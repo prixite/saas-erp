@@ -80,7 +80,9 @@ class BaseTestCase(TestCase):
         self.document_type = factories.DocumentTypeFactory(
             name="Contracts", organization=self.organization
         )
-
+        self.asset_type = factories.AssetTypeFactory(
+            name="Laptop", organization=self.organization, attributes={}
+        )
         self.compensation_type = factories.CompensationTypeFactory(
             name="Hourly",
             is_hourly=True,

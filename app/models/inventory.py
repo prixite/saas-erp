@@ -13,7 +13,9 @@ class Asset(models.Model):
     type = models.ForeignKey("AssetType", on_delete=models.PROTECT)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     attribute_values = models.JSONField()
-    employee = models.ForeignKey("Employee", null=True, on_delete=models.SET_NULL)
+    employee = models.ForeignKey(
+        "Employee", null=True, on_delete=models.SET_NULL, related_name="assets"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

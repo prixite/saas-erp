@@ -1,6 +1,22 @@
 import { emptySplitApi as api } from "@src/store/emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    apiAssetTypeList: build.query<
+      ApiAssetTypeListApiResponse,
+      ApiAssetTypeListApiArg
+    >({
+      query: () => ({ url: `/api/asset_type/` }),
+    }),
+    apiAssetTypeCreate: build.mutation<
+      ApiAssetTypeCreateApiResponse,
+      ApiAssetTypeCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/asset_type/`,
+        method: "POST",
+        body: queryArg.assetType,
+      }),
+    }),
     apiAttendanceList: build.query<
       ApiAttendanceListApiResponse,
       ApiAttendanceListApiArg
@@ -95,22 +111,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/currency/`,
         method: "POST",
         body: queryArg.currency,
-      }),
-    }),
-    apiDegreesList: build.query<
-      ApiDegreesListApiResponse,
-      ApiDegreesListApiArg
-    >({
-      query: () => ({ url: `/api/degrees/` }),
-    }),
-    apiDegreesCreate: build.mutation<
-      ApiDegreesCreateApiResponse,
-      ApiDegreesCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/degrees/`,
-        method: "POST",
-        body: queryArg.degree,
       }),
     }),
     apiDepartmentList: build.query<
@@ -238,22 +238,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.document,
       }),
     }),
-    apiExperiencesList: build.query<
-      ApiExperiencesListApiResponse,
-      ApiExperiencesListApiArg
-    >({
-      query: () => ({ url: `/api/experiences/` }),
-    }),
-    apiExperiencesCreate: build.mutation<
-      ApiExperiencesCreateApiResponse,
-      ApiExperiencesCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/experiences/`,
-        method: "POST",
-        body: queryArg.experirence,
-      }),
-    }),
     apiFlagsRetrieve: build.query<
       ApiFlagsRetrieveApiResponse,
       ApiFlagsRetrieveApiArg
@@ -308,6 +292,12 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as rtk };
+export type ApiAssetTypeListApiResponse = /** status 200  */ AssetType[];
+export type ApiAssetTypeListApiArg = void;
+export type ApiAssetTypeCreateApiResponse = /** status 201  */ AssetType;
+export type ApiAssetTypeCreateApiArg = {
+  assetType: AssetType;
+};
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
@@ -348,12 +338,6 @@ export type ApiCurrencyListApiArg = void;
 export type ApiCurrencyCreateApiResponse = /** status 201  */ Currency;
 export type ApiCurrencyCreateApiArg = {
   currency: Currency;
-};
-export type ApiDegreesListApiResponse = /** status 200  */ Degree[];
-export type ApiDegreesListApiArg = void;
-export type ApiDegreesCreateApiResponse = /** status 201  */ Degree;
-export type ApiDegreesCreateApiArg = {
-  degree: Degree;
 };
 export type ApiDepartmentListApiResponse = /** status 200  */ Department[];
 export type ApiDepartmentListApiArg = void;
@@ -417,12 +401,6 @@ export type ApiEmployeesDocumentsCreateApiArg = {
   id: number;
   document: Document;
 };
-export type ApiExperiencesListApiResponse = /** status 200  */ Experirence[];
-export type ApiExperiencesListApiArg = void;
-export type ApiExperiencesCreateApiResponse = /** status 201  */ Experirence;
-export type ApiExperiencesCreateApiArg = {
-  experirence: Experirence;
-};
 export type ApiFlagsRetrieveApiResponse = unknown;
 export type ApiFlagsRetrieveApiArg = void;
 export type ApiInstituesListApiResponse = /** status 200  */ Institue[];
@@ -443,6 +421,15 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
+export type AssetType = {
+  id: number;
+  name: string;
+  attributes: {
+    [key: string]: any;
+  };
+  created_at: string;
+  updated_at: string;
+};
 export type Attendance = {
   employee: number;
   time_in: string;
@@ -493,12 +480,6 @@ export type Currency = {
   created_at: string;
   updated_at: string;
 };
-export type Degree = {
-  employee: number;
-  program: number;
-  institute: number;
-  year: string;
-};
 export type Department = {
   id: number;
   name: string;
@@ -534,8 +515,22 @@ export type EmployeeUser = {
   contact_number: string;
   default_role?: number | null;
 };
+export type Degree = {
+  program: number;
+  institute: number;
+  year: string;
+};
+export type Asset = {
+  id: number;
+  name: string;
+  attribute_values: {
+    [key: string]: any;
+  };
+  created_at: string;
+  updated_at: string;
+  type: number;
+};
 export type Experirence = {
-  employee: number;
   title: string;
   company: number;
   start_date: string;
@@ -545,14 +540,17 @@ export type Employee = {
   id: number;
   user: EmployeeUser;
   degrees: Degree[];
+  assets: Asset[];
   experience: Experirence[];
   org_id: string;
+  managing: number[];
   total_experience: string;
+  manages: string[];
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
   designation: string;
-  slack_id?: string | null;
+  salary?: number | null;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -628,6 +626,8 @@ export type Role = {
   updated_at: string;
 };
 export const {
+  useApiAssetTypeListQuery,
+  useApiAssetTypeCreateMutation,
   useApiAttendanceListQuery,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
@@ -640,8 +640,6 @@ export const {
   useApiCompensationTypeCreateMutation,
   useApiCurrencyListQuery,
   useApiCurrencyCreateMutation,
-  useApiDegreesListQuery,
-  useApiDegreesCreateMutation,
   useApiDepartmentListQuery,
   useApiDepartmentCreateMutation,
   useApiDocumentTypeListQuery,
@@ -657,8 +655,6 @@ export const {
   useApiEmployeesCompensationCreateMutation,
   useApiEmployeesDocumentsListQuery,
   useApiEmployeesDocumentsCreateMutation,
-  useApiExperiencesListQuery,
-  useApiExperiencesCreateMutation,
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
