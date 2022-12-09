@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
-from rest_framework.views import status
 from rest_framework.permissions import SAFE_METHODS
+from rest_framework.views import status
 
 from app import models
 
