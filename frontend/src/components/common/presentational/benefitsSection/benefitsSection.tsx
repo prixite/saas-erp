@@ -11,10 +11,10 @@ import editIcon from "@src/assets/svgs/Edit.svg";
 import circleIcon from "@src/assets/svgs/redcircle.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import EditBenefitModal from "@src/components/shared/popUps/benefitModal/EditBenefitModal";
-import { toPkrFormat } from "@src/helpers/constants/constants";
 import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { toPkrFormat } from "@src/helpers/utils/utils";
 import { useApiEmployeesCompensationRetrieveQuery } from "@src/store/api";
 import "@src/components/common/presentational/benefitsSection/benefitsSection.scss";
 

@@ -75,6 +75,26 @@ export interface modalsInterface {
   no: string;
   employeeFirstName: string;
   employeeLastName: string;
+  year: string;
+  firstNameRequired: string;
+  lastNameRequired: string;
+  phoneRequired: string;
+  emailRequired: string;
+  joiningDateRequired: string;
+  CnicRequired: string;
+  DesignationRequired: string;
+  ManagerRequired: string;
+  SalaryRequired: string;
+  EmployementTypeRequired: string;
+  EmergencyContactRequired: string;
+  AssetsRequired: string;
+  CompanyRequired: string;
+  StartDateRequired: string;
+  EndDateRequired: string;
+  DegreeRequired: string;
+  UniversityRequired: string;
+  YearRequired: string;
+  emailrRegxError: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -115,6 +135,10 @@ export interface profilePageInterface {
   phoneSub: string;
   saveBtn: string;
   cancelBtn: string;
+  firstNameError: string;
+  lastNameError: string;
+  emailError: string;
+  phoneError: string;
 
   firstNameRequired: string;
   lastNameRequired: string;
@@ -184,12 +208,17 @@ export type EmployeeForm = {
   designation: string;
   salary?: number | null;
   userAllowed?: boolean;
-  createdAt: Date | null;
-  updatedAt: Date | null;
   department?: number | null;
   manager?: number | null;
   type?: number | null;
   benefits?: number[];
+  title: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  program: string;
+  institute: string;
+  year: string;
 };
 export interface Formik {
   initialValues: EmployeeForm;

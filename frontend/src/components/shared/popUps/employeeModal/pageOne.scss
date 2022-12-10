@@ -7,7 +7,7 @@
   .grid-container-cls {
     .grid-item-cls {
       .text-field-box {
-        height: 85px !important;
+        height: 82px !important;
         .text-field-cls {
           .MuiOutlinedInput-notchedOutline {
             border: 1px solid #d4d6db;
@@ -34,27 +34,18 @@
     }
   }
   .switch-section {
-    margin-top: 18px;
+    margin-top: 15px;
     .switch-cls {
       display: flex;
       align-items: center;
     }
-    .checkbox-section {
+    .checkbox-cls {
       margin-top: 19px;
-
-      .checkbox-cls {
-        .MuiFormGroup-root {
-          margin-right: 20px;
-          .MuiFormControlLabel-root {
-            margin-right: 133px;
-            margin-left: 10px;
-          }
-          .label-cls {
-            color: red;
-            font-weight: 400;
-            font-size: 16px;
-          }
-        }
+      display: flex;
+      text-transform: capitalize;
+      flex-wrap: wrap;
+      .checkbox-section {
+        width: 179px;
       }
     }
   }

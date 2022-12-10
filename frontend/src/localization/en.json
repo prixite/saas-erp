@@ -74,7 +74,12 @@
       "firstNameRequired": "First name is required!",
       "lastNameRequired": "Last name is required!",
       "emailRequired": "Email is required!",
-      "phoneRequired":"Phone number is required!"
+      "phoneRequired":"Phone number is required!",
+      "firstNameError":"Invalid first name!",
+      "lastNameError": "Invalid last name!",
+      "emailError": "Invalid email!",
+      "phoneError": "Invalid phone!"
+
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
@@ -123,6 +128,7 @@
       "employeeCompnay": "Company",
       "dateStart": "Date Started",
       "dateEnd": "Date Ended",
+      "year": "Year",
       "employeeDegree": "Degree",
       "employeeUniveristy": "University",
       "newEmployeeCreated":"A new employee is created.",
@@ -132,7 +138,28 @@
       "yes": "Yes",
       "no": "No",
       "employeeFirstName":"First Name",
-      "employeeLastName": "Last Name"
+      "employeeLastName": "Last Name",
+      "firstNameRequired":"First name is required!",
+      "lastNameRequired":"Last name is required!",
+      "phoneRequired":"Phone number is required!",
+      "emailRequired":"Email is required!",
+      "joiningDateRequired":"Joining date is required!",
+      "CnicRequired": "Nic is required!",
+      "DesignationRequired": "Designation is required!",
+      "ManagerRequired": "Manager is required!",
+      "SalaryRequired": "Salary is required!",
+      "EmployementTypeRequired":"Employment type is required!",
+      "EmergencyContactRequired":"Emergency Contact is required!",
+      "AssetsRequired": "Assets is required!",
+      "CompanyRequired":"Company is required!",
+      "StartDateRequired": "Start date is required!",
+      "EndDateRequired": "End date is required!",
+      "DegreeRequired": "Degree is required!",
+      "UniversityRequired":"University is required!",
+      "YearRequired":"Year is required!",
+      "emailrRegxError":"Invalid Email!"
+
+
     },
 
     "EditBenefitModal":{

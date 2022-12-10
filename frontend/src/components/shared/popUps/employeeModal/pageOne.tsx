@@ -18,6 +18,7 @@ import {
   Formik,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useGetBenefitsQuery } from "@src/store/reducers/employees-api";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 interface Props {
@@ -26,7 +27,7 @@ interface Props {
 const PageOne = ({ formik }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [checked, setChecked] = useState(false);
-
+  const { data: Benefits = [] } = useGetBenefitsQuery();
   const {
     employeeFirstName,
     employeeLastName,
@@ -80,9 +81,9 @@ const PageOne = ({ formik }: Props) => {
               <DatePicker
                 className="text-field-cls"
                 label={employeeDateLabel}
-                value={formik.values.createdAt}
+                value={formik.values.dateOfJoining}
                 onChange={(newValue) => {
-                  formik.setFieldValue("createdAt", newValue);
+                  formik.setFieldValue("dateOfJoining", newValue);
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -96,7 +97,7 @@ const PageOne = ({ formik }: Props) => {
                   />
                 )}
               />
-              <p className="errorText">{formik.errors?.createdAt}</p>
+              <p className="errorText">{formik.errors?.dateOfJoining}</p>
             </LocalizationProvider>
           </Box>
           <Box className="text-field-box">
@@ -281,111 +282,38 @@ const PageOne = ({ formik }: Props) => {
             {employeeCompensationLabel}
           </Typography>
         </Box>
-        {checked ? (
-          <Box
-            className="checkbox-section"
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box
-              className="checkbox-cls"
-              sx={{ display: "flex", flexDirection: "column" }}
-            >
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" />}
-                label={
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                    className="label-cls"
-                  >
-                    Meals Allowance
-                  </Typography>
-                }
-              />
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" />}
-                label={
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                    className="label-cls"
-                  >
-                    Fuel Allowance
-                  </Typography>
-                }
-              />
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" checked={true} />}
-                label={
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                    className="label-cls"
-                  >
-                    Dinner Allowance
-                  </Typography>
-                }
-              />
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" checked={true} />}
-                label={
-                  <Typography sx={{ color: "#6C6C6C" }} className="label-cls">
-                    Phone Allowance
-                  </Typography>
-                }
-              />
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" checked={true} />}
-                label={
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                    className="label-cls"
-                  >
-                    Fuel Allowance
-                  </Typography>
-                }
-              />
-              <FormControlLabel
-                control={<Checkbox disableRipple size="small" />}
-                label={
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                    className="label-cls"
-                  >
-                    Meal Allowance
-                  </Typography>
-                }
-              />
-            </Box>
-          </Box>
-        ) : (
-          ""
-        )}
+        <Box className="checkbox-cls">
+          {checked
+            ? Benefits?.map((benefit) => {
+                return (
+                  <Box className="checkbox-section" key={benefit?.id}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          disableRipple
+                          name="benefits"
+                          onChange={formik.handleChange}
+                          size="small"
+                        />
+                      }
+                      label={
+                        <Typography
+                          sx={{
+                            color: "#6C6C6C",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                          }}
+                          className="label-cls"
+                        >
+                          {benefit?.name}
+                        </Typography>
+                      }
+                    />
+                  </Box>
+                );
+              })
+            : ""}
+        </Box>
       </Box>
     </Box>
   );

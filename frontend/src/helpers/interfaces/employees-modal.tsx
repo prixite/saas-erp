@@ -78,3 +78,8 @@ export interface Flags {
   show_dashboard_module: boolean;
   show_setting_module: string;
 }
+export interface Benefits {
+  id: number;
+  name: string;
+  created_at: string;
+}
