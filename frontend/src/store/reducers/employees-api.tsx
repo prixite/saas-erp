@@ -31,6 +31,12 @@ export const employeesApi = createApi({
     getBenefits: builder.query<Benefits[], void>({
       query: () => "/benefits/",
     }),
+    deleteEmployee: builder.mutation<void, { id: number }>({
+      query: (id) => ({
+        url: `/api/employees/${id}/`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -41,4 +47,5 @@ export const {
   useGetUserQuery,
   useGetFlagsQuery,
   useGetBenefitsQuery,
+  useDeleteEmployeeMutation,
 } = employeesApi;

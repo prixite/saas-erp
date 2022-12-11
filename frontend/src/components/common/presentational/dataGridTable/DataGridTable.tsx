@@ -16,8 +16,10 @@ import { localizedData } from "@src/helpers/utils/language";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
+  useDeleteEmployeeMutation,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
+
 function DataGridTable() {
   const navigate = useNavigate();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
@@ -27,6 +29,7 @@ function DataGridTable() {
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const { notFound } = constantData.Employee;
+  const [rowCellId, setRowCellId] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
@@ -101,43 +104,6 @@ function DataGridTable() {
         );
       },
     },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 350,
-      renderCell: () => {
-        return (
-          <Box
-            className="renderCell-joiningDate"
-            style={{ marginLeft: "10px" }}
-          >
-            <IconButton
-              onClick={handleModalOpen}
-              aria-label="edit"
-              id="edit-btn-id"
-              className="edit-btn"
-            >
-              <img className="profile-pic" src={EditIcon} alt="profile pic" />
-            </IconButton>
-            <IconButton
-              aria-label="Show"
-              id="show-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={ShowIcon} alt="profile pic" />
-            </IconButton>
-            <IconButton
-              onClick={handleDeleteModalOpen}
-              aria-label="delete"
-              id="delete-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
-            </IconButton>
-          </Box>
-        );
-      },
-    },
   ];
   const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -146,15 +112,23 @@ function DataGridTable() {
   const handleModalClose = () => {
     setOpenModal(false);
   };
-  const handleDeleteModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenDeleteModal(true);
-  };
+
   const handleDeleteModalClose = () => {
     setOpenDeleteModal(false);
   };
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleEmployeeDelete = () => {
+    useDeleteEmployeeMutation({ rowCellId }).unwrap();
   };
   return (
     <Box className="dataGridTable-section">
@@ -167,7 +141,60 @@ function DataGridTable() {
                 rowHeight={80}
                 autoHeight
                 rows={tableData}
-                columns={columns}
+                columns={[
+                  ...columns,
+                  {
+                    field: "actions",
+                    headerName: "Actions",
+                    width: 350,
+                    renderCell: (cellValues) => {
+                      return (
+                        <Box
+                          className="renderCell-joiningDate"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          <IconButton
+                            onClick={handleModalOpen}
+                            aria-label="edit"
+                            id="edit-btn-id"
+                            className="edit-btn"
+                          >
+                            <img
+                              className="profile-pic"
+                              src={EditIcon}
+                              alt="profile pic"
+                            />
+                          </IconButton>
+                          <IconButton
+                            aria-label="Show"
+                            id="show-btn-id"
+                            className="delete-btn"
+                          >
+                            <img
+                              className="profile-pic"
+                              src={ShowIcon}
+                              alt="profile pic"
+                            />
+                          </IconButton>
+                          <IconButton
+                            onClick={(event) =>
+                              handleDeleteModalOpen(event, cellValues?.row?.id)
+                            }
+                            aria-label="delete"
+                            id="delete-btn-id"
+                            className="delete-btn"
+                          >
+                            <img
+                              className="profile-pic"
+                              src={DeleteIcon}
+                              alt="profile pic"
+                            />
+                          </IconButton>
+                        </Box>
+                      );
+                    },
+                  },
+                ]}
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
@@ -285,6 +312,7 @@ function DataGridTable() {
       <EmployeeModal open={openModal} handleClose={handleModalClose} />
       <DeleteModal
         open={openDeleteModal}
+        handleEmployeeDelete={handleEmployeeDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>
