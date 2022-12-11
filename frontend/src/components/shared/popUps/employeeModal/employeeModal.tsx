@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import backIcon from "@src/assets/svgs/back.svg";
 import crossIcon from "@src/assets/svgs/cross.svg";
@@ -24,6 +25,8 @@ import {
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { emailRegX } from "@src/helpers/utils/utils";
+import { addNewEmployeeService } from "@src/services/employeeService";
+import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
@@ -66,6 +69,7 @@ const employeeFormInitialState: EmployeeForm = {
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
+  const [createEmployee] = useCreateEmployeeMutation();
   const {
     createEmployeeHeading,
     createEmployeeSubheading,
@@ -140,9 +144,64 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         : employeeDegreeValidationSchema,
     validateOnChange: onChangeValidation,
     onSubmit: () => {
-      // console.log("values are", formik.values);
+      handleAddEmployee();
     },
   });
+  const handleAddEmployee = () => {
+    const employeeObject = getEmployeeObject();
+    addNewEmployeeService(employeeObject, createEmployee)
+      .then(() => {
+        handleClose();
+      })
+      .catch((error) => {
+        toast.error("Error", error);
+      });
+  };
+  const getEmployeeObject = () => {
+    return {
+      user: {
+        first_name: formik.values.firstName,
+        last_name: formik.values.lastName,
+        email: formik.values.email,
+        image: "string",
+        contact_number: formik.values.contactNumber,
+        default_role: 0,
+      },
+      degrees: [
+        {
+          program: formik.values.program,
+          institute: formik.values.institute,
+          year: formik.values.year,
+        },
+      ],
+      assets: [
+        {
+          name: "string",
+          attribute_values: {},
+          type: 0,
+        },
+      ],
+      experience: [
+        {
+          title: formik.values.title,
+          company: formik.values.company,
+          start_date: formik.values.startDate,
+          end_date: formik.values.endDate,
+        },
+      ],
+      managing: [formik.values.managing],
+      nic: formik.values.nic,
+      date_of_joining: formik.values.dateOfJoining,
+      emergency_contact_number: formik.values.emergencyContactNumber,
+      designation: formik.values.designation,
+      salary: formik.values.salary,
+      user_allowed: true,
+      department: formik.values.department,
+      manager: formik.values.manager,
+      type: formik.values.type,
+      benefits: [formik.values.benefits],
+    };
+  };
   const moveToNextPage = async () => {
     const errors = await formik.validateForm();
     if (page == "1" && !Object.keys(errors).length) {
@@ -334,7 +393,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
                   {createEmployeeBack}
                 </Button>
                 <Button
-                  onClick={moveToNextPage}
+                  onClick={() => formik.handleSubmit()}
                   className="submitBtn"
                   sx={{ m: "0px" }}
                 >

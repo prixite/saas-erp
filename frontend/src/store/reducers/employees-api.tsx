@@ -47,6 +47,14 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
+    createEmployee: builder.mutation<EmployeeData[], EmployeeData[]>({
+      query: () => {
+        return {
+          url: "/employees/",
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 
@@ -58,4 +66,5 @@ export const {
   useGetFlagsQuery,
   useGetBenefitsQuery,
   useDeleteEmployeeMutation,
+  useCreateEmployeeMutation,
 } = employeesApi;
