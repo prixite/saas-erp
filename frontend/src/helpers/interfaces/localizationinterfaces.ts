@@ -212,7 +212,7 @@ export type EmployeeForm = {
   manager?: number | null;
   type?: number | null;
   benefits?: number[];
-  title: string;
+  title: string | null;
   company: string;
   startDate: string;
   endDate: string;

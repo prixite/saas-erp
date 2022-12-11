@@ -6,6 +6,7 @@ import {
   Switch,
   Typography,
   Checkbox,
+  Autocomplete,
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,6 +14,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "@src/components/shared/popUps/employeeModal/pageOne.scss";
+import { assets } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   Formik,
@@ -242,23 +244,22 @@ const PageOne = ({ formik }: Props) => {
           sx={{ pt: "0px !important" }}
         >
           <Box className="text-field-box">
-            <TextField
+            <Autocomplete
+              multiple
               className="text-field-cls"
-              select
-              fullWidth
-              name="assets"
-              label={employeeAssetLabel}
-              onChange={formik.handleChange}
-              value={formik.values.assets}
-              SelectProps={{
-                multiple: true,
-              }}
-              InputLabelProps={{ className: "textfield_label" }}
-            >
-              <MenuItem value={10}>Laptop</MenuItem>
-              <MenuItem value={20}>Mouse</MenuItem>
-              <MenuItem value={30}>Handfree</MenuItem>
-            </TextField>
+              options={assets}
+              getOptionLabel={(option) => option.title}
+              defaultValue={[assets[0]]}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputLabelProps={{ className: "textfield_label" }}
+                  label={employeeAssetLabel}
+                  placeholder={employeeAssetLabel}
+                />
+              )}
+            />
           </Box>
         </Grid>
       </Grid>
