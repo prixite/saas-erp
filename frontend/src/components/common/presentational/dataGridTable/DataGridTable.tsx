@@ -3,6 +3,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
@@ -13,6 +14,7 @@ import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeM
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { deleteEmployeeService } from "@src/services/employeeService";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
@@ -23,6 +25,7 @@ import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 function DataGridTable() {
   const navigate = useNavigate();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
   const allFlags = Object.assign({}, ...Flags);
   const constantData: LocalizationInterface = localizedData();
@@ -127,8 +130,12 @@ function DataGridTable() {
     setRowCellId(cellId);
     setOpenDeleteModal(true);
   };
-  const handleEmployeeDelete = () => {
-    useDeleteEmployeeMutation({ rowCellId }).unwrap();
+  const handleEmployeeDelete = async () => {
+    await deleteEmployeeService(rowCellId, deleteEmployee);
+    toast.success("Sucess", {
+      autoClose: 2000,
+      pauseOnHover: false,
+    });
   };
   return (
     <Box className="dataGridTable-section">

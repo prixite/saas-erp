@@ -32,10 +32,12 @@ export const employeesApi = createApi({
       query: () => "/benefits/",
     }),
     deleteEmployee: builder.mutation<void, { id: number }>({
-      query: (id) => ({
-        url: `/api/employees/${id}/`,
-        method: "DELETE",
-      }),
+      query: ({ id }) => {
+        return {
+          url: `/employees/${id}/`,
+          method: "DELETE",
+        };
+      },
     }),
   }),
 });
