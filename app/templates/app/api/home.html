@@ -19,6 +19,7 @@
   </head>
   <body data-flags="{% block data_flags %}{% endblock %}">
     {% block body %}{% endblock %}
+    <form name="csrf">{% csrf_token %}</form>
     <div id="container"></div>
     {% block js_includes %}{% endblock %}
     {% render_bundle 'main' 'js' %}

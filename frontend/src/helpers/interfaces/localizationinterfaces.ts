@@ -16,6 +16,7 @@ export interface employeeInterface {
   employeeExperienceLetters: string;
   uploadDocument: string;
   notFound: string;
+  employeeDeleteSuccess: string;
 }
 export interface userInterface {
   userHeading: string;

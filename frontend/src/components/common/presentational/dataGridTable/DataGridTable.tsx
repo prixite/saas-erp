@@ -11,7 +11,7 @@ import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-import { employeeConstants } from "@src/helpers/constants/constants";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { deleteEmployeeService } from "@src/services/employeeService";
@@ -31,7 +31,7 @@ function DataGridTable() {
   const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { notFound } = constantData.Employee;
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [rowCellId, setRowCellId] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -132,10 +132,11 @@ function DataGridTable() {
   };
   const handleEmployeeDelete = async () => {
     await deleteEmployeeService(rowCellId, deleteEmployee);
-    toast.success("Sucess", {
-      autoClose: 2000,
+    toast.success(employeeDeleteSuccess, {
+      autoClose: timeOut,
       pauseOnHover: false,
     });
+    handleDeleteModalClose();
   };
   return (
     <Box className="dataGridTable-section">
