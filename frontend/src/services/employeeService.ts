@@ -9,7 +9,7 @@ const deleteEmployeeService = async (rowCellId: number, deleteEmployee) => {
 };
 const addNewEmployeeService = async (employeeObject, createEmployee) => {
   await createEmployee({
-    metaSite: employeeObject,
+    employee: employeeObject,
   })
     .unwrap()
     .then(async () => {

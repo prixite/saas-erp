@@ -149,9 +149,10 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
   });
   const handleAddEmployee = () => {
     const employeeObject = getEmployeeObject();
+
     addNewEmployeeService(employeeObject, createEmployee)
       .then(() => {
-        handleClose();
+        handleModalClose();
       })
       .catch((error) => {
         toast.error("Error", error);
