@@ -87,6 +87,21 @@ class Team(models.Model):
         return self.name
 
 
+class Standup(models.Model):
+    team = models.ForeignKey("Team", on_delete=models.CASCADE)
+    standup_time = models.DateTimeField(auto_now_add=True)
+
+
+class StandupUpdate(models.Model):
+    standup = models.ForeignKey("Standup", on_delete=models.CASCADE)
+    employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
+    update_time = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50)
+    work_done_yesterday = models.TextField()
+    work_to_do = models.TextField()
+    blockers = models.TextField()
+
+
 class Degree(models.Model):
     """
     The educational degrees of an employee.
