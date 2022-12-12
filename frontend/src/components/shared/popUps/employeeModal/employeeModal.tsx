@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
+import moment from "moment";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import backIcon from "@src/assets/svgs/back.svg";
@@ -149,13 +150,14 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
   });
   const handleAddEmployee = () => {
     const employeeObject = getEmployeeObject();
-
     addNewEmployeeService(employeeObject, createEmployee)
       .then(() => {
-        handleModalClose();
+        handleClose();
+        formik.resetForm();
+        setOpenSucessModal(true);
       })
       .catch((error) => {
-        toast.error("Error", error);
+        toast.error("Somthing went wrong!", error?.status);
       });
   };
   const getEmployeeObject = () => {
@@ -164,43 +166,23 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         first_name: formik.values.firstName,
         last_name: formik.values.lastName,
         email: formik.values.email,
-        image: "string",
         contact_number: formik.values.contactNumber,
-        default_role: 0,
+        default_role: null,
       },
-      degrees: [
-        {
-          program: formik.values.program,
-          institute: formik.values.institute,
-          year: formik.values.year,
-        },
-      ],
-      assets: [
-        {
-          name: "string",
-          attribute_values: {},
-          type: 0,
-        },
-      ],
-      experience: [
-        {
-          title: formik.values.title,
-          company: formik.values.company,
-          start_date: formik.values.startDate,
-          end_date: formik.values.endDate,
-        },
-      ],
-      managing: [formik.values.managing],
+      degrees: [],
+      assets: [],
+      experience: [],
+      managing: [],
       nic: formik.values.nic,
-      date_of_joining: formik.values.dateOfJoining,
+      date_of_joining: moment(formik.values.dateOfJoining).format("YYYY-MM-DD"),
       emergency_contact_number: formik.values.emergencyContactNumber,
       designation: formik.values.designation,
       salary: formik.values.salary,
       user_allowed: true,
       department: formik.values.department,
-      manager: formik.values.manager,
-      type: formik.values.type,
-      benefits: [formik.values.benefits],
+      manager: null,
+      type: null,
+      benefits: [],
     };
   };
   const moveToNextPage = async () => {

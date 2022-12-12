@@ -8,9 +8,7 @@ const deleteEmployeeService = async (rowCellId: number, deleteEmployee) => {
   }).unwrap();
 };
 const addNewEmployeeService = async (employeeObject, createEmployee) => {
-  await createEmployee({
-    employee: employeeObject,
-  })
+  await createEmployee(employeeObject)
     .unwrap()
     .then(async () => {
       toast.success("New Employee Added.", {
