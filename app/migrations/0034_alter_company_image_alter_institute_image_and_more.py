@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             model_name="user",
             name="image",
             field=models.URLField(
-                default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"
+                default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"  # noqa
             ),
         ),
     ]
