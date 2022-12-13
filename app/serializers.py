@@ -1,6 +1,5 @@
 from datetime import date
 
-from django.conf import settings
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -124,7 +123,6 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["image"] = f"{settings.DOMAIN_NAME}{instance.image.url}"
         return data
 
 
@@ -235,7 +233,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
     contact_number = serializers.CharField(source="user.contact_number", read_only=True)
-    image = serializers.SerializerMethodField()
+    image = serializers.CharField(source="user.image", read_only=True)
 
     class Meta:
         model = models.Employee
@@ -248,9 +246,6 @@ class EmployeeListSerializer(serializers.ModelSerializer):
             "date_of_joining",
             "image",
         ]
-
-    def get_image(self, data):
-        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
 
 
 class EmployeeUpdateSerializer(serializers.ModelSerializer):
@@ -315,8 +310,6 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
 
-    image = serializers.SerializerMethodField()
-
     allowed_modules = serializers.SerializerMethodField()
 
     class Meta:
@@ -334,21 +327,21 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        allowed_modules = set()
+        member_modules = [
+            module.slug for module in self.context.get("request").user.member_modules
+        ]
+        admin_modules = [
+            module.slug for module in self.context.get("request").user.admin_modules
+        ]
+        owner_modules = [
+            module.slug for module in self.context.get("request").user.owner_modules
+        ]
 
-        for module in self.context.get("request").user.member_modules:
-            allowed_modules.add(module.slug)
-        for module in self.context.get("request").user.admin_modules:
-            allowed_modules.add(module.slug)
-        for module in self.context.get("request").user.owner_modules:
-            allowed_modules.add(module.slug)
-
-        allowed_modules = list(allowed_modules)
-
-        return allowed_modules
-
-    def get_image(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
+        return {
+            "member_modules": member_modules,
+            "admin_modules": admin_modules,
+            "owner_modules": owner_modules,
+        }
 
 
 class UserPasswordSerializer(serializers.Serializer):
