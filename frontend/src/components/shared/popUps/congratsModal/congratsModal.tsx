@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import { useNavigate } from "react-router-dom";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import handshakeIcon from "@src/assets/svgs/handshake.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
@@ -17,11 +16,9 @@ interface Props {
 
 const CongratsModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
-  const navigate = useNavigate();
   const { newEmployeeCreated, congrats, backToListing } = constantData.Modals;
 
   const moveToListing = () => {
-    navigate("/employees");
     handleClose();
   };
 

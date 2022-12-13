@@ -221,6 +221,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     }
   };
   const handleModalClose = () => {
+    resetModal();
     setOpenSucessModal(false);
   };
   const resetModal = () => {
