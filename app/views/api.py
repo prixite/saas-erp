@@ -13,11 +13,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.views import mixins
-from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_TOKEN
+from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
 
@@ -215,52 +216,86 @@ class SlackApiView(APIView):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        try:
-            channel_id = request.data.get("channel_id")
-            user_id = request.data.get("user_id")
-            command = request.data.get("command")
-            if channel_id == SLACK_ATTENDACE_CHANNEL:
-                try:
-                    employee = models.Employee.objects.get(slack_id=user_id)
-                except models.Employee.DoesNotExist:
-                    user = client.users_profile_get(user=user_id)
-                    employee = models.Employee.objects.get(
-                        user__email=user.get("profile").get("email")
-                    )
+        req = SignatureVerifier(SLACK_SIGNING_SECRET)
+        if req.is_valid(
+            request.body,
+            request.headers.get("X-Slack-Request-Timestamp"),
+            request.headers.get("X-Slack-Signature"),
+        ):
+            try:
+                channel_id = request.data.get("channel_id")
+                user_id = request.data.get("user_id")
+                command = request.data.get("command")
 
-                    employee.slack_id = user_id
+                if channel_id == SLACK_ATTENDACE_CHANNEL:
+                    try:
+                        employee = models.Employee.objects.get(slack_id=user_id)
+                    except models.Employee.DoesNotExist:
+                        user = client.users_profile_get(user=user_id)
+                        employee = models.Employee.objects.get(
+                            user__email=user.get("profile").get("email")
+                        )
 
-                    employee.save()
-                if command == "/timein":
-                    attendance = models.Attendance.objects.create(
-                        employee=employee, organization=employee.organization
-                    )
-                elif command == "/timeout":
-                    attendance = models.Attendance.objects.filter(
+                        employee.slack_id = user_id
+
+                        employee.save()
+
+                    last_record = models.Attendance.objects.filter(
                         employee=employee
                     ).last()
-                    attendance.time_out = datetime.now()
-                    attendance.save()
+
+                    if command == "/timein":
+                        if last_record and last_record.time_out is None:
+                            return Response(
+                                data={
+                                    "text": "Please do time out before timing in.",
+                                },
+                                status=status.HTTP_200_OK,
+                            )
+
+                        attendance = models.Attendance.objects.create(
+                            employee=employee, organization=employee.organization
+                        )
+
+                    elif command == "/timeout":
+                        if last_record and last_record.time_out is not None:
+                            return Response(
+                                data={
+                                    "text": "Please do time in before timing out.",
+                                },
+                                status=status.HTTP_200_OK,
+                            )
+                        attendance = models.Attendance.objects.filter(
+                            employee=employee
+                        ).last()
+                        attendance.time_out = datetime.now()
+                        attendance.save()
+
+                    return Response(
+                        data={"response_type": "in_channel"},
+                        status=status.HTTP_200_OK,
+                    )
 
                 return Response(
-                    data={"response_type": "in_channel"},
+                    data={
+                        "text": "Please use this command in attendance channel",
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            except Exception:
+                return Response(
+                    data={
+                        "text": "Something went wrong. Please try again.",
+                    },
                     status=status.HTTP_200_OK,
                 )
 
-            return Response(
-                data={
-                    "text": "Please user this command in attendance channel",
-                },
-                status=status.HTTP_200_OK,
-            )
-        except Exception as e:
-            print(e)
-            return Response(
-                data={
-                    "text": "Something went wrong. Please try again.",
-                },
-                status=status.HTTP_200_OK,
-            )
+        return Response(
+            data={
+                "detail": "Forbidden",
+            },
+            status=status.HTTP_403_FORBIDDEN,
+        )
 
 
 class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):

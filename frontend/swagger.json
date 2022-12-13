@@ -1562,7 +1562,8 @@
                     "image": {
                         "type": "string",
                         "format": "uri",
-                        "nullable": true
+                        "nullable": true,
+                        "maxLength": 200
                     },
                     "created_at": {
                         "type": "string",
@@ -2059,7 +2060,7 @@
                     "image": {
                         "type": "string",
                         "format": "uri",
-                        "nullable": true
+                        "maxLength": 200
                     },
                     "contact_number": {
                         "type": "string",
@@ -2144,7 +2145,8 @@
                     "image": {
                         "type": "string",
                         "format": "uri",
-                        "nullable": true
+                        "nullable": true,
+                        "maxLength": 200
                     },
                     "created_at": {
                         "type": "string",
@@ -2187,7 +2189,8 @@
                     },
                     "image": {
                         "type": "string",
-                        "readOnly": true
+                        "format": "uri",
+                        "maxLength": 200
                     },
                     "is_superuser": {
                         "type": "boolean",
@@ -2211,8 +2214,7 @@
                     "allowed_modules",
                     "contact_number",
                     "email",
-                    "headline",
-                    "image"
+                    "headline"
                 ]
             },
             "PatchedEmployeeUpdate": {

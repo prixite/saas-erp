@@ -59,6 +59,11 @@ export interface EmployeeDoc {
   docs: Doc[];
 }
 
+interface AllowedModules {
+  member_modules: string[];
+  admin_modules: string[];
+  owner_modules: string[];
+}
 export interface User {
   image: string;
   email: string;
@@ -67,7 +72,7 @@ export interface User {
   is_superuser: boolean;
   last_name: string;
   organization: string;
-  allowed_modules: string[];
+  allowed_modules: AllowedModules;
 }
 export interface Flags {
   show_users_module: string;
