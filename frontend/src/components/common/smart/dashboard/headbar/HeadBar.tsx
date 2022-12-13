@@ -21,20 +21,12 @@ function HeadBar() {
         <div className="x-1">
           <span>{employeeHeading}</span>
         </div>
-        {allFlags.show_search_module ? (
-          <div className="x-2">
-            <SearchAreaBox />
-          </div>
-        ) : (
-          ""
-        )}
-        {allFlags.show_employee_filter ? (
-          <div className="x-3">
-            <FilterButton />
-          </div>
-        ) : (
-          ""
-        )}
+        <div className={`x-2 ${!allFlags.show_search_module && "d-hide"}`}>
+          <SearchAreaBox />
+        </div>
+        <div className={`x-3 ${!allFlags.show_employee_filter && "d-hide"}`}>
+          <FilterButton />
+        </div>
         {userData?.allowed_modules.admin_modules.includes("employees") ||
         userData?.allowed_modules.owner_modules.includes("employees") ? (
           <div className="x-4">
