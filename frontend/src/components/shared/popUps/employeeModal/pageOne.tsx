@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -27,6 +27,7 @@ interface Props {
 const PageOne = ({ formik }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [checked, setChecked] = useState(false);
+  const [benefit, setBenefit] = useState<number[]>([]);
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const {
     employeeFirstName,
@@ -46,6 +47,23 @@ const PageOne = ({ formik }: Props) => {
   } = constantData.Modals;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+  };
+  useEffect(() => {
+    if (benefit.length) {
+      formik.setFieldValue("benefits", benefit);
+    }
+  }, [benefit.length]);
+  const handleOnChangeBenefit = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const index = benefit.indexOf(parseInt(event.target.value));
+    if (index === -1) {
+      setBenefit([...benefit, parseInt(event.target.value)]);
+    } else {
+      setBenefit(
+        benefit.filter((item) => item !== parseInt(event.target.value))
+      );
+    }
   };
   return (
     <Box className="pageone-section">
@@ -292,7 +310,8 @@ const PageOne = ({ formik }: Props) => {
                         <Checkbox
                           disableRipple
                           name="benefits"
-                          onChange={formik.handleChange}
+                          value={benefit?.id}
+                          onChange={handleOnChangeBenefit}
                           size="small"
                         />
                       }

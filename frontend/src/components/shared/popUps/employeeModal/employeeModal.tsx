@@ -182,7 +182,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       department: formik.values.department,
       manager: null,
       type: null,
-      benefits: [],
+      benefits: formik.values.benefits,
     };
   };
   const moveToNextPage = async () => {
