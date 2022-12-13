@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { Buffer } from "buffer";
 import AppRoutes from "@src/components/hoc/AppRoutes";
