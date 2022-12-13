@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class User(AbstractUser):
@@ -18,10 +19,8 @@ class User(AbstractUser):
         "Organization", on_delete=models.CASCADE, null=True
     )
 
-    image = models.ImageField(
-        upload_to="profile",
-        null=True,
-        default="../static/app/assets/profile_default.png",
+    image = models.URLField(
+        default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"
     )
 
     contact_number = models.CharField(max_length=20)
