@@ -1,8 +1,6 @@
 from datetime import datetime
 
 import slack
-from slack.signature.verifier import SignatureVerifier
-
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -15,11 +13,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.views import mixins
-from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_TOKEN, SLACK_SIGNING_SECRET
+from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
 
