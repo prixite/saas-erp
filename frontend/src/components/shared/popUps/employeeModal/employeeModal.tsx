@@ -102,6 +102,8 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     EndDateRequired,
     DegreeRequired,
     UniversityRequired,
+    DefaultRoleRequired,
+    DepartmentRequired,
     YearRequired,
     emailrRegxError,
   } = constantData.Modals;
@@ -121,6 +123,8 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     salary: yup.string().required(SalaryRequired),
     emergencyContactNumber: yup.string().required(EmergencyContactRequired),
     type: yup.string().required(EmployementTypeRequired),
+    defaultRole: yup.string().required(DefaultRoleRequired),
+    department: yup.string().required(DepartmentRequired),
   });
   const employeeExperienceValidationSchema = yup.object({
     title: yup.string().required(DesignationRequired),
@@ -155,9 +159,15 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         handleClose();
         formik.resetForm();
         setOpenSucessModal(true);
+        setOnChangeValidation(false);
+        setPage("1");
       })
       .catch((error) => {
-        toast.error("Somthing went wrong!", error?.status);
+        toast.error(
+          `${error?.data?.non_field_errors || ""}
+            ${error?.data?.user?.email || ""}
+            ${error?.data?.nic || ""}`
+        );
       });
   };
   const getEmployeeObject = () => {
@@ -167,12 +177,25 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         last_name: formik.values.lastName,
         email: formik.values.email,
         contact_number: formik.values.contactNumber,
-        default_role: null,
+        default_role: formik.values.defaultRole,
       },
-      degrees: [],
+      degrees: [
+        {
+          program: formik.values.program,
+          institute: formik.values.institute,
+          year: moment(formik.values.year).format("YYYY-MM-DD"),
+        },
+      ],
       assets: [],
-      experience: [],
-      managing: [],
+      experience: [
+        {
+          title: formik.values.title,
+          company: formik.values.company,
+          start_date: moment(formik.values.startDate).format("YYYY-MM-DD"),
+          end_date: moment(formik.values.endDate).format("YYYY-MM-DD"),
+        },
+      ],
+      managing: formik.values.managing,
       nic: formik.values.nic,
       date_of_joining: moment(formik.values.dateOfJoining).format("YYYY-MM-DD"),
       emergency_contact_number: formik.values.emergencyContactNumber,
@@ -180,8 +203,8 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       salary: formik.values.salary,
       user_allowed: true,
       department: formik.values.department,
-      manager: null,
-      type: null,
+      manager: formik.values.manager,
+      type: formik.values.type,
       benefits: formik.values.benefits,
     };
   };
@@ -193,12 +216,6 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     } else if (page === "2" && !Object.keys(errors).length) {
       setPage("3");
       setOnChangeValidation(false);
-    } else if (page === "3" && !Object.keys(errors).length) {
-      formik.resetForm();
-      handleClose();
-      setOpenSucessModal(true);
-      setOnChangeValidation(false);
-      setPage("1");
     } else {
       setOnChangeValidation(true);
     }
@@ -206,9 +223,15 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
   const handleModalClose = () => {
     setOpenSucessModal(false);
   };
+  const resetModal = () => {
+    formik.resetForm();
+    handleClose();
+    setPage("1");
+    setOnChangeValidation(false);
+  };
   return (
     <Box>
-      <Dialog open={open} onClose={handleClose} className="EmployeeModal">
+      <Dialog open={open} onClose={resetModal} className="EmployeeModal">
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
@@ -219,7 +242,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
                 {createEmployeeSubheading}
               </Typography>
             </Box>
-            <Box className="cross-icon-box" onClick={handleClose}>
+            <Box className="cross-icon-box" onClick={resetModal}>
               <img src={crossIcon} className="cross-btn" />
             </Box>
           </Box>
@@ -297,7 +320,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         <DialogActions className="EmployeeModal__Actions">
           {page === "1" ? (
             <>
-              <Button className="resetBtn" onClick={handleClose}>
+              <Button className="resetBtn" onClick={resetModal}>
                 <span>
                   {" "}
                   <img className="reset-img" src={crossIcon} alt="reset" />
@@ -376,7 +399,10 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
                   {createEmployeeBack}
                 </Button>
                 <Button
-                  onClick={() => formik.handleSubmit()}
+                  onClick={() => {
+                    setOnChangeValidation(true);
+                    formik.handleSubmit();
+                  }}
                   className="submitBtn"
                   sx={{ m: "0px" }}
                 >

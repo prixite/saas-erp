@@ -94,8 +94,12 @@ export interface modalsInterface {
   EndDateRequired: string;
   DegreeRequired: string;
   UniversityRequired: string;
+  DepartmentRequired: string;
+  DefaultRoleRequired: string;
   YearRequired: string;
   emailrRegxError: string;
+  defaultRoleLabel: string;
+  departmentsLabel: string;
 }
 export interface payrollInterface {
   payrollHeading: string;

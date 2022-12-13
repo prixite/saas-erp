@@ -18,11 +18,13 @@ import {
   Formik,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useGetCompaniesQuery } from "@src/store/reducers/employees-api";
 interface Props {
   formik: Formik;
 }
 const PageTwo = ({ formik }: Props) => {
   const constantData: LocalizationInterface = localizedData();
+  const { data: companiesData } = useGetCompaniesQuery();
   const {
     employeeDesignationLabel,
     employeeCompnay,
@@ -35,23 +37,17 @@ const PageTwo = ({ formik }: Props) => {
     <Box className="pagetwo-section">
       <Grid className="grid-container-cls" container spacing={2}>
         <Grid className="grid-item-cls" item xs={6}>
-          <Box className="text-field-box" sx={{ minWidth: 120 }}>
+          <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              select
+              required
               fullWidth
-              InputProps={{ sx: { height: 56 } }}
-              label={employeeDesignationLabel}
               name="title"
+              label={employeeDesignationLabel}
               onChange={formik.handleChange}
               value={formik.values.title}
-              autoComplete="family-name"
               InputLabelProps={{ className: "textfield_label" }}
-            >
-              <MenuItem value={10}>Senior Software Engineer</MenuItem>
-              <MenuItem value={20}>Junior Software Engineer</MenuItem>
-              <MenuItem value={30}>Fresh</MenuItem>
-            </TextField>
+            />
             <p className="errorText">{formik.errors?.title}</p>
           </Box>
           <Box className="text-field-box">
@@ -89,13 +85,21 @@ const PageTwo = ({ formik }: Props) => {
               label={employeeCompnay}
               name="company"
               onChange={formik.handleChange}
-              value={formik.values.company}
+              value={formik.values.company || ""}
               autoComplete="family-name"
               InputLabelProps={{ className: "textfield_label" }}
             >
-              <MenuItem value={10}>Prxite</MenuItem>
-              <MenuItem value={20}>Prixibix</MenuItem>
-              <MenuItem value={30}>Prixiyes</MenuItem>
+              {companiesData?.length ? (
+                companiesData?.map((company) => {
+                  return (
+                    <MenuItem key={company?.id} value={company?.id}>
+                      {company?.name}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <Box></Box>
+              )}
             </TextField>
             <p className="errorText">{formik.errors?.company}</p>
           </Box>
