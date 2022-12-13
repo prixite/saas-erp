@@ -5,6 +5,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import backIcon from "@src/assets/svgs/back.svg";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import "@src/components/shared/popUps/employeeModal/employeeModal.scss";
@@ -16,13 +18,50 @@ import CongratsModal from "@src/components/shared/popUps/congratsModal/congratsM
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
-import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import {
+  LocalizationInterface,
+  EmployeeForm,
+} from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { emailRegX } from "@src/helpers/utils/utils";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
 }
+
+const employeeFormInitialState: EmployeeForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  image: null,
+  contactNumber: "",
+  defaultRole: undefined,
+  degrees: [],
+  assets: [],
+  experience: [],
+  orgId: "",
+  managing: [],
+  totalExperience: "",
+  manages: [],
+  nic: "",
+  dateOfJoining: "",
+  emergencyContactNumber: "",
+  designation: "",
+  salary: undefined,
+  userAllowed: false,
+  department: undefined,
+  manager: undefined,
+  type: undefined,
+  benefits: [],
+  title: "",
+  company: "",
+  startDate: "",
+  endDate: "",
+  program: "",
+  institute: "",
+  year: "",
+};
 
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
@@ -42,18 +81,84 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     addNewEducation,
     education,
     addNewExperience,
+    firstNameRequired,
+    lastNameRequired,
+    phoneRequired,
+    emailRequired,
+    joiningDateRequired,
+    CnicRequired,
+    DesignationRequired,
+    ManagerRequired,
+    SalaryRequired,
+    EmployementTypeRequired,
+    EmergencyContactRequired,
+    CompanyRequired,
+    StartDateRequired,
+    EndDateRequired,
+    DegreeRequired,
+    UniversityRequired,
+    YearRequired,
+    emailrRegxError,
   } = constantData.Modals;
-  const [page, setPage] = useState("1");
 
-  const moveToNextPage = () => {
-    if (page == "1") {
+  const employeeFormValidationSchema = yup.object({
+    firstName: yup.string().required(firstNameRequired),
+    lastName: yup.string().required(lastNameRequired),
+    contactNumber: yup.string().required(phoneRequired),
+    email: yup
+      .string()
+      .matches(emailRegX, emailrRegxError)
+      .required(emailRequired),
+    nic: yup.string().required(CnicRequired),
+    dateOfJoining: yup.string().required(joiningDateRequired),
+    manager: yup.string().required(ManagerRequired),
+    designation: yup.string().required(DesignationRequired),
+    salary: yup.string().required(SalaryRequired),
+    emergencyContactNumber: yup.string().required(EmergencyContactRequired),
+    type: yup.string().required(EmployementTypeRequired),
+  });
+  const employeeExperienceValidationSchema = yup.object({
+    title: yup.string().required(DesignationRequired),
+    company: yup.string().required(CompanyRequired),
+    startDate: yup.string().required(StartDateRequired),
+    endDate: yup.string().required(EndDateRequired),
+  });
+  const employeeDegreeValidationSchema = yup.object({
+    program: yup.string().required(DegreeRequired),
+    institute: yup.string().required(UniversityRequired),
+    year: yup.string().required(YearRequired),
+  });
+  const [page, setPage] = useState("1");
+  const [onChangeValidation, setOnChangeValidation] = useState(false);
+  const formik = useFormik<EmployeeForm>({
+    initialValues: employeeFormInitialState,
+    validationSchema:
+      page === "1"
+        ? employeeFormValidationSchema
+        : page === "2"
+        ? employeeExperienceValidationSchema
+        : employeeDegreeValidationSchema,
+    validateOnChange: onChangeValidation,
+    onSubmit: () => {
+      // console.log("values are", formik.values);
+    },
+  });
+  const moveToNextPage = async () => {
+    const errors = await formik.validateForm();
+    if (page == "1" && !Object.keys(errors).length) {
       setPage("2");
-    } else if (page === "2") {
+      setOnChangeValidation(false);
+    } else if (page === "2" && !Object.keys(errors).length) {
       setPage("3");
-    } else {
+      setOnChangeValidation(false);
+    } else if (page === "3" && !Object.keys(errors).length) {
+      formik.resetForm();
       handleClose();
       setOpenSucessModal(true);
+      setOnChangeValidation(false);
       setPage("1");
+    } else {
+      setOnChangeValidation(true);
     }
   };
   const handleModalClose = () => {
@@ -139,11 +244,11 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         <DialogContent className="FilterModal__Content">
           <Box className="content-cls">
             {page === "1" ? (
-              <PageOne />
+              <PageOne formik={formik} />
             ) : page === "2" ? (
-              <PageTwo />
+              <PageTwo formik={formik} />
             ) : (
-              <PageThree />
+              <PageThree formik={formik} />
             )}
           </Box>
         </DialogContent>

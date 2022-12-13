@@ -65,6 +65,8 @@
   }
   &__Content {
     display: flex;
+    height: auto;
+    overflow: hidden;
     flex-direction: column;
     width: 100%;
   }
