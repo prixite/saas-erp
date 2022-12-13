@@ -282,7 +282,7 @@ class SlackApiView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-            except Exception as e:
+            except Exception:
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
