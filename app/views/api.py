@@ -290,6 +290,13 @@ class SlackApiView(APIView):
                     status=status.HTTP_200_OK,
                 )
 
+        return Response(
+            data={
+                "detail": "Forbidden",
+            },
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
 
 class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
     serializer_class = serializers.AttendanceSerializer

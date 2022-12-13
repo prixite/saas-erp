@@ -9,9 +9,12 @@
   height: 100px;
   background-color: white;
 
+  .d-hide {
+    visibility: hidden;
+  }
+
   .x-1 {
     margin: 5px;
-    width: 173px;
     height: 24px;
     font-family: "Lato";
     font-style: normal;

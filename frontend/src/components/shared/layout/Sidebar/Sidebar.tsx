@@ -106,7 +106,9 @@ const Sidebar = (props) => {
             <ListItemText primary="Dashboard" />
           </ListItemButton>
           {allFlags.show_users_module ? (
-            userData?.allowed_modules.includes("user") ? (
+            userData?.allowed_modules.member_modules.includes("user") ||
+            userData?.allowed_modules.admin_modules.includes("user") ||
+            userData?.allowed_modules.owner_modules.includes("user") ? (
               <ListItemButton
                 onClick={() => {
                   navigate("users/");
@@ -128,7 +130,9 @@ const Sidebar = (props) => {
             ""
           )}
           {allFlags.show_employees_module ? (
-            userData?.allowed_modules.includes("employees") ? (
+            userData?.allowed_modules.member_modules.includes("employees") ||
+            userData?.allowed_modules.admin_modules.includes("employees") ||
+            userData?.allowed_modules.owner_modules.includes("employees") ? (
               <ListItemButton
                 onClick={() => {
                   navigate("employees/");
@@ -150,7 +154,9 @@ const Sidebar = (props) => {
             ""
           )}
           {allFlags.show_accounts_module ? (
-            userData?.allowed_modules.includes("Inventory") ? (
+            userData?.allowed_modules.member_modules.includes("inventory") ||
+            userData?.allowed_modules.admin_modules.includes("inventory") ||
+            userData?.allowed_modules.owner_modules.includes("inventory") ? (
               <ListItemButton
                 onClick={() => {
                   navigate("accounts/");
@@ -172,7 +178,9 @@ const Sidebar = (props) => {
             ""
           )}
           {allFlags.show_payroll_module ? (
-            userData?.allowed_modules.includes("payroll") ? (
+            userData?.allowed_modules.member_modules.includes("payroll") ||
+            userData?.allowed_modules.admin_modules.includes("payroll") ||
+            userData?.allowed_modules.owner_modules.includes("payroll") ? (
               <ListItemButton
                 onClick={() => {
                   navigate("payroll/");

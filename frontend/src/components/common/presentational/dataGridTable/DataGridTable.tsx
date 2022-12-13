@@ -19,11 +19,13 @@ import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
   useDeleteEmployeeMutation,
+  useGetUserQuery
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 
 function DataGridTable() {
   const navigate = useNavigate();
+  const { data: userData } = useGetUserQuery();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
@@ -118,22 +120,29 @@ function DataGridTable() {
             className="renderCell-joiningDate"
             style={{ marginLeft: "10px" }}
           >
-            <IconButton
-              onClick={handleModalOpen}
-              aria-label="edit"
-              id="edit-btn-id"
-              className="edit-btn"
-            >
-              <img className="profile-pic" src={EditIcon} alt="profile pic" />
-            </IconButton>
+            {userData?.allowed_modules.admin_modules.includes("employees") ||
+            userData?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={handleModalOpen}
+                aria-label="edit"
+                id="edit-btn-id"
+                className="edit-btn"
+              >
+                <img className="profile-pic" src={EditIcon} alt="profile pic" />
+              </IconButton>
+            ) : (
+              ""
+            )}
             <IconButton
               aria-label="Show"
               id="show-btn-id"
               className="delete-btn"
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
-            </IconButton>
-            <IconButton
+            </IconButton>  
+            {userData?.allowed_modules.admin_modules.includes("employees") ||
+            userData?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
               onClick={(event) =>
                 handleDeleteModalOpen(event, cellValues?.row?.id)
               }
@@ -143,6 +152,9 @@ function DataGridTable() {
             >
               <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
             </IconButton>
+            ) : (
+              ""
+            )}
           </Box>
         );
       },
