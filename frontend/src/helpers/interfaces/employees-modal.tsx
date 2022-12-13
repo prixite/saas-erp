@@ -60,6 +60,11 @@ export interface EmployeeDoc {
   docs: Doc[];
 }
 
+interface AllowedModules {
+  member_modules: string[];
+  admin_modules: string[];
+  owner_modules: string[];
+}
 export interface User {
   image: string;
   email: string;
@@ -79,11 +84,6 @@ export interface Flags {
   show_setting_module: string;
 }
 
-export interface AllowedModules {
-  member_modules: string[];
-  admin_modules: string[];
-  owner_modules: string[];
-}
 export interface Benefits {
   id: number;
   name: string;
