@@ -68,7 +68,7 @@ export interface User {
   is_superuser: boolean;
   last_name: string;
   organization: string;
-  allowed_modules: string[];
+  allowed_modules: AllowedModules;
 }
 export interface Flags {
   show_users_module: string;
@@ -77,4 +77,10 @@ export interface Flags {
   show_accounts_module: string;
   show_dashboard_module: boolean;
   show_setting_module: string;
+}
+
+export interface AllowedModules {
+  member_modules: string[];
+  admin_modules: string[];
+  owner_modules: string[];
 }
