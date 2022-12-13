@@ -278,12 +278,11 @@ class SlackApiView(APIView):
 
                 return Response(
                     data={
-                        "text": "Please user this command in attendance channel",
+                        "text": "Please use this command in attendance channel",
                     },
                     status=status.HTTP_200_OK,
                 )
             except Exception as e:
-                print(e)
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
