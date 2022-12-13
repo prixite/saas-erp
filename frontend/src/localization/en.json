@@ -16,7 +16,9 @@
       "mealsAllowance": "Meals Allowance",
       "employeeExperienceLetters":"Experience Letters",
       "uploadDocument": "Upload Document",
-      "notFound": "Not Found!"
+      "notFound": "Not Found!",
+      "employeeDeleteSuccess": "Employee deleted successfully"
+
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"

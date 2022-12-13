@@ -10,11 +10,18 @@ import {
 export const employeesApi = createApi({
   reducerPath: "employeesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `/api`,
+    baseUrl: "/api/",
+    prepareHeaders: (headers) => {
+      headers.append("Content-Type", "application/json");
+      headers.set("X-CSRFToken", document.forms.csrf.csrfmiddlewaretoken.value);
+      return headers;
+    },
   }),
+  tagTypes: ["Employee"],
   endpoints: (builder) => ({
     getEmployees: builder.query<EmployeeData[], void>({
       query: () => "/employees/",
+      providesTags: ["Employee"],
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
       query: ({ id }) => `/employees/${id}/`,
@@ -31,6 +38,15 @@ export const employeesApi = createApi({
     getBenefits: builder.query<Benefits[], void>({
       query: () => "/benefits/",
     }),
+    deleteEmployee: builder.mutation<void, { id: number }>({
+      query: ({ id }) => {
+        return {
+          url: `/employees/${id}/`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Employee"],
+    }),
   }),
 });
 
@@ -41,4 +57,5 @@ export const {
   useGetUserQuery,
   useGetFlagsQuery,
   useGetBenefitsQuery,
+  useDeleteEmployeeMutation,
 } = employeesApi;

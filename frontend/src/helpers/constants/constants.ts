@@ -271,3 +271,4 @@ export const datarows = [
 export const employeeConstants = {
   employees: "Data ",
 };
+export const timeOut = 2000;

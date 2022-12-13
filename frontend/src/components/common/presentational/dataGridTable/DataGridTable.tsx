@@ -3,6 +3,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
@@ -10,25 +11,30 @@ import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-import { employeeConstants } from "@src/helpers/constants/constants";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { deleteEmployeeService } from "@src/services/employeeService";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
+  useDeleteEmployeeMutation,
   useGetUserQuery,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
+
 function DataGridTable() {
   const navigate = useNavigate();
   const { data: userData } = useGetUserQuery();
   const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
   const allFlags = Object.assign({}, ...Flags);
   const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { notFound } = constantData.Employee;
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [rowCellId, setRowCellId] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
@@ -77,6 +83,7 @@ function DataGridTable() {
         );
       },
     },
+
     {
       field: "contact_Number",
       headerName: "Contact Number",
@@ -107,7 +114,7 @@ function DataGridTable() {
       field: "actions",
       headerName: "Actions",
       width: 350,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
           <Box
             className="renderCell-joiningDate"
@@ -136,7 +143,9 @@ function DataGridTable() {
             {userData?.allowed_modules.admin_modules.includes("employees") ||
             userData?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
-                onClick={handleDeleteModalOpen}
+                onClick={(event) =>
+                  handleDeleteModalOpen(event, cellValues?.row?.id)
+                }
                 aria-label="delete"
                 id="delete-btn-id"
                 className="delete-btn"
@@ -162,15 +171,28 @@ function DataGridTable() {
   const handleModalClose = () => {
     setOpenModal(false);
   };
-  const handleDeleteModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenDeleteModal(true);
-  };
+
   const handleDeleteModalClose = () => {
     setOpenDeleteModal(false);
   };
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleEmployeeDelete = async () => {
+    await deleteEmployeeService(rowCellId, deleteEmployee);
+    toast.success(employeeDeleteSuccess, {
+      autoClose: timeOut,
+      pauseOnHover: false,
+    });
+    handleDeleteModalClose();
   };
   return (
     <Box className="dataGridTable-section">
@@ -301,6 +323,7 @@ function DataGridTable() {
       <EmployeeModal open={openModal} handleClose={handleModalClose} />
       <DeleteModal
         open={openDeleteModal}
+        handleEmployeeDelete={handleEmployeeDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>
