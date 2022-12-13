@@ -84,3 +84,8 @@ export interface AllowedModules {
   admin_modules: string[];
   owner_modules: string[];
 }
+export interface Benefits {
+  id: number;
+  name: string;
+  created_at: string;
+}

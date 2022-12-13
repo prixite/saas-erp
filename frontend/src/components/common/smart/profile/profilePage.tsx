@@ -16,6 +16,7 @@ import * as yup from "yup";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { emailRegX, nameRegex, phoneRegex } from "@src/helpers/utils/utils";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/profile/profilePage.scss";
 
@@ -40,17 +41,11 @@ function ProfilePage() {
     lastNameRequired,
     emailRequired,
     phoneRequired,
+    firstNameError,
+    lastNameError,
+    emailError,
+    phoneError,
   } = constantData.ProfilePage;
-
-  /* eslint-disable-next-line */
-  const nameRegex = /^[A-Za-z]*$/;
-  const phoneRegex =
-    /* eslint-disable-next-line */
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-  /* eslint-disable-next-line */
-  const emailRegex =
-    /* eslint-disable-next-line */
-    /^[^<>()[\]\\,;:\%#^\s@\"$*&/!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const formik = useFormik({
     initialValues: {
@@ -62,19 +57,19 @@ function ProfilePage() {
     validationSchema: yup.object({
       firstname: yup
         .string()
-        .matches(nameRegex, "First Name is required!")
+        .matches(nameRegex, firstNameError)
         .required(firstNameRequired),
       lastname: yup
         .string()
-        .matches(nameRegex, "Last Name is required!")
+        .matches(nameRegex, lastNameError)
         .required(lastNameRequired),
       email: yup
         .string()
-        .matches(emailRegex, "Invalid email!")
+        .matches(emailRegX, emailError)
         .required(emailRequired),
       phone: yup
         .string()
-        .matches(phoneRegex, "Invalid phone number!")
+        .matches(phoneRegex, phoneError)
         .required(phoneRequired),
     }),
     validateOnChange: true,

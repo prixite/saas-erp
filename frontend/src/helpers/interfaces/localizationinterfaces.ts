@@ -1,3 +1,4 @@
+import { FormikErrors } from "formik";
 export interface btnsInterface {
   createButton: string;
   filterButton: string;
@@ -72,6 +73,28 @@ export interface modalsInterface {
   wantToDelete: string;
   yes: string;
   no: string;
+  employeeFirstName: string;
+  employeeLastName: string;
+  year: string;
+  firstNameRequired: string;
+  lastNameRequired: string;
+  phoneRequired: string;
+  emailRequired: string;
+  joiningDateRequired: string;
+  CnicRequired: string;
+  DesignationRequired: string;
+  ManagerRequired: string;
+  SalaryRequired: string;
+  EmployementTypeRequired: string;
+  EmergencyContactRequired: string;
+  AssetsRequired: string;
+  CompanyRequired: string;
+  StartDateRequired: string;
+  EndDateRequired: string;
+  DegreeRequired: string;
+  UniversityRequired: string;
+  YearRequired: string;
+  emailrRegxError: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -112,6 +135,10 @@ export interface profilePageInterface {
   phoneSub: string;
   saveBtn: string;
   cancelBtn: string;
+  firstNameError: string;
+  lastNameError: string;
+  emailError: string;
+  phoneError: string;
 
   firstNameRequired: string;
   lastNameRequired: string;
@@ -139,6 +166,74 @@ export interface editBenefitModal {
   OvertimeAllowance: string;
   DinnerAllowance: string;
   MealAllowance: string;
+}
+export type Degree = {
+  program: number;
+  institute: number;
+  year: string;
+};
+export type Asset = {
+  id: number;
+  name: string;
+  attribute_values: {
+    [key: string]: string;
+  };
+  created_at: string;
+  updated_at: string;
+  type: number;
+};
+export type Experirence = {
+  title: string;
+  company: number;
+  start_date: string;
+  end_date: string;
+};
+export type EmployeeForm = {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  image?: string | null;
+  contactNumber: string;
+  defaultRole?: number | null;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  orgId: string;
+  managing: [];
+  totalExperience: string;
+  manages: string[];
+  nic: string;
+  dateOfJoining: string;
+  emergencyContactNumber: string;
+  designation: string;
+  salary?: number | null;
+  userAllowed?: boolean;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
+  title: string | null;
+  company: string;
+  startDate: string;
+  endDate: string;
+  program: string;
+  institute: string;
+  year: string;
+};
+export interface Formik {
+  initialValues: EmployeeForm;
+  initialStatus: EmployeeForm;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: EmployeeForm;
+  errors?: FormikErrors<EmployeeForm>;
+  setFieldValue: (
+    field: string,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<EmployeeForm>> | Promise<void>;
+  submitCount: number;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

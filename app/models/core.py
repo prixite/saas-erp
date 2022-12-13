@@ -18,10 +18,8 @@ class User(AbstractUser):
         "Organization", on_delete=models.CASCADE, null=True
     )
 
-    image = models.ImageField(
-        upload_to="profile",
-        null=True,
-        default="../static/app/assets/profile_default.png",
+    image = models.URLField(
+        default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"  # noqa
     )
 
     contact_number = models.CharField(max_length=20)

@@ -28,9 +28,13 @@ function HeadBar() {
         ) : (
           ""
         )}
-        <div className="x-3">
-          <FilterButton />
-        </div>
+        {allFlags.show_employee_filter ? (
+          <div className="x-3">
+            <FilterButton />
+          </div>
+        ) : (
+          ""
+        )}
         {userData?.allowed_modules.admin_modules.includes("employees") ||
         userData?.allowed_modules.owner_modules.includes("employees") ? (
           <div className="x-4">
