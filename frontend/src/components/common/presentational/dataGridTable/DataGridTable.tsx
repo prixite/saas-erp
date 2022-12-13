@@ -19,7 +19,7 @@ import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
   useDeleteEmployeeMutation,
-  useGetUserQuery
+  useGetUserQuery,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 
@@ -139,19 +139,23 @@ function DataGridTable() {
               className="delete-btn"
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
-            </IconButton>  
+            </IconButton>
             {userData?.allowed_modules.admin_modules.includes("employees") ||
             userData?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
-              onClick={(event) =>
-                handleDeleteModalOpen(event, cellValues?.row?.id)
-              }
-              aria-label="delete"
-              id="delete-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
-            </IconButton>
+                onClick={(event) =>
+                  handleDeleteModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="delete"
+                id="delete-btn-id"
+                className="delete-btn"
+              >
+                <img
+                  className="profile-pic"
+                  src={DeleteIcon}
+                  alt="profile pic"
+                />
+              </IconButton>
             ) : (
               ""
             )}
