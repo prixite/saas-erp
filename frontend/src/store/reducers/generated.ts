@@ -511,7 +511,7 @@ export type EmployeeUser = {
   first_name?: string;
   last_name?: string;
   email: string;
-  image?: string | null;
+  image?: string;
   contact_number: string;
   default_role?: number | null;
 };
@@ -604,7 +604,7 @@ export type Me = {
   last_name?: string;
   email: string;
   organization?: string;
-  image: string;
+  image?: string;
   is_superuser?: boolean;
   headline: string;
   contact_number: string;
