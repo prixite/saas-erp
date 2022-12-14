@@ -159,7 +159,11 @@
       "DegreeRequired": "Degree is required!",
       "UniversityRequired":"University is required!",
       "YearRequired":"Year is required!",
-      "emailrRegxError":"Invalid Email!"
+      "DepartmentRequired": "Department is required!",
+      "DefaultRoleRequired": "Default role is required!",
+      "emailrRegxError":"Invalid Email!",
+      "defaultRoleLabel": "Default Role",
+      "departmentsLabel": "Department"
 
 
     },

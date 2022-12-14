@@ -18,11 +18,17 @@ import {
   Formik,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import {
+  useGetProgramsQuery,
+  useGetInstituteQuery,
+} from "@src/store/reducers/employees-api";
 interface Props {
   formik: Formik;
 }
 const PageThree = ({ formik }: Props) => {
   const constantData: LocalizationInterface = localizedData();
+  const { data: programsData } = useGetProgramsQuery();
+  const { data: instituteData } = useGetInstituteQuery();
 
   const {
     employeeDegree,
@@ -31,7 +37,6 @@ const PageThree = ({ formik }: Props) => {
     CurrentlyProgress,
     uploadReleventDegree,
   } = constantData.Modals;
-
   return (
     <Box className="pagethree-section">
       <Grid className="grid-container-cls" container spacing={2}>
@@ -45,13 +50,20 @@ const PageThree = ({ formik }: Props) => {
               label={employeeDegree}
               name="program"
               onChange={formik.handleChange}
-              value={formik.values.program}
-              autoComplete="family-name"
+              value={formik.values.program || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
-              <MenuItem value={10}>BS(CS)</MenuItem>
-              <MenuItem value={20}>BS(IT)</MenuItem>
-              <MenuItem value={30}>Software Engineering</MenuItem>
+              {programsData?.length ? (
+                programsData?.map((program) => {
+                  return (
+                    <MenuItem key={program?.id} value={program?.id}>
+                      {program?.name}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <Box></Box>
+              )}
             </TextField>
             <p className="errorText">{formik.errors?.program}</p>
           </Box>
@@ -90,13 +102,20 @@ const PageThree = ({ formik }: Props) => {
               label={employeeUniveristy}
               name="institute"
               onChange={formik.handleChange}
-              value={formik.values.institute}
-              autoComplete="family-name"
+              value={formik.values.institute || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
-              <MenuItem value={10}>FAST</MenuItem>
-              <MenuItem value={20}>LUMS</MenuItem>
-              <MenuItem value={30}>GIKI</MenuItem>
+              {instituteData?.length ? (
+                instituteData?.map((institute) => {
+                  return (
+                    <MenuItem key={institute?.id} value={institute?.id}>
+                      {institute?.name}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <Box></Box>
+              )}
             </TextField>
             <p className="errorText">{formik.errors?.institute}</p>
           </Box>

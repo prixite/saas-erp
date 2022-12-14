@@ -94,8 +94,12 @@ export interface modalsInterface {
   EndDateRequired: string;
   DegreeRequired: string;
   UniversityRequired: string;
+  DepartmentRequired: string;
+  DefaultRoleRequired: string;
   YearRequired: string;
   emailrRegxError: string;
+  defaultRoleLabel: string;
+  departmentsLabel: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -213,7 +217,7 @@ export type EmployeeForm = {
   manager?: number | null;
   type?: number | null;
   benefits?: number[];
-  title: string | null;
+  title: string;
   company: string;
   startDate: string;
   endDate: string;

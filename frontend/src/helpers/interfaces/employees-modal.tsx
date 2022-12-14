@@ -1,12 +1,11 @@
 export interface Employee {
-  name: string;
-  contact_number: number;
-  nic: number;
-  emergency_contact_number: number;
-  date_of_joining: Date;
-  organization: number;
-  type: number;
-  department: number;
+  first_name: string;
+  last_name: string;
+  contact_number: string;
+  id: number;
+  image: string;
+  org_id: string;
+  date_of_joining: string;
 }
 export interface Education {
   program: string;
@@ -83,7 +82,46 @@ export interface Flags {
   show_dashboard_module: boolean;
   show_setting_module: string;
 }
-
+export interface EmployeementTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface CompaniesTypes {
+  id: number;
+  name: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface ProgramsTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface InstituteTypes {
+  id: number;
+  name: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface roleTypes {
+  id: number;
+  name: string;
+  permission: string;
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
+export interface departmentsTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
 export interface Benefits {
   id: number;
   name: string;

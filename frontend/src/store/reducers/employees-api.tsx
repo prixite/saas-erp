@@ -4,7 +4,14 @@ import {
   EmployeeData,
   User,
   Flags,
+  Employee,
   Benefits,
+  EmployeementTypes,
+  ProgramsTypes,
+  InstituteTypes,
+  CompaniesTypes,
+  departmentsTypes,
+  roleTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -19,7 +26,7 @@ export const employeesApi = createApi({
   }),
   tagTypes: ["Employee"],
   endpoints: (builder) => ({
-    getEmployees: builder.query<EmployeeData[], void>({
+    getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
       providesTags: ["Employee"],
     }),
@@ -35,14 +42,45 @@ export const employeesApi = createApi({
     getFlags: builder.query<Flags[], void>({
       query: () => "/flags/",
     }),
+    getEmployeementTypes: builder.query<EmployeementTypes[], void>({
+      query: () => "/employeement_type/",
+    }),
+    getCompanies: builder.query<CompaniesTypes[], void>({
+      query: () => "/companies/",
+    }),
+    getPrograms: builder.query<ProgramsTypes[], void>({
+      query: () => "/programs/",
+    }),
+    getInstitute: builder.query<InstituteTypes[], void>({
+      query: () => "/institues/",
+    }),
+    getRoles: builder.query<roleTypes[], void>({
+      query: () => "/role/",
+    }),
     getBenefits: builder.query<Benefits[], void>({
       query: () => "/benefits/",
+    }),
+    getDepartments: builder.query<departmentsTypes[], void>({
+      query: () => "/department/",
     }),
     deleteEmployee: builder.mutation<void, { id: number }>({
       query: ({ id }) => {
         return {
           url: `/employees/${id}/`,
           method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Employee"],
+    }),
+    createEmployee: builder.mutation<
+      EmployeeData[],
+      { employee: EmployeeData[] }
+    >({
+      query: (employee) => {
+        return {
+          url: "/employees/",
+          method: "POST",
+          body: employee,
         };
       },
       invalidatesTags: ["Employee"],
@@ -58,4 +96,11 @@ export const {
   useGetFlagsQuery,
   useGetBenefitsQuery,
   useDeleteEmployeeMutation,
+  useCreateEmployeeMutation,
+  useGetEmployeementTypesQuery,
+  useGetCompaniesQuery,
+  useGetProgramsQuery,
+  useGetInstituteQuery,
+  useGetRolesQuery,
+  useGetDepartmentsQuery,
 } = employeesApi;
