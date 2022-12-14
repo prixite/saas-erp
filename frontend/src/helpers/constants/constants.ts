@@ -269,16 +269,6 @@ export const datarows = [
   },
 ];
 export const employeeConstants = {
-  employees: "Employee's Data ",
+  employees: "Data ",
 };
-
-export const toPkrFormat = (enumber: number | undefined) => {
-  const amount = enumber?.toString();
-  let lastThree = amount?.substring(amount.length - 3);
-  const otherNumbers = amount?.substring(0, amount.length - 3);
-  if (otherNumbers != "") lastThree = "," + lastThree;
-  const result =
-    "RS. " + otherNumbers?.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-
-  return result;
-};
+export const timeOut = 2000;

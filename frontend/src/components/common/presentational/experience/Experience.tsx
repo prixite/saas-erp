@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Divider, Grid, Typography, Box } from "@mui/material";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
 import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
-import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/experience/experience.scss";
 
-interface ExperienceType {
-  employeeData?: EmployeeData;
-}
-function Experience({ employeeData }: ExperienceType) {
+function Experience() {
+  const param = useParams();
+  const [paramValue, setParamValue] = useState<string>("");
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: parseInt(paramValue),
+    },
+    { skip: !parseInt(paramValue) }
+  );
+  useEffect(() => {
+    if (param.employeeId) {
+      setParamValue(param.employeeId);
+    }
+  }, [employeeData]);
+
   const constantData: LocalizationInterface = localizedData();
   const { experienceHeading } = constantData.Experience;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

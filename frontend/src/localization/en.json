@@ -16,7 +16,9 @@
       "mealsAllowance": "Meals Allowance",
       "employeeExperienceLetters":"Experience Letters",
       "uploadDocument": "Upload Document",
-      "notFound": "Not Found"
+      "notFound": "Not Found!",
+      "employeeDeleteSuccess": "Employee deleted successfully"
+
     },
     "Dashboard": {
       "dashboardHeading": "Dashboard"
@@ -74,7 +76,12 @@
       "firstNameRequired": "First name is required!",
       "lastNameRequired": "Last name is required!",
       "emailRequired": "Email is required!",
-      "phoneRequired":"Phone number is required!"
+      "phoneRequired":"Phone number is required!",
+      "firstNameError":"Invalid first name!",
+      "lastNameError": "Invalid last name!",
+      "emailError": "Invalid email!",
+      "phoneError": "Invalid phone!"
+
     },
     "EmployeeButtons":{
       "basicBtn": "Basic Information",
@@ -88,8 +95,79 @@
       "filterResetBtn":"Reset",
       "filterSubmitBtn":"Submit",
       "filterNameLabel":"Please Enter Name",
-      "filterDesignationLabel":"Please Enter Designation"
+      "filterDesignationLabel":"Please Enter Designation",
+      "createEmployeeHeading": "Create an Employee",
+      "createEmployeeSubheading": "Fill the following fields to add an employee",
+      "createEmployeeClose": "Close",
+      "createEmployeeNext": "Next",
+      "createEmployeeSave": "Save",
+      "createEmployeeBack": "Back",
+      "employeeNameLabel": "Name",
+      "employeeEmailLabel": "Email Address",
+      "employeePhoneLabel": "Phone Number",
+      "employeeCnicLabel": "CNIC",
+      "employeeDateLabel": "Date Started",
+      "employeeManagerLabel": "Manager",
+      "employeeDesignationLabel": "Designation",
+      "employeeSalaryLabel": "Salary",
+      "employeeManagingLabel": "Managing",
+      "employeeEmployementLabel": "Employment Type",
+      "employeeAssetLabel": "Assets",
+      "employeeEmergencyContactLabel": "Emergency Contact",
+      "employeeCompensationLabel": "Benefits",
+      "stepOne": "Step 1.",
+      "stepTwo": "Step 2.",
+      "stepThree": "Step 3.",
+      "basicInformation":"Basic Information",
+      "experience":"Experience",
+      "education":"Education",
+      "addNewExperience":"Add New Experience",
+      "addNewEducation":"Add New Education",
+      "uploadExperienceLetter": "Upload Experience Letter",
+      "uploadReleventDegree": "Upload Relevent Degree",
+      "CurrentlyWorking": "Currently working here.",
+      "CurrentlyProgress": "Currently InProgress.",
+      "employeeCompnay": "Company",
+      "dateStart": "Date Started",
+      "dateEnd": "Date Ended",
+      "year": "Year",
+      "employeeDegree": "Degree",
+      "employeeUniveristy": "University",
+      "newEmployeeCreated":"A new employee is created.",
+      "congrats": "Congratulations",
+      "backToListing": "Back to Listing",
+      "wantToDelete": "Want to Delete?",
+      "yes": "Yes",
+      "no": "No",
+      "employeeFirstName":"First Name",
+      "employeeLastName": "Last Name",
+      "firstNameRequired":"First name is required!",
+      "lastNameRequired":"Last name is required!",
+      "phoneRequired":"Phone number is required!",
+      "emailRequired":"Email is required!",
+      "joiningDateRequired":"Joining date is required!",
+      "CnicRequired": "Nic is required!",
+      "DesignationRequired": "Designation is required!",
+      "ManagerRequired": "Manager is required!",
+      "SalaryRequired": "Salary is required!",
+      "EmployementTypeRequired":"Employment type is required!",
+      "EmergencyContactRequired":"Emergency Contact is required!",
+      "AssetsRequired": "Assets is required!",
+      "CompanyRequired":"Company is required!",
+      "StartDateRequired": "Start date is required!",
+      "EndDateRequired": "End date is required!",
+      "DegreeRequired": "Degree is required!",
+      "UniversityRequired":"University is required!",
+      "YearRequired":"Year is required!",
+      "DepartmentRequired": "Department is required!",
+      "DefaultRoleRequired": "Default role is required!",
+      "emailrRegxError":"Invalid Email!",
+      "defaultRoleLabel": "Default Role",
+      "departmentsLabel": "Department"
+
+
     },
+
     "EditBenefitModal":{
       "Heading":"Compensation & Benefits",
       "HeadingText":"While adding compensation please do add comments",
@@ -102,6 +180,9 @@
       "DinnerAllowance": "Dinner Allowance",
       "MealAllowance": "Meal Allowance"
 
+    },
+    "BreadCrumbs":{
+      "Home": "Home"
     }
 
   }

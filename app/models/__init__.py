@@ -1,3 +1,4 @@
+from app.models.attendance import Attendance
 from app.models.core import (
     Currency,
     Invitation,
@@ -61,4 +62,5 @@ __all__ = [
     "UserModuleRole",
     "Company",
     "Experience",
+    "Attendance",
 ]

@@ -1,13 +1,19 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as CoreUserAdmin
 
 from app import models
 
 
 @admin.register(models.User)
-class UserAdmin(UserAdmin):
-    pass
+class CustomUserAdmin(CoreUserAdmin):
+    list_display = ["username", "email"]
+    fieldsets = CoreUserAdmin.fieldsets + (
+        (
+            "More Info",
+            {"fields": ("contact_number",)},
+        ),
+    )
 
 
 @admin.register(models.Employee)
@@ -119,3 +125,15 @@ if settings.DEBUG:
     @admin.register(models.CompensationSchedule)
     class CompensationScheduleAdmin(admin.ModelAdmin):
         pass
+
+    @admin.register(models.AssetType)
+    class AssetTypeAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Asset)
+    class AssetAdmin(admin.ModelAdmin):
+        pass
+
+    @admin.register(models.Attendance)
+    class AttendanceAdmin(admin.ModelAdmin):
+        readonly_fields = ("time_in", "time_out")
