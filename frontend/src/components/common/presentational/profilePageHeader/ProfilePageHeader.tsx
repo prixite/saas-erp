@@ -11,7 +11,7 @@ function ProfilePageHeader() {
         <div className="icon-Container">
           <img
             className="profile-pic"
-            src={userData?.avatar}
+            src={userData?.image}
             alt="profile pic"
           />
         </div>

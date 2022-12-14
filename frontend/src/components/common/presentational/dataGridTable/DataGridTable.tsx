@@ -1,19 +1,28 @@
 import { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
 import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
-import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
-import { employeeConstants } from "@src/helpers/constants/constants";
-import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
+import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
+import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
+import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
+import { deleteEmployeeService } from "@src/services/employeeService";
+import {
+  useGetEmployeesQuery,
+  useGetFlagsQuery,
+  useDeleteEmployeeMutation,
+  useGetUserQuery,
+} from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 
 const useDebounce = (value: string, delay: number): string => {
@@ -30,22 +39,28 @@ const useDebounce = (value: string, delay: number): string => {
   return debouncedValue;
 };
 function DataGridTable() {
-  const navigate = useNavigate();
   const { data: rows = [], isSuccess, isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
-  const { notFound } = constantData.Employee;
-  const [userData, setUserData] = useState<EmployeeData[]>([]);
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [userData, setUserData] = useState<Employee[]>([]);
   const [page, setPage] = useState<number>(0);
+  const { data: userInfo } = useGetUserQuery();
   const [pageSize, setPageSize] = useState<number>(10);
+  const [deleteEmployee] = useDeleteEmployeeMutation();
+  const { data: Flags = [] } = useGetFlagsQuery();
+  const allFlags = Object.assign({}, ...Flags);
+  const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const [rowCellId, setRowCellId] = useState<number>(0);
   const debouncedSearchTerm = useDebounce(query, 500);
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: "id",
       headerName: "ID",
       sortable: false,
       width: 200,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
@@ -59,12 +74,11 @@ function DataGridTable() {
       headerName: "Name",
       sortable: false,
       width: 400,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <div
             style={{
-              marginLeft: "20px",
+              marginLeft: "16px",
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
@@ -78,7 +92,7 @@ function DataGridTable() {
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row.avatar}`}
+              src={`${cellValues.row.image}`}
               alt="profile pic"
             />
             <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
@@ -86,12 +100,12 @@ function DataGridTable() {
         );
       },
     },
+
     {
       field: "contact_Number",
       headerName: "Contact Number",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -105,7 +119,6 @@ function DataGridTable() {
       headerName: "Joining Date",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -117,22 +130,26 @@ function DataGridTable() {
     {
       field: "actions",
       headerName: "Actions",
-      headerAlign: "start",
       width: 350,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
           <Box
             className="renderCell-joiningDate"
             style={{ marginLeft: "10px" }}
           >
-            <IconButton
-              onClick={handleIconClicks}
-              aria-label="edit"
-              id="edit-btn-id"
-              className="edit-btn"
-            >
-              <img className="profile-pic" src={EditIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={handleModalOpen}
+                aria-label="edit"
+                id="edit-btn-id"
+                className="edit-btn"
+              >
+                <img className="profile-pic" src={EditIcon} alt="profile pic" />
+              </IconButton>
+            ) : (
+              ""
+            )}
             <IconButton
               aria-label="Show"
               id="show-btn-id"
@@ -140,21 +157,28 @@ function DataGridTable() {
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
-            <IconButton
-              onClick={handleIconClicks}
-              aria-label="delete"
-              id="delete-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={(event) =>
+                  handleDeleteModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="delete"
+                id="delete-btn-id"
+                className="delete-btn"
+              >
+                <img
+                  className="profile-pic"
+                  src={DeleteIcon}
+                  alt="profile pic"
+                />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </Box>
         );
       },
-      valueGetter: (params) =>
-        `${params.getValue(params.id, "firstName") || ""} ${
-          params.getValue(params.id, "contact_Number") || ""
-        }`,
     },
   ];
 
@@ -166,7 +190,7 @@ function DataGridTable() {
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
       setUserData((prevState) =>
-        [...prevState].filter((userData) => {
+        [...prevState].filter((userData: Employee) => {
           return `${userData?.first_name} ${userData?.last_name}`
             .trim()
             .toLowerCase()
@@ -178,11 +202,35 @@ function DataGridTable() {
     }
   }, [debouncedSearchTerm]);
 
-  const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
+    setOpenModal(true);
   };
-  const handleOnCellClick = (params) => {
-    navigate(`/react/employees/${params.row.id}`);
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
+
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleOnCellClick = (params: GridCellParams) => {
+    navigate(`/employees/${params.row.id}`);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleEmployeeDelete = async () => {
+    await deleteEmployeeService(rowCellId, deleteEmployee);
+    toast.success(employeeDeleteSuccess, {
+      autoClose: timeOut,
+      pauseOnHover: false,
+    });
+    handleDeleteModalClose();
   };
   return (
     <Box className="dataGridTable-section">
@@ -196,7 +244,7 @@ function DataGridTable() {
                 rowHeight={80}
                 autoHeight
                 rows={[...userData]}
-                columns={[...columns]}
+                columns={columns}
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
@@ -232,6 +280,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
+                    cursor: "default",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
@@ -289,7 +338,9 @@ function DataGridTable() {
                     {
                       outline: "none",
                     },
-                  "& .css-17jjc08-MuiDataGrid-footerContainer": {},
+                  "& .MuiTablePagination-root:last-child": {
+                    display: allFlags.show_pagination_module ? "block" : "none",
+                  },
                 }}
               />
             </div>
@@ -308,6 +359,12 @@ function DataGridTable() {
           <RowSkeletonCard />
         </>
       )}
+      <EmployeeModal open={openModal} handleClose={handleModalClose} />
+      <DeleteModal
+        open={openDeleteModal}
+        handleEmployeeDelete={handleEmployeeDelete}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }

@@ -5,7 +5,6 @@ from project.settings import AUTH_USER_MODEL
 
 class Employee(models.Model):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    contact_number = models.CharField(max_length=20)
     nic = models.CharField(max_length=25, unique=True)
     date_of_joining = models.DateField()
     emergency_contact_number = models.CharField(max_length=20)
@@ -15,13 +14,14 @@ class Employee(models.Model):
     manager = models.ForeignKey(
         "self", null=True, on_delete=models.SET_NULL, related_name="manages"
     )
-    benefits = models.ManyToManyField("Benefit")
+    benefits = models.ManyToManyField("Benefit", blank=True)
     type = models.ForeignKey(
         "EmploymentType",
         on_delete=models.PROTECT,
         null=True,
     )
-
+    salary = models.PositiveIntegerField(null=True, blank=True)
+    slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -123,6 +123,7 @@ class Institute(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
+    image = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -191,6 +192,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
+    image = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

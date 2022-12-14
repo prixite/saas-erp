@@ -34,6 +34,9 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str, None),
     DEFAULT_FROM_EMAIL=(str, "no-reply@prixite.com"),
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
+    SLACK_TOKEN=(str, None),
+    SLACK_ATTENDACE_CHANNEL=(str, None),
+    SLACK_SIGNING_SECRET=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -51,6 +54,12 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 DOMAIN_NAME = env("DOMAIN_NAME")
+
+SLACK_TOKEN = env("SLACK_TOKEN")
+
+SLACK_ATTENDACE_CHANNEL = env("SLACK_ATTENDACE_CHANNEL")
+
+SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 
 # Application definition
 
@@ -70,6 +79,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "webpack_loader",
+    "waffle",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +90,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "waffle.middleware.WaffleMiddleware",
 ]
 
 ROOT_URLCONF = "project.urls"
@@ -144,7 +155,7 @@ AUTH_USER_MODEL = "app.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Karachi"
 
 USE_I18N = True
 
