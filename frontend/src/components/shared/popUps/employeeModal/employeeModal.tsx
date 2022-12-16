@@ -25,7 +25,12 @@ import {
   EmployeeForm,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { emailRegX } from "@src/helpers/utils/utils";
+import {
+  emailRegX,
+  nameRegex,
+  phoneRegex,
+  nicRegex,
+} from "@src/helpers/utils/utils";
 import { addNewEmployeeService } from "@src/services/employeeService";
 import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
 
@@ -41,9 +46,22 @@ const employeeFormInitialState: EmployeeForm = {
   image: null,
   contactNumber: "",
   defaultRole: undefined,
-  degrees: [],
+  degrees: [
+    {
+      program: "",
+      institute: "",
+      year: "",
+    },
+  ],
   assets: [],
-  experience: [],
+  experience: [
+    {
+      title: "",
+      company: "",
+      start_date: "",
+      end_date: "",
+    },
+  ],
   orgId: "",
   managing: [],
   totalExperience: "",
@@ -58,18 +76,13 @@ const employeeFormInitialState: EmployeeForm = {
   manager: undefined,
   type: undefined,
   benefits: [],
-  title: "",
-  company: "",
-  startDate: "",
-  endDate: "",
-  program: "",
-  institute: "",
-  year: "",
 };
 
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
+  const [page, setPage] = useState("1");
+  const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
   const {
     createEmployeeHeading,
@@ -106,39 +119,62 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     DepartmentRequired,
     YearRequired,
     emailrRegxError,
+    firstNameRegxError,
+    lastNameRegxError,
+    phoneRegxError,
+    nicRegxError,
   } = constantData.Modals;
 
   const employeeFormValidationSchema = yup.object({
-    firstName: yup.string().required(firstNameRequired),
-    lastName: yup.string().required(lastNameRequired),
-    contactNumber: yup.string().required(phoneRequired),
+    firstName: yup
+      .string()
+      .matches(nameRegex, firstNameRegxError)
+      .required(firstNameRequired),
+    lastName: yup
+      .string()
+      .matches(nameRegex, lastNameRegxError)
+      .required(lastNameRequired),
+    contactNumber: yup
+      .string()
+      .matches(phoneRegex, phoneRegxError)
+      .required(phoneRequired),
     email: yup
       .string()
       .matches(emailRegX, emailrRegxError)
       .required(emailRequired),
-    nic: yup.string().required(CnicRequired),
+    nic: yup.string().matches(nicRegex, nicRegxError).required(CnicRequired),
     dateOfJoining: yup.string().required(joiningDateRequired),
     manager: yup.string().required(ManagerRequired),
     designation: yup.string().required(DesignationRequired),
     salary: yup.string().required(SalaryRequired),
-    emergencyContactNumber: yup.string().required(EmergencyContactRequired),
+    emergencyContactNumber: yup
+      .string()
+      .matches(phoneRegex, phoneRegxError)
+      .required(EmergencyContactRequired),
     type: yup.string().required(EmployementTypeRequired),
     defaultRole: yup.string().required(DefaultRoleRequired),
     department: yup.string().required(DepartmentRequired),
   });
-  const employeeExperienceValidationSchema = yup.object({
-    title: yup.string().required(DesignationRequired),
-    company: yup.string().required(CompanyRequired),
-    startDate: yup.string().required(StartDateRequired),
-    endDate: yup.string().required(EndDateRequired),
+  const employeeExperienceValidationSchema = yup.object().shape({
+    experience: yup.array().of(
+      yup.object().shape({
+        title: yup.string().required(DesignationRequired),
+        company: yup.string().required(CompanyRequired),
+        start_date: yup.string().required(StartDateRequired),
+        end_date: yup.string().required(EndDateRequired),
+      })
+    ),
   });
   const employeeDegreeValidationSchema = yup.object({
-    program: yup.string().required(DegreeRequired),
-    institute: yup.string().required(UniversityRequired),
-    year: yup.string().required(YearRequired),
+    degrees: yup.array().of(
+      yup.object().shape({
+        program: yup.string().required(DegreeRequired),
+        institute: yup.string().required(UniversityRequired),
+        year: yup.string().required(YearRequired),
+      })
+    ),
   });
-  const [page, setPage] = useState("1");
-  const [onChangeValidation, setOnChangeValidation] = useState(false);
+
   const formik = useFormik<EmployeeForm>({
     initialValues: employeeFormInitialState,
     validationSchema:
@@ -179,22 +215,9 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         contact_number: formik.values.contactNumber,
         default_role: formik.values.defaultRole,
       },
-      degrees: [
-        {
-          program: formik.values.program,
-          institute: formik.values.institute,
-          year: moment(formik.values.year).format("YYYY-MM-DD"),
-        },
-      ],
+      degrees: formik.values.degrees,
       assets: [],
-      experience: [
-        {
-          title: formik.values.title,
-          company: formik.values.company,
-          start_date: moment(formik.values.startDate).format("YYYY-MM-DD"),
-          end_date: moment(formik.values.endDate).format("YYYY-MM-DD"),
-        },
-      ],
+      experience: formik.values.experience,
       managing: formik.values.managing,
       nic: formik.values.nic,
       date_of_joining: moment(formik.values.dateOfJoining).format("YYYY-MM-DD"),
@@ -229,6 +252,27 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     handleClose();
     setPage("1");
     setOnChangeValidation(false);
+  };
+  const addExpComponent = () => {
+    formik.setFieldValue("experience", [
+      ...formik.values.experience,
+      {
+        title: "",
+        company: "",
+        start_date: "",
+        end_date: "",
+      },
+    ]);
+  };
+  const addDegreeComponent = () => {
+    formik.setFieldValue("degrees", [
+      ...formik.values.degrees,
+      {
+        program: "",
+        year: "",
+        institute: "",
+      },
+    ]);
   };
   return (
     <Box>
@@ -312,7 +356,9 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
             {page === "1" ? (
               <PageOne formik={formik} />
             ) : page === "2" ? (
-              <PageTwo formik={formik} />
+              <>
+                <PageTwo formik={formik} />
+              </>
             ) : (
               <PageThree formik={formik} />
             )}
@@ -343,7 +389,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           ) : page === "2" ? (
             <Box className="actions-btns-wrapper">
               <Box className="add-new-sec">
-                <Button className="upload-btn">
+                <Button className="upload-btn" onClick={addExpComponent}>
                   <span>
                     {" "}
                     <img className="upload-img" src={uploadIcon} alt="doc" />
@@ -379,7 +425,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           ) : (
             <Box className="actions-btns-wrapper">
               <Box className="add-new-sec">
-                <Button className="upload-btn">
+                <Button className="upload-btn" onClick={addDegreeComponent}>
                   <span>
                     {" "}
                     <img className="upload-img" src={uploadIcon} alt="doc" />

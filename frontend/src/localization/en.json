@@ -162,6 +162,10 @@
       "DepartmentRequired": "Department is required!",
       "DefaultRoleRequired": "Default role is required!",
       "emailrRegxError":"Invalid Email!",
+      "firstNameRegxError":"Invalid first name!",
+      "lastNameRegxError":"Invalid last name!",
+      "nicRegxError":"Invalid nic!",
+      "phoneRegxError":"Invalid phone number!",
       "defaultRoleLabel": "Default Role",
       "departmentsLabel": "Department"
 

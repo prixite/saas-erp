@@ -95,6 +95,24 @@ const PageOne = ({ formik }: Props) => {
             />
             <p className="errorText">{formik.errors?.firstName}</p>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="lastName"
+              label={employeeLastName}
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.lastName}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -108,6 +126,24 @@ const PageOne = ({ formik }: Props) => {
             />
             <p className="errorText">{formik.errors?.contactNumber}</p>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="email"
+              label={employeeEmailLabel}
+              onChange={formik.handleChange}
+              value={formik.values.email}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.email}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -132,6 +168,24 @@ const PageOne = ({ formik }: Props) => {
               <p className="errorText">{formik.errors?.dateOfJoining}</p>
             </LocalizationProvider>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="nic"
+              label={employeeCnicLabel}
+              onChange={formik.handleChange}
+              value={formik.values.nic}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.nic}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -145,6 +199,38 @@ const PageOne = ({ formik }: Props) => {
             />
             <p className="errorText">{formik.errors?.designation}</p>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              select
+              fullWidth
+              name="manager"
+              label={employeeManagerLabel}
+              onChange={formik.handleChange}
+              value={formik.values.manager || ""}
+              InputLabelProps={{ className: "textfield_label" }}
+            >
+              {employeetableData?.length ? (
+                employeetableData?.map((employee) => {
+                  return (
+                    <MenuItem
+                      key={employee?.id}
+                      value={employee?.id}
+                    >{`${employee.first_name} ${employee.last_name}`}</MenuItem>
+                  );
+                })
+              ) : (
+                <Box></Box>
+              )}
+            </TextField>
+            <p className="errorText">{formik.errors?.manager}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -174,6 +260,24 @@ const PageOne = ({ formik }: Props) => {
             </TextField>
             <p className="errorTexte">{formik.errors?.managing}</p>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="salary"
+              label={employeeSalaryLabel}
+              onChange={formik.handleChange}
+              value={formik.values.salary || ""}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.salary}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -199,6 +303,24 @@ const PageOne = ({ formik }: Props) => {
             </TextField>
             <p className="errorText">{formik.errors?.type}</p>
           </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={6}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              fullWidth
+              name="emergencyContactNumber"
+              label={employeeEmergencyContactLabel}
+              onChange={formik.handleChange}
+              value={formik.values.emergencyContactNumber}
+              InputLabelProps={{ className: "textfield_label" }}
+            />
+            <p className="errorText">{formik.errors?.emergencyContactNumber}</p>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -225,94 +347,7 @@ const PageOne = ({ formik }: Props) => {
             <p className="errorText">{formik.errors?.department}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls " item xs={6}>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              fullWidth
-              name="lastName"
-              label={employeeLastName}
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{formik.errors?.lastName}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              fullWidth
-              name="email"
-              label={employeeEmailLabel}
-              onChange={formik.handleChange}
-              value={formik.values.email}
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{formik.errors?.email}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              fullWidth
-              name="nic"
-              label={employeeCnicLabel}
-              onChange={formik.handleChange}
-              value={formik.values.nic}
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{formik.errors?.nic}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              select
-              fullWidth
-              name="manager"
-              label={employeeManagerLabel}
-              onChange={formik.handleChange}
-              value={formik.values.manager || ""}
-              InputLabelProps={{ className: "textfield_label" }}
-            >
-              {employeetableData?.length ? (
-                employeetableData?.map((employee) => {
-                  return (
-                    <MenuItem
-                      key={employee?.id}
-                      value={employee?.id}
-                    >{`${employee.first_name} ${employee.last_name}`}</MenuItem>
-                  );
-                })
-              ) : (
-                <Box></Box>
-              )}
-            </TextField>
-            <p className="errorText">{formik.errors?.manager}</p>
-          </Box>
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              fullWidth
-              name="salary"
-              label={employeeSalaryLabel}
-              onChange={formik.handleChange}
-              value={formik.values.salary || ""}
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{formik.errors?.salary}</p>
-          </Box>
-
-          <Box className="text-field-box">
-            <TextField
-              className="text-field-cls"
-              fullWidth
-              name="emergencyContactNumber"
-              label={employeeEmergencyContactLabel}
-              onChange={formik.handleChange}
-              value={formik.values.emergencyContactNumber}
-              InputLabelProps={{ className: "textfield_label" }}
-            />
-            <p className="errorText">{formik.errors?.emergencyContactNumber}</p>
-          </Box>
+        <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -339,12 +374,9 @@ const PageOne = ({ formik }: Props) => {
             <p className="errorText">{formik.errors?.defaultRole}</p>
           </Box>
         </Grid>
-        <Grid
-          className="grid-item-cls "
-          item
-          xs={12}
-          sx={{ pt: "0px !important" }}
-        >
+      </Grid>
+      <Grid className="grid-container-cls" container spacing={2}>
+        <Grid className="grid-item-cls " item xs={12}>
           <Box className="text-field-box">
             <Autocomplete
               multiple

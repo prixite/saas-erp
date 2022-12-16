@@ -2,7 +2,22 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
   margin-top: 10px;
+  padding: 16px 16px 16px 16px;
+  .cross-icon {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    .cross-btn-icon {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0px !important;
+    }
+  }
   .grid-container-cls {
     .grid-item-cls {
       .text-field-box {
