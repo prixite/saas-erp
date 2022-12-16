@@ -10,17 +10,40 @@ from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.authtoken import views as auth_views
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
+
 
 from app import models, serializers
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
+
+
+class LoginApiView(auth_views.ObtainAuthToken):
+    serializer_class = serializers.AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 @method_decorator(login_required, name="dispatch")

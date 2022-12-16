@@ -68,7 +68,7 @@ class PrivateApiMixin:
     allow_superuser = False
     module = None
 
-    def dispatch(self, request, *args, **kwargs):
+    def finalize_response(self, request, response, *args, **kwargs):
         if not request.user.is_authenticated:
             return JsonResponse(
                 data={"detail": "You must be logged in first to perform this action"},
@@ -76,21 +76,21 @@ class PrivateApiMixin:
             )
 
         if request.user.is_superuser and self.allow_superuser:
-            return super().dispatch(request, *args, **kwargs)
+            return super().finalize_response(request, response, *args, **kwargs)
 
         if (
             self.module in [x.slug for x in request.user.member_modules]
             and request.method in SAFE_METHODS
         ):
-            return super().dispatch(request, *args, **kwargs)
+            return super().finalize_response(request, response, *args, **kwargs)
 
         if self.module in [
             x.slug for x in request.user.admin_modules
         ] or self.module in [x.slug for x in request.user.owner_modules]:
-            return super().dispatch(request, *args, **kwargs)
+            return super().finalize_response(request, response, *args, **kwargs)
 
         return JsonResponse(
-            data={"detail": "Not allowed"},
+            data={"detail": "Permission denied"},
             status=status.HTTP_403_FORBIDDEN,
         )
 
