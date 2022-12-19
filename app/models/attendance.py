@@ -11,3 +11,19 @@ class Attendance(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Leave(models.Model):
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="leaves_employee"
+    )
+    hr = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        related_name="leaves_hr",
+        null=True,
+        blank=True,
+    )
+    leave = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

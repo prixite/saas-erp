@@ -260,6 +260,19 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.institue,
       }),
     }),
+    apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
+      query: () => ({ url: `/api/leave/` }),
+    }),
+    apiLeaveUpdate: build.mutation<
+      ApiLeaveUpdateApiResponse,
+      ApiLeaveUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/leave/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.leave,
+      }),
+    }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
@@ -409,6 +422,13 @@ export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
 export type ApiInstituesCreateApiArg = {
   institue: Institue;
 };
+export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
+export type ApiLeaveListApiArg = void;
+export type ApiLeaveUpdateApiResponse = /** status 200  */ Leave;
+export type ApiLeaveUpdateApiArg = {
+  id: number;
+  leave: Leave;
+};
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
@@ -551,6 +571,7 @@ export type Employee = {
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;
+  leave_count?: number | null;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -598,6 +619,14 @@ export type Institue = {
   image?: string | null;
   created_at: string;
   updated_at: string;
+};
+export type Leave = {
+  id: number;
+  leave?: boolean;
+  created_at: string;
+  updated_at: string;
+  employee: number;
+  hr?: number | null;
 };
 export type Me = {
   first_name?: string;
@@ -658,6 +687,8 @@ export const {
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
+  useApiLeaveListQuery,
+  useApiLeaveUpdateMutation,
   useApiMeRetrieveQuery,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,

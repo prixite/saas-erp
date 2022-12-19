@@ -109,6 +109,14 @@ urlpatterns = [
         api.AttendanceViewSet.as_view(),
     ),
     path(
+        "leave/",
+        api.LeaveView.as_view(),
+    ),
+    path(
+        "leave/<int:pk>/",
+        api.LeaveUpdateView.as_view(),
+    ),
+    path(
         "slack/attendance/",
         api.SlackApiView.as_view(),
     ),

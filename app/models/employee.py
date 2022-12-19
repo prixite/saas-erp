@@ -22,6 +22,7 @@ class Employee(models.Model):
     )
     salary = models.PositiveIntegerField(null=True, blank=True)
     slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
+    leave_count = models.IntegerField(blank=True, null=True)
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

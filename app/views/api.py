@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,6 +17,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
+from app.utils import send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -271,6 +272,21 @@ class SlackApiView(APIView):
                         attendance.time_out = datetime.now()
                         attendance.save()
 
+                    elif command == "/leaves":
+                        if employee.leave_count <= 0:
+                            return Response(data={"status": "leave limit exceed!"})
+
+                        if models.Leave.objects.filter(
+                            employee_id=employee.id,
+                            created_at__date=datetime.now().date(),
+                        ).exists():
+                            return Response(data={"status": "already apply for leave!"})
+                        models.Leave.objects.create(employee_id=employee.id)
+                        return Response(
+                            data={"status": "leave submitted successfully"},
+                            status=status.HTTP_201_CREATED,
+                        )
+
                     return Response(
                         data={"response_type": "in_channel"},
                         status=status.HTTP_200_OK,
@@ -302,3 +318,55 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+
+class LeaveView(ListAPIView):
+    serializer_class = serializers.LeaveSerializer
+    queryset = models.Leave.objects.all()
+
+
+class LeaveUpdateView(UpdateAPIView):
+    queryset = models.Leave.objects.all()
+    serializer_class = serializers.LeaveSerializer
+    http_method_names = ("put",)
+
+    def put(self, request, pk):
+        if not request.data:
+            return Response(
+                {
+                    "status": "empty payload",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        super().put(request, pk)
+        get_leave_detail = get_object_or_404(models.Leave, pk=pk)
+        get_employee = get_object_or_404(
+            models.Employee, pk=get_leave_detail.employee.id
+        )
+        if request.data["leave"]:
+            get_leave_detail.leave = True
+            get_leave_detail.hr_id = request.data["hr"]
+            get_employee.leave_count -= 1
+            get_employee.save()
+            to_email = []
+            if get_leave_detail.employee.user.email:
+                to_email.append(get_leave_detail.employee.user.email)
+            if get_leave_detail.employee.manager.user.email:
+                to_email.append(get_leave_detail.employee.manager.user.email)
+
+            send_leave_email(to_email)
+
+            return Response(
+                {
+                    "status": "leave granted.",
+                },
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {
+                    "status": "leave not granted.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )

@@ -370,3 +370,9 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
