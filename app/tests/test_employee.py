@@ -77,6 +77,7 @@ class EmployeeTestCase(BaseTestCase):
                 "emergency_contact_number",
                 "designation",
                 "salary",
+                "leave_count",
                 "user_allowed",
                 "created_at",
                 "updated_at",
