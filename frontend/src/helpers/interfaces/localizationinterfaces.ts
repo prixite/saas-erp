@@ -197,9 +197,15 @@ export type Experirence = {
   start_date: string;
   end_date: string;
 };
+export type Benefit = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
 export type EmployeeForm = {
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   email: string;
   image?: string | null;
   contactNumber: string;
@@ -215,12 +221,12 @@ export type EmployeeForm = {
   dateOfJoining: string;
   emergencyContactNumber: string;
   designation: string;
-  salary?: number | null;
-  userAllowed?: boolean;
-  department?: number | null;
-  manager?: number | null;
-  type?: number | null;
-  benefits?: number[];
+  salary: number | null;
+  userAllowed: boolean;
+  department: number | null;
+  manager: number | null;
+  type: number | null;
+  benefits?: Benefit[];
 };
 export interface Formik {
   initialValues: EmployeeForm;

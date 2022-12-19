@@ -33,6 +33,7 @@ function DataGridTable() {
   const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [action, setAction] = useState("add");
   const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [rowCellId, setRowCellId] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
@@ -123,7 +124,9 @@ function DataGridTable() {
             {userData?.allowed_modules.admin_modules.includes("employees") ||
             userData?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
-                onClick={handleModalOpen}
+                onClick={(event) =>
+                  handleEditModalOpen(event, cellValues?.row?.id)
+                }
                 aria-label="edit"
                 id="edit-btn-id"
                 className="edit-btn"
@@ -164,10 +167,6 @@ function DataGridTable() {
       },
     },
   ];
-  const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenModal(true);
-  };
   const handleModalClose = () => {
     setOpenModal(false);
   };
@@ -177,6 +176,15 @@ function DataGridTable() {
   };
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
+  };
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
   };
   const handleDeleteModalOpen = (
     event: React.MouseEvent<HTMLElement>,
@@ -320,7 +328,12 @@ function DataGridTable() {
           <RowSkeletonCard />
         </>
       )}
-      <EmployeeModal open={openModal} handleClose={handleModalClose} />
+      <EmployeeModal
+        empId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
       <DeleteModal
         open={openDeleteModal}
         handleEmployeeDelete={handleEmployeeDelete}

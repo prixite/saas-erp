@@ -40,13 +40,16 @@ export interface EmployeeData {
   contact_number: string;
   date_of_joining: string;
   nic: string;
+  manages: string[];
   designation: string;
   emergency_contact_number: string;
   organization: number;
   type: number;
-  manager?: string;
+  manager?: number;
   department: number;
   org_id: string;
+  salary: number;
+  user_allowed: boolean;
 }
 export interface Doc {
   id: number;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -32,11 +32,16 @@ import {
   nicRegex,
 } from "@src/helpers/utils/utils";
 import { addNewEmployeeService } from "@src/services/employeeService";
-import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
+import {
+  useCreateEmployeeMutation,
+  useGetEmployeeDataQuery,
+} from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  action?: string;
+  empId?: number;
 }
 
 const employeeFormInitialState: EmployeeForm = {
@@ -70,20 +75,26 @@ const employeeFormInitialState: EmployeeForm = {
   dateOfJoining: "",
   emergencyContactNumber: "",
   designation: "",
-  salary: undefined,
+  salary: null,
   userAllowed: false,
-  department: undefined,
-  manager: undefined,
-  type: undefined,
+  department: null,
+  manager: null,
+  type: null,
   benefits: [],
 };
 
-const EmployeeModal = ({ open, handleClose }: Props) => {
+const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
   const [page, setPage] = useState("1");
   const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: Number(empId || ""),
+    },
+    { skip: !Number(empId || "") }
+  );
   const {
     createEmployeeHeading,
     createEmployeeSubheading,
@@ -185,9 +196,21 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         : employeeDegreeValidationSchema,
     validateOnChange: onChangeValidation,
     onSubmit: () => {
-      handleAddEmployee();
+      if (action === "edit") {
+        handleEditEmployee();
+      } else {
+        handleAddEmployee();
+      }
     },
   });
+  // console.log("exmployee are", employeeData);
+  // console.log("manager are", formik.values.manager);
+
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData();
+    }
+  }, [action, employeeData]);
   const handleAddEmployee = () => {
     const employeeObject = getEmployeeObject();
     addNewEmployeeService(employeeObject, createEmployee)
@@ -205,6 +228,35 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
             ${error?.data?.nic || ""}`
         );
       });
+  };
+  const handleEditEmployee = () => {
+    // const employeeObject = getEmployeeObject();
+    // console.log("employee object from edit ", employeeObject);
+  };
+  const populateEditableData = () => {
+    formik.setValues({
+      firstName: employeeData?.user?.first_name || "",
+      lastName: employeeData?.user?.last_name || "",
+      email: employeeData?.user?.email || "",
+      contactNumber: employeeData?.user?.contact_number || "",
+      degrees: employeeData?.degrees || [],
+      assets: [],
+      experience: employeeData?.experience || [],
+      orgId: employeeData?.org_id || "",
+      managing: [],
+      totalExperience: employeeData?.total_experience || "",
+      manages: employeeData?.manages || [],
+      nic: employeeData?.nic || "",
+      dateOfJoining: employeeData?.date_of_joining || "",
+      emergencyContactNumber: employeeData?.emergency_contact_number || "",
+      designation: employeeData?.designation || "",
+      salary: employeeData?.salary || null,
+      userAllowed: employeeData?.user_allowed as boolean,
+      department: employeeData?.department || null,
+      manager: employeeData?.manager || null,
+      type: employeeData?.type || null,
+      benefits: employeeData?.benefits || [],
+    });
   };
   const getEmployeeObject = () => {
     return {
