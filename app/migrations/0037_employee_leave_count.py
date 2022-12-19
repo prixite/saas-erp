@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0036_alter_leave_hr'),
+        ("app", "0036_alter_leave_hr"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='employee',
-            name='leave_count',
+            model_name="employee",
+            name="leave_count",
             field=models.IntegerField(blank=True, null=True),
         ),
     ]
