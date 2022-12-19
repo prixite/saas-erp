@@ -3,11 +3,14 @@ from datetime import datetime
 import slack
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
+from django.utils.encoding import smart_str
+from django.utils.http import urlsafe_base64_decode
 from django.views.generic import TemplateView
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -302,3 +305,39 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+
+class EmployeeInvitationConfirmView(generics.GenericAPIView):
+    serializer_class = serializers.EmployeeInvitationConfirmSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        token = serializer.validated_data["token"]
+
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+            return Response({"token_valid": True}, status=status.HTTP_200_OK)
+
+        except Exception:
+            try:
+                if not PasswordResetTokenGenerator().check_token(user):
+                    return Response(
+                        {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            except Exception:
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )

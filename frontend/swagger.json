@@ -699,6 +699,55 @@
                 }
             }
         },
+        "/api/employee_invitation_confirm/": {
+            "post": {
+                "operationId": "api_employee_invitation_confirm_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmployeeInvitationConfirm"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmployeeInvitationConfirm"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmployeeInvitationConfirm"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmployeeInvitationConfirm"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/employeement_type/": {
             "get": {
                 "operationId": "api_employeement_type_list",
@@ -1963,6 +2012,23 @@
                     "total_experience",
                     "updated_at",
                     "user"
+                ]
+            },
+            "EmployeeInvitationConfirm": {
+                "type": "object",
+                "properties": {
+                    "uidb64": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "token": {
+                        "type": "string",
+                        "writeOnly": true
+                    }
+                },
+                "required": [
+                    "token",
+                    "uidb64"
                 ]
             },
             "EmployeeList": {

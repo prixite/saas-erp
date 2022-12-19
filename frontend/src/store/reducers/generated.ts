@@ -145,6 +145,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.documentType,
       }),
     }),
+    apiEmployeeInvitationConfirmCreate: build.mutation<
+      ApiEmployeeInvitationConfirmCreateApiResponse,
+      ApiEmployeeInvitationConfirmCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/employee_invitation_confirm/`,
+        method: "POST",
+        body: queryArg.employeeInvitationConfirm,
+      }),
+    }),
     apiEmployeementTypeList: build.query<
       ApiEmployeementTypeListApiResponse,
       ApiEmployeementTypeListApiArg
@@ -351,6 +361,11 @@ export type ApiDocumentTypeCreateApiResponse = /** status 201  */ DocumentType;
 export type ApiDocumentTypeCreateApiArg = {
   documentType: DocumentType;
 };
+export type ApiEmployeeInvitationConfirmCreateApiResponse =
+  /** status 200  */ EmployeeInvitationConfirm;
+export type ApiEmployeeInvitationConfirmCreateApiArg = {
+  employeeInvitationConfirm: EmployeeInvitationConfirm;
+};
 export type ApiEmployeementTypeListApiResponse =
   /** status 200  */ EmployeementType[];
 export type ApiEmployeementTypeListApiArg = void;
@@ -491,6 +506,10 @@ export type DocumentType = {
   name: string;
   created_at: string;
   updated_at: string;
+};
+export type EmployeeInvitationConfirm = {
+  uidb64: string;
+  token: string;
 };
 export type EmployeementType = {
   id: number;
@@ -644,6 +663,7 @@ export const {
   useApiDepartmentCreateMutation,
   useApiDocumentTypeListQuery,
   useApiDocumentTypeCreateMutation,
+  useApiEmployeeInvitationConfirmCreateMutation,
   useApiEmployeementTypeListQuery,
   useApiEmployeementTypeCreateMutation,
   useApiEmployeesListQuery,

@@ -1,8 +1,13 @@
 from django import forms
+from django.conf import settings
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.utils.encoding import smart_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from app import models
 from app.lib.user import create_and_send_invite
+from app.utils import send_invitation_mail
 
 
 class UserForm(forms.ModelForm):
@@ -90,4 +95,11 @@ class EmployeeForm(forms.ModelForm):
         self.instance.organization = self.request.user.organization
         self.instance.user.is_active = self.cleaned_data.get("can_login", False)
         self.instance.user.save()
+
+        uidb64 = urlsafe_base64_encode(smart_bytes(self.instance.user.email))
+        token = PasswordResetTokenGenerator().make_token(self.instance.user)
+        current_site = settings.DOMAIN_NAME
+        relativeLink = f"/password-invitation-confirm/?uidb64={uidb64}&token={token}"
+        url = current_site + relativeLink
+        send_invitation_mail(self.instance.user.email, self.instance.user, url)
         return super().save()

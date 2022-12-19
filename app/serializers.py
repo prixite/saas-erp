@@ -370,3 +370,8 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]
+
+
+class EmployeeInvitationConfirmSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(write_only=True, required=True)
+    token = serializers.CharField(write_only=True, required=True)
