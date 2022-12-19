@@ -545,7 +545,6 @@ export type Employee = {
   org_id: string;
   managing: number[];
   total_experience: string;
-  manages: string[];
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
@@ -560,20 +559,40 @@ export type Employee = {
   benefits?: number[];
 };
 export type EmployeeUpdate = {
-  department?: number | null;
+  id: number;
+  user: EmployeeUser;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  managing: number[];
+  emergency_contact_number: string;
   designation: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
+  salary?: number | null;
   user_allowed?: boolean;
+  created_at: string;
+  updated_at: string;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export type PatchedEmployeeUpdate = {
-  department?: number | null;
+  id?: number;
+  user?: EmployeeUser;
+  degrees?: Degree[];
+  assets?: Asset[];
+  experience?: Experirence[];
+  managing?: number[];
+  emergency_contact_number?: string;
   designation?: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
+  salary?: number | null;
   user_allowed?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export type Compensation = {
   id: number;
