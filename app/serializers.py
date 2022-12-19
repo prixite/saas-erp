@@ -121,10 +121,6 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return data
-
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
@@ -136,7 +132,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         write_only=True, queryset=models.Employee.objects.all(), many=True
     )
     total_experience = serializers.SerializerMethodField()
-    manages = serializers.StringRelatedField(read_only=True, many=True)
+    # manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
@@ -249,16 +245,27 @@ class EmployeeListSerializer(serializers.ModelSerializer):
 
 
 class EmployeeUpdateSerializer(serializers.ModelSerializer):
+    user = EmployeeUserSerializer()
+    degrees = DegreeSerializer(many=True)
+    assets = AssetSerializer(many=True)
+    experience = ExperirenceSerializer(many=True)
+    managing = serializers.PrimaryKeyRelatedField(
+        write_only=True, queryset=models.Employee.objects.all(), many=True
+    )
+
     class Meta:
         model = models.Employee
-        fields = [
-            "department",
-            "designation",
-            "manager",
-            "benefits",
-            "type",
-            "user_allowed",
-        ]
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop("user")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user_ser.save()
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
