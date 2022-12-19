@@ -14,8 +14,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "@src/components/shared/popUps/employeeModal/pageTwo.scss";
 import { FieldArray, getIn, FormikProvider } from "formik";
 import moment from "moment";
-import crossIcon from "@src/assets/svgs/cross.svg";
 import uploadIcon from "@src/assets/svgs/plus.svg";
+import crossIcon from "@src/assets/svgs/smallcross.svg";
 import {
   LocalizationInterface,
   Formik,
@@ -45,17 +45,9 @@ const PageTwo = ({ formik }: Props) => {
               {formik.values.experience.map((exp, index) => {
                 return (
                   <Box key={index} className="pagetwo-section">
-                    {formik.values.experience.length > 1 && (
-                      <Box className="cross-icon" sx={{ mb: "10px" }}>
-                        <Button
-                          className="cross-btn-icon"
-                          sx={{ minWidth: "0px !important" }}
-                          onClick={() => remove(index)}
-                        >
-                          <img src={crossIcon} className="cross-btn" />
-                        </Button>
-                      </Box>
-                    )}
+                    <Box className="cross-icon" onClick={() => remove(index)}>
+                      <img src={crossIcon} className="cross-btn" />
+                    </Box>
                     <Grid className="grid-container-cls" container spacing={2}>
                       <Grid className="grid-item-cls" item xs={6}>
                         <Box className="text-field-box">

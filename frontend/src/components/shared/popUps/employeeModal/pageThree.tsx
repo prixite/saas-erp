@@ -13,8 +13,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { FieldArray, getIn, FormikProvider } from "formik";
 import moment from "moment";
-import crossIcon from "@src/assets/svgs/cross.svg";
 import uploadIcon from "@src/assets/svgs/plus.svg";
+import crossIcon from "@src/assets/svgs/smallcross.svg";
 import "@src/components/shared/popUps/employeeModal/pageThree.scss";
 import {
   LocalizationInterface,
@@ -49,17 +49,9 @@ const PageThree = ({ formik }: Props) => {
               {formik.values.degrees.map((deg, index) => {
                 return (
                   <Box key={index} className="pagethree-section">
-                    {formik.values.degrees.length > 1 && (
-                      <Box className="cross-icon" sx={{ mb: "10px" }}>
-                        <Button
-                          className="cross-btn-icon"
-                          sx={{ minWidth: "0px !important" }}
-                          onClick={() => remove(index)}
-                        >
-                          <img src={crossIcon} className="cross-btn" />
-                        </Button>
-                      </Box>
-                    )}
+                    <Box className="cross-icon" onClick={() => remove(index)}>
+                      <img src={crossIcon} className="cross-btn" />
+                    </Box>
                     <Grid className="grid-container-cls" container spacing={2}>
                       <Grid className="grid-item-cls" item xs={6}>
                         <Box className="text-field-box" sx={{ minWidth: 120 }}>

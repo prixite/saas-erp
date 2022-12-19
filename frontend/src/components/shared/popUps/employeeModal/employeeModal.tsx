@@ -20,6 +20,7 @@ import CongratsModal from "@src/components/shared/popUps/congratsModal/congratsM
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
+import { timeOut } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   EmployeeForm,
@@ -31,7 +32,6 @@ import {
   phoneRegex,
   nicRegex,
 } from "@src/helpers/utils/utils";
-import { addNewEmployeeService } from "@src/services/employeeService";
 import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
 
 interface Props {
@@ -188,10 +188,15 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       handleAddEmployee();
     },
   });
-  const handleAddEmployee = () => {
+  const handleAddEmployee = async () => {
     const employeeObject = getEmployeeObject();
-    addNewEmployeeService(employeeObject, createEmployee)
-      .then(() => {
+    await createEmployee(employeeObject)
+      .unwrap()
+      .then(async () => {
+        toast.success("New Employee Added.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
         handleClose();
         formik.resetForm();
         setOpenSucessModal(true);

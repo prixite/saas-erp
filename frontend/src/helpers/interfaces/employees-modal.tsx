@@ -44,7 +44,7 @@ export interface EmployeeData {
   emergency_contact_number: string;
   organization: number;
   type: number;
-  manager?: string;
+  manager?: number;
   department: number;
   org_id: string;
 }
