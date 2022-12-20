@@ -1,11 +1,52 @@
 from datetime import date
 
+from django.contrib.auth import authenticate
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models
+
+
+class AuthTokenSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        label="Password",
+        style={"input_type": "password"},
+        trim_whitespace=False,
+    )
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = authenticate(
+                request=self.context.get("request"), email=email, password=password
+            )
+            if not user:
+                msg = {"error": "Please enter correct Email/Password."}
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = {"error": "Must include 'email' and 'password'."}
+            raise serializers.ValidationError(msg, code="authorization")
+
+        attrs["user"] = user
+        return attrs
+
+
+class RefreshTokenSerializer(serializers.Serializer):
+    token_key = serializers.CharField(max_length=500, required=True)
+
+    def validate(self, attrs):
+        try:
+            Token.objects.get(key=attrs["token_key"])
+        except Token.DoesNotExist:
+            raise serializers.ValidationError({"token_key": "Token deos not exist."})
+
+        return attrs
 
 
 class DegreeSerializer(serializers.ModelSerializer):
@@ -346,15 +387,9 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        member_modules = [
-            module.slug for module in self.context.get("request").user.member_modules
-        ]
-        admin_modules = [
-            module.slug for module in self.context.get("request").user.admin_modules
-        ]
-        owner_modules = [
-            module.slug for module in self.context.get("request").user.owner_modules
-        ]
+        member_modules = [module.slug for module in data.member_modules]
+        admin_modules = [module.slug for module in data.admin_modules]
+        owner_modules = [module.slug for module in data.owner_modules]
 
         return {
             "member_modules": member_modules,
