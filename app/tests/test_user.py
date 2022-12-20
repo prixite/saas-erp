@@ -23,9 +23,11 @@ class UserTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_obtain_token(self):
+        token, _ = Token.objects.get_or_create(user=self.org_user)
         login_data = {"email": "user@example.com", "password": "admin"}
         response = self.client.post("/api/token/", data=login_data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(token.key, response.json().get("token"))
 
     def test_refresh_token(self):
         token, _ = Token.objects.get_or_create(user=self.org_user)
@@ -33,3 +35,4 @@ class UserTestCase(BaseTestCase):
             "/api/refresh-token/", data={"token_key": token.key}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(token.key, response.json().get("token"))

@@ -26,7 +26,6 @@ class AuthTokenSerializer(serializers.Serializer):
             user = authenticate(
                 request=self.context.get("request"), email=email, password=password
             )
-
             if not user:
                 msg = {"error": "Please enter correct Email/Password."}
                 raise serializers.ValidationError(msg, code="authorization")
