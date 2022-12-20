@@ -13,12 +13,6 @@
                 ],
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -65,12 +59,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -95,12 +83,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -129,12 +111,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -182,12 +158,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -232,12 +202,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -262,12 +226,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -315,12 +273,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -345,12 +297,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -398,12 +344,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -428,12 +368,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -481,12 +415,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -511,12 +439,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -564,12 +486,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -594,12 +510,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -647,12 +557,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -677,12 +581,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -730,12 +628,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -760,12 +652,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -813,12 +699,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -843,12 +723,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -896,12 +770,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -936,12 +804,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -995,12 +857,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1034,12 +890,6 @@
                 ],
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1067,12 +917,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -1127,12 +971,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1167,12 +1005,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -1230,12 +1062,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1261,12 +1087,6 @@
                 ],
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1284,12 +1104,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -1337,12 +1151,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1368,12 +1176,6 @@
                 ],
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1398,12 +1200,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -1451,12 +1247,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     }
                 ],
@@ -1502,12 +1292,6 @@
                 },
                 "security": [
                     {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
-                    {
                         "tokenAuth": []
                     },
                     {}
@@ -1533,12 +1317,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -1567,12 +1345,6 @@
                     "api"
                 ],
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     },
@@ -1612,12 +1384,6 @@
                     "required": true
                 },
                 "security": [
-                    {
-                        "basicAuth": []
-                    },
-                    {
-                        "cookieAuth": []
-                    },
                     {
                         "tokenAuth": []
                     }
@@ -2591,15 +2357,6 @@
             }
         },
         "securitySchemes": {
-            "basicAuth": {
-                "type": "http",
-                "scheme": "basic"
-            },
-            "cookieAuth": {
-                "type": "apiKey",
-                "in": "cookie",
-                "name": "sessionid"
-            },
             "tokenAuth": {
                 "type": "apiKey",
                 "in": "header",
