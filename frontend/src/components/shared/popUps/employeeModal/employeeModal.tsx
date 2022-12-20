@@ -241,8 +241,6 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       setOnChangeValidation(false);
     }
   }, [page, onChangeValidation]);
-  // console.log("formik is valid value", formik.isValid)
-  // console.log("validation value",onChangeValidation)
   const moveToNextPage = async () => {
     const errors = await formik.validateForm();
     if (page == "1" && !Object.keys(errors).length) {
