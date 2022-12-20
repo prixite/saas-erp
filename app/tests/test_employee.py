@@ -89,7 +89,7 @@ class EmployeeTestCase(BaseTestCase):
         )
 
     def test_employee_put(self):
-        self.client.force_login(self.owner)
+        self.client.force_token_login(self.owner)
         employee_data = {
             "user": {
                 "first_name": "John",
