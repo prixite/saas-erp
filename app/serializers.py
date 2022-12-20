@@ -1,12 +1,52 @@
 from datetime import date
 
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate, password_validation
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models
+
+
+class AuthTokenSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        label="Password",
+        style={"input_type": "password"},
+        trim_whitespace=False,
+    )
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = authenticate(
+                request=self.context.get("request"), email=email, password=password
+            )
+            if not user:
+                msg = {"error": "Please enter correct Email/Password."}
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = {"error": "Must include 'email' and 'password'."}
+            raise serializers.ValidationError(msg, code="authorization")
+
+        attrs["user"] = user
+        return attrs
+
+
+class RefreshTokenSerializer(serializers.Serializer):
+    token_key = serializers.CharField(max_length=500, required=True)
+
+    def validate(self, attrs):
+        try:
+            Token.objects.get(key=attrs["token_key"])
+        except Token.DoesNotExist:
+            raise serializers.ValidationError({"token_key": "Token deos not exist."})
+
+        return attrs
 
 
 class DegreeSerializer(serializers.ModelSerializer):
@@ -14,22 +54,11 @@ class DegreeSerializer(serializers.ModelSerializer):
         model = models.Degree
         fields = ["program", "institute", "year"]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
-        return data
-
 
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["company"] = instance.company.name
-        return data
 
 
 class BenefitSerializer(serializers.ModelSerializer):
@@ -122,9 +151,9 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return data
+
+class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
+    email = serializers.EmailField(read_only=True)
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -249,17 +278,47 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         ]
 
 
-class EmployeeUpdateSerializer(serializers.ModelSerializer):
+class EmployeeUpdateSerializer(EmployeeSerializer):
+    user = EmployeeUpdateUserSerializer()
+
     class Meta:
         model = models.Employee
-        fields = [
-            "department",
-            "designation",
-            "manager",
-            "benefits",
-            "type",
-            "user_allowed",
-        ]
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        organization = self.context.get("request").user.organization
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user_ser.save()
+
+        models.Degree.objects.filter(employee=instance).delete()
+        models.Asset.objects.filter(employee=instance).delete()
+        models.Experience.objects.filter(employee=instance).delete()
+        models.Employee.objects.filter(manager=instance).update(manager=None)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = instance
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=instance)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=instance)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=instance, organization=organization
+            )
+
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -328,15 +387,9 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        member_modules = [
-            module.slug for module in self.context.get("request").user.member_modules
-        ]
-        admin_modules = [
-            module.slug for module in self.context.get("request").user.admin_modules
-        ]
-        owner_modules = [
-            module.slug for module in self.context.get("request").user.owner_modules
-        ]
+        member_modules = [module.slug for module in data.member_modules]
+        admin_modules = [module.slug for module in data.admin_modules]
+        owner_modules = [module.slug for module in data.owner_modules]
 
         return {
             "member_modules": member_modules,
@@ -381,7 +434,9 @@ class EmployeeInvitationConfirmSerializer(serializers.Serializer):
 class EmployeeInvitationPasswordCompleteSerializer(serializers.Serializer):
     uidb64 = serializers.CharField(write_only=True, required=True)
     password = serializers.CharField(
-        write_only=True, required=False, validators=[validate_password]
+        write_only=True,
+        required=False,
+        validators=[password_validation.validate_password],
     )
     password2 = serializers.CharField(write_only=True, required=False)
 
