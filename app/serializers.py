@@ -54,12 +54,22 @@ class DegreeSerializer(serializers.ModelSerializer):
         model = models.Degree
         fields = ["program", "institute", "year"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = instance.program.name
+        data["institute"] = instance.institute.name
+        return data
+
 
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["company"] = instance.company.name
+        return data
 
 class BenefitSerializer(serializers.ModelSerializer):
     class Meta:
