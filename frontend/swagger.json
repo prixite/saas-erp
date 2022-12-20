@@ -17,8 +17,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -67,8 +66,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -96,8 +94,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -128,8 +125,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -178,8 +174,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -226,8 +221,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -255,8 +249,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -305,8 +298,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -334,8 +326,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -384,8 +375,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -413,8 +403,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -463,8 +452,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -492,8 +480,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -542,8 +529,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -571,8 +557,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -621,8 +606,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -650,8 +634,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -700,8 +683,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -729,8 +711,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -779,8 +760,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -808,8 +788,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -858,8 +837,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -897,8 +875,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -953,8 +930,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -990,8 +966,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "204": {
@@ -1022,8 +997,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1079,8 +1053,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -1118,8 +1091,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1178,8 +1150,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -1207,8 +1178,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1229,8 +1199,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1279,8 +1248,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -1308,8 +1276,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1370,8 +1337,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1399,8 +1365,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1428,8 +1393,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1478,8 +1442,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -1507,8 +1470,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -2303,6 +2265,16 @@
                     "id": {
                         "type": "integer",
                         "readOnly": true
+                    },
+                    "leave_from": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                    },
+                    "leave_to": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
                     },
                     "leave": {
                         "type": "boolean"

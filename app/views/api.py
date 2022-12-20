@@ -227,6 +227,7 @@ class SlackApiView(APIView):
                 channel_id = request.data.get("channel_id")
                 user_id = request.data.get("user_id")
                 command = request.data.get("command")
+                command_params = request.data.get("text")
 
                 if channel_id == SLACK_ATTENDACE_CHANNEL:
                     try:
@@ -276,12 +277,13 @@ class SlackApiView(APIView):
                         if employee.leave_count <= 0:
                             return Response(data={"status": "leave limit exceed!"})
 
-                        if models.Leave.objects.filter(
+                        get_leave_date = command_params.split("/")
+
+                        models.Leave.objects.create(
                             employee_id=employee.id,
-                            created_at__date=datetime.now().date(),
-                        ).exists():
-                            return Response(data={"status": "already apply for leave!"})
-                        models.Leave.objects.create(employee_id=employee.id)
+                            leave_from=get_leave_date[0],
+                            leave_to=get_leave_date[1],
+                        )
                         return Response(
                             data={"status": "leave submitted successfully"},
                             status=status.HTTP_201_CREATED,

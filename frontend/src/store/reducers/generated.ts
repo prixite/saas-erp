@@ -622,6 +622,8 @@ export type Institue = {
 };
 export type Leave = {
   id: number;
+  leave_from?: string | null;
+  leave_to?: string | null;
   leave?: boolean;
   created_at: string;
   updated_at: string;

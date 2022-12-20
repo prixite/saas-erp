@@ -24,6 +24,8 @@ class Leave(models.Model):
         null=True,
         blank=True,
     )
+    leave_from = models.DateField(blank=True, null=True)
+    leave_to = models.DateField(blank=True, null=True)
     leave = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
