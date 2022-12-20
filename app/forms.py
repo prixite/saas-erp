@@ -96,10 +96,10 @@ class EmployeeForm(forms.ModelForm):
         self.instance.user.is_active = self.cleaned_data.get("can_login", False)
         self.instance.user.save()
 
-        uidb64 = urlsafe_base64_encode(smart_bytes(self.instance.user.email))
+        uidb64 = urlsafe_base64_encode(smart_bytes(self.instance.user.id))
         token = PasswordResetTokenGenerator().make_token(self.instance.user)
         current_site = settings.DOMAIN_NAME
-        relativeLink = f"/password-invitation-confirm/?uidb64={uidb64}&token={token}"
+        relativeLink = f"/employee-invitation-confirm/?uidb64={uidb64}&token={token}"
         url = current_site + relativeLink
         send_invitation_mail(self.instance.user.email, self.instance.user, url)
         return super().save()

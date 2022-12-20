@@ -341,3 +341,30 @@ class EmployeeInvitationConfirmView(generics.GenericAPIView):
                 return Response(
                     {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
                 )
+
+
+class EmployeeInvitationPasswordUpdateCompleteView(generics.GenericAPIView):
+    serializer_class = serializers.EmployeeInvitationPasswordCompleteSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+            user.set_password(serializer.validated_data["password"])
+            user.save()
+        except Exception:
+            return Response(
+                {"status": "account record not found"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {"status": "password reset success"},
+            status=status.HTTP_200_OK,
+        )

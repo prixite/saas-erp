@@ -113,7 +113,11 @@ urlpatterns = [
         api.SlackApiView.as_view(),
     ),
     path(
-        "employee_invitation_confirm/",
+        "employee-invitation-password-confirm/",
         api.EmployeeInvitationConfirmView.as_view(),
+    ),
+    path(
+        "employee-invitation-password-complete/",
+        api.EmployeeInvitationPasswordUpdateCompleteView.as_view(),
     ),
 ]
