@@ -183,14 +183,14 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/employees/${queryArg.id}/` }),
     }),
-    apiEmployeesPartialUpdate: build.mutation<
-      ApiEmployeesPartialUpdateApiResponse,
-      ApiEmployeesPartialUpdateApiArg
+    apiEmployeesUpdate: build.mutation<
+      ApiEmployeesUpdateApiResponse,
+      ApiEmployeesUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/employees/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedEmployeeUpdate,
+        method: "PUT",
+        body: queryArg.employeeUpdate,
       }),
     }),
     apiEmployeesDestroy: build.mutation<
@@ -369,11 +369,10 @@ export type ApiEmployeesRetrieveApiResponse = /** status 200  */ Employee;
 export type ApiEmployeesRetrieveApiArg = {
   id: number;
 };
-export type ApiEmployeesPartialUpdateApiResponse =
-  /** status 200  */ EmployeeUpdate;
-export type ApiEmployeesPartialUpdateApiArg = {
+export type ApiEmployeesUpdateApiResponse = /** status 200  */ EmployeeUpdate;
+export type ApiEmployeesUpdateApiArg = {
   id: number;
-  patchedEmployeeUpdate: PatchedEmployeeUpdate;
+  employeeUpdate: EmployeeUpdate;
 };
 export type ApiEmployeesDestroyApiResponse = unknown;
 export type ApiEmployeesDestroyApiArg = {
@@ -559,21 +558,34 @@ export type Employee = {
   type?: number | null;
   benefits?: number[];
 };
-export type EmployeeUpdate = {
-  department?: number | null;
-  designation: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
-  user_allowed?: boolean;
+export type EmployeeUpdateUser = {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number: string;
+  default_role?: number | null;
 };
-export type PatchedEmployeeUpdate = {
-  department?: number | null;
-  designation?: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
+export type EmployeeUpdate = {
+  id: number;
+  user: EmployeeUpdateUser;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  org_id: string;
+  managing: number[];
+  total_experience: string;
+  manages: string[];
+  emergency_contact_number: string;
+  designation: string;
+  salary?: number | null;
   user_allowed?: boolean;
+  created_at: string;
+  updated_at: string;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export type Compensation = {
   id: number;
@@ -649,7 +661,7 @@ export const {
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
-  useApiEmployeesPartialUpdateMutation,
+  useApiEmployeesUpdateMutation,
   useApiEmployeesDestroyMutation,
   useApiEmployeesCompensationRetrieveQuery,
   useApiEmployeesCompensationCreateMutation,

@@ -17,7 +17,7 @@ urlpatterns = [
         api.EmployeeViewSet.as_view(
             {
                 "get": "retrieve",
-                "patch": "partial_update",
+                "put": "update",
                 "delete": "destroy",
             }
         ),
