@@ -71,6 +71,7 @@ class ExperirenceSerializer(serializers.ModelSerializer):
         data["company"] = instance.company.name
         return data
 
+
 class BenefitSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Benefit
