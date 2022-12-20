@@ -17,6 +17,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics
 
 
 from app import models, serializers
@@ -26,7 +28,7 @@ from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLAC
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
-class LoginApiView(auth_views.ObtainAuthToken):
+class AuthTokenView(auth_views.ObtainAuthToken):
     serializer_class = serializers.AuthTokenSerializer
 
     def post(self, request, *args, **kwargs):
@@ -40,6 +42,29 @@ class LoginApiView(auth_views.ObtainAuthToken):
                 "token": token.key,
                 "user": serializers.MeSerializer(
                     user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class RefreshTokenView(generics.GenericAPIView):
+    queryset = Token.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RefreshTokenSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = Token.objects.get(key=serializer.validated_data["token_key"])
+
+        return Response(
+            {
+                "status": "valid token",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    token.user, context=self.get_serializer_context()
                 ).data,
             },
             status=status.HTTP_200_OK,
