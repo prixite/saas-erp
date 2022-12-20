@@ -890,8 +890,8 @@
                     }
                 }
             },
-            "patch": {
-                "operationId": "api_employees_partial_update",
+            "put": {
+                "operationId": "api_employees_update",
                 "parameters": [
                     {
                         "in": "path",
@@ -909,20 +909,21 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "security": [
                     {
@@ -1888,6 +1889,13 @@
                         "type": "string",
                         "readOnly": true
                     },
+                    "manages": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -1949,6 +1957,7 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
+                    "manages",
                     "managing",
                     "nic",
                     "org_id",
@@ -2007,7 +2016,7 @@
                         "readOnly": true
                     },
                     "user": {
-                        "$ref": "#/components/schemas/EmployeeUser"
+                        "$ref": "#/components/schemas/EmployeeUpdateUser"
                     },
                     "degrees": {
                         "type": "array",
@@ -2027,6 +2036,10 @@
                             "$ref": "#/components/schemas/Experirence"
                         }
                     },
+                    "org_id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
                     "managing": {
                         "type": "array",
                         "items": {
@@ -2034,6 +2047,17 @@
                             "writeOnly": true
                         },
                         "writeOnly": true
+                    },
+                    "total_experience": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "manages": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
                     },
                     "emergency_contact_number": {
                         "type": "string",
@@ -2087,9 +2111,47 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
+                    "manages",
                     "managing",
+                    "org_id",
+                    "total_experience",
                     "updated_at",
                     "user"
+                ]
+            },
+            "EmployeeUpdateUser": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": true
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "default_role": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "email"
                 ]
             },
             "EmployeeUser": {
@@ -2268,87 +2330,6 @@
                     "email",
                     "headline"
                 ]
-            },
-            "PatchedEmployeeUpdate": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/EmployeeUser"
-                    },
-                    "degrees": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Degree"
-                        }
-                    },
-                    "assets": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Asset"
-                        }
-                    },
-                    "experience": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Experirence"
-                        }
-                    },
-                    "managing": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "writeOnly": true
-                        },
-                        "writeOnly": true
-                    },
-                    "emergency_contact_number": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
-                    "designation": {
-                        "type": "string",
-                        "maxLength": 50
-                    },
-                    "salary": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
-                    "department": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "manager": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "benefits": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
-                    }
-                }
             },
             "PatchedUserPassword": {
                 "type": "object",
