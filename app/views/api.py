@@ -83,7 +83,7 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     def get_serializer_class(self):
         if self.action == "list":
             return serializers.EmployeeListSerializer
-        if self.action == "partial_update":
+        if self.action == "update":
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 

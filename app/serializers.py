@@ -54,22 +54,11 @@ class DegreeSerializer(serializers.ModelSerializer):
         model = models.Degree
         fields = ["program", "institute", "year"]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
-        return data
-
 
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["company"] = instance.company.name
-        return data
 
 
 class BenefitSerializer(serializers.ModelSerializer):
@@ -162,9 +151,9 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return data
+
+class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
+    email = serializers.EmailField(read_only=True)
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -289,17 +278,47 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         ]
 
 
-class EmployeeUpdateSerializer(serializers.ModelSerializer):
+class EmployeeUpdateSerializer(EmployeeSerializer):
+    user = EmployeeUpdateUserSerializer()
+
     class Meta:
         model = models.Employee
-        fields = [
-            "department",
-            "designation",
-            "manager",
-            "benefits",
-            "type",
-            "user_allowed",
-        ]
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        organization = self.context.get("request").user.organization
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user_ser.save()
+
+        models.Degree.objects.filter(employee=instance).delete()
+        models.Asset.objects.filter(employee=instance).delete()
+        models.Experience.objects.filter(employee=instance).delete()
+        models.Employee.objects.filter(manager=instance).update(manager=None)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = instance
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=instance)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=instance)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=instance, organization=organization
+            )
+
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
