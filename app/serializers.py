@@ -1,7 +1,7 @@
 from datetime import date
 
-from django.db import transaction
 from django.contrib.auth import authenticate
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token

@@ -7,19 +7,16 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
-from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework import generics
-
 
 from app import models, serializers
 from app.views import mixins
