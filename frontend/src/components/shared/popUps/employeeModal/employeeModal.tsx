@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -81,7 +81,7 @@ const employeeFormInitialState: EmployeeForm = {
 const EmployeeModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
-  const [page, setPage] = useState("1");
+  const [page, setPage] = useState("2");
   const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
   const {
@@ -236,6 +236,13 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       benefits: formik.values.benefits,
     };
   };
+  useEffect(() => {
+    if (page === "2" && onChangeValidation) {
+      setOnChangeValidation(false);
+    }
+  }, [page, onChangeValidation]);
+  // console.log("formik is valid value", formik.isValid)
+  // console.log("validation value",onChangeValidation)
   const moveToNextPage = async () => {
     const errors = await formik.validateForm();
     if (page == "1" && !Object.keys(errors).length) {

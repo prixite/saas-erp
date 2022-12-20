@@ -18,7 +18,7 @@ export const toPkrFormat = (enumber: number | undefined) => {
 /* eslint-disable */
 export const emailRegX =
   /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-export const nameRegex = /^[A-Za-z]*$/;
+export const nameRegex = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
 export const phoneRegex = /^\d+\.?\d*$/;
 export const nicRegex = /^\d+\.?\d*$/;
 /* eslint-enable */
