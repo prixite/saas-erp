@@ -6,7 +6,7 @@ from app.tests.base import BaseTestCase
 
 class EmployeeTestCase(BaseTestCase):
     def test_employee_post(self):
-        self.client.force_login(self.owner)
+        self.client.force_token_login(self.owner)
 
         employee_data = {
             "user": {
