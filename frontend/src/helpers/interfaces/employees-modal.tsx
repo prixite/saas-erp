@@ -32,6 +32,7 @@ export interface EmployeeData {
     email: string;
     image: string;
     contact_number: string;
+    default_role: number;
   };
   total_experience: string;
   benefits: Benefit[];

@@ -50,7 +50,7 @@ const employeeFormInitialState: EmployeeForm = {
   email: "",
   image: null,
   contactNumber: "",
-  defaultRole: undefined,
+  defaultRole: null,
   degrees: [
     {
       program: "",
@@ -245,6 +245,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       lastName: employeeData?.user?.last_name || "",
       email: employeeData?.user?.email || "",
       contactNumber: employeeData?.user?.contact_number || "",
+      defaultRole: employeeData?.user?.default_role,
       degrees: employeeData?.degrees || [],
       assets: [],
       experience: employeeData?.experience || [],
