@@ -100,6 +100,10 @@ export interface modalsInterface {
   emailrRegxError: string;
   defaultRoleLabel: string;
   departmentsLabel: string;
+  firstNameRegxError: string;
+  lastNameRegxError: string;
+  nicRegxError: string;
+  phoneRegxError: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -173,8 +177,8 @@ export interface editBenefitModal {
   MealAllowance: string;
 }
 export type Degree = {
-  program: number;
-  institute: number;
+  program: string;
+  institute: string;
   year: string;
 };
 export type Asset = {
@@ -189,7 +193,7 @@ export type Asset = {
 };
 export type Experirence = {
   title: string;
-  company: number;
+  company: string;
   start_date: string;
   end_date: string;
 };
@@ -217,13 +221,6 @@ export type EmployeeForm = {
   manager?: number | null;
   type?: number | null;
   benefits?: number[];
-  title: string;
-  company: string;
-  startDate: string;
-  endDate: string;
-  program: string;
-  institute: string;
-  year: string;
 };
 export interface Formik {
   initialValues: EmployeeForm;

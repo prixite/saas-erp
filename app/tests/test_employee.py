@@ -89,6 +89,55 @@ class EmployeeTestCase(BaseTestCase):
             ],
         )
 
+    def test_employee_put(self):
+        self.client.force_login(self.owner)
+        employee_data = {
+            "user": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "contact_number": "+4240004432",
+                "default_role": self.member_role.id,
+            },
+            "date_of_joining": "2022-11-15",
+            "emergency_contact_number": "1234324234",
+            "designation": "Software Engineer",
+            "degrees": [
+                {
+                    "program": self.program.id,
+                    "institute": self.institute.id,
+                    "year": "2018-12-08",
+                }
+            ],
+            "experience": [
+                {
+                    "title": "Internee",
+                    "company": self.company.id,
+                    "start_date": "2018-12-08",
+                    "end_date": "2020-12-08",
+                },
+                {
+                    "title": "Junior developer",
+                    "company": self.company.id,
+                    "start_date": "2018-12-08",
+                    "end_date": "2020-12-08",
+                },
+            ],
+            "assets": [
+                {
+                    "name": "Macbook pro",
+                    "attribute_values": {},
+                    "type": self.asset_type.id,
+                }
+            ],
+            "managing": [],
+        }
+
+        response = self.client.put(
+            f"/api/employees/{self.employee.id}/", data=employee_data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_employee_list(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/employees/")

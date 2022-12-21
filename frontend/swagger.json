@@ -890,8 +890,8 @@
                     }
                 }
             },
-            "patch": {
-                "operationId": "api_employees_partial_update",
+            "put": {
+                "operationId": "api_employees_update",
                 "parameters": [
                     {
                         "in": "path",
@@ -909,20 +909,21 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "security": [
                     {
@@ -1296,8 +1297,8 @@
             }
         },
         "/api/leave/{id}/": {
-            "put": {
-                "operationId": "api_leave_update",
+            "patch": {
+                "operationId": "api_leave_partial_update",
                 "parameters": [
                     {
                         "in": "path",
@@ -1315,21 +1316,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Leave"
+                                "$ref": "#/components/schemas/PatchedLeave"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/Leave"
+                                "$ref": "#/components/schemas/PatchedLeave"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Leave"
+                                "$ref": "#/components/schemas/PatchedLeave"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "security": [
                     {
@@ -1458,6 +1458,55 @@
                 }
             }
         },
+        "/api/refresh-token/": {
+            "post": {
+                "operationId": "api_refresh_token_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshToken"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/role/": {
             "get": {
                 "operationId": "api_role_list",
@@ -1507,6 +1556,54 @@
                 "responses": {
                     "200": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/token/": {
+            "post": {
+                "operationId": "api_token_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthToken"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -1606,6 +1703,22 @@
                 "required": [
                     "employee",
                     "time_in"
+                ]
+            },
+            "AuthToken": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
                 ]
             },
             "Benefit": {
@@ -2005,8 +2118,7 @@
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "nullable": true
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -2103,15 +2215,91 @@
             "EmployeeUpdate": {
                 "type": "object",
                 "properties": {
-                    "department": {
+                    "id": {
                         "type": "integer",
-                        "nullable": true
+                        "readOnly": true
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/EmployeeUpdateUser"
+                    },
+                    "degrees": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Degree"
+                        }
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
+                    },
+                    "experience": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Experirence"
+                        }
+                    },
+                    "org_id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "managing": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "writeOnly": true
+                        },
+                        "writeOnly": true
+                    },
+                    "total_experience": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "manages": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "emergency_contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     },
                     "designation": {
                         "type": "string",
                         "maxLength": 50
                     },
+                    "salary": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
+                    },
+                    "user_allowed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "department": {
+                        "type": "integer",
+                        "nullable": true
+                    },
                     "manager": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "type": {
                         "type": "integer",
                         "nullable": true
                     },
@@ -2120,17 +2308,57 @@
                         "items": {
                             "type": "integer"
                         }
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
                     }
                 },
                 "required": [
-                    "designation"
+                    "assets",
+                    "created_at",
+                    "degrees",
+                    "designation",
+                    "emergency_contact_number",
+                    "experience",
+                    "id",
+                    "manages",
+                    "managing",
+                    "org_id",
+                    "total_experience",
+                    "updated_at",
+                    "user"
+                ]
+            },
+            "EmployeeUpdateUser": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": true
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "default_role": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "email"
                 ]
             },
             "EmployeeUser": {
@@ -2268,16 +2496,19 @@
                     },
                     "leave_from": {
                         "type": "string",
-                        "format": "date",
-                        "nullable": true
+                        "format": "date"
                     },
                     "leave_to": {
                         "type": "string",
-                        "format": "date",
-                        "nullable": true
+                        "format": "date"
                     },
-                    "leave": {
-                        "type": "boolean"
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
                     },
                     "created_at": {
                         "type": "string",
@@ -2292,7 +2523,7 @@
                     "employee": {
                         "type": "integer"
                     },
-                    "hr": {
+                    "updated_by": {
                         "type": "integer",
                         "nullable": true
                     }
@@ -2301,6 +2532,8 @@
                     "created_at",
                     "employee",
                     "id",
+                    "leave_from",
+                    "leave_to",
                     "updated_at"
                 ]
             },
@@ -2355,33 +2588,45 @@
                     "headline"
                 ]
             },
-            "PatchedEmployeeUpdate": {
+            "PatchedLeave": {
                 "type": "object",
                 "properties": {
-                    "department": {
+                    "id": {
                         "type": "integer",
-                        "nullable": true
+                        "readOnly": true
                     },
-                    "designation": {
+                    "leave_from": {
                         "type": "string",
-                        "maxLength": 50
+                        "format": "date"
                     },
-                    "manager": {
+                    "leave_to": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "updated_by": {
                         "type": "integer",
                         "nullable": true
-                    },
-                    "benefits": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
                     }
                 }
             },
@@ -2434,6 +2679,18 @@
                     "updated_at"
                 ]
             },
+            "RefreshToken": {
+                "type": "object",
+                "properties": {
+                    "token_key": {
+                        "type": "string",
+                        "maxLength": 500
+                    }
+                },
+                "required": [
+                    "token_key"
+                ]
+            },
             "Role": {
                 "type": "object",
                 "properties": {
@@ -2468,6 +2725,14 @@
                     "name",
                     "updated_at"
                 ]
+            },
+            "StatusEnum": {
+                "enum": [
+                    "pending",
+                    "approved",
+                    "denied"
+                ],
+                "type": "string"
             },
             "UserPassword": {
                 "type": "object",

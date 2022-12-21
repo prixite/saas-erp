@@ -44,7 +44,7 @@ export interface EmployeeData {
   emergency_contact_number: string;
   organization: number;
   type: number;
-  manager?: string;
+  manager?: number;
   department: number;
   org_id: string;
 }
@@ -72,6 +72,7 @@ export interface User {
   is_superuser: boolean;
   last_name: string;
   organization: string;
+  contact_number: string;
   allowed_modules: AllowedModules;
 }
 export interface Flags {

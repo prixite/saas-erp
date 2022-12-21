@@ -183,14 +183,14 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/employees/${queryArg.id}/` }),
     }),
-    apiEmployeesPartialUpdate: build.mutation<
-      ApiEmployeesPartialUpdateApiResponse,
-      ApiEmployeesPartialUpdateApiArg
+    apiEmployeesUpdate: build.mutation<
+      ApiEmployeesUpdateApiResponse,
+      ApiEmployeesUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/employees/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedEmployeeUpdate,
+        method: "PUT",
+        body: queryArg.employeeUpdate,
       }),
     }),
     apiEmployeesDestroy: build.mutation<
@@ -263,14 +263,14 @@ const injectedRtkApi = api.injectEndpoints({
     apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
       query: () => ({ url: `/api/leave/` }),
     }),
-    apiLeaveUpdate: build.mutation<
-      ApiLeaveUpdateApiResponse,
-      ApiLeaveUpdateApiArg
+    apiLeavePartialUpdate: build.mutation<
+      ApiLeavePartialUpdateApiResponse,
+      ApiLeavePartialUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/leave/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.leave,
+        method: "PATCH",
+        body: queryArg.patchedLeave,
       }),
     }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
@@ -292,6 +292,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.program,
       }),
     }),
+    apiRefreshTokenCreate: build.mutation<
+      ApiRefreshTokenCreateApiResponse,
+      ApiRefreshTokenCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/refresh-token/`,
+        method: "POST",
+        body: queryArg.refreshToken,
+      }),
+    }),
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
@@ -300,6 +310,16 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
+    }),
+    apiTokenCreate: build.mutation<
+      ApiTokenCreateApiResponse,
+      ApiTokenCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/token/`,
+        method: "POST",
+        body: queryArg.authToken,
+      }),
     }),
   }),
   overrideExisting: false,
@@ -382,11 +402,10 @@ export type ApiEmployeesRetrieveApiResponse = /** status 200  */ Employee;
 export type ApiEmployeesRetrieveApiArg = {
   id: number;
 };
-export type ApiEmployeesPartialUpdateApiResponse =
-  /** status 200  */ EmployeeUpdate;
-export type ApiEmployeesPartialUpdateApiArg = {
+export type ApiEmployeesUpdateApiResponse = /** status 200  */ EmployeeUpdate;
+export type ApiEmployeesUpdateApiArg = {
   id: number;
-  patchedEmployeeUpdate: PatchedEmployeeUpdate;
+  employeeUpdate: EmployeeUpdate;
 };
 export type ApiEmployeesDestroyApiResponse = unknown;
 export type ApiEmployeesDestroyApiArg = {
@@ -424,10 +443,10 @@ export type ApiInstituesCreateApiArg = {
 };
 export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
 export type ApiLeaveListApiArg = void;
-export type ApiLeaveUpdateApiResponse = /** status 200  */ Leave;
-export type ApiLeaveUpdateApiArg = {
+export type ApiLeavePartialUpdateApiResponse = /** status 200  */ Leave;
+export type ApiLeavePartialUpdateApiArg = {
   id: number;
-  leave: Leave;
+  patchedLeave: PatchedLeave;
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
@@ -437,10 +456,18 @@ export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
 export type ApiProgramsCreateApiArg = {
   program: Program;
 };
+export type ApiRefreshTokenCreateApiResponse = /** status 200  */ RefreshToken;
+export type ApiRefreshTokenCreateApiArg = {
+  refreshToken: RefreshToken;
+};
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
+export type ApiTokenCreateApiResponse = /** status 200  */ AuthToken;
+export type ApiTokenCreateApiArg = {
+  authToken: AuthToken;
+};
 export type AssetType = {
   id: number;
   name: string;
@@ -571,7 +598,7 @@ export type Employee = {
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;
-  leave_count?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -580,21 +607,35 @@ export type Employee = {
   type?: number | null;
   benefits?: number[];
 };
-export type EmployeeUpdate = {
-  department?: number | null;
-  designation: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
-  user_allowed?: boolean;
+export type EmployeeUpdateUser = {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number: string;
+  default_role?: number | null;
 };
-export type PatchedEmployeeUpdate = {
-  department?: number | null;
-  designation?: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
+export type EmployeeUpdate = {
+  id: number;
+  user: EmployeeUpdateUser;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  org_id: string;
+  managing: number[];
+  total_experience: string;
+  manages: string[];
+  emergency_contact_number: string;
+  designation: string;
+  salary?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
+  created_at: string;
+  updated_at: string;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export type Compensation = {
   id: number;
@@ -620,15 +661,26 @@ export type Institue = {
   created_at: string;
   updated_at: string;
 };
+export type StatusEnum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
-  leave_from?: string | null;
-  leave_to?: string | null;
-  leave?: boolean;
+  leave_from: string;
+  leave_to: string;
+  status?: StatusEnum;
   created_at: string;
   updated_at: string;
   employee: number;
-  hr?: number | null;
+  updated_by?: number | null;
+};
+export type PatchedLeave = {
+  id?: number;
+  leave_from?: string;
+  leave_to?: string;
+  status?: StatusEnum;
+  created_at?: string;
+  updated_at?: string;
+  employee?: number;
+  updated_by?: number | null;
 };
 export type Me = {
   first_name?: string;
@@ -647,6 +699,9 @@ export type Program = {
   created_at: string;
   updated_at: string;
 };
+export type RefreshToken = {
+  token_key: string;
+};
 export type PermissionEnum = "c" | "b" | "a";
 export type Role = {
   id: number;
@@ -655,6 +710,10 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
+};
+export type AuthToken = {
+  email: string;
+  password: string;
 };
 export const {
   useApiAssetTypeListQuery,
@@ -680,7 +739,7 @@ export const {
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
-  useApiEmployeesPartialUpdateMutation,
+  useApiEmployeesUpdateMutation,
   useApiEmployeesDestroyMutation,
   useApiEmployeesCompensationRetrieveQuery,
   useApiEmployeesCompensationCreateMutation,
@@ -690,10 +749,12 @@ export const {
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
   useApiLeaveListQuery,
-  useApiLeaveUpdateMutation,
+  useApiLeavePartialUpdateMutation,
   useApiMeRetrieveQuery,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
+  useApiRefreshTokenCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
+  useApiTokenCreateMutation,
 } = injectedRtkApi;

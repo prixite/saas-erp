@@ -14,18 +14,23 @@ class Attendance(models.Model):
 
 
 class Leave(models.Model):
+    class LeaveStatus(models.TextChoices):
+        PENDING = "pending", "Pending"
+        APPROVED = "approved", "Approved"
+        DENIED = "denied", "Denied"
+
     employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, related_name="leaves_employee"
+        Employee, on_delete=models.CASCADE, related_name="leaves"
     )
-    hr = models.ForeignKey(
+    updated_by = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
-        related_name="leaves_hr",
+        related_name="managed_leaves",
         null=True,
         blank=True,
     )
-    leave_from = models.DateField(blank=True, null=True)
-    leave_to = models.DateField(blank=True, null=True)
-    leave = models.BooleanField(default=False)
+    leave_from = models.DateField()
+    leave_to = models.DateField()
+    status = models.SlugField(choices=LeaveStatus.choices, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

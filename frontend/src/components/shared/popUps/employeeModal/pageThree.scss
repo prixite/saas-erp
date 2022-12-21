@@ -3,6 +3,24 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 10px;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 16px 16px 16px 16px;
+  position: relative;
+  .cross-icon {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #ebebeb;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+  }
   .grid-container-cls {
     .grid-item-cls {
       .text-field-box {

@@ -7,7 +7,9 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from rest_framework import status
+from rest_framework import generics, status
+from rest_framework.authtoken import views as auth_views
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -22,6 +24,49 @@ from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
+
+
+class AuthTokenView(auth_views.ObtainAuthToken):
+    serializer_class = serializers.AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class RefreshTokenView(generics.GenericAPIView):
+    queryset = Token.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RefreshTokenSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = Token.objects.get(key=serializer.validated_data["token_key"])
+
+        return Response(
+            {
+                "status": "valid token",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    token.user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 @method_decorator(login_required, name="dispatch")
@@ -39,7 +84,7 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     def get_serializer_class(self):
         if self.action == "list":
             return serializers.EmployeeListSerializer
-        if self.action == "partial_update":
+        if self.action == "update":
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 
@@ -274,8 +319,14 @@ class SlackApiView(APIView):
                         attendance.save()
 
                     elif command == "/leaves":
-                        if employee.leave_count <= 0:
-                            return Response(data={"status": "leave limit exceed!"})
+                        if not command_params:
+                            return Response(
+                                data={
+                                    "status": "Invalid command e.g: /leave y-m-d/y-m-d"
+                                }
+                            )
+                        if employee.leave_count > 20:
+                            return Response(data={"status": "Leaves limit exceed!"})
 
                         get_leave_date = command_params.split("/")
 
@@ -330,9 +381,9 @@ class LeaveView(ListAPIView):
 class LeaveUpdateView(UpdateAPIView):
     queryset = models.Leave.objects.all()
     serializer_class = serializers.LeaveSerializer
-    http_method_names = ("put",)
+    http_method_names = ("patch",)
 
-    def put(self, request, pk):
+    def patch(self, request, pk):
         if not request.data:
             return Response(
                 {
@@ -341,29 +392,38 @@ class LeaveUpdateView(UpdateAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        super().put(request, pk)
+        super().patch(request, pk)
         get_leave_detail = get_object_or_404(models.Leave, pk=pk)
         get_employee = get_object_or_404(
             models.Employee, pk=get_leave_detail.employee.id
         )
-        if request.data["leave"]:
-            get_leave_detail.leave = True
-            get_leave_detail.hr_id = request.data["hr"]
-            get_employee.leave_count -= 1
+        to_email = []
+        if get_leave_detail.employee.user.email:
+            to_email.append(get_leave_detail.employee.user.email)
+        if request.data["status"] == "approved":
+            get_leave_detail.status = models.Leave.LeaveStatus.APPROVED
+            get_leave_detail.updated_by_id = request.data["updated_by"]
+            get_employee.leave_count += 1
             get_employee.save()
-            to_email = []
-            if get_leave_detail.employee.user.email:
-                to_email.append(get_leave_detail.employee.user.email)
+
             if get_leave_detail.employee.manager.user.email:
                 to_email.append(get_leave_detail.employee.manager.user.email)
 
-            send_leave_email(to_email)
+            send_leave_email(to_email, request.data["status"])
 
             return Response(
                 {
                     "status": "leave granted.",
                 },
                 status=status.HTTP_200_OK,
+            )
+        elif request.data["status"] == "denied":
+            send_leave_email(to_email, request.data["status"])
+            return Response(
+                {
+                    "status": "leave not granted.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
             )
         else:
             return Response(
