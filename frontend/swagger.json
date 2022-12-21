@@ -2002,13 +2002,6 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "manages": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "readOnly": true
-                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -2070,7 +2063,6 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
-                    "manages",
                     "managing",
                     "nic",
                     "org_id",
@@ -2165,13 +2157,6 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "manages": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "readOnly": true
-                    },
                     "emergency_contact_number": {
                         "type": "string",
                         "maxLength": 20
@@ -2224,7 +2209,6 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
-                    "manages",
                     "managing",
                     "org_id",
                     "total_experience",
