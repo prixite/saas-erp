@@ -7,46 +7,63 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0038_leave_leave_from_leave_leave_to'),
+        ("app", "0038_leave_leave_from_leave_leave_to"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='leave',
-            name='hr',
+            model_name="leave",
+            name="hr",
         ),
         migrations.RemoveField(
-            model_name='leave',
-            name='leave',
+            model_name="leave",
+            name="leave",
         ),
         migrations.AddField(
-            model_name='leave',
-            name='status',
-            field=models.SlugField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('denied', 'Denied')], default='pending'),
+            model_name="leave",
+            name="status",
+            field=models.SlugField(
+                choices=[
+                    ("pending", "Pending"),
+                    ("approved", "Approved"),
+                    ("denied", "Denied"),
+                ],
+                default="pending",
+            ),
         ),
         migrations.AddField(
-            model_name='leave',
-            name='updated_by',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='managed_leaves', to='app.employee'),
+            model_name="leave",
+            name="updated_by",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="managed_leaves",
+                to="app.employee",
+            ),
         ),
         migrations.AlterField(
-            model_name='employee',
-            name='leave_count',
+            model_name="employee",
+            name="leave_count",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='leave',
-            name='employee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='leaves', to='app.employee'),
+            model_name="leave",
+            name="employee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="leaves",
+                to="app.employee",
+            ),
         ),
         migrations.AlterField(
-            model_name='leave',
-            name='leave_from',
+            model_name="leave",
+            name="leave_from",
             field=models.DateField(),
         ),
         migrations.AlterField(
-            model_name='leave',
-            name='leave_to',
+            model_name="leave",
+            name="leave_to",
             field=models.DateField(),
         ),
     ]
