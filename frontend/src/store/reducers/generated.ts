@@ -572,7 +572,6 @@ export type Employee = {
   org_id: string;
   managing: number[];
   total_experience: string;
-  manages: string[];
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
@@ -603,7 +602,6 @@ export type EmployeeUpdate = {
   org_id: string;
   managing: number[];
   total_experience: string;
-  manages: string[];
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;

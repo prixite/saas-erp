@@ -71,7 +71,6 @@ class EmployeeTestCase(BaseTestCase):
                 "experience",
                 "org_id",
                 "total_experience",
-                "manages",
                 "nic",
                 "date_of_joining",
                 "emergency_contact_number",
@@ -85,6 +84,7 @@ class EmployeeTestCase(BaseTestCase):
                 "type",
                 "benefits",
                 "organization",
+                "manages",
             ],
         )
 
