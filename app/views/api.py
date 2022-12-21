@@ -347,3 +347,33 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+
+class UpdateProfileView(generics.UpdateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UpdateProfileSerializer
+    http_method_names = ("put",)
+
+    def put(self, request, pk):
+        if not request.data:
+            return Response(
+                {
+                    "status": "empty payload",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        super().put(request, pk)
+        user = get_object_or_404(models.User, pk=pk)
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "status": "profile updated",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
