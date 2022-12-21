@@ -75,6 +75,7 @@ export interface User {
   is_superuser: boolean;
   last_name: string;
   organization: string;
+  contact_number: string;
   allowed_modules: AllowedModules;
 }
 export interface Flags {

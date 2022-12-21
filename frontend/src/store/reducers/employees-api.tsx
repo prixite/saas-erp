@@ -72,15 +72,12 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
-    createEmployee: builder.mutation<
-      EmployeeData[],
-      { employee: EmployeeData[] }
-    >({
-      query: (employee) => {
+    createEmployee: builder.mutation({
+      query: (employeeObject) => {
         return {
           url: "/employees/",
           method: "POST",
-          body: employee,
+          body: employeeObject,
         };
       },
       invalidatesTags: ["Employee"],

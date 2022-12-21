@@ -221,12 +221,12 @@ export type EmployeeForm = {
   dateOfJoining: string;
   emergencyContactNumber: string;
   designation: string;
-  salary: number | null;
-  userAllowed: boolean;
-  department: number | null;
-  manager: number | null;
-  type: number | null;
-  benefits?: Benefit[];
+  salary?: number | null;
+  userAllowed?: boolean;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export interface Formik {
   initialValues: EmployeeForm;

@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "app",
     # 3rd party apps
     "rest_framework",
+    "rest_framework.authtoken",
     "drf_spectacular",
     "crispy_forms",
     "crispy_bootstrap5",

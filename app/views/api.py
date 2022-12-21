@@ -7,7 +7,9 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from rest_framework import status
+from rest_framework import generics, status
+from rest_framework.authtoken import views as auth_views
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -21,6 +23,49 @@ from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
+
+
+class AuthTokenView(auth_views.ObtainAuthToken):
+    serializer_class = serializers.AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class RefreshTokenView(generics.GenericAPIView):
+    queryset = Token.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RefreshTokenSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = Token.objects.get(key=serializer.validated_data["token_key"])
+
+        return Response(
+            {
+                "status": "valid token",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    token.user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 @method_decorator(login_required, name="dispatch")
@@ -38,7 +83,7 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     def get_serializer_class(self):
         if self.action == "list":
             return serializers.EmployeeListSerializer
-        if self.action == "partial_update":
+        if self.action == "update":
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 

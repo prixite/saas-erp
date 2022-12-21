@@ -11,12 +11,28 @@
   .icon-Container {
     width: 96px;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     .profile-pic {
       height: 60px;
       margin: 24px 12px 24px 24px;
+    }
+    .upload-btn-icon {
+      position: absolute;
+      top: 65px;
+      left: 48px;
+      border-radius: 50%;
+      height: 30px;
+      width: 30px;
+      border: 1px solid #ebebeb;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      img {
+        height: 15px;
+        width: 15px;
+      }
     }
   }
 

@@ -14,7 +14,6 @@ import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeM
 import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { deleteEmployeeService } from "@src/services/employeeService";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
@@ -195,7 +194,9 @@ function DataGridTable() {
     setOpenDeleteModal(true);
   };
   const handleEmployeeDelete = async () => {
-    await deleteEmployeeService(rowCellId, deleteEmployee);
+    await deleteEmployee({
+      id: rowCellId,
+    }).unwrap();
     toast.success(employeeDeleteSuccess, {
       autoClose: timeOut,
       pauseOnHover: false,
