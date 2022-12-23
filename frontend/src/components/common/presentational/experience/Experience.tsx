@@ -77,7 +77,7 @@ function Experience() {
 
           {employeeData?.experience.map((exp, index) => {
             return (
-              <Box key={exp?.title}>
+              <Box key={index}>
                 <Grid
                   className="experience-Card"
                   container
@@ -112,7 +112,7 @@ function Experience() {
                     >
                       <Grid item className="heading-One">
                         <Typography variant="body1" className="description">
-                          {exp?.company}{" "}
+                          {exp?.company?.name}{" "}
                         </Typography>
                       </Grid>
                       <Grid item className="heading-Two">

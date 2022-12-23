@@ -8,16 +8,30 @@ export interface Employee {
   date_of_joining: string;
 }
 export interface Education {
-  program: string;
-  institute: string;
+  program: {
+    id: string;
+    name: string;
+  };
+  institute: {
+    id: string;
+    name: string;
+  };
   year: string;
 }
 export interface Experience {
+  id: string;
   title: string;
-  company: string;
+  company: {
+    id: string;
+    name: string;
+  };
   start_date: string;
   end_date: string;
 }
+export type Manage = {
+  id: string;
+  name: string;
+};
 export type Benefit = {
   id: number;
   name: string;
@@ -41,13 +55,23 @@ export interface EmployeeData {
   contact_number: string;
   date_of_joining: string;
   nic: string;
-  manages: string[];
+  manages: Manage[];
+  managing: Manage[];
   designation: string;
   emergency_contact_number: string;
   organization: number;
-  type: number;
-  manager?: number;
-  department: number;
+  type: {
+    id: number;
+    title: string;
+  };
+  manager?: {
+    id: number;
+    name: string;
+  };
+  department: {
+    id: number;
+    name: string;
+  };
   org_id: string;
   salary: number;
   user_allowed: boolean;
