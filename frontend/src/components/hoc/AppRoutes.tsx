@@ -6,6 +6,7 @@ import EmployeeSection from "@src/components/common/smart/employeeSection/Employ
 import Login from "@src/components/common/smart/login/Login";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
+import Signup from "@src/components/common/smart/signup/Signup";
 import Users from "@src/components/common/smart/users/users";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
 import Layout from "@src/components/shared/layout";
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       {!isLoading ? (
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
             path="/"
             element={
