@@ -216,7 +216,7 @@ export type EmployeeForm = {
   email: string;
   image?: string | null;
   contactNumber: string;
-  defaultRole?: number | null;
+  defaultRole?: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];
@@ -228,11 +228,11 @@ export type EmployeeForm = {
   dateOfJoining: string;
   emergencyContactNumber: string;
   designation: string;
-  salary?: number | null;
+  salary?: number;
   userAllowed?: boolean;
-  department?: number | null;
-  manager?: number | null;
-  type?: number | null;
+  department?: number;
+  manager?: number;
+  type?: number;
   benefits: number[];
 };
 export interface Formik {

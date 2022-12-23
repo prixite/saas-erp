@@ -51,7 +51,7 @@ const employeeFormInitialState: EmployeeForm = {
   email: "",
   image: null,
   contactNumber: "",
-  defaultRole: null,
+  defaultRole: null || undefined,
   degrees: [
     {
       program: "",
@@ -76,11 +76,11 @@ const employeeFormInitialState: EmployeeForm = {
   dateOfJoining: "",
   emergencyContactNumber: "",
   designation: "",
-  salary: null,
+  salary: null || undefined,
   userAllowed: false,
-  department: null,
-  manager: null,
-  type: null,
+  department: null || undefined,
+  manager: null || undefined,
+  type: null || undefined,
   benefits: [],
 };
 
