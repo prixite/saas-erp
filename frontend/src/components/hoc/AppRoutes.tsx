@@ -5,8 +5,10 @@ import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
+import Login from "@src/components/common/smart/login/Login";
 import Users from "@src/components/common/smart/users/users";
 import Layout from "@src/components/shared/layout";
+import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
 import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
 
 const AppRoutes = () => {
@@ -16,7 +18,15 @@ const AppRoutes = () => {
     <>
       {!isLoading ? (
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             {allFlags.show_employees_module && (
               <>

@@ -68,7 +68,6 @@ class RefreshTokenView(generics.GenericAPIView):
         )
 
 
-@method_decorator(login_required, name="dispatch")
 class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
