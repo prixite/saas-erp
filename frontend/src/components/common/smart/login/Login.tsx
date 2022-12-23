@@ -14,9 +14,9 @@ import { Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import { useApiTokenCreateMutation } from "@src/store/api";
 import "@src/components/common/smart/login/login.scss";
 

@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }: Props) => {
       refreshToken: { token_key: localStorage.getItem("token") || "" },
     })
       .unwrap()
-      .then((resp) => {
+      .then(() => {
         setIsAuthenticated(true);
       })
       .catch(() => {

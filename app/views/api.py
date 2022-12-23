@@ -2,10 +2,8 @@ from datetime import datetime
 
 import slack
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
