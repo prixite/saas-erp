@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Box,
   Button,
@@ -8,13 +9,12 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
-import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
+import { useNavigate } from "react-router-dom";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
+import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
 import "@src/components/common/smart/signup/Signup.scss";
 
 const Signup = () => {
@@ -41,7 +41,6 @@ const Signup = () => {
           confirm_password: "",
         }}
         validate={(values) => {
-          console.log("phoneRegex", phoneRegex.test(values.phone_number));
           const errors = {};
           if (!values.fullname) {
             errors.fullname = "Name is required";
