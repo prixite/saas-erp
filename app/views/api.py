@@ -10,7 +10,7 @@ from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -282,11 +282,8 @@ class SlackApiView(APIView):
                         employee = models.Employee.objects.get(
                             user__email=user.get("profile").get("email")
                         )
-
                         employee.slack_id = user_id
-
                         employee.save()
-
                     last_record = models.Attendance.objects.filter(
                         employee=employee
                     ).last()
@@ -299,7 +296,6 @@ class SlackApiView(APIView):
                                 },
                                 status=status.HTTP_200_OK,
                             )
-
                         attendance = models.Attendance.objects.create(
                             employee=employee, organization=employee.organization
                         )
@@ -319,26 +315,29 @@ class SlackApiView(APIView):
                         attendance.save()
 
                     elif command == "/leaves":
-                        if not command_params:
+                        if employee.leave_count > 20:
+                            return Response(
+                                data={"text": "Your leave count is already completed."}
+                            )
+                        try:
+                            get_leave_date = command_params.split("/")
+                            models.Leave.objects.create(
+                                employee_id=employee.id,
+                                leave_from=get_leave_date[0],
+                                leave_to=get_leave_date[1],
+                            )
+                            return Response(
+                                data={"text": "Leave request submitted successfully"},
+                                status=status.HTTP_201_CREATED,
+                            )
+                        except Exception as e:
+                            print(e)
                             return Response(
                                 data={
-                                    "status": "Invalid command e.g: /leave y-m-d/y-m-d"
-                                }
+                                    "text": "You submitted an invalid leave request.Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"
+                                },
+                                status=status.HTTP_201_CREATED,
                             )
-                        if employee.leave_count > 20:
-                            return Response(data={"status": "Leaves limit exceed!"})
-
-                        get_leave_date = command_params.split("/")
-
-                        models.Leave.objects.create(
-                            employee_id=employee.id,
-                            leave_from=get_leave_date[0],
-                            leave_to=get_leave_date[1],
-                        )
-                        return Response(
-                            data={"status": "leave submitted successfully"},
-                            status=status.HTTP_201_CREATED,
-                        )
 
                     return Response(
                         data={"response_type": "in_channel"},
@@ -351,7 +350,8 @@ class SlackApiView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-            except Exception:
+            except Exception as e:
+                print(e)
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
@@ -373,62 +373,27 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class LeaveView(ListAPIView):
+class LeaveView(ModelViewSet):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_class(self):
+        if self.action == "partial_update":
+            return serializers.LeaveUpdateSerializer
+        return self.serializer_class
 
-class LeaveUpdateView(UpdateAPIView):
-    queryset = models.Leave.objects.all()
-    serializer_class = serializers.LeaveSerializer
-    http_method_names = ("patch",)
-
-    def patch(self, request, pk):
-        if not request.data:
-            return Response(
-                {
-                    "status": "empty payload",
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        super().patch(request, pk)
-        get_leave_detail = get_object_or_404(models.Leave, pk=pk)
-        get_employee = get_object_or_404(
-            models.Employee, pk=get_leave_detail.employee.id
-        )
-        to_email = []
-        if get_leave_detail.employee.user.email:
-            to_email.append(get_leave_detail.employee.user.email)
-        if request.data["status"] == "approved":
-            get_leave_detail.status = models.Leave.LeaveStatus.APPROVED
-            get_leave_detail.updated_by_id = request.data["updated_by"]
-            get_employee.leave_count += 1
-            get_employee.save()
-
-            if get_leave_detail.employee.manager.user.email:
-                to_email.append(get_leave_detail.employee.manager.user.email)
-
-            send_leave_email(to_email, request.data["status"])
-
-            return Response(
-                {
-                    "status": "leave granted.",
-                },
-                status=status.HTTP_200_OK,
-            )
-        elif request.data["status"] == "denied":
-            send_leave_email(to_email, request.data["status"])
-            return Response(
-                {
-                    "status": "leave not granted.",
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        else:
-            return Response(
-                {
-                    "status": "leave not granted.",
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    @transaction.atomic
+    def update(self, request, *args, **kwargs):
+        leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
+        employee = get_object_or_404(models.Employee, pk=leave.employee.id)
+        updated_by = get_object_or_404(models.Employee, user=request.user)
+        to_email = [leave.employee.user.email]
+        if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
+            leave.updated_by = updated_by
+            employee.leave_count += 1
+            employee.save()
+        if leave.employee.manager:
+            to_email.append(leave.employee.manager.user.email)
+        send_leave_email(to_email, request.data["status"])
+        super().update(request, *args, **kwargs)
