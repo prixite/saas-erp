@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { Buffer } from "buffer";
 import { ToastContainer } from "react-toastify";
@@ -11,10 +11,6 @@ const loading = <span>Loading....</span>;
 window.Buffer = Buffer;
 
 const App = () => {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-  }, []);
-
   return (
     <>
       <ToastContainer />
