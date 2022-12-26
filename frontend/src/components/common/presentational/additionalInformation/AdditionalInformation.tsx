@@ -95,7 +95,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="department-text">
-              {employeeData?.department}
+              {employeeData?.department?.name}
             </Typography>
           </Grid>
 
@@ -111,7 +111,7 @@ function AdditionalInformation() {
             </Typography>
 
             <Typography variant="body1" className="employee-text">
-              {employeeData?.manager || ""}
+              {employeeData?.manager?.name || ""}
             </Typography>
           </Grid>
 

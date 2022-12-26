@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Grid,
@@ -31,11 +31,11 @@ import {
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 interface Props {
   formik: Formik;
+  action: string | undefined;
 }
-const PageOne = ({ formik }: Props) => {
+const PageOne = ({ formik, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [checked, setChecked] = useState(false);
-  const [benefit, setBenefit] = useState<number[]>([]);
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
@@ -62,20 +62,23 @@ const PageOne = ({ formik }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
-  useEffect(() => {
-    if (benefit.length) {
-      formik.setFieldValue("benefits", benefit);
-    }
-  }, [benefit.length]);
   const handleOnChangeBenefit = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const index = benefit.indexOf(parseInt(event.target.value));
+    const index = formik.values?.benefits?.indexOf(
+      parseInt(event.target.value)
+    );
     if (index === -1) {
-      setBenefit([...benefit, parseInt(event.target.value)]);
+      formik.setFieldValue("benefits", [
+        ...formik.values.benefits,
+        parseInt(event.target.value),
+      ]);
     } else {
-      setBenefit(
-        benefit.filter((item) => item !== parseInt(event.target.value))
+      formik.setFieldValue(
+        "benefits",
+        formik.values.benefits.filter(
+          (item) => item !== parseInt(event.target.value)
+        )
       );
     }
   };
@@ -133,6 +136,7 @@ const PageOne = ({ formik }: Props) => {
               className="text-field-cls"
               fullWidth
               name="email"
+              disabled={action === "edit" ? true : false}
               label={employeeEmailLabel}
               onChange={formik.handleChange}
               value={formik.values.email}
@@ -150,6 +154,7 @@ const PageOne = ({ formik }: Props) => {
                 className="text-field-cls"
                 label={employeeDateLabel}
                 value={formik.values.dateOfJoining}
+                disabled={action === "edit" ? true : false}
                 onChange={(newValue) => {
                   formik.setFieldValue("dateOfJoining", newValue);
                 }}
@@ -175,6 +180,7 @@ const PageOne = ({ formik }: Props) => {
               className="text-field-cls"
               fullWidth
               name="nic"
+              disabled={action === "edit" ? true : false}
               label={employeeCnicLabel}
               onChange={formik.handleChange}
               value={formik.values.nic}
@@ -403,7 +409,7 @@ const PageOne = ({ formik }: Props) => {
             size="small"
             {...label}
             sx={{ paddingLeft: "5px" }}
-            checked={checked}
+            checked={checked || formik.values.benefits.length ? true : false}
             onChange={handleChange}
           />
           <Typography
@@ -418,7 +424,7 @@ const PageOne = ({ formik }: Props) => {
           </Typography>
         </Box>
         <Box className="checkbox-cls">
-          {checked
+          {checked || formik.values.benefits.length
             ? Benefits?.map((benefit) => {
                 return (
                   <Box className="checkbox-section" key={benefit?.id}>
@@ -427,6 +433,7 @@ const PageOne = ({ formik }: Props) => {
                         <Checkbox
                           disableRipple
                           name="benefits"
+                          checked={formik.values.benefits.includes(benefit?.id)}
                           value={benefit?.id}
                           onChange={handleOnChangeBenefit}
                           size="small"
