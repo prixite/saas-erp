@@ -12,11 +12,13 @@ import "@src/components/shared/popUps/congratsModal/congratsModal.scss";
 interface Props {
   open: boolean;
   handleClose: () => void;
+  action: string | undefined;
 }
 
-const CongratsModal = ({ open, handleClose }: Props) => {
+const CongratsModal = ({ open, handleClose, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
-  const { newEmployeeCreated, congrats, backToListing } = constantData.Modals;
+  const { newEmployeeCreated, congrats, backToListing, employeeUpdated } =
+    constantData.Modals;
 
   const moveToListing = () => {
     handleClose();
@@ -32,7 +34,7 @@ const CongratsModal = ({ open, handleClose }: Props) => {
               <img className="hey-img" src={handshakeIcon} />
             </Box>
             <Typography className="new-employee-text">
-              {newEmployeeCreated}
+              {action === "edit" ? employeeUpdated : newEmployeeCreated}
             </Typography>
           </Box>
         </DialogContent>

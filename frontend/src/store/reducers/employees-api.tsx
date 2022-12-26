@@ -32,6 +32,7 @@ export const employeesApi = createApi({
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
       query: ({ id }) => `/employees/${id}/`,
+      providesTags: ["Employee"],
     }),
     getEmployeeDocs: builder.query({
       query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
@@ -82,6 +83,16 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
+    updateEmployee: builder.mutation({
+      query: ({ updatedObj, id }) => {
+        return {
+          url: `/employees/${id}/`,
+          method: "PUT",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Employee"],
+    }),
   }),
 });
 
@@ -100,4 +111,5 @@ export const {
   useGetInstituteQuery,
   useGetRolesQuery,
   useGetDepartmentsQuery,
+  useUpdateEmployeeMutation,
 } = employeesApi;
