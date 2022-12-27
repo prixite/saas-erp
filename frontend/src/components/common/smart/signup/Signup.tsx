@@ -72,6 +72,7 @@ const Signup = () => {
           // eslint-disable-next-line no-unused-vars
           resetForm();
           setSubmitting(false);
+          navigate("/login");
         }}
       >
         {({ isSubmitting }) => (

@@ -6,10 +6,10 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProtectedRoute = ({ children }: Props) => {
+const WthAuth = ({ children }: Props) => {
   const { isAuthenticated } = useContext(AuthContext);
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? <Navigate to="/" /> : children;
 };
 
-export default ProtectedRoute;
+export default WthAuth;
