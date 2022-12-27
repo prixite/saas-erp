@@ -21,6 +21,8 @@ export const employeesApi = createApi({
     prepareHeaders: (headers) => {
       headers.append("Content-Type", "application/json");
       headers.set("X-CSRFToken", document.forms.csrf.csrfmiddlewaretoken.value);
+      localStorage.getItem("token") &&
+        headers.set("Authorization", `Token ${localStorage.getItem("token")}`);
       return headers;
     },
   }),
@@ -32,6 +34,7 @@ export const employeesApi = createApi({
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
       query: ({ id }) => `/employees/${id}/`,
+      providesTags: ["Employee"],
     }),
     getEmployeeDocs: builder.query({
       query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
@@ -82,6 +85,16 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
+    updateEmployee: builder.mutation({
+      query: ({ updatedObj, id }) => {
+        return {
+          url: `/employees/${id}/`,
+          method: "PUT",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Employee"],
+    }),
   }),
 });
 
@@ -100,4 +113,5 @@ export const {
   useGetInstituteQuery,
   useGetRolesQuery,
   useGetDepartmentsQuery,
+  useUpdateEmployeeMutation,
 } = employeesApi;

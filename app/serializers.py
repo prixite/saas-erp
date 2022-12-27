@@ -56,8 +56,11 @@ class DegreeSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
+        data["program"] = {"id": instance.program.id, "name": instance.program.name}
+        data["institute"] = {
+            "id": instance.institute.id,
+            "name": instance.institute.name,
+        }
         return data
 
 
@@ -68,7 +71,10 @@ class ExperirenceSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["company"] = instance.company.name
+        data["company"] = {
+            "id": instance.company.id,
+            "name": instance.company.name,
+        }
         return data
 
 
@@ -167,6 +173,15 @@ class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
     email = serializers.EmailField(read_only=True)
 
 
+class ManagerSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(source="user.get_full_name")
+
+    class Meta:
+        model = models.Employee
+        fields = "id", "name"
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
     degrees = DegreeSerializer(many=True)
@@ -177,7 +192,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         write_only=True, queryset=models.Employee.objects.all(), many=True
     )
     total_experience = serializers.SerializerMethodField()
-    manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
@@ -198,6 +212,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user = user_ser.save()
         user.username = user.email
         user.organization = organization
+        user.is_active = validated_data.get("user_allowed", False)
         user.save()
         validated_data["user_id"] = user.id
         employee = super().create(validated_data)
@@ -257,12 +272,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["organization"] = instance.organization.name
+        data["manages"] = ManagerSerializer(instance.manages.all(), many=True).data
         if instance.department:
-            data["department"] = instance.department.name
+            data["department"] = {
+                "id": instance.department.id,
+                "name": instance.department.name,
+            }
         if instance.manager:
-            data["manager"] = instance.manager.user.get_full_name()
+            data["manager"] = {
+                "id": instance.manager.id,
+                "name": instance.manager.user.get_full_name(),
+            }
         if instance.type:
-            data["type"] = instance.type.name
+            data["type"] = {"id": instance.type.id, "title": instance.type.name}
         if instance.benefits:
             data["benefits"] = BenefitSerializer(
                 instance.benefits.all(), many=True
@@ -309,6 +331,7 @@ class EmployeeUpdateSerializer(EmployeeSerializer):
         user = models.User.objects.get(email=instance.user.email)
         user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
         user_ser.is_valid(raise_exception=True)
+        user.is_active = validated_data.get("user_allowed", False)
         user_ser.save()
 
         models.Degree.objects.filter(employee=instance).delete()
