@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import AppRoutes from "@src/components/hoc/AppRoutes";
 import baseTheme from "@src/theme/base-theme";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "@src/components/hoc/AuthContext";
 
 const loading = <span>Loading....</span>;
 
@@ -16,7 +17,9 @@ const App = () => {
       <ToastContainer />
       <Suspense fallback={loading}>
         <ThemeProvider theme={baseTheme}>
-          <AppRoutes />
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
         </ThemeProvider>
       </Suspense>
     </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -19,11 +19,14 @@ import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import { useApiTokenCreateMutation } from "@src/store/api";
 import "@src/components/common/smart/login/login.scss";
+import { AuthContext } from "@src/components/hoc/AuthContext";
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const [generateToken] = useApiTokenCreateMutation();
+
+  const { signIn } = useContext(AuthContext);
 
   return (
     <Box className="container">
@@ -57,6 +60,7 @@ const Login = () => {
           try {
             const resp = await generateToken({ authToken: values }).unwrap();
             localStorage.setItem("token", resp.token);
+            signIn();
             navigate("/");
           } catch (error) {
             toast.error(error.data.error[0]);
