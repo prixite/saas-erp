@@ -321,6 +321,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.authToken,
       }),
     }),
+    apiUpdateProfileUpdate: build.mutation<
+      ApiUpdateProfileUpdateApiResponse,
+      ApiUpdateProfileUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/update-profile/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.updateProfile,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -467,6 +477,12 @@ export type ApiSlackAttendanceCreateApiArg = void;
 export type ApiTokenCreateApiResponse = /** status 200  */ AuthToken;
 export type ApiTokenCreateApiArg = {
   authToken: AuthToken;
+};
+export type ApiUpdateProfileUpdateApiResponse =
+  /** status 200  */ UpdateProfile;
+export type ApiUpdateProfileUpdateApiArg = {
+  id: number;
+  updateProfile: UpdateProfile;
 };
 export type AssetType = {
   id: number;
@@ -710,6 +726,15 @@ export type AuthToken = {
   email: string;
   password: string;
 };
+export type UpdateProfile = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number: string;
+  headline: string;
+  password?: string;
+  password2?: string;
+};
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
@@ -752,4 +777,5 @@ export const {
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
   useApiTokenCreateMutation,
+  useApiUpdateProfileUpdateMutation,
 } = injectedRtkApi;
