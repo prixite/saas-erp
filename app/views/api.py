@@ -325,6 +325,7 @@ class SlackApiView(APIView):
                                 employee_id=employee.id,
                                 leave_from=get_leave_date[0],
                                 leave_to=get_leave_date[1],
+                                organization=employee.organization,
                             )
                             return Response(
                                 data={"text": "Leave request submitted successfully"},
@@ -373,7 +374,7 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class LeaveView(ModelViewSet):
+class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
@@ -390,10 +391,11 @@ class LeaveView(ModelViewSet):
         updated_by = get_object_or_404(models.Employee, user=request.user)
         to_email = [leave.employee.user.email]
         if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
-            leave.updated_by = updated_by
             employee.leave_count += 1
-            employee.save()
+        leave.updated_by = updated_by
+        employee.save()
+        leave.save()
         if leave.employee.manager:
             to_email.append(leave.employee.manager.user.email)
         send_leave_email(to_email, request.data["status"])
-        super().update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
