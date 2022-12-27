@@ -335,7 +335,8 @@ class SlackApiView(APIView):
                             print(e)
                             return Response(
                                 data={
-                                    "text": "You submitted an invalid leave request.Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"
+                                    "text": """You submitted an invalid leave request.
+                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"""  # noqa
                                 },
                                 status=status.HTTP_201_CREATED,
                             )

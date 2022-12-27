@@ -1316,17 +1316,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedLeave"
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedLeave"
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedLeave"
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
                             }
                         }
                     }
@@ -1344,7 +1344,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Leave"
+                                    "$ref": "#/components/schemas/LeaveUpdate"
                                 }
                             }
                         },
@@ -2526,6 +2526,9 @@
                     "updated_by": {
                         "type": "integer",
                         "nullable": true
+                    },
+                    "organization": {
+                        "type": "integer"
                     }
                 },
                 "required": [
@@ -2534,8 +2537,22 @@
                     "id",
                     "leave_from",
                     "leave_to",
+                    "organization",
                     "updated_at"
                 ]
+            },
+            "LeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    }
+                }
             },
             "Me": {
                 "type": "object",
@@ -2588,21 +2605,9 @@
                     "headline"
                 ]
             },
-            "PatchedLeave": {
+            "PatchedLeaveUpdate": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
-                    "leave_from": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "leave_to": {
-                        "type": "string",
-                        "format": "date"
-                    },
                     "status": {
                         "allOf": [
                             {
@@ -2610,23 +2615,6 @@
                             }
                         ],
                         "pattern": "^[-a-zA-Z0-9_]+$"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    },
-                    "employee": {
-                        "type": "integer"
-                    },
-                    "updated_by": {
-                        "type": "integer",
-                        "nullable": true
                     }
                 }
             },

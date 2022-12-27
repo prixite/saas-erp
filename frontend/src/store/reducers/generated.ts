@@ -270,7 +270,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/leave/${queryArg.id}/`,
         method: "PATCH",
-        body: queryArg.patchedLeave,
+        body: queryArg.patchedLeaveUpdate,
       }),
     }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
@@ -443,10 +443,10 @@ export type ApiInstituesCreateApiArg = {
 };
 export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
 export type ApiLeaveListApiArg = void;
-export type ApiLeavePartialUpdateApiResponse = /** status 200  */ Leave;
+export type ApiLeavePartialUpdateApiResponse = /** status 200  */ LeaveUpdate;
 export type ApiLeavePartialUpdateApiArg = {
   id: number;
-  patchedLeave: PatchedLeave;
+  patchedLeaveUpdate: PatchedLeaveUpdate;
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
@@ -671,16 +671,13 @@ export type Leave = {
   updated_at: string;
   employee: number;
   updated_by?: number | null;
+  organization: number;
 };
-export type PatchedLeave = {
-  id?: number;
-  leave_from?: string;
-  leave_to?: string;
+export type LeaveUpdate = {
   status?: StatusEnum;
-  created_at?: string;
-  updated_at?: string;
-  employee?: number;
-  updated_by?: number | null;
+};
+export type PatchedLeaveUpdate = {
+  status?: StatusEnum;
 };
 export type Me = {
   first_name?: string;
