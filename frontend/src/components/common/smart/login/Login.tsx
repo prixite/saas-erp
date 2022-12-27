@@ -17,9 +17,9 @@ import { toast } from "react-toastify";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
+import { AuthContext } from "@src/components/hoc/AuthContext";
 import { useApiTokenCreateMutation } from "@src/store/api";
 import "@src/components/common/smart/login/login.scss";
-import { AuthContext } from "@src/components/hoc/AuthContext";
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);

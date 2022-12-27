@@ -13,9 +13,9 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@src/components/hoc/AuthContext";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
-import { AuthContext } from "@src/components/hoc/AuthContext";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
