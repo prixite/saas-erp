@@ -16,7 +16,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
-// import UploadImageModal from "@src/components/shared/popUps/uploadImageModal/uploadImageModal";
 import "@src/components/shared/popUps/employeeModal/pageOne.scss";
 import { assets } from "@src/helpers/constants/constants";
 import {
@@ -40,7 +39,6 @@ interface Props {
 const PageOne = ({ formik, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [checked, setChecked] = useState(false);
-  // const [open, setOpen] = useState(false);
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
@@ -90,66 +88,65 @@ const PageOne = ({ formik, action }: Props) => {
       );
     }
   };
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-  // console.log("image value are", formik.values.image)
   return (
     <Box className="pageone-section">
-      <Box className="employee-profile-img">
-        <Box className="upload-img">
-          <input
-            ref={fileRef}
-            hidden
-            type="file"
-            onChange={(e) => {
-              formik.setFieldValue(
-                "image",
-                (e.target as HTMLInputElement)?.files?.[0]
-              );
-            }}
-          />
-          {action == "edit" && !fileRef.current?.value ? (
-            <img
-              className="preview-img"
-              src={formik.values.image}
-              alt="upload icon"
+      <Box className="employee-profile-section">
+        <Box className="employee-profile-img">
+          <Box className="upload-img">
+            <input
+              ref={fileRef}
+              hidden
+              type="file"
+              onChange={(e) => {
+                formik.setFieldValue(
+                  "image",
+                  (e.target as HTMLInputElement)?.files?.[0]
+                );
+              }}
             />
-          ) : formik.values.image ? (
-            <PreviewImage file={formik.values.image} />
-          ) : (
-            <img className="upload-pic" src={UploadIcon} alt="upload icon" />
-          )}
-        </Box>
-        <Box className="upload-btn">
-          <Button
-            onClick={() => {
-              fileRef?.current?.click();
-            }}
-            className="upload-img-btn"
-            sx={{ ml: "20px !important" }}
-          >
-            {uploadImg}
-          </Button>
-        </Box>
-        {formik.values.image ? (
-          <Box className="remove-btn-section">
+            {action == "edit" && !fileRef.current?.value ? (
+              <img
+                className="preview-img"
+                src={formik.values.image}
+                alt="upload icon"
+              />
+            ) : formik.values.image ? (
+              <PreviewImage file={formik.values.image} />
+            ) : (
+              <img className="upload-pic" src={UploadIcon} alt="upload icon" />
+            )}
+          </Box>
+
+          <Box className="upload-btn">
             <Button
               onClick={() => {
-                formik.setFieldValue("image", "");
+                fileRef?.current?.click();
               }}
-              className="remove-btn"
-              sx={{ ml: "11px !important" }}
+              className="upload-img-btn"
+              sx={{ ml: "20px !important" }}
             >
-              {removeImg}
+              {uploadImg}
             </Button>
           </Box>
-        ) : (
-          ""
-        )}
+          {formik.values.image ? (
+            <Box className="remove-btn-section">
+              <Button
+                onClick={() => {
+                  formik.setFieldValue("image", "");
+                }}
+                className="remove-btn"
+                sx={{ ml: "11px !important" }}
+              >
+                {removeImg}
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )}
+        </Box>
+        <Typography sx={{ color: "#ff1744", fontSize: "0.8rem" }}>
+          {formik.errors?.image}
+        </Typography>
       </Box>
       <Grid className="grid-container-cls" container spacing={2}>
         <Grid className="grid-item-cls" item xs={6}>
@@ -525,7 +522,6 @@ const PageOne = ({ formik, action }: Props) => {
             : ""}
         </Box>
       </Box>
-      {/* <UploadImageModal open={open} handleClose={handleClose} /> */}
     </Box>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -89,6 +90,7 @@ const employeeFormInitialState: EmployeeForm = {
 const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState("1");
   const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
@@ -141,6 +143,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     lastNameRegxError,
     phoneRegxError,
     nicRegxError,
+    employeeImageError,
   } = constantData.Modals;
 
   const employeeFormValidationSchema = yup.object({
@@ -161,6 +164,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       .matches(emailRegX, emailrRegxError)
       .required(emailRequired),
     nic: yup.string().matches(nicRegex, nicRegxError).required(CnicRequired),
+    image: yup.string().required(employeeImageError),
     dateOfJoining: yup.string().required(joiningDateRequired),
     manager: yup.string().required(ManagerRequired),
     designation: yup.string().required(DesignationRequired),
@@ -230,8 +234,8 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       populateEditableData();
     }
   }, [action, employeeData]);
-  // console.log("data from aws", formik.values.image);
   const handleAddEmployee = async () => {
+    setLoading(true);
     await uploadImageToS3(formik.values.image).then(
       async (data: S3Interface) => {
         const employeeObject = getEmployeeObject(data.location);
@@ -242,6 +246,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
               autoClose: timeOut,
               pauseOnHover: false,
             });
+            setLoading(false);
             handleClose();
             formik.resetForm();
             setOpenSucessModal(true);
@@ -249,6 +254,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
             setPage("1");
           })
           .catch((error) => {
+            setLoading(false);
             toast.error(
               `${error?.data?.non_field_errors || ""}
               ${error?.data?.user?.email || ""}
@@ -259,6 +265,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     );
   };
   const handleEditEmployee = async () => {
+    setLoading(true);
     if (formik.values.image?.length) {
       performEditEmployee(formik.values.image);
     } else {
@@ -278,6 +285,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
+        setLoading(false);
         handleClose();
         formik.resetForm();
         setOpenSucessModal(true);
@@ -285,6 +293,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
         setPage("1");
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(
           `${error?.data?.non_field_errors || ""}
           ${error?.data?.user?.email || ""}
@@ -572,20 +581,29 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
                   </span>{" "}
                   {createEmployeeBack}
                 </Button>
-                <Button
+                <LoadingButton
                   onClick={() => {
                     setOnChangeValidation(true);
                     formik.handleSubmit();
                   }}
                   className="submitBtn"
+                  loading={loading}
                   sx={{ m: "0px" }}
                 >
-                  {createEmployeeSave}
-                  <span>
-                    {" "}
-                    <img className="submit-img" src={submitIcon} alt="submit" />
-                  </span>{" "}
-                </Button>
+                  {!loading && (
+                    <span style={{ display: "flex" }}>
+                      {createEmployeeSave}
+                      <span>
+                        {" "}
+                        <img
+                          className="submit-img"
+                          src={submitIcon}
+                          alt="submit"
+                        />
+                      </span>{" "}
+                    </span>
+                  )}
+                </LoadingButton>
               </Box>
             </Box>
           )}

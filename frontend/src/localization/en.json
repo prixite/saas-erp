@@ -163,6 +163,7 @@
       "AssetsRequired": "Assets is required!",
       "CompanyRequired":"Company is required!",
       "StartDateRequired": "Start date is required!",
+      "employeeImageError":"Image is required!",
       "EndDateRequired": "End date is required!",
       "DegreeRequired": "Degree is required!",
       "UniversityRequired":"University is required!",

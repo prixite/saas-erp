@@ -106,6 +106,7 @@ export interface modalsInterface {
   firstNameRegxError: string;
   lastNameRegxError: string;
   nicRegxError: string;
+  employeeImageError: string;
   phoneRegxError: string;
   uploadImg: string;
   removeImg: string;
