@@ -112,7 +112,13 @@ const PageOne = ({ formik, action }: Props) => {
               );
             }}
           />
-          {formik.values.image ? (
+          {action == "edit" && !fileRef.current?.value ? (
+            <img
+              className="preview-img"
+              src={formik.values.image}
+              alt="upload icon"
+            />
+          ) : formik.values.image ? (
             <PreviewImage file={formik.values.image} />
           ) : (
             <img className="upload-pic" src={UploadIcon} alt="upload icon" />
