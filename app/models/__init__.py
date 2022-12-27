@@ -1,4 +1,4 @@
-from app.models.attendance import Attendance
+from app.models.attendance import Attendance, Leave
 from app.models.core import (
     Currency,
     Invitation,
@@ -63,4 +63,5 @@ __all__ = [
     "Company",
     "Experience",
     "Attendance",
+    "Leave",
 ]

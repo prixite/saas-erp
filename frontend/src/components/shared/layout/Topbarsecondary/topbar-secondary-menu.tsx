@@ -4,6 +4,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,6 +13,7 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@src/components/hoc/AuthContext";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 
@@ -60,20 +62,22 @@ const StyledMenu = styled((props: MenuProps) => (
 
 const TopbarSecondaryMenu = () => {
   const { data: userData } = useGetUserQuery();
+  const { signOut } = React.useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleProfileClick = () => {
     navigate("/profile");
     handleClose();
   };
+
   return (
     <Box className="topbar-secondary">
       <Button
@@ -118,6 +122,10 @@ const TopbarSecondaryMenu = () => {
         <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
           More
+        </MenuItem>
+        <MenuItem onClick={signOut} disableRipple>
+          <LogoutIcon />
+          Logout
         </MenuItem>
       </StyledMenu>
     </Box>
