@@ -1169,6 +1169,88 @@
                 }
             }
         },
+        "/api/leave/": {
+            "get": {
+                "operationId": "api_leave_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Leave"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/leave/{id}/": {
+            "patch": {
+                "operationId": "api_leave_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LeaveUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/me/": {
             "get": {
                 "operationId": "api_me_retrieve",
@@ -1960,6 +2042,9 @@
                         "type": "integer",
                         "nullable": true
                     },
+                    "leave_count": {
+                        "type": "integer"
+                    },
                     "user_allowed": {
                         "type": "boolean"
                     },
@@ -2106,6 +2191,9 @@
                     "salary": {
                         "type": "integer",
                         "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -2315,6 +2403,73 @@
                     "updated_at"
                 ]
             },
+            "Leave": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "leave_from": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "leave_to": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "updated_by": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "organization": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "employee",
+                    "id",
+                    "leave_from",
+                    "leave_to",
+                    "organization",
+                    "updated_at"
+                ]
+            },
+            "LeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    }
+                }
+            },
             "Me": {
                 "type": "object",
                 "properties": {
@@ -2365,6 +2520,19 @@
                     "email",
                     "headline"
                 ]
+            },
+            "PatchedLeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    }
+                }
             },
             "PatchedUserPassword": {
                 "type": "object",
@@ -2461,6 +2629,14 @@
                     "name",
                     "updated_at"
                 ]
+            },
+            "StatusEnum": {
+                "enum": [
+                    "pending",
+                    "approved",
+                    "denied"
+                ],
+                "type": "string"
             },
             "UpdateProfile": {
                 "type": "object",

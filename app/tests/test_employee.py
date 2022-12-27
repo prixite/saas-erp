@@ -76,6 +76,7 @@ class EmployeeTestCase(BaseTestCase):
                 "emergency_contact_number",
                 "designation",
                 "salary",
+                "leave_count",
                 "user_allowed",
                 "created_at",
                 "updated_at",
@@ -407,4 +408,11 @@ class AttendaceTestCase(BaseTestCase):
         self.client.force_token_login(self.owner)
         response = self.client.get("/api/attendance/")
 
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class LeaveTesCase(BaseTestCase):
+    def test_get_all_leaves(self):
+        self.client.force_token_login(self.owner)
+        response = self.client.get("/api/attendance/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)

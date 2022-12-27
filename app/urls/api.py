@@ -111,6 +111,18 @@ urlpatterns = [
         api.AttendanceViewSet.as_view(),
     ),
     path(
+        "leave/",
+        api.LeaveView.as_view({"get": "list"}),
+    ),
+    path(
+        "leave/<int:pk>/",
+        api.LeaveView.as_view(
+            {
+                "patch": "partial_update",
+            }
+        ),
+    ),
+    path(
         "slack/attendance/",
         api.SlackApiView.as_view(),
     ),

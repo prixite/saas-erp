@@ -17,6 +17,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
+from app.utils import send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -268,6 +269,7 @@ class SlackApiView(APIView):
                 channel_id = request.data.get("channel_id")
                 user_id = request.data.get("user_id")
                 command = request.data.get("command")
+                command_params = request.data.get("text")
 
                 if channel_id == SLACK_ATTENDACE_CHANNEL:
                     try:
@@ -277,11 +279,8 @@ class SlackApiView(APIView):
                         employee = models.Employee.objects.get(
                             user__email=user.get("profile").get("email")
                         )
-
                         employee.slack_id = user_id
-
                         employee.save()
-
                     last_record = models.Attendance.objects.filter(
                         employee=employee
                     ).last()
@@ -294,7 +293,6 @@ class SlackApiView(APIView):
                                 },
                                 status=status.HTTP_200_OK,
                             )
-
                         attendance = models.Attendance.objects.create(
                             employee=employee, organization=employee.organization
                         )
@@ -313,6 +311,33 @@ class SlackApiView(APIView):
                         attendance.time_out = datetime.now()
                         attendance.save()
 
+                    elif command == "/leaves":
+                        if employee.leave_count > 20:
+                            return Response(
+                                data={"text": "Your leave count is already completed."}
+                            )
+                        try:
+                            get_leave_date = command_params.split("/")
+                            models.Leave.objects.create(
+                                employee_id=employee.id,
+                                leave_from=get_leave_date[0],
+                                leave_to=get_leave_date[1],
+                                organization=employee.organization,
+                            )
+                            return Response(
+                                data={"text": "Leave request submitted successfully"},
+                                status=status.HTTP_201_CREATED,
+                            )
+                        except Exception as e:
+                            print(e)
+                            return Response(
+                                data={
+                                    "text": """You submitted an invalid leave request.
+                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"""  # noqa
+                                },
+                                status=status.HTTP_201_CREATED,
+                            )
+
                     return Response(
                         data={"response_type": "in_channel"},
                         status=status.HTTP_200_OK,
@@ -324,7 +349,8 @@ class SlackApiView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-            except Exception:
+            except Exception as e:
+                print(e)
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
@@ -374,3 +400,30 @@ class UpdateProfileView(generics.UpdateAPIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.LeaveSerializer
+    queryset = models.Leave.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_class(self):
+        if self.action == "partial_update":
+            return serializers.LeaveUpdateSerializer
+        return self.serializer_class
+
+    @transaction.atomic
+    def update(self, request, *args, **kwargs):
+        leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
+        employee = get_object_or_404(models.Employee, pk=leave.employee.id)
+        updated_by = get_object_or_404(models.Employee, user=request.user)
+        to_email = [leave.employee.user.email]
+        if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
+            employee.leave_count += 1
+        leave.updated_by = updated_by
+        employee.save()
+        leave.save()
+        if leave.employee.manager:
+            to_email.append(leave.employee.manager.user.email)
+        send_leave_email(to_email, request.data["status"])
+        return super().update(request, *args, **kwargs)

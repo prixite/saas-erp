@@ -507,3 +507,15 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
+
+
+class LeaveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = ("status",)

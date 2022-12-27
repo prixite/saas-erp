@@ -260,6 +260,19 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.institue,
       }),
     }),
+    apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
+      query: () => ({ url: `/api/leave/` }),
+    }),
+    apiLeavePartialUpdate: build.mutation<
+      ApiLeavePartialUpdateApiResponse,
+      ApiLeavePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/leave/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedLeaveUpdate,
+      }),
+    }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
@@ -438,6 +451,13 @@ export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
 export type ApiInstituesCreateApiArg = {
   institue: Institue;
 };
+export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
+export type ApiLeaveListApiArg = void;
+export type ApiLeavePartialUpdateApiResponse = /** status 200  */ LeaveUpdate;
+export type ApiLeavePartialUpdateApiArg = {
+  id: number;
+  patchedLeaveUpdate: PatchedLeaveUpdate;
+};
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
@@ -593,6 +613,7 @@ export type Employee = {
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -621,6 +642,7 @@ export type EmployeeUpdate = {
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -652,6 +674,24 @@ export type Institue = {
   image?: string | null;
   created_at: string;
   updated_at: string;
+};
+export type StatusEnum = "pending" | "approved" | "denied";
+export type Leave = {
+  id: number;
+  leave_from: string;
+  leave_to: string;
+  status?: StatusEnum;
+  created_at: string;
+  updated_at: string;
+  employee: number;
+  updated_by?: number | null;
+  organization: number;
+};
+export type LeaveUpdate = {
+  status?: StatusEnum;
+};
+export type PatchedLeaveUpdate = {
+  status?: StatusEnum;
 };
 export type Me = {
   first_name?: string;
@@ -728,6 +768,8 @@ export const {
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
+  useApiLeaveListQuery,
+  useApiLeavePartialUpdateMutation,
   useApiMeRetrieveQuery,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
