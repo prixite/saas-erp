@@ -128,6 +128,11 @@
       "addNewEducation":"Add New Education",
       "uploadExperienceLetter": "Upload Experience Letter",
       "uploadReleventDegree": "Upload Relevent Degree",
+      "uploadfileDescription":"PDF,word,JPG or PNG",
+      "uploadOrganizationLogo": "Upload Organization Logo",
+      "uploadCompanyLogo": "Upload Company Logo",
+      "imgSize": "Max Size 5MB",
+      "uploadImgDescription":"JPG or PNG",
       "CurrentlyWorking": "Currently working here.",
       "CurrentlyProgress": "Currently InProgress.",
       "employeeCompnay": "Company",
@@ -170,7 +175,12 @@
       "nicRegxError":"Invalid nic!",
       "phoneRegxError":"Invalid phone number!",
       "defaultRoleLabel": "Default Role",
-      "departmentsLabel": "Department"
+      "departmentsLabel": "Department",
+      "uploadImg":"Upload img",
+      "removeImg":"Remove",
+      "uploadImage":"Upload",
+      "dragToAdjust":"Drag to adjust the image",
+      "saveChanges":"Save Changes"
 
 
     },

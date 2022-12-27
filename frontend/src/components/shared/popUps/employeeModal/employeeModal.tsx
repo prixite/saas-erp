@@ -24,8 +24,10 @@ import { timeOut } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   EmployeeForm,
+  S3Interface,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 import {
   emailRegX,
   nameRegex,
@@ -49,7 +51,7 @@ const employeeFormInitialState: EmployeeForm = {
   firstName: "",
   lastName: "",
   email: "",
-  image: null,
+  image: "",
   contactNumber: "",
   defaultRole: null || undefined,
   degrees: [
@@ -124,7 +126,6 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     CnicRequired,
     DesignationRequired,
     ManagerRequired,
-    SalaryRequired,
     EmployementTypeRequired,
     EmergencyContactRequired,
     CompanyRequired,
@@ -163,7 +164,6 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     dateOfJoining: yup.string().required(joiningDateRequired),
     manager: yup.string().required(ManagerRequired),
     designation: yup.string().required(DesignationRequired),
-    salary: yup.string().required(SalaryRequired),
     emergencyContactNumber: yup
       .string()
       .matches(phoneRegex, phoneRegxError)
@@ -230,32 +230,47 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       populateEditableData();
     }
   }, [action, employeeData]);
-
+  // console.log("data from aws", formik.values.image);
   const handleAddEmployee = async () => {
-    const employeeObject = getEmployeeObject();
-    await createEmployee(employeeObject)
-      .unwrap()
-      .then(async () => {
-        toast.success("New Employee Added.", {
-          autoClose: timeOut,
-          pauseOnHover: false,
-        });
-        handleClose();
-        formik.resetForm();
-        setOpenSucessModal(true);
-        setOnChangeValidation(false);
-        setPage("1");
-      })
-      .catch((error) => {
-        toast.error(
-          `${error?.data?.non_field_errors || ""}
-            ${error?.data?.user?.email || ""}
-            ${error?.data?.nic || ""}`
-        );
-      });
+    await uploadImageToS3(formik.values.image).then(
+      async (data: S3Interface) => {
+        const employeeObject = getEmployeeObject(data.location);
+        await createEmployee(employeeObject)
+          .unwrap()
+          .then(async () => {
+            toast.success("New Employee Added.", {
+              autoClose: timeOut,
+              pauseOnHover: false,
+            });
+            handleClose();
+            formik.resetForm();
+            setOpenSucessModal(true);
+            setOnChangeValidation(false);
+            setPage("1");
+          })
+          .catch((error) => {
+            toast.error(
+              `${error?.data?.non_field_errors || ""}
+              ${error?.data?.user?.email || ""}
+              ${error?.data?.nic || ""}`
+            );
+          });
+      }
+    );
   };
   const handleEditEmployee = async () => {
-    const updatedObj = getEmployeeObject();
+    if (formik.values.image?.length) {
+      performEditEmployee(formik.values.image);
+    } else {
+      await uploadImageToS3(formik.values.image).then(
+        async (data: S3Interface) => {
+          performEditEmployee(data.location);
+        }
+      );
+    }
+  };
+  const performEditEmployee = async (data: string) => {
+    const updatedObj = getEmployeeObject(data);
     await updateEmployee({ updatedObj: updatedObj, id: empId })
       .unwrap()
       .then(async () => {
@@ -291,6 +306,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       firstName: employeeData?.user?.first_name || "",
       lastName: employeeData?.user?.last_name || "",
       email: employeeData?.user?.email || "",
+      image: employeeData?.user?.image,
       contactNumber: employeeData?.user?.contact_number || "",
       defaultRole: employeeData?.user?.default_role,
       degrees: editableDegrees || [],
@@ -312,12 +328,13 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       benefits: getBenefitsIds || [],
     });
   };
-  const getEmployeeObject = () => {
+  const getEmployeeObject = (imageUrl: string) => {
     return {
       user: {
         first_name: formik.values.firstName,
         last_name: formik.values.lastName,
         email: formik.values.email,
+        image: imageUrl,
         contact_number: formik.values.contactNumber,
         default_role: formik.values.defaultRole,
       },
