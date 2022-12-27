@@ -5,7 +5,7 @@ from app.tests.base import BaseTestCase
 
 class MeTestCase(BaseTestCase):
     def test_me(self):
-        self.client.force_login(self.org_user)
+        self.client.force_token_login(self.org_user)
         response = self.client.get("/api/me/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

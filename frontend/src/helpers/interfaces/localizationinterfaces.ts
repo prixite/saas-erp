@@ -34,6 +34,8 @@ export interface modalsInterface {
   filterDesignationLabel: string;
   createEmployeeHeading: string;
   createEmployeeSubheading: string;
+  updateEmployeeHeading: string;
+  updateEmployeeSubheading: string;
   createEmployeeClose: string;
   createEmployeeNext: string;
   createEmployeeSave: string;
@@ -69,6 +71,7 @@ export interface modalsInterface {
   employeeDegree: string;
   employeeUniveristy: string;
   newEmployeeCreated: string;
+  employeeUpdated: string;
   congrats: string;
   backToListing: string;
   wantToDelete: string;
@@ -191,36 +194,46 @@ export type Asset = {
   updated_at: string;
   type: number;
 };
+export type CompanyEdit = {
+  id: string;
+  name: string;
+};
 export type Experirence = {
   title: string;
-  company: string;
+  company: CompanyEdit | string;
   start_date: string;
   end_date: string;
 };
+export type Benefit = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
 export type EmployeeForm = {
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   email: string;
   image?: string | null;
   contactNumber: string;
-  defaultRole?: number | null;
+  defaultRole?: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];
   orgId: string;
-  managing: [];
+  managing: number[];
   totalExperience: string;
   manages: string[];
   nic: string;
   dateOfJoining: string;
   emergencyContactNumber: string;
   designation: string;
-  salary?: number | null;
+  salary?: number;
   userAllowed?: boolean;
-  department?: number | null;
-  manager?: number | null;
-  type?: number | null;
-  benefits?: number[];
+  department?: number;
+  manager?: number;
+  type?: number;
+  benefits: number[];
 };
 export interface Formik {
   initialValues: EmployeeForm;

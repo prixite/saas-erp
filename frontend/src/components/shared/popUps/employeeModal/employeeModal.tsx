@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -32,11 +32,17 @@ import {
   phoneRegex,
   nicRegex,
 } from "@src/helpers/utils/utils";
-import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
+import {
+  useCreateEmployeeMutation,
+  useGetEmployeeDataQuery,
+  useUpdateEmployeeMutation,
+} from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  action?: string;
+  empId?: number;
 }
 
 const employeeFormInitialState: EmployeeForm = {
@@ -45,7 +51,7 @@ const employeeFormInitialState: EmployeeForm = {
   email: "",
   image: null,
   contactNumber: "",
-  defaultRole: undefined,
+  defaultRole: null || undefined,
   degrees: [
     {
       program: "",
@@ -70,23 +76,34 @@ const employeeFormInitialState: EmployeeForm = {
   dateOfJoining: "",
   emergencyContactNumber: "",
   designation: "",
-  salary: undefined,
+  salary: null || undefined,
   userAllowed: false,
-  department: undefined,
-  manager: undefined,
-  type: undefined,
+  department: null || undefined,
+  manager: null || undefined,
+  type: null || undefined,
   benefits: [],
 };
 
-const EmployeeModal = ({ open, handleClose }: Props) => {
+const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
   const [page, setPage] = useState("1");
   const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: Number(empId || ""),
+    },
+    { skip: !Number(empId || "") }
+  );
+  const getManagingIds = employeeData?.manages?.map((item) => item.id);
+  const getBenefitsIds = employeeData?.benefits?.map(({ id }) => id);
   const {
     createEmployeeHeading,
     createEmployeeSubheading,
+    updateEmployeeHeading,
+    updateEmployeeSubheading,
     createEmployeeClose,
     createEmployeeNext,
     stepOne,
@@ -174,9 +191,24 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       })
     ),
   });
-
   const formik = useFormik<EmployeeForm>({
-    initialValues: employeeFormInitialState,
+    initialValues:
+      action === "edit"
+        ? {
+            ...employeeFormInitialState,
+            experience: [
+              {
+                title: "",
+                company: {
+                  id: "",
+                  name: "",
+                },
+                start_date: "",
+                end_date: "",
+              },
+            ],
+          }
+        : employeeFormInitialState,
     validationSchema:
       page === "1"
         ? employeeFormValidationSchema
@@ -185,9 +217,20 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         : employeeDegreeValidationSchema,
     validateOnChange: onChangeValidation,
     onSubmit: () => {
-      handleAddEmployee();
+      if (action === "edit") {
+        handleEditEmployee();
+      } else {
+        handleAddEmployee();
+      }
     },
   });
+
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData();
+    }
+  }, [action, employeeData]);
+
   const handleAddEmployee = async () => {
     const employeeObject = getEmployeeObject();
     await createEmployee(employeeObject)
@@ -210,6 +253,64 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
             ${error?.data?.nic || ""}`
         );
       });
+  };
+  const handleEditEmployee = async () => {
+    const updatedObj = getEmployeeObject();
+    await updateEmployee({ updatedObj: updatedObj, id: empId })
+      .unwrap()
+      .then(async () => {
+        toast.success("Employee successfully updated.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleClose();
+        formik.resetForm();
+        setOpenSucessModal(true);
+        setOnChangeValidation(false);
+        setPage("1");
+      })
+      .catch((error) => {
+        toast.error(
+          `${error?.data?.non_field_errors || ""}
+          ${error?.data?.user?.email || ""}
+          ${error?.data?.nic || ""}`
+        );
+      });
+  };
+  const populateEditableData = () => {
+    const editableExperience = employeeData?.experience.map((item) => ({
+      ...item,
+      company: item.company.id,
+    }));
+    const editableDegrees = employeeData?.degrees.map((item) => ({
+      ...item,
+      program: item.program.id,
+      institute: item.institute.id,
+    }));
+    formik.setValues({
+      firstName: employeeData?.user?.first_name || "",
+      lastName: employeeData?.user?.last_name || "",
+      email: employeeData?.user?.email || "",
+      contactNumber: employeeData?.user?.contact_number || "",
+      defaultRole: employeeData?.user?.default_role,
+      degrees: editableDegrees || [],
+      assets: [],
+      experience: editableExperience || [],
+      orgId: employeeData?.org_id || "",
+      managing: getManagingIds || [],
+      totalExperience: employeeData?.total_experience || "",
+      manages: getManagingIds || [],
+      nic: employeeData?.nic || "",
+      dateOfJoining: employeeData?.date_of_joining || "",
+      emergencyContactNumber: employeeData?.emergency_contact_number || "",
+      designation: employeeData?.designation || "",
+      salary: employeeData?.salary || null,
+      userAllowed: employeeData?.user_allowed as boolean,
+      department: employeeData?.department?.id || null,
+      manager: employeeData?.manager?.id,
+      type: employeeData?.type?.id || null,
+      benefits: getBenefitsIds || [],
+    });
   };
   const getEmployeeObject = () => {
     return {
@@ -254,7 +355,6 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     setOpenSucessModal(false);
   };
   const resetModal = () => {
-    formik.resetForm();
     handleClose();
     setPage("1");
     setOnChangeValidation(false);
@@ -287,10 +387,14 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
               <Typography className="heading-text">
-                {createEmployeeHeading}
+                {action === "edit"
+                  ? updateEmployeeHeading
+                  : createEmployeeHeading}
               </Typography>
               <Typography className="subheading-text">
-                {createEmployeeSubheading}
+                {action === "edit"
+                  ? updateEmployeeSubheading
+                  : createEmployeeSubheading}
               </Typography>
             </Box>
             <Box className="cross-icon-box" onClick={resetModal}>
@@ -360,7 +464,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         <DialogContent className="FilterModal__Content">
           <Box className="content-cls">
             {page === "1" ? (
-              <PageOne formik={formik} />
+              <PageOne formik={formik} action={action} />
             ) : page === "2" ? (
               <>
                 <PageTwo formik={formik} />
@@ -470,7 +574,11 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           )}
         </DialogActions>
       </Dialog>
-      <CongratsModal open={openSuccessModal} handleClose={handleModalClose} />
+      <CongratsModal
+        action={action}
+        open={openSuccessModal}
+        handleClose={handleModalClose}
+      />
     </Box>
   );
 };
