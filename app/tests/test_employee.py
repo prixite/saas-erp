@@ -413,6 +413,6 @@ class AttendaceTestCase(BaseTestCase):
 
 class LeaveTesCase(BaseTestCase):
     def test_get_all_leaves(self):
-        self.client.force_login(self.owner)
+        self.client.force_token_login(self.owner)
         response = self.client.get("/api/attendance/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
