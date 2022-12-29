@@ -15,6 +15,7 @@ import { FieldArray, getIn, FormikProvider } from "formik";
 import moment from "moment";
 import uploadIcon from "@src/assets/svgs/plus.svg";
 import crossIcon from "@src/assets/svgs/smallcross.svg";
+import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import "@src/components/shared/popUps/employeeModal/pageThree.scss";
 import {
   LocalizationInterface,
@@ -39,6 +40,10 @@ const PageThree = ({ formik }: Props) => {
     year,
     CurrentlyProgress,
     uploadReleventDegree,
+    uploadfileDescription,
+    imgSize,
+    uploadImg,
+    removeImg,
   } = constantData.Modals;
   return (
     <FormikProvider value={formik}>
@@ -51,6 +56,31 @@ const PageThree = ({ formik }: Props) => {
                   <Box key={index} className="pagethree-section">
                     <Box className="cross-icon" onClick={() => remove(index)}>
                       <img src={crossIcon} className="cross-btn" />
+                    </Box>
+                    <Box className="employee-profile-img">
+                      <Box className="upload-img">
+                        <img
+                          className="upload-pic"
+                          src={UploadIcon}
+                          alt="upload icon"
+                        />
+                      </Box>
+                      <Box className="upload-btn">
+                        <Button
+                          className="upload-img-btn"
+                          sx={{ ml: "20px !important" }}
+                        >
+                          {uploadImg}
+                        </Button>
+                      </Box>
+                      <Box className="remove-btn-section">
+                        <Button
+                          className="remove-btn"
+                          sx={{ ml: "11px !important" }}
+                        >
+                          {removeImg}
+                        </Button>
+                      </Box>
                     </Box>
                     <Grid className="grid-container-cls" container spacing={2}>
                       <Grid className="grid-item-cls" item xs={6}>
@@ -178,17 +208,22 @@ const PageThree = ({ formik }: Props) => {
                         />
                       </Box>
                       <Box className="upload-box">
-                        <Button className="upload-btn">
-                          <span>
-                            {" "}
-                            <img
-                              className="upload-img"
-                              src={uploadIcon}
-                              alt="doc"
-                            />
-                          </span>{" "}
-                          {uploadReleventDegree}
-                        </Button>
+                        <Box className="upload-img-ist">
+                          <img
+                            className="upload-img"
+                            src={uploadIcon}
+                            alt="doc"
+                          />
+                          <Typography className="upload-exp-p">
+                            {uploadReleventDegree}
+                          </Typography>
+                        </Box>
+                        <Box className="upload-img-sec">
+                          <Typography className="upload-exp-des">
+                            {uploadfileDescription}
+                          </Typography>
+                          {imgSize}
+                        </Box>
                       </Box>
                     </Box>
                   </Box>

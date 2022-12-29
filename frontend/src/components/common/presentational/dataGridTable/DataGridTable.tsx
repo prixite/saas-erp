@@ -70,6 +70,7 @@ function DataGridTable() {
             <img
               style={{
                 height: "32px",
+                width: "32px",
                 left: "241px",
                 top: "154px",
                 marginRight: "8px",

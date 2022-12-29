@@ -12,9 +12,13 @@
     width: 96px;
     height: 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .profile-pic {
-      height: 60px;
-      margin: 24px 12px 24px 24px;
+      height: 70px;
+      width: 70;
+      border-radius: 50%;
     }
     .upload-btn-icon {
       position: absolute;

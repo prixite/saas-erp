@@ -106,7 +106,18 @@ export interface modalsInterface {
   firstNameRegxError: string;
   lastNameRegxError: string;
   nicRegxError: string;
+  employeeImageError: string;
   phoneRegxError: string;
+  uploadImg: string;
+  removeImg: string;
+  uploadfileDescription: string;
+  imgSize: string;
+  uploadImgDescription: string;
+  uploadOrganizationLogo: string;
+  uploadCompanyLogo: string;
+  uploadImage: string;
+  dragToAdjust: string;
+  saveChanges: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -214,7 +225,7 @@ export type EmployeeForm = {
   firstName: string;
   lastName: string;
   email: string;
-  image?: string | null;
+  image: string;
   contactNumber: string;
   defaultRole?: number;
   degrees: Degree[];
@@ -235,6 +246,11 @@ export type EmployeeForm = {
   type?: number;
   benefits: number[];
 };
+export interface S3Interface {
+  bucket: string;
+  key: string;
+  location: string;
+}
 export interface Formik {
   initialValues: EmployeeForm;
   initialStatus: EmployeeForm;

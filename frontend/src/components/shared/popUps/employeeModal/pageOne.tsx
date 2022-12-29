@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Box,
   Grid,
@@ -7,12 +7,15 @@ import {
   Typography,
   Checkbox,
   Autocomplete,
+  Button,
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import UploadIcon from "@src/assets/svgs/uploadimg.svg";
+import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
 import "@src/components/shared/popUps/employeeModal/pageOne.scss";
 import { assets } from "@src/helpers/constants/constants";
 import {
@@ -41,6 +44,7 @@ const PageOne = ({ formik, action }: Props) => {
   const { data: typesData } = useGetEmployeementTypesQuery();
   const { data: rolesData } = useGetRolesQuery();
   const { data: departmentData } = useGetDepartmentsQuery();
+  const fileRef = useRef<HTMLInputElement>(null);
   const {
     employeeFirstName,
     employeeLastName,
@@ -58,6 +62,8 @@ const PageOne = ({ formik, action }: Props) => {
     employeeCompensationLabel,
     defaultRoleLabel,
     departmentsLabel,
+    uploadImg,
+    removeImg,
   } = constantData.Modals;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -84,6 +90,64 @@ const PageOne = ({ formik, action }: Props) => {
   };
   return (
     <Box className="pageone-section">
+      <Box className="employee-profile-section">
+        <Box className="employee-profile-img">
+          <Box className="upload-img">
+            <input
+              ref={fileRef}
+              hidden
+              type="file"
+              onChange={(e) => {
+                formik.setFieldValue(
+                  "image",
+                  (e.target as HTMLInputElement)?.files?.[0]
+                );
+              }}
+            />
+            {action == "edit" && !fileRef.current?.value ? (
+              <img
+                className="preview-img"
+                src={formik.values.image}
+                alt="upload icon"
+              />
+            ) : formik.values.image ? (
+              <PreviewImage file={formik.values.image} />
+            ) : (
+              <img className="upload-pic" src={UploadIcon} alt="upload icon" />
+            )}
+          </Box>
+
+          <Box className="upload-btn">
+            <Button
+              onClick={() => {
+                fileRef?.current?.click();
+              }}
+              className="upload-img-btn"
+              sx={{ ml: "20px !important" }}
+            >
+              {uploadImg}
+            </Button>
+          </Box>
+          {formik.values.image ? (
+            <Box className="remove-btn-section">
+              <Button
+                onClick={() => {
+                  formik.setFieldValue("image", "");
+                }}
+                className="remove-btn"
+                sx={{ ml: "11px !important" }}
+              >
+                {removeImg}
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )}
+        </Box>
+        <Typography sx={{ color: "#ff1744", fontSize: "0.8rem" }}>
+          {formik.errors?.image}
+        </Typography>
+      </Box>
       <Grid className="grid-container-cls" container spacing={2}>
         <Grid className="grid-item-cls" item xs={6}>
           <Box className="text-field-box">
