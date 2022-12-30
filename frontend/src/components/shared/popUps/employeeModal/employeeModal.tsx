@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -20,30 +21,56 @@ import CongratsModal from "@src/components/shared/popUps/congratsModal/congratsM
 import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
+import { timeOut } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   EmployeeForm,
+  S3Interface,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { emailRegX } from "@src/helpers/utils/utils";
-import { addNewEmployeeService } from "@src/services/employeeService";
-import { useCreateEmployeeMutation } from "@src/store/reducers/employees-api";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
+import {
+  emailRegX,
+  nameRegex,
+  phoneRegex,
+  nicRegex,
+} from "@src/helpers/utils/utils";
+import {
+  useCreateEmployeeMutation,
+  useGetEmployeeDataQuery,
+  useUpdateEmployeeMutation,
+} from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  action?: string;
+  empId?: number;
 }
 
 const employeeFormInitialState: EmployeeForm = {
   firstName: "",
   lastName: "",
   email: "",
-  image: null,
+  image: "",
   contactNumber: "",
-  defaultRole: undefined,
-  degrees: [],
+  defaultRole: null || undefined,
+  degrees: [
+    {
+      program: "",
+      institute: "",
+      year: "",
+    },
+  ],
   assets: [],
-  experience: [],
+  experience: [
+    {
+      title: "",
+      company: "",
+      start_date: "",
+      end_date: "",
+    },
+  ],
   orgId: "",
   managing: [],
   totalExperience: "",
@@ -52,28 +79,35 @@ const employeeFormInitialState: EmployeeForm = {
   dateOfJoining: "",
   emergencyContactNumber: "",
   designation: "",
-  salary: undefined,
+  salary: null || undefined,
   userAllowed: false,
-  department: undefined,
-  manager: undefined,
-  type: undefined,
+  department: null || undefined,
+  manager: null || undefined,
+  type: null || undefined,
   benefits: [],
-  title: "",
-  company: "",
-  startDate: "",
-  endDate: "",
-  program: "",
-  institute: "",
-  year: "",
 };
 
-const EmployeeModal = ({ open, handleClose }: Props) => {
+const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState("1");
+  const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
+  const { data: employeeData } = useGetEmployeeDataQuery(
+    {
+      id: Number(empId || ""),
+    },
+    { skip: !Number(empId || "") }
+  );
+  const getManagingIds = employeeData?.manages?.map((item) => item.id);
+  const getBenefitsIds = employeeData?.benefits?.map(({ id }) => id);
   const {
     createEmployeeHeading,
     createEmployeeSubheading,
+    updateEmployeeHeading,
+    updateEmployeeSubheading,
     createEmployeeClose,
     createEmployeeNext,
     stepOne,
@@ -93,8 +127,6 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     joiningDateRequired,
     CnicRequired,
     DesignationRequired,
-    ManagerRequired,
-    SalaryRequired,
     EmployementTypeRequired,
     EmergencyContactRequired,
     CompanyRequired,
@@ -106,41 +138,79 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     DepartmentRequired,
     YearRequired,
     emailrRegxError,
+    firstNameRegxError,
+    lastNameRegxError,
+    phoneRegxError,
+    nicRegxError,
+    employeeImageError,
   } = constantData.Modals;
 
   const employeeFormValidationSchema = yup.object({
-    firstName: yup.string().required(firstNameRequired),
-    lastName: yup.string().required(lastNameRequired),
-    contactNumber: yup.string().required(phoneRequired),
+    firstName: yup
+      .string()
+      .matches(nameRegex, firstNameRegxError)
+      .required(firstNameRequired),
+    lastName: yup
+      .string()
+      .matches(nameRegex, lastNameRegxError)
+      .required(lastNameRequired),
+    contactNumber: yup
+      .string()
+      .matches(phoneRegex, phoneRegxError)
+      .required(phoneRequired),
     email: yup
       .string()
       .matches(emailRegX, emailrRegxError)
       .required(emailRequired),
-    nic: yup.string().required(CnicRequired),
+    nic: yup.string().matches(nicRegex, nicRegxError).required(CnicRequired),
+    image: yup.string().required(employeeImageError),
     dateOfJoining: yup.string().required(joiningDateRequired),
-    manager: yup.string().required(ManagerRequired),
     designation: yup.string().required(DesignationRequired),
-    salary: yup.string().required(SalaryRequired),
-    emergencyContactNumber: yup.string().required(EmergencyContactRequired),
+    emergencyContactNumber: yup
+      .string()
+      .matches(phoneRegex, phoneRegxError)
+      .required(EmergencyContactRequired),
     type: yup.string().required(EmployementTypeRequired),
     defaultRole: yup.string().required(DefaultRoleRequired),
     department: yup.string().required(DepartmentRequired),
   });
-  const employeeExperienceValidationSchema = yup.object({
-    title: yup.string().required(DesignationRequired),
-    company: yup.string().required(CompanyRequired),
-    startDate: yup.string().required(StartDateRequired),
-    endDate: yup.string().required(EndDateRequired),
+  const employeeExperienceValidationSchema = yup.object().shape({
+    experience: yup.array().of(
+      yup.object().shape({
+        title: yup.string().required(DesignationRequired),
+        company: yup.string().required(CompanyRequired),
+        start_date: yup.string().required(StartDateRequired),
+        end_date: yup.string().required(EndDateRequired),
+      })
+    ),
   });
   const employeeDegreeValidationSchema = yup.object({
-    program: yup.string().required(DegreeRequired),
-    institute: yup.string().required(UniversityRequired),
-    year: yup.string().required(YearRequired),
+    degrees: yup.array().of(
+      yup.object().shape({
+        program: yup.string().required(DegreeRequired),
+        institute: yup.string().required(UniversityRequired),
+        year: yup.string().required(YearRequired),
+      })
+    ),
   });
-  const [page, setPage] = useState("1");
-  const [onChangeValidation, setOnChangeValidation] = useState(false);
   const formik = useFormik<EmployeeForm>({
-    initialValues: employeeFormInitialState,
+    initialValues:
+      action === "edit"
+        ? {
+            ...employeeFormInitialState,
+            experience: [
+              {
+                title: "",
+                company: {
+                  id: "",
+                  name: "",
+                },
+                start_date: "",
+                end_date: "",
+              },
+            ],
+          }
+        : employeeFormInitialState,
     validationSchema:
       page === "1"
         ? employeeFormValidationSchema
@@ -149,13 +219,76 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         : employeeDegreeValidationSchema,
     validateOnChange: onChangeValidation,
     onSubmit: () => {
-      handleAddEmployee();
+      if (action === "edit") {
+        handleEditEmployee();
+      } else {
+        handleAddEmployee();
+      }
     },
   });
-  const handleAddEmployee = () => {
-    const employeeObject = getEmployeeObject();
-    addNewEmployeeService(employeeObject, createEmployee)
-      .then(() => {
+
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData();
+    }
+  }, [action, employeeData]);
+  const handleAddEmployee = async () => {
+    setLoading(true);
+    await uploadImageToS3(formik.values.image || "")
+      .then(async (data: S3Interface) => {
+        const employeeObject = getEmployeeObject(data.location);
+        await createEmployee(employeeObject)
+          .unwrap()
+          .then(async () => {
+            toast.success("New Employee Added.", {
+              autoClose: timeOut,
+              pauseOnHover: false,
+            });
+            setLoading(false);
+            handleClose();
+            formik.resetForm();
+            setOpenSucessModal(true);
+            setOnChangeValidation(false);
+            setPage("1");
+          })
+          .catch((error) => {
+            setLoading(false);
+            toast.error(
+              `${error?.data?.non_field_errors || ""}
+              ${error?.data?.user?.email || ""}
+              ${error?.data?.nic || ""}
+              ${error?.data?.user?.image || ""}`
+            );
+          });
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
+  const handleEditEmployee = async () => {
+    setLoading(true);
+    if (formik.values.image?.length) {
+      performEditEmployee(formik.values.image);
+    } else {
+      await uploadImageToS3(formik.values.image || "")
+        .then(async (data: S3Interface) => {
+          performEditEmployee(data.location);
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
+    }
+  };
+  const performEditEmployee = async (data: string) => {
+    const updatedObj = getEmployeeObject(data);
+    await updateEmployee({ updatedObj: updatedObj, id: empId })
+      .unwrap()
+      .then(async () => {
+        toast.success("Employee successfully updated.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        setLoading(false);
         handleClose();
         formik.resetForm();
         setOpenSucessModal(true);
@@ -163,38 +296,64 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         setPage("1");
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(
           `${error?.data?.non_field_errors || ""}
-            ${error?.data?.user?.email || ""}
-            ${error?.data?.nic || ""}`
+          ${error?.data?.user?.email || ""}
+          ${error?.data?.nic || ""}
+          ${error?.data?.user?.image || ""}`
         );
       });
   };
-  const getEmployeeObject = () => {
+  const populateEditableData = () => {
+    const editableExperience = employeeData?.experience.map((item) => ({
+      ...item,
+      company: item.company.id,
+    }));
+    const editableDegrees = employeeData?.degrees.map((item) => ({
+      ...item,
+      program: item.program.id,
+      institute: item.institute.id,
+    }));
+    formik.setValues({
+      firstName: employeeData?.user?.first_name || "",
+      lastName: employeeData?.user?.last_name || "",
+      email: employeeData?.user?.email || "",
+      image: employeeData?.user?.image,
+      contactNumber: employeeData?.user?.contact_number || "",
+      defaultRole: employeeData?.user?.default_role,
+      degrees: editableDegrees || [],
+      assets: [],
+      experience: editableExperience || [],
+      orgId: employeeData?.org_id || "",
+      managing: getManagingIds || [],
+      totalExperience: employeeData?.total_experience || "",
+      manages: getManagingIds || [],
+      nic: employeeData?.nic || "",
+      dateOfJoining: employeeData?.date_of_joining || "",
+      emergencyContactNumber: employeeData?.emergency_contact_number || "",
+      designation: employeeData?.designation || "",
+      salary: employeeData?.salary,
+      userAllowed: employeeData?.user_allowed as boolean,
+      department: employeeData?.department?.id,
+      manager: employeeData?.manager?.id,
+      type: employeeData?.type?.id,
+      benefits: getBenefitsIds || [],
+    });
+  };
+  const getEmployeeObject = (imageUrl: string) => {
     return {
       user: {
         first_name: formik.values.firstName,
         last_name: formik.values.lastName,
         email: formik.values.email,
+        image: imageUrl,
         contact_number: formik.values.contactNumber,
         default_role: formik.values.defaultRole,
       },
-      degrees: [
-        {
-          program: formik.values.program,
-          institute: formik.values.institute,
-          year: moment(formik.values.year).format("YYYY-MM-DD"),
-        },
-      ],
+      degrees: formik.values.degrees,
       assets: [],
-      experience: [
-        {
-          title: formik.values.title,
-          company: formik.values.company,
-          start_date: moment(formik.values.startDate).format("YYYY-MM-DD"),
-          end_date: moment(formik.values.endDate).format("YYYY-MM-DD"),
-        },
-      ],
+      experience: formik.values.experience,
       managing: formik.values.managing,
       nic: formik.values.nic,
       date_of_joining: moment(formik.values.dateOfJoining).format("YYYY-MM-DD"),
@@ -208,6 +367,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
       benefits: formik.values.benefits,
     };
   };
+
   const moveToNextPage = async () => {
     const errors = await formik.validateForm();
     if (page == "1" && !Object.keys(errors).length) {
@@ -225,10 +385,30 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
     setOpenSucessModal(false);
   };
   const resetModal = () => {
-    formik.resetForm();
     handleClose();
     setPage("1");
     setOnChangeValidation(false);
+  };
+  const addExpComponent = () => {
+    formik.setFieldValue("experience", [
+      ...formik.values.experience,
+      {
+        title: "",
+        company: "",
+        start_date: "",
+        end_date: "",
+      },
+    ]);
+  };
+  const addDegreeComponent = () => {
+    formik.setFieldValue("degrees", [
+      ...formik.values.degrees,
+      {
+        program: "",
+        year: "",
+        institute: "",
+      },
+    ]);
   };
   return (
     <Box>
@@ -237,10 +417,14 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
               <Typography className="heading-text">
-                {createEmployeeHeading}
+                {action === "edit"
+                  ? updateEmployeeHeading
+                  : createEmployeeHeading}
               </Typography>
               <Typography className="subheading-text">
-                {createEmployeeSubheading}
+                {action === "edit"
+                  ? updateEmployeeSubheading
+                  : createEmployeeSubheading}
               </Typography>
             </Box>
             <Box className="cross-icon-box" onClick={resetModal}>
@@ -310,9 +494,11 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
         <DialogContent className="FilterModal__Content">
           <Box className="content-cls">
             {page === "1" ? (
-              <PageOne formik={formik} />
+              <PageOne formik={formik} action={action} />
             ) : page === "2" ? (
-              <PageTwo formik={formik} />
+              <>
+                <PageTwo formik={formik} />
+              </>
             ) : (
               <PageThree formik={formik} />
             )}
@@ -343,7 +529,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           ) : page === "2" ? (
             <Box className="actions-btns-wrapper">
               <Box className="add-new-sec">
-                <Button className="upload-btn">
+                <Button className="upload-btn" onClick={addExpComponent}>
                   <span>
                     {" "}
                     <img className="upload-img" src={uploadIcon} alt="doc" />
@@ -379,7 +565,7 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
           ) : (
             <Box className="actions-btns-wrapper">
               <Box className="add-new-sec">
-                <Button className="upload-btn">
+                <Button className="upload-btn" onClick={addDegreeComponent}>
                   <span>
                     {" "}
                     <img className="upload-img" src={uploadIcon} alt="doc" />
@@ -399,26 +585,39 @@ const EmployeeModal = ({ open, handleClose }: Props) => {
                   </span>{" "}
                   {createEmployeeBack}
                 </Button>
-                <Button
+                <LoadingButton
                   onClick={() => {
                     setOnChangeValidation(true);
                     formik.handleSubmit();
                   }}
                   className="submitBtn"
+                  loading={loading}
                   sx={{ m: "0px" }}
                 >
-                  {createEmployeeSave}
-                  <span>
-                    {" "}
-                    <img className="submit-img" src={submitIcon} alt="submit" />
-                  </span>{" "}
-                </Button>
+                  {!loading && (
+                    <span style={{ display: "flex" }}>
+                      {createEmployeeSave}
+                      <span>
+                        {" "}
+                        <img
+                          className="submit-img"
+                          src={submitIcon}
+                          alt="submit"
+                        />
+                      </span>{" "}
+                    </span>
+                  )}
+                </LoadingButton>
               </Box>
             </Box>
           )}
         </DialogActions>
       </Dialog>
-      <CongratsModal open={openSuccessModal} handleClose={handleModalClose} />
+      <CongratsModal
+        action={action}
+        open={openSuccessModal}
+        handleClose={handleModalClose}
+      />
     </Box>
   );
 };

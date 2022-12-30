@@ -1,11 +1,53 @@
 from datetime import date
 
+from django.contrib.auth import authenticate, password_validation
+from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models
+
+
+class AuthTokenSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        label="Password",
+        style={"input_type": "password"},
+        trim_whitespace=False,
+    )
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = authenticate(
+                request=self.context.get("request"), email=email, password=password
+            )
+            if not user:
+                msg = {"error": "Please enter correct Email/Password."}
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = {"error": "Must include 'email' and 'password'."}
+            raise serializers.ValidationError(msg, code="authorization")
+
+        attrs["user"] = user
+        return attrs
+
+
+class RefreshTokenSerializer(serializers.Serializer):
+    token_key = serializers.CharField(max_length=500, required=True)
+
+    def validate(self, attrs):
+        try:
+            Token.objects.get(key=attrs["token_key"])
+        except Token.DoesNotExist:
+            raise serializers.ValidationError({"token_key": "Token deos not exist."})
+
+        return attrs
 
 
 class DegreeSerializer(serializers.ModelSerializer):
@@ -15,8 +57,11 @@ class DegreeSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
+        data["program"] = {"id": instance.program.id, "name": instance.program.name}
+        data["institute"] = {
+            "id": instance.institute.id,
+            "name": instance.institute.name,
+        }
         return data
 
 
@@ -27,7 +72,10 @@ class ExperirenceSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["company"] = instance.company.name
+        data["company"] = {
+            "id": instance.company.id,
+            "name": instance.company.name,
+        }
         return data
 
 
@@ -121,9 +169,18 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        return data
+
+class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
+    email = serializers.EmailField(read_only=True)
+
+
+class ManagerSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(source="user.get_full_name")
+
+    class Meta:
+        model = models.Employee
+        fields = "id", "name"
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -136,7 +193,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         write_only=True, queryset=models.Employee.objects.all(), many=True
     )
     total_experience = serializers.SerializerMethodField()
-    manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
@@ -157,6 +213,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user = user_ser.save()
         user.username = user.email
         user.organization = organization
+        user.is_active = validated_data.get("user_allowed", False)
         user.save()
         validated_data["user_id"] = user.id
         employee = super().create(validated_data)
@@ -216,12 +273,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["organization"] = instance.organization.name
+        data["manages"] = ManagerSerializer(instance.manages.all(), many=True).data
         if instance.department:
-            data["department"] = instance.department.name
+            data["department"] = {
+                "id": instance.department.id,
+                "name": instance.department.name,
+            }
         if instance.manager:
-            data["manager"] = instance.manager.user.get_full_name()
+            data["manager"] = {
+                "id": instance.manager.id,
+                "name": instance.manager.user.get_full_name(),
+            }
         if instance.type:
-            data["type"] = instance.type.name
+            data["type"] = {"id": instance.type.id, "title": instance.type.name}
         if instance.benefits:
             data["benefits"] = BenefitSerializer(
                 instance.benefits.all(), many=True
@@ -248,17 +312,48 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         ]
 
 
-class EmployeeUpdateSerializer(serializers.ModelSerializer):
+class EmployeeUpdateSerializer(EmployeeSerializer):
+    user = EmployeeUpdateUserSerializer()
+
     class Meta:
         model = models.Employee
-        fields = [
-            "department",
-            "designation",
-            "manager",
-            "benefits",
-            "type",
-            "user_allowed",
-        ]
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        organization = self.context.get("request").user.organization
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user.is_active = validated_data.get("user_allowed", False)
+        user_ser.save()
+
+        models.Degree.objects.filter(employee=instance).delete()
+        models.Asset.objects.filter(employee=instance).delete()
+        models.Experience.objects.filter(employee=instance).delete()
+        models.Employee.objects.filter(manager=instance).update(manager=None)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = instance
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=instance)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=instance)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=instance, organization=organization
+            )
+
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -327,15 +422,9 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        member_modules = [
-            module.slug for module in self.context.get("request").user.member_modules
-        ]
-        admin_modules = [
-            module.slug for module in self.context.get("request").user.admin_modules
-        ]
-        owner_modules = [
-            module.slug for module in self.context.get("request").user.owner_modules
-        ]
+        member_modules = [module.slug for module in data.member_modules]
+        admin_modules = [module.slug for module in data.admin_modules]
+        owner_modules = [module.slug for module in data.owner_modules]
 
         return {
             "member_modules": member_modules,
@@ -370,3 +459,63 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only=True,
+        required=False,
+        validators=[password_validation.validate_password],
+    )
+    password2 = serializers.CharField(write_only=True, required=False)
+
+    class Meta:
+        model = models.User
+        fields = (
+            "first_name",
+            "last_name",
+            "image",
+            "contact_number",
+            "headline",
+            "password",
+            "password2",
+        )
+
+    def validate(self, attrs):
+        if attrs.get("password") and attrs.get("password2"):
+            if attrs["password"] != attrs["password2"]:
+                raise serializers.ValidationError(
+                    {"password": "Password fields didn't match."}
+                )
+
+        return attrs
+
+    def update(self, instance, validated_data):
+        if validated_data.get("first_name"):
+            instance.first_name = validated_data["first_name"]
+        if validated_data.get("last_name"):
+            instance.last_name = validated_data["last_name"]
+        if validated_data.get("password"):
+            instance.password = make_password(validated_data["password"])
+        if validated_data.get("image"):
+            instance.image = validated_data["image"]
+        if validated_data.get("contact_number"):
+            instance.contact_number = validated_data["contact_number"]
+        if validated_data.get("headline"):
+            instance.headline = validated_data["headline"]
+
+        instance.save()
+
+        return instance
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
+
+
+class LeaveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = ("status",)

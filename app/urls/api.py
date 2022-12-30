@@ -3,6 +3,8 @@ from django.urls import path
 from app.views import api
 
 urlpatterns = [
+    path("token/", api.AuthTokenView.as_view(), name="obtain-auth-token"),
+    path("refresh-token/", api.RefreshTokenView.as_view(), name="refresh-auth-token"),
     path(
         "employees/",
         api.EmployeeViewSet.as_view(
@@ -17,7 +19,7 @@ urlpatterns = [
         api.EmployeeViewSet.as_view(
             {
                 "get": "retrieve",
-                "patch": "partial_update",
+                "put": "update",
                 "delete": "destroy",
             }
         ),
@@ -109,7 +111,20 @@ urlpatterns = [
         api.AttendanceViewSet.as_view(),
     ),
     path(
+        "leave/",
+        api.LeaveView.as_view({"get": "list"}),
+    ),
+    path(
+        "leave/<int:pk>/",
+        api.LeaveView.as_view(
+            {
+                "patch": "partial_update",
+            }
+        ),
+    ),
+    path(
         "slack/attendance/",
         api.SlackApiView.as_view(),
     ),
+    path("update-profile/<int:pk>/", api.UpdateProfileView.as_view()),
 ]

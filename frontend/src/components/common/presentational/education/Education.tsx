@@ -74,10 +74,9 @@ function Education() {
               </div>
             </Grid>
           </Grid>
-
           {employeeData?.degrees.map((degree, index) => {
             return (
-              <Box key={degree?.program}>
+              <Box key={index}>
                 <Grid
                   className="Education-Card"
                   container
@@ -98,7 +97,7 @@ function Education() {
                   <Grid container item className="contentDiv">
                     <Grid className="title-container" item>
                       <Typography variant="body1" className="text-cls">
-                        {degree?.program}
+                        {degree?.program.name}
                       </Typography>
                     </Grid>
 
@@ -112,7 +111,7 @@ function Education() {
                     >
                       <Grid item className="description">
                         <Typography variant="body1" className="text-cls">
-                          {degree?.institute}{" "}
+                          {degree?.institute.name}{" "}
                         </Typography>
                       </Grid>
                       <Grid item className="year">

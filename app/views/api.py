@@ -2,12 +2,12 @@ from datetime import datetime
 
 import slack
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from rest_framework import status
+from rest_framework import generics, status
+from rest_framework.authtoken import views as auth_views
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -17,13 +17,56 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
+from app.utils import send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
-@method_decorator(login_required, name="dispatch")
+class AuthTokenView(auth_views.ObtainAuthToken):
+    serializer_class = serializers.AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class RefreshTokenView(generics.GenericAPIView):
+    queryset = Token.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RefreshTokenSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        token = Token.objects.get(key=serializer.validated_data["token_key"])
+
+        return Response(
+            {
+                "status": "valid token",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    token.user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
@@ -38,7 +81,7 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     def get_serializer_class(self):
         if self.action == "list":
             return serializers.EmployeeListSerializer
-        if self.action == "partial_update":
+        if self.action == "update":
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 
@@ -226,6 +269,7 @@ class SlackApiView(APIView):
                 channel_id = request.data.get("channel_id")
                 user_id = request.data.get("user_id")
                 command = request.data.get("command")
+                command_params = request.data.get("text")
 
                 if channel_id == SLACK_ATTENDACE_CHANNEL:
                     try:
@@ -235,11 +279,8 @@ class SlackApiView(APIView):
                         employee = models.Employee.objects.get(
                             user__email=user.get("profile").get("email")
                         )
-
                         employee.slack_id = user_id
-
                         employee.save()
-
                     last_record = models.Attendance.objects.filter(
                         employee=employee
                     ).last()
@@ -252,7 +293,6 @@ class SlackApiView(APIView):
                                 },
                                 status=status.HTTP_200_OK,
                             )
-
                         attendance = models.Attendance.objects.create(
                             employee=employee, organization=employee.organization
                         )
@@ -271,6 +311,33 @@ class SlackApiView(APIView):
                         attendance.time_out = datetime.now()
                         attendance.save()
 
+                    elif command == "/leaves":
+                        if employee.leave_count > 20:
+                            return Response(
+                                data={"text": "Your leave count is already completed."}
+                            )
+                        try:
+                            get_leave_date = command_params.split("/")
+                            models.Leave.objects.create(
+                                employee_id=employee.id,
+                                leave_from=get_leave_date[0],
+                                leave_to=get_leave_date[1],
+                                organization=employee.organization,
+                            )
+                            return Response(
+                                data={"text": "Leave request submitted successfully"},
+                                status=status.HTTP_201_CREATED,
+                            )
+                        except Exception as e:
+                            print(e)
+                            return Response(
+                                data={
+                                    "text": """You submitted an invalid leave request.
+                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"""  # noqa
+                                },
+                                status=status.HTTP_201_CREATED,
+                            )
+
                     return Response(
                         data={"response_type": "in_channel"},
                         status=status.HTTP_200_OK,
@@ -282,7 +349,8 @@ class SlackApiView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-            except Exception:
+            except Exception as e:
+                print(e)
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
@@ -302,3 +370,60 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+
+class UpdateProfileView(generics.UpdateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UpdateProfileSerializer
+    http_method_names = ("put",)
+
+    def put(self, request, pk):
+        if not request.data:
+            return Response(
+                {
+                    "status": "empty payload",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        super().put(request, pk)
+        user = get_object_or_404(models.User, pk=pk)
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response(
+            {
+                "status": "profile updated",
+                "token": token.key,
+                "user": serializers.MeSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.LeaveSerializer
+    queryset = models.Leave.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_class(self):
+        if self.action == "partial_update":
+            return serializers.LeaveUpdateSerializer
+        return self.serializer_class
+
+    @transaction.atomic
+    def update(self, request, *args, **kwargs):
+        leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
+        employee = get_object_or_404(models.Employee, pk=leave.employee.id)
+        updated_by = get_object_or_404(models.Employee, user=request.user)
+        to_email = [leave.employee.user.email]
+        if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
+            employee.leave_count += 1
+        leave.updated_by = updated_by
+        employee.save()
+        leave.save()
+        if leave.employee.manager:
+            to_email.append(leave.employee.manager.user.email)
+        send_leave_email(to_email, request.data["status"])
+        return super().update(request, *args, **kwargs)

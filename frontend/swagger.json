@@ -13,10 +13,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -62,10 +59,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -90,10 +84,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -121,10 +112,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -170,10 +158,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -217,10 +202,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -245,10 +227,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -294,10 +273,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -322,10 +298,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -371,10 +344,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -399,10 +369,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -448,10 +415,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -476,10 +440,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -525,10 +486,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -553,10 +511,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -602,10 +557,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -630,10 +582,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -679,10 +628,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -707,10 +653,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -756,10 +699,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -784,10 +724,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -833,10 +770,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -871,10 +805,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -890,8 +821,8 @@
                     }
                 }
             },
-            "patch": {
-                "operationId": "api_employees_partial_update",
+            "put": {
+                "operationId": "api_employees_update",
                 "parameters": [
                     {
                         "in": "path",
@@ -909,27 +840,25 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -962,10 +891,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -993,10 +919,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1049,10 +972,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1087,10 +1007,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1146,10 +1063,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1174,10 +1088,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1195,10 +1106,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1244,10 +1152,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1264,6 +1169,88 @@
                 }
             }
         },
+        "/api/leave/": {
+            "get": {
+                "operationId": "api_leave_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Leave"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/leave/{id}/": {
+            "patch": {
+                "operationId": "api_leave_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LeaveUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/me/": {
             "get": {
                 "operationId": "api_me_retrieve",
@@ -1272,10 +1259,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1300,10 +1284,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1349,10 +1330,7 @@
                 },
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1369,6 +1347,52 @@
                 }
             }
         },
+        "/api/refresh-token/": {
+            "post": {
+                "operationId": "api_refresh_token_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "tokenAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshToken"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/role/": {
             "get": {
                 "operationId": "api_role_list",
@@ -1377,10 +1401,7 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     }
                 ],
                 "responses": {
@@ -1408,16 +1429,113 @@
                 ],
                 "security": [
                     {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
+                        "tokenAuth": []
                     },
                     {}
                 ],
                 "responses": {
                     "200": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/token/": {
+            "post": {
+                "operationId": "api_token_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthToken"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthToken"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/update-profile/{id}/": {
+            "put": {
+                "operationId": "api_update_profile_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfile"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfile"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfile"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateProfile"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -1517,6 +1635,22 @@
                 "required": [
                     "employee",
                     "time_in"
+                ]
+            },
+            "AuthToken": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
                 ]
             },
             "Benefit": {
@@ -1888,13 +2022,6 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "manages": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "readOnly": true
-                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -1914,6 +2041,9 @@
                     "salary": {
                         "type": "integer",
                         "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -1956,7 +2086,6 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
-                    "manages",
                     "managing",
                     "nic",
                     "org_id",
@@ -2010,15 +2139,84 @@
             "EmployeeUpdate": {
                 "type": "object",
                 "properties": {
-                    "department": {
+                    "id": {
                         "type": "integer",
-                        "nullable": true
+                        "readOnly": true
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/EmployeeUpdateUser"
+                    },
+                    "degrees": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Degree"
+                        }
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
+                    },
+                    "experience": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Experirence"
+                        }
+                    },
+                    "org_id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "managing": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "writeOnly": true
+                        },
+                        "writeOnly": true
+                    },
+                    "total_experience": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "emergency_contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     },
                     "designation": {
                         "type": "string",
                         "maxLength": 50
                     },
+                    "salary": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
+                    },
+                    "user_allowed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "department": {
+                        "type": "integer",
+                        "nullable": true
+                    },
                     "manager": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "type": {
                         "type": "integer",
                         "nullable": true
                     },
@@ -2027,17 +2225,56 @@
                         "items": {
                             "type": "integer"
                         }
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
                     }
                 },
                 "required": [
-                    "designation"
+                    "assets",
+                    "created_at",
+                    "degrees",
+                    "designation",
+                    "emergency_contact_number",
+                    "experience",
+                    "id",
+                    "managing",
+                    "org_id",
+                    "total_experience",
+                    "updated_at",
+                    "user"
+                ]
+            },
+            "EmployeeUpdateUser": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": true
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "default_role": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "email"
                 ]
             },
             "EmployeeUser": {
@@ -2166,6 +2403,73 @@
                     "updated_at"
                 ]
             },
+            "Leave": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "leave_from": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "leave_to": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "updated_by": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "organization": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "employee",
+                    "id",
+                    "leave_from",
+                    "leave_to",
+                    "organization",
+                    "updated_at"
+                ]
+            },
+            "LeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    }
+                }
+            },
             "Me": {
                 "type": "object",
                 "properties": {
@@ -2217,33 +2521,16 @@
                     "headline"
                 ]
             },
-            "PatchedEmployeeUpdate": {
+            "PatchedLeaveUpdate": {
                 "type": "object",
                 "properties": {
-                    "department": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "designation": {
-                        "type": "string",
-                        "maxLength": 50
-                    },
-                    "manager": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "benefits": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
                     }
                 }
             },
@@ -2296,6 +2583,18 @@
                     "updated_at"
                 ]
             },
+            "RefreshToken": {
+                "type": "object",
+                "properties": {
+                    "token_key": {
+                        "type": "string",
+                        "maxLength": 500
+                    }
+                },
+                "required": [
+                    "token_key"
+                ]
+            },
             "Role": {
                 "type": "object",
                 "properties": {
@@ -2331,6 +2630,52 @@
                     "updated_at"
                 ]
             },
+            "StatusEnum": {
+                "enum": [
+                    "pending",
+                    "approved",
+                    "denied"
+                ],
+                "type": "string"
+            },
+            "UpdateProfile": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "headline": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "password2": {
+                        "type": "string",
+                        "writeOnly": true
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "headline"
+                ]
+            },
             "UserPassword": {
                 "type": "object",
                 "properties": {
@@ -2349,14 +2694,11 @@
             }
         },
         "securitySchemes": {
-            "basicAuth": {
-                "type": "http",
-                "scheme": "basic"
-            },
-            "cookieAuth": {
+            "tokenAuth": {
                 "type": "apiKey",
-                "in": "cookie",
-                "name": "sessionid"
+                "in": "header",
+                "name": "Authorization",
+                "description": "Token-based authentication with required prefix \"Token\""
             }
         }
     }

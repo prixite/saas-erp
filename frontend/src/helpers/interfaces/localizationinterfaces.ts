@@ -34,6 +34,8 @@ export interface modalsInterface {
   filterDesignationLabel: string;
   createEmployeeHeading: string;
   createEmployeeSubheading: string;
+  updateEmployeeHeading: string;
+  updateEmployeeSubheading: string;
   createEmployeeClose: string;
   createEmployeeNext: string;
   createEmployeeSave: string;
@@ -69,6 +71,7 @@ export interface modalsInterface {
   employeeDegree: string;
   employeeUniveristy: string;
   newEmployeeCreated: string;
+  employeeUpdated: string;
   congrats: string;
   backToListing: string;
   wantToDelete: string;
@@ -100,6 +103,21 @@ export interface modalsInterface {
   emailrRegxError: string;
   defaultRoleLabel: string;
   departmentsLabel: string;
+  firstNameRegxError: string;
+  lastNameRegxError: string;
+  nicRegxError: string;
+  employeeImageError: string;
+  phoneRegxError: string;
+  uploadImg: string;
+  removeImg: string;
+  uploadfileDescription: string;
+  imgSize: string;
+  uploadImgDescription: string;
+  uploadOrganizationLogo: string;
+  uploadCompanyLogo: string;
+  uploadImage: string;
+  dragToAdjust: string;
+  saveChanges: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -173,8 +191,8 @@ export interface editBenefitModal {
   MealAllowance: string;
 }
 export type Degree = {
-  program: number;
-  institute: number;
+  program: string;
+  institute: string;
   year: string;
 };
 export type Asset = {
@@ -187,44 +205,52 @@ export type Asset = {
   updated_at: string;
   type: number;
 };
+export type CompanyEdit = {
+  id: string;
+  name: string;
+};
 export type Experirence = {
   title: string;
-  company: number;
+  company: CompanyEdit | string;
   start_date: string;
   end_date: string;
 };
+export type Benefit = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
 export type EmployeeForm = {
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  image?: string | null;
+  image?: string;
   contactNumber: string;
-  defaultRole?: number | null;
+  defaultRole?: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];
   orgId: string;
-  managing: [];
+  managing: string[];
   totalExperience: string;
   manages: string[];
   nic: string;
   dateOfJoining: string;
   emergencyContactNumber: string;
   designation: string;
-  salary?: number | null;
+  salary?: number;
   userAllowed?: boolean;
-  department?: number | null;
-  manager?: number | null;
-  type?: number | null;
-  benefits?: number[];
-  title: string;
-  company: string;
-  startDate: string;
-  endDate: string;
-  program: string;
-  institute: string;
-  year: string;
+  department?: number;
+  manager?: number;
+  type?: number;
+  benefits: number[];
 };
+export interface S3Interface {
+  bucket: string;
+  key: string;
+  location: string;
+}
 export interface Formik {
   initialValues: EmployeeForm;
   initialStatus: EmployeeForm;
