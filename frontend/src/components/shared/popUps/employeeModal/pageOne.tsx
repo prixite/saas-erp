@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -88,6 +88,19 @@ const PageOne = ({ formik, action }: Props) => {
       );
     }
   };
+  useEffect(() => {
+    if (formik.values.benefits.length) {
+      setChecked(true);
+    }
+  }, [formik.values.benefits]);
+  useEffect(() => {
+    if (!checked) {
+      formik.setFieldValue("benefits", []);
+    }
+  }, [checked]);
+  const filterItselfManager = employeetableData?.filter((employee) => {
+    return employee.id !== formik.values.manager;
+  });
   return (
     <Box className="pageone-section">
       <Box className="employee-profile-section">
@@ -154,6 +167,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               fullWidth
+              required
               name="firstName"
               label={employeeFirstName}
               onChange={formik.handleChange}
@@ -168,6 +182,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               fullWidth
+              required
               name="lastName"
               label={employeeLastName}
               onChange={formik.handleChange}
@@ -199,6 +214,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               fullWidth
+              required
               name="email"
               disabled={action === "edit" ? true : false}
               label={employeeEmailLabel}
@@ -224,6 +240,7 @@ const PageOne = ({ formik, action }: Props) => {
                 }}
                 renderInput={(params) => (
                   <TextField
+                    required
                     sx={{
                       "& .MuiInputBase-input": {
                         height: "21px",
@@ -243,6 +260,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               fullWidth
+              required
               name="nic"
               disabled={action === "edit" ? true : false}
               label={employeeCnicLabel}
@@ -259,8 +277,8 @@ const PageOne = ({ formik, action }: Props) => {
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
-              required
               fullWidth
+              required
               name="designation"
               label={employeeDesignationLabel}
               onChange={formik.handleChange}
@@ -315,8 +333,8 @@ const PageOne = ({ formik, action }: Props) => {
                 multiple: true,
               }}
             >
-              {employeetableData?.length ? (
-                employeetableData?.map((employee) => {
+              {filterItselfManager?.length ? (
+                filterItselfManager?.map((employee) => {
                   return (
                     <MenuItem
                       key={employee?.id}
@@ -352,6 +370,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               select
+              required
               fullWidth
               name="type"
               label={employeeEmployementLabel}
@@ -379,6 +398,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               fullWidth
+              required
               name="emergencyContactNumber"
               label={employeeEmergencyContactLabel}
               onChange={formik.handleChange}
@@ -396,6 +416,7 @@ const PageOne = ({ formik, action }: Props) => {
               className="text-field-cls"
               select
               fullWidth
+              required
               name="department"
               label={departmentsLabel}
               onChange={formik.handleChange}
@@ -422,6 +443,7 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               select
+              required
               fullWidth
               name="defaultRole"
               label={defaultRoleLabel}
@@ -473,7 +495,7 @@ const PageOne = ({ formik, action }: Props) => {
             size="small"
             {...label}
             sx={{ paddingLeft: "5px" }}
-            checked={checked || formik.values.benefits.length ? true : false}
+            checked={checked}
             onChange={handleChange}
           />
           <Typography
@@ -488,7 +510,7 @@ const PageOne = ({ formik, action }: Props) => {
           </Typography>
         </Box>
         <Box className="checkbox-cls">
-          {checked || formik.values.benefits.length
+          {checked
             ? Benefits?.map((benefit) => {
                 return (
                   <Box className="checkbox-section" key={benefit?.id}>
