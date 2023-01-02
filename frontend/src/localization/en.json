@@ -185,6 +185,25 @@
 
 
     },
+    "AuthPages": {
+      "saas": "SaaS",
+      "erp": "ERP",
+      "forgot_password_title":"Forgot Password?",
+      "reset_password_title": "Reset Password?",
+      "reset_password_desc": "Create a strong password",
+      "forgot_password_desc":"No worries, we will send you reset instructions.",
+      "email_text":"Email Address",
+      "password_text": "Password",
+      "confirm_password_text": "Confirm Password",
+      "save_password_text":"Save Password",
+      "reset_password_btn": "Reset Password",
+      "Back_to": "Back to",
+      "login_text": "Login",
+      "email_required_text":"Email is required!",
+      "invalid_email_text":"invalid_email_text",
+      "password_required_text":"Password is required!",
+      "confirm_password_required_text":"Confirm password is required!"
+    },
 
     "EditBenefitModal":{
       "Heading":"Compensation & Benefits",
