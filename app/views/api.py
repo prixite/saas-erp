@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import slack
-from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
-
 
 from app import models, serializers
 from app.utils import send_leave_email
@@ -37,7 +36,7 @@ class CheckAuthenticatedView(APIView):
                 return Response(
                     {"isAuthenticated": "error"}, status=status.HTTP_400_BAD_REQUEST
                 )
-        except:
+        except Exception:
             return Response(
                 {"error": "Something went wrong when checking authentication status"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -65,7 +64,7 @@ class LoginView(generics.GenericAPIView):
                     {"detail": "Wrong email or password"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-        except:
+        except Exception:
             return Response(
                 {"detail": "Something went wrong when logging in"},
                 status=status.HTTP_400_BAD_REQUEST,

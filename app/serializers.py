@@ -5,7 +5,6 @@ from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models

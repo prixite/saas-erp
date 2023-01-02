@@ -14,8 +14,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
 import { AuthContext } from "@src/components/hoc/AuthContext";
+import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
 import "@src/components/common/smart/signup/Signup.scss";
 
 const Signup = () => {
