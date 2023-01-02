@@ -11,7 +11,7 @@ from waffle import get_waffle_switch_model
 from app import models
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(
         label="Password",
@@ -35,18 +35,6 @@ class AuthTokenSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user
-        return attrs
-
-
-class RefreshTokenSerializer(serializers.Serializer):
-    token_key = serializers.CharField(max_length=500, required=True)
-
-    def validate(self, attrs):
-        try:
-            Token.objects.get(key=attrs["token_key"])
-        except Token.DoesNotExist:
-            raise serializers.ValidationError({"token_key": "Token deos not exist."})
-
         return attrs
 
 

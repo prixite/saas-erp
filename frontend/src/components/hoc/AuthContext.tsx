@@ -1,51 +1,31 @@
 import React, { createContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { useApiRefreshTokenCreateMutation } from "@src/store/api";
+import { useApiIsAuthenticatedRetrieveQuery } from "@src/store/api";
 
-const AuthContext = createContext();
+export interface AuhtContextInterface {
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AuthContext = createContext<AuhtContextInterface | null>(null);
 
 type Props = {
   children: React.ReactNode;
 };
 
 const AuthProvider = ({ children }: Props) => {
-  const [refreshToken] = useApiRefreshTokenCreateMutation();
-  const [loading, setIsloading] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsloading(true);
-      refreshToken({
-        refreshToken: { token_key: localStorage.getItem("token") || "" },
-      })
-        .unwrap()
-        .then(() => {
-          setIsAuthenticated(true);
-        })
-        .catch(() => {
-          toast.error("Something went wrong");
-        })
-        .finally(() => setIsloading(false));
-    }
-  }, []);
-
+  const { isFetching, isSuccess } = useApiIsAuthenticatedRetrieveQuery();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const signIn = () => {
-    setIsAuthenticated(true);
-  };
+  useEffect(() => {
+    isSuccess && setIsAuthenticated(true);
+  }, [isFetching]);
 
-  const signOut = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-  };
+  if (isFetching) return <p>Loading</p>;
 
   return (
-    !loading && (
-      <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
-        {children}
-      </AuthContext.Provider>
-    )
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

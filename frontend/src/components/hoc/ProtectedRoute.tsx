@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "@src/components/hoc/AuthContext";
+import { useApiIsAuthenticatedRetrieveQuery } from "@src/store/api";
 
 type Props = {
-  children: React.ReactNode;
+  children: JSX.Element;
 };
 
 const ProtectedRoute = ({ children }: Props) => {
