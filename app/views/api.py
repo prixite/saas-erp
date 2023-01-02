@@ -312,16 +312,18 @@ class SlackApiView(APIView):
                         attendance.save()
 
                     elif command == "/leaves":
+
                         if employee.leave_count > 20:
                             return Response(
                                 data={"text": "Your leave count is already completed."}
                             )
                         try:
-                            get_leave_date = command_params.split("/")
+                            get_detail = command_params.split("/")
                             models.Leave.objects.create(
                                 employee_id=employee.id,
-                                leave_from=get_leave_date[0],
-                                leave_to=get_leave_date[1],
+                                leave_from=get_detail[0],
+                                leave_to=get_detail[1],
+                                description=get_detail[2],
                                 organization=employee.organization,
                             )
                             return Response(
@@ -333,7 +335,7 @@ class SlackApiView(APIView):
                             return Response(
                                 data={
                                     "text": """You submitted an invalid leave request.
-                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"""  # noqa
+                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD/reason"""  # noqa
                                 },
                                 status=status.HTTP_201_CREATED,
                             )

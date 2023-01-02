@@ -31,6 +31,8 @@ class Leave(models.Model):
     )
     leave_from = models.DateField()
     leave_to = models.DateField()
+    description = models.TextField()
+    hr_comment = models.TextField(blank=True, null=True)
     status = models.SlugField(choices=LeaveStatus.choices, default="pending")
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -2418,6 +2418,13 @@
                         "type": "string",
                         "format": "date"
                     },
+                    "description": {
+                        "type": "string"
+                    },
+                    "hr_comment": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "status": {
                         "allOf": [
                             {
@@ -2449,6 +2456,7 @@
                 },
                 "required": [
                     "created_at",
+                    "description",
                     "employee",
                     "id",
                     "leave_from",

@@ -680,6 +680,8 @@ export type Leave = {
   id: number;
   leave_from: string;
   leave_to: string;
+  description: string;
+  hr_comment?: string | null;
   status?: StatusEnum;
   created_at: string;
   updated_at: string;
