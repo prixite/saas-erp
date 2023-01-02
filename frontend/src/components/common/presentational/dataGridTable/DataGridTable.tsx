@@ -220,7 +220,7 @@ function DataGridTable() {
                 disableColumnSelector
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                 pageSize={pageSize}
-                rowsPerPageOptions={[10, 13, 16, 19]}
+                rowsPerPageOptions={[10, 13]}
                 pagination
                 density="standard"
                 onCellClick={handleOnCellClick}
