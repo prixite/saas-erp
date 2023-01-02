@@ -117,8 +117,9 @@ const PageOne = ({ formik, action }: Props) => {
                 );
               }}
             />
-            {action == "edit" &&
+            {action === "edit" &&
             !fileRef.current?.value &&
+            formik.values.image &&
             typeof formik.values.image === "string" ? (
               <img
                 className="preview-img"
