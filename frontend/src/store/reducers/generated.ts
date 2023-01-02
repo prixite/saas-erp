@@ -260,12 +260,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.institue,
       }),
     }),
-    apiIsAuthenticatedRetrieve: build.query<
-      ApiIsAuthenticatedRetrieveApiResponse,
-      ApiIsAuthenticatedRetrieveApiArg
-    >({
-      query: () => ({ url: `/api/is_authenticated/` }),
-    }),
     apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
       query: () => ({ url: `/api/leave/` }),
     }),
@@ -447,8 +441,6 @@ export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
 export type ApiInstituesCreateApiArg = {
   institue: Institue;
 };
-export type ApiIsAuthenticatedRetrieveApiResponse = unknown;
-export type ApiIsAuthenticatedRetrieveApiArg = void;
 export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
 export type ApiLeaveListApiArg = void;
 export type ApiLeavePartialUpdateApiResponse = /** status 200  */ LeaveUpdate;
@@ -759,7 +751,6 @@ export const {
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
-  useApiIsAuthenticatedRetrieveQuery,
   useApiLeaveListQuery,
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,

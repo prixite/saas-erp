@@ -1169,24 +1169,6 @@
                 }
             }
         },
-        "/api/is_authenticated/": {
-            "get": {
-                "operationId": "api_is_authenticated_retrieve",
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "No response body"
-                    }
-                }
-            }
-        },
         "/api/leave/": {
             "get": {
                 "operationId": "api_leave_list",

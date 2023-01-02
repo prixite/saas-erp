@@ -23,26 +23,6 @@ from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLAC
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
-class CheckAuthenticatedView(APIView):
-    def get(self, request, format=None):
-        user = self.request.user
-
-        try:
-            isAuthenticated = user.is_authenticated
-
-            if isAuthenticated:
-                return Response({"isAuthenticated": "success"})
-            else:
-                return Response(
-                    {"isAuthenticated": "error"}, status=status.HTTP_400_BAD_REQUEST
-                )
-        except Exception:
-            return Response(
-                {"error": "Something went wrong when checking authentication status"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-
 class LoginView(generics.GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = serializers.LoginSerializer

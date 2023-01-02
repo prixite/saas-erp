@@ -4,7 +4,6 @@ from django.urls import path
 from app.views import api
 
 urlpatterns = [
-    path("is_authenticated/", api.CheckAuthenticatedView.as_view()),
     path("login/", api.LoginView.as_view()),
     path("logout/", auth_views.LogoutView.as_view(next_page="/")),
     path(

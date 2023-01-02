@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useApiIsAuthenticatedRetrieveQuery } from "@src/store/api";
+import { useApiMeRetrieveQuery } from "@src/store/api";
 
 export interface AuhtContextInterface {
   isAuthenticated: boolean;
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const AuthProvider = ({ children }: Props) => {
-  const { isFetching, isSuccess } = useApiIsAuthenticatedRetrieveQuery();
+  const { isFetching, isSuccess } = useApiMeRetrieveQuery();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
