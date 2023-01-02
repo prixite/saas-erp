@@ -449,6 +449,10 @@ class UserPasswordSerializer(serializers.Serializer):
         return data
 
 
+class ResendEmailCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
 class WaffleSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_waffle_switch_model()

@@ -4,6 +4,10 @@ import slack
 from django.contrib.auth import update_session_auth_hash
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import smart_bytes, smart_str
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.conf import settings
 from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
@@ -17,7 +21,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
-from app.utils import send_leave_email
+from app.utils import send_leave_email, send_email_forget_password
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -65,6 +69,44 @@ class RefreshTokenView(generics.GenericAPIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class PasswordResetEmailView(generics.GenericAPIView):
+    serializer_class = serializers.ResendEmailCodeSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            user = models.User.objects.get(email=serializer.validated_data["email"])
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+
+            current_site = settings.DOMAIN_NAME
+            relativeLink = f"/password-reset-confirm/?uidb64={uidb64}&token={token}"
+            password_reset_url = current_site + relativeLink
+
+            send_email_forget_password(
+                request,
+                {
+                    "password_reset_url": password_reset_url,
+                    "relativeLink": relativeLink,
+                    "to_email": user.email,
+                },
+            )
+
+            return Response(
+                {"status": "password reset link sent"},
+                status=status.HTTP_200_OK,
+            )
+        except models.User.DoesNotExist:
+            return Response(
+                {"error": "account record not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
 
 class HomeView(TemplateView):

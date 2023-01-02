@@ -6,6 +6,11 @@ urlpatterns = [
     path("token/", api.AuthTokenView.as_view(), name="obtain-auth-token"),
     path("refresh-token/", api.RefreshTokenView.as_view(), name="refresh-auth-token"),
     path(
+        "password-reset/",
+        api.PasswordResetEmailView.as_view(),
+        name="request-reset-email",
+    ),
+    path(
         "employees/",
         api.EmployeeViewSet.as_view(
             {
