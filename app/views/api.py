@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import slack
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
