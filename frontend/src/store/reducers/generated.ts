@@ -675,9 +675,11 @@ export type Leave = {
 };
 export type LeaveUpdate = {
   status?: StatusEnum;
+  hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
   status?: StatusEnum;
+  hr_comment?: string | null;
 };
 export type Login = {
   email: string;

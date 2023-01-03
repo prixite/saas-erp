@@ -1,5 +1,7 @@
 from django.db import models
 
+from project.settings import AUTH_USER_MODEL
+
 from .core import Organization
 from .employee import Employee
 
@@ -23,7 +25,7 @@ class Leave(models.Model):
         Employee, on_delete=models.CASCADE, related_name="leaves"
     )
     updated_by = models.ForeignKey(
-        Employee,
+        AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="managed_leaves",
         null=True,
