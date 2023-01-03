@@ -1,13 +1,13 @@
 from datetime import datetime
 
 import slack
+from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import smart_bytes, smart_str
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.conf import settings
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
@@ -21,7 +21,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
-from app.utils import send_leave_email, send_email_forget_password
+from app.utils import send_email_forget_password, send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -86,27 +86,94 @@ class PasswordResetEmailView(generics.GenericAPIView):
             token = PasswordResetTokenGenerator().make_token(user)
 
             current_site = settings.DOMAIN_NAME
-            relativeLink = f"/password-reset-confirm/?uidb64={uidb64}&token={token}"
-            password_reset_url = current_site + relativeLink
+            relativeLink = f"/reset-password/?uidb64={uidb64}&token={token}"
+            password_reset_url = f"{current_site}{relativeLink}"
 
-            send_email_forget_password(
-                request,
-                {
-                    "password_reset_url": password_reset_url,
-                    "relativeLink": relativeLink,
-                    "to_email": user.email,
-                },
-            )
+            try:
+                send_email_forget_password(
+                    {
+                        "password_reset_url": password_reset_url,
+                        "to_email": user.email,
+                    },
+                )
+                return Response(
+                    {"status": "Password reset link sent"},
+                    status=status.HTTP_200_OK,
+                )
+            except Exception:
+                return Response(
+                    {"status": "Something went wrong"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
-            return Response(
-                {"status": "password reset link sent"},
-                status=status.HTTP_200_OK,
-            )
         except models.User.DoesNotExist:
             return Response(
-                {"error": "account record not found."},
+                {"error": "Account record not found."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+
+class PasswordResetConfirmView(generics.GenericAPIView):
+    serializer_class = serializers.PasswordResetConfirmSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        token = serializer.validated_data["token"]
+
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+            return Response({"token_valid": True}, status=status.HTTP_200_OK)
+
+        except Exception:
+            try:
+                if not PasswordResetTokenGenerator().check_token(user):
+                    return Response(
+                        {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            except Exception:
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+
+class PasswordResetCompleteView(generics.GenericAPIView):
+    serializer_class = serializers.PasswordResetCompleteSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+            user.set_password(serializer.validated_data["password"])
+            user.save()
+        except Exception:
+            return Response(
+                {"status": "Account record not found"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {"status": "Password reset success"},
+            status=status.HTTP_200_OK,
+        )
 
 
 class HomeView(TemplateView):

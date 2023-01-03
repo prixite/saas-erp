@@ -11,6 +11,16 @@ urlpatterns = [
         name="request-reset-email",
     ),
     path(
+        "password-reset-confirm/",
+        api.PasswordResetConfirmView.as_view(),
+        name="password-reset-confirm",
+    ),
+    path(
+        "password-reset-complete/",
+        api.PasswordResetCompleteView.as_view(),
+        name="password-reset-complete",
+    ),
+    path(
         "employees/",
         api.EmployeeViewSet.as_view(
             {

@@ -286,6 +286,36 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.patchedMeUpdate,
       }),
     }),
+    apiPasswordResetCreate: build.mutation<
+      ApiPasswordResetCreateApiResponse,
+      ApiPasswordResetCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset/`,
+        method: "POST",
+        body: queryArg.resendEmailCode,
+      }),
+    }),
+    apiPasswordResetCompleteCreate: build.mutation<
+      ApiPasswordResetCompleteCreateApiResponse,
+      ApiPasswordResetCompleteCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-complete/`,
+        method: "POST",
+        body: queryArg.passwordResetComplete,
+      }),
+    }),
+    apiPasswordResetConfirmCreate: build.mutation<
+      ApiPasswordResetConfirmCreateApiResponse,
+      ApiPasswordResetConfirmCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-confirm/`,
+        method: "POST",
+        body: queryArg.passwordResetConfirm,
+      }),
+    }),
     apiProgramsList: build.query<
       ApiProgramsListApiResponse,
       ApiProgramsListApiArg
@@ -463,6 +493,21 @@ export type ApiMeRetrieveApiArg = void;
 export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdatePartialUpdateApiArg = {
   patchedMeUpdate: PatchedMeUpdate;
+};
+export type ApiPasswordResetCreateApiResponse =
+  /** status 200  */ ResendEmailCode;
+export type ApiPasswordResetCreateApiArg = {
+  resendEmailCode: ResendEmailCode;
+};
+export type ApiPasswordResetCompleteCreateApiResponse =
+  /** status 200  */ PasswordResetComplete;
+export type ApiPasswordResetCompleteCreateApiArg = {
+  passwordResetComplete: PasswordResetComplete;
+};
+export type ApiPasswordResetConfirmCreateApiResponse =
+  /** status 200  */ PasswordResetConfirm;
+export type ApiPasswordResetConfirmCreateApiArg = {
+  passwordResetConfirm: PasswordResetConfirm;
 };
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
@@ -716,6 +761,18 @@ export type PatchedMeUpdate = {
   contact_number?: string;
   headline?: string;
 };
+export type ResendEmailCode = {
+  email: string;
+};
+export type PasswordResetComplete = {
+  uidb64: string;
+  password?: string;
+  password2?: string;
+};
+export type PasswordResetConfirm = {
+  uidb64: string;
+  token: string;
+};
 export type Program = {
   id: number;
   name: string;
@@ -775,6 +832,9 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiMeRetrieveQuery,
   useApiMeUpdatePartialUpdateMutation,
+  useApiPasswordResetCreateMutation,
+  useApiPasswordResetCompleteCreateMutation,
+  useApiPasswordResetConfirmCreateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRefreshTokenCreateMutation,

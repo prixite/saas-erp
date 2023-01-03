@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -450,6 +451,27 @@ class UserPasswordSerializer(serializers.Serializer):
 
 class ResendEmailCodeSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(write_only=True, required=True)
+    token = serializers.CharField(write_only=True, required=True)
+
+
+class PasswordResetCompleteSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(write_only=True, required=True)
+    password = serializers.CharField(
+        write_only=True, required=False, validators=[validate_password]
+    )
+    password2 = serializers.CharField(write_only=True, required=False)
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        return attrs
 
 
 class WaffleSerializer(serializers.ModelSerializer):

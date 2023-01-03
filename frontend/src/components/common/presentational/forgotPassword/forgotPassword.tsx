@@ -1,12 +1,22 @@
-import { Box, Button, TextField, Typography, Stack } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  TextField,
+  Typography,
+  Stack,
+  CircularProgress,
+} from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import backIcon from "@src/assets/svgs/thinbackarrow.svg";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import "@src/components/common/presentational/forgotPassword/forgotPassword.scss";
 import { localizedData } from "@src/helpers/utils/language";
 import { emailRegX } from "@src/helpers/utils/utils";
+import { useApiPasswordResetCreateMutation } from "@src/store/api";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -20,9 +30,11 @@ const ForgotPassword = () => {
     reset_password_btn,
     Back_to,
     login_text,
-    email_required_text,
-    invalid_email_text,
   } = constantData.AuthPages;
+
+  const [sendEmail, { isLoading }] = useApiPasswordResetCreateMutation();
+  const { data: userData } = useGetUserQuery();
+
   return (
     <Box className="forgot-container">
       <img src={appIcon} className="logo" />
@@ -36,19 +48,34 @@ const ForgotPassword = () => {
         {forgot_password_desc}
       </Typography>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: userData?.email, password: "" }}
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = { email_required_text };
+            errors.email = "Email is required";
           } else if (!emailRegX.test(values.email)) {
-            errors.email = { invalid_email_text };
+            errors.email = "Invalid email address";
           }
           return errors;
         }}
-        // onSubmit={async () => {}}
+        onSubmit={async (values) => {
+          sendEmail({
+            resendEmailCode: {
+              email: values.email,
+            },
+          })
+            .unwrap()
+            .then(() => {
+              toast.success(
+                "Kindly follow the instructions we sent to your email to reset your password."
+              );
+            })
+            .catch((err) => {
+              toast.error(err.data.error || "Something went wrong");
+            });
+        }}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form>
             <Field
               name="email"
@@ -65,14 +92,22 @@ const ForgotPassword = () => {
               )}
             />
             <Stack alignItems="center" mt={3}>
-              <Button
+              <LoadingButton
                 type="submit"
                 className="btn"
-                variant="contained"
-                disabled={isSubmitting}
+                loading={isLoading}
+                sx={{ m: "0px" }}
+                loadingIndicator={
+                  <CircularProgress
+                    sx={{
+                      color: "white",
+                    }}
+                    size={16}
+                  />
+                }
               >
                 {reset_password_btn}
-              </Button>
+              </LoadingButton>
               <Box className="move-to-login" onClick={() => navigate("/login")}>
                 <Box className="back-btn-cls">
                   <img src={backIcon} alt="back" />
