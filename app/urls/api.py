@@ -1,10 +1,11 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from app.views import api
 
 urlpatterns = [
-    path("token/", api.AuthTokenView.as_view(), name="obtain-auth-token"),
-    path("refresh-token/", api.RefreshTokenView.as_view(), name="refresh-auth-token"),
+    path("login/", api.LoginView.as_view()),
+    path("logout/", auth_views.LogoutView.as_view(next_page="/")),
     path(
         "employees/",
         api.EmployeeViewSet.as_view(

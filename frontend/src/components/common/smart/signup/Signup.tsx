@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Box,
@@ -10,15 +10,21 @@ import {
   Stack,
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
+import { AuthContext } from "@src/components/hoc/AuthContext";
 import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
 import "@src/components/common/smart/signup/Signup.scss";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
+
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Box className="signup_container">

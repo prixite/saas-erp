@@ -13,7 +13,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -59,7 +59,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -84,7 +84,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -112,7 +112,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -158,7 +158,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -202,7 +202,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -227,7 +227,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -273,7 +273,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -298,7 +298,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -344,7 +344,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -369,7 +369,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -415,7 +415,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -440,7 +440,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -486,7 +486,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -511,7 +511,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -557,7 +557,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -582,7 +582,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -628,7 +628,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -653,7 +653,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -699,7 +699,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -724,7 +724,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -770,7 +770,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -805,7 +805,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -858,7 +858,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -891,7 +891,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -919,7 +919,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -972,7 +972,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1007,7 +1007,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1063,7 +1063,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1088,7 +1088,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1106,7 +1106,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1152,7 +1152,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1177,7 +1177,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1234,7 +1234,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1251,6 +1251,52 @@
                 }
             }
         },
+        "/api/login/": {
+            "post": {
+                "operationId": "api_login_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Login"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/me/": {
             "get": {
                 "operationId": "api_me_retrieve",
@@ -1259,7 +1305,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1303,7 +1349,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1328,7 +1374,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1374,7 +1420,7 @@
                 },
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1391,52 +1437,6 @@
                 }
             }
         },
-        "/api/refresh-token/": {
-            "post": {
-                "operationId": "api_refresh_token_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshToken"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshToken"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RefreshToken"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "tokenAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RefreshToken"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/api/role/": {
             "get": {
                 "operationId": "api_role_list",
@@ -1445,7 +1445,7 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     }
                 ],
                 "responses": {
@@ -1473,58 +1473,13 @@
                 ],
                 "security": [
                     {
-                        "tokenAuth": []
+                        "cookieAuth": []
                     },
                     {}
                 ],
                 "responses": {
                     "200": {
                         "description": "No response body"
-                    }
-                }
-            }
-        },
-        "/api/token/": {
-            "post": {
-                "operationId": "api_token_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AuthToken"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AuthToken"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AuthToken"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "tokenAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthToken"
-                                }
-                            }
-                        },
-                        "description": ""
                     }
                 }
             }
@@ -1624,22 +1579,6 @@
                 "required": [
                     "employee",
                     "time_in"
-                ]
-            },
-            "AuthToken": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "email",
-                    "password"
                 ]
             },
             "Benefit": {
@@ -2459,6 +2398,22 @@
                     }
                 }
             },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
             "Me": {
                 "type": "object",
                 "properties": {
@@ -2628,18 +2583,6 @@
                     "updated_at"
                 ]
             },
-            "RefreshToken": {
-                "type": "object",
-                "properties": {
-                    "token_key": {
-                        "type": "string",
-                        "maxLength": 500
-                    }
-                },
-                "required": [
-                    "token_key"
-                ]
-            },
             "Role": {
                 "type": "object",
                 "properties": {
@@ -2701,11 +2644,10 @@
             }
         },
         "securitySchemes": {
-            "tokenAuth": {
+            "cookieAuth": {
                 "type": "apiKey",
-                "in": "header",
-                "name": "Authorization",
-                "description": "Token-based authentication with required prefix \"Token\""
+                "in": "cookie",
+                "name": "sessionid"
             }
         }
     }

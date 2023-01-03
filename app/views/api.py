@@ -1,13 +1,11 @@
 from datetime import datetime
 
 import slack
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework import generics, status
-from rest_framework.authtoken import views as auth_views
-from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -24,47 +22,32 @@ from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLAC
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
-class AuthTokenView(auth_views.ObtainAuthToken):
-    serializer_class = serializers.AuthTokenSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
-
-        return Response(
-            {
-                "token": token.key,
-                "user": serializers.MeSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-
-class RefreshTokenView(generics.GenericAPIView):
-    queryset = Token.objects.all()
+class LoginView(generics.GenericAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = serializers.RefreshTokenSerializer
+    serializer_class = serializers.LoginSerializer
 
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    def post(self, request, format=None):
+        data = self.request.data
 
-        token = Token.objects.get(key=serializer.validated_data["token_key"])
+        email = data["email"]
+        password = data["password"]
 
-        return Response(
-            {
-                "status": "valid token",
-                "token": token.key,
-                "user": serializers.MeSerializer(
-                    token.user, context=self.get_serializer_context()
-                ).data,
-            },
-            status=status.HTTP_200_OK,
-        )
+        try:
+            user = authenticate(email=email, password=password)
+
+            if user is not None:
+                login(request, user)
+                return Response({"detail": "User authenticated"})
+            else:
+                return Response(
+                    {"detail": "Wrong email or password"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        except Exception:
+            return Response(
+                {"detail": "Something went wrong when logging in"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class HomeView(TemplateView):
