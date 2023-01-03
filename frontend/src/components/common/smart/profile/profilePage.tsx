@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import {
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import ChangePassword from "@src/components/common/presentational/changePassword/changePassword";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
 import { timeOut } from "@src/helpers/constants/constants";
 import {
@@ -44,7 +38,6 @@ function ProfilePage() {
   const constantData: LocalizationInterface = localizedData();
   const {
     basicInformationHeading,
-    changePasswordHeading,
     notificationHeading,
     newsLetterLabel,
     billUpdatesLabel,
@@ -60,6 +53,7 @@ function ProfilePage() {
     lastNameError,
     emailError,
     phoneError,
+    headlineRequired,
   } = constantData.ProfilePage;
 
   const formik = useFormik({
@@ -88,7 +82,7 @@ function ProfilePage() {
         .string()
         .matches(phoneRegex, phoneError)
         .required(phoneRequired),
-      headline: yup.string().required(phoneRequired),
+      headline: yup.string().required(headlineRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -108,41 +102,6 @@ function ProfilePage() {
       });
     }
   }, [userData, isSuccess]);
-  const [values, setValues] = useState({
-    currentPassword: "",
-    showCurrentPassword: false,
-    newPassword: false,
-    verifyPassword: false,
-  });
-
-  const handleClickShowVerifyPassword = () => {
-    setValues({
-      ...values,
-      verifyPassword: !values.verifyPassword,
-    });
-  };
-  const handleClickShowNewPassword = () => {
-    setValues({
-      ...values,
-      newPassword: !values.newPassword,
-    });
-  };
-  const handleClickShowCurrentPassword = () => {
-    setValues({
-      ...values,
-      showCurrentPassword: !values.showCurrentPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
   const handleEditOwner = async () => {
     setLoading(true);
     if (formik.values.image?.length) {
@@ -298,99 +257,7 @@ function ProfilePage() {
             </Stack>
           </div>
         </div>
-
-        <div className="password">
-          <Typography className="password__heading" gutterBottom>
-            {changePasswordHeading}
-          </Typography>
-          <div className="password__passwordfield">
-            <div className="currentPassword">
-              <TextField
-                className="currentPassword__textfield"
-                id="currPass_1"
-                type={values.showCurrentPassword ? "text" : "password"}
-                label="Current Password"
-                onChange={handleChange("password")}
-                InputProps={{
-                  autoComplete: "new-password",
-                  style: inputLabelColor,
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowCurrentPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {values.showCurrentPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-            <div className="newPassword">
-              <TextField
-                className="newPassword__textfield"
-                id="newPass_1"
-                type={values.newPassword ? "text" : "password"}
-                label="New Password"
-                onChange={handleChange("password")}
-                InputProps={{
-                  autoComplete: "new-password",
-                  style: inputLabelColor,
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowNewPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {values.newPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-            <div className="verifyPassword">
-              <TextField
-                className="verifyPassword__textfield"
-                name="password"
-                id="verifyPass_1"
-                type={values.verifyPassword ? "text" : "password"}
-                label="Verify Password"
-                onChange={handleChange("password")}
-                InputProps={{
-                  autoComplete: "new-password",
-                  style: inputLabelColor,
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowVerifyPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {values.verifyPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-          </div>
-        </div>
+        <ChangePassword />
         <div className="notification">
           <Typography
             className="notification__heading"

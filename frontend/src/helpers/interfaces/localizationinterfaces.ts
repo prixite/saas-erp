@@ -168,6 +168,8 @@ export interface profilePageInterface {
   lastNameRequired: string;
   emailRequired: string;
   phoneRequired: string;
+  passwordRequired: string;
+  passwordMatch: string;
 }
 
 export interface employeeButtons {
