@@ -22,7 +22,12 @@ import {
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
-import { emailRegX, nameRegex, phoneRegex } from "@src/helpers/utils/utils";
+import {
+  emailRegX,
+  nameRegex,
+  phoneRegex,
+  toastAPIError,
+} from "@src/helpers/utils/utils";
 import {
   useGetUserQuery,
   useUpdateOwnerProfileMutation,
@@ -87,7 +92,7 @@ function ProfilePage() {
     }),
     validateOnChange: true,
     onSubmit: () => {
-      handleEditEmployee();
+      handleEditOwner();
     },
   });
 
@@ -138,7 +143,7 @@ function ProfilePage() {
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
     };
-  const handleEditEmployee = async () => {
+  const handleEditOwner = async () => {
     setLoading(true);
     if (formik.values.image?.length) {
       performEditOwner(formik.values.image);
@@ -148,7 +153,7 @@ function ProfilePage() {
           performEditOwner(data.location);
         })
         .catch((error) => {
-          toast.error(error);
+          toastAPIError("Something went wrong.", error.status, error.data);
         });
     }
   };
@@ -165,7 +170,7 @@ function ProfilePage() {
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(error);
+        toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
   const getEmployeeObject = (imageUrl: string) => {

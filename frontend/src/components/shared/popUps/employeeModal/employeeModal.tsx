@@ -34,6 +34,7 @@ import {
   nameRegex,
   phoneRegex,
   nicRegex,
+  toastAPIError,
 } from "@src/helpers/utils/utils";
 import {
   useCreateEmployeeMutation,
@@ -253,16 +254,11 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
           })
           .catch((error) => {
             setLoading(false);
-            toast.error(
-              `${error?.data?.non_field_errors || ""}
-              ${error?.data?.user?.email || ""}
-              ${error?.data?.nic || ""}
-              ${error?.data?.user?.image || ""}`
-            );
+            toastAPIError("Something went wrong.", error.status, error.data);
           });
       })
       .catch((error) => {
-        toast.error(error);
+        toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
   const handleEditEmployee = async () => {
@@ -275,7 +271,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
           performEditEmployee(data.location);
         })
         .catch((error) => {
-          toast.error(error);
+          toastAPIError("Something went wrong.", error.status, error.data);
         });
     }
   };
@@ -297,12 +293,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(
-          `${error?.data?.non_field_errors || ""}
-          ${error?.data?.user?.email || ""}
-          ${error?.data?.nic || ""}
-          ${error?.data?.user?.image || ""}`
-        );
+        toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
   const populateEditableData = () => {
