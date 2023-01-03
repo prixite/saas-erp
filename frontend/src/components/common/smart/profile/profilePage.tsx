@@ -284,7 +284,6 @@ function ProfilePage() {
               <LoadingButton
                 loading={loading}
                 className="btns__saveBtn"
-                variant="contained"
                 onClick={() => {
                   formik.handleSubmit();
                 }}
