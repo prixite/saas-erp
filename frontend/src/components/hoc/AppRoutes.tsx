@@ -1,12 +1,14 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Employee from "@src/components/common/presentational/employee/employee";
+import ForgotPassword from "@src/components/common/presentational/forgotPassword/forgotPassword";
+import Login from "@src/components/common/presentational/login/Login";
+import ResetPassword from "@src/components/common/presentational/resetPassword/resetPassword";
+import Signup from "@src/components/common/presentational/signup/Signup";
 import Accounts from "@src/components/common/smart/accounts/accounts";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
-import Login from "@src/components/common/smart/login/Login";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
-import Signup from "@src/components/common/smart/signup/Signup";
 import Users from "@src/components/common/smart/users/users";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
 import WithAuth from "@src/components/hoc/WithAuth";
@@ -33,6 +35,22 @@ const AppRoutes = () => {
             element={
               <WithAuth>
                 <Signup />
+              </WithAuth>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <WithAuth>
+                <ForgotPassword />
+              </WithAuth>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <WithAuth>
+                <ResetPassword />
               </WithAuth>
             }
           />

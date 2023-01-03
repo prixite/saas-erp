@@ -15,7 +15,7 @@ import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
-import "@src/components/common/smart/signup/Signup.scss";
+import "@src/components/common/presentational/signup/Signup.scss";
 
 const Signup = () => {
   const navigate = useNavigate();

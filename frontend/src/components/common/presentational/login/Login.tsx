@@ -19,7 +19,7 @@ import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import { AuthContext } from "@src/components/hoc/AuthContext";
 import { useApiTokenCreateMutation } from "@src/store/api";
-import "@src/components/common/smart/login/login.scss";
+import "@src/components/common/presentational/login/login.scss";
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
