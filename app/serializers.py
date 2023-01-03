@@ -5,13 +5,12 @@ from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(
         label="Password",
@@ -35,18 +34,6 @@ class AuthTokenSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user
-        return attrs
-
-
-class RefreshTokenSerializer(serializers.Serializer):
-    token_key = serializers.CharField(max_length=500, required=True)
-
-    def validate(self, attrs):
-        try:
-            Token.objects.get(key=attrs["token_key"])
-        except Token.DoesNotExist:
-            raise serializers.ValidationError({"token_key": "Token deos not exist."})
-
         return attrs
 
 
@@ -454,16 +441,14 @@ class ResendEmailCodeSerializer(serializers.Serializer):
 
 
 class PasswordResetConfirmSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField(write_only=True, required=True)
-    token = serializers.CharField(write_only=True, required=True)
+    uidb64 = serializers.CharField(required=True)
+    token = serializers.CharField(required=True)
 
 
 class PasswordResetCompleteSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField(write_only=True, required=True)
-    password = serializers.CharField(
-        write_only=True, required=False, validators=[validate_password]
-    )
-    password2 = serializers.CharField(write_only=True, required=False)
+    uidb64 = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, validators=[validate_password])
+    password2 = serializers.CharField(required=True)
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:

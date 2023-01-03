@@ -13,7 +13,6 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "@src/components/hoc/AuthContext";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 
@@ -62,7 +61,6 @@ const StyledMenu = styled((props: MenuProps) => (
 
 const TopbarSecondaryMenu = () => {
   const { data: userData } = useGetUserQuery();
-  const { signOut } = React.useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -123,9 +121,11 @@ const TopbarSecondaryMenu = () => {
           <MoreHorizIcon />
           More
         </MenuItem>
-        <MenuItem onClick={signOut} disableRipple>
+        <MenuItem disableRipple>
           <LogoutIcon />
-          Logout
+          <a className="logout-link" href="/api/logout">
+            Logout
+          </a>
         </MenuItem>
       </StyledMenu>
     </Box>

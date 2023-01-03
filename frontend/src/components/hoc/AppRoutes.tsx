@@ -11,7 +11,6 @@ import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Users from "@src/components/common/smart/users/users";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
-import WithAuth from "@src/components/hoc/WithAuth";
 import Layout from "@src/components/shared/layout";
 import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
 
@@ -22,38 +21,10 @@ const AppRoutes = () => {
     <>
       {!isLoading ? (
         <Routes>
-          <Route
-            path="/login"
-            element={
-              <WithAuth>
-                <Login />
-              </WithAuth>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <WithAuth>
-                <Signup />
-              </WithAuth>
-            }
-          />
-          <Route
-            path="/forgot-password"
-            element={
-              <WithAuth>
-                <ForgotPassword />
-              </WithAuth>
-            }
-          />
-          <Route
-            path="/reset-password"
-            element={
-              <WithAuth>
-                <ResetPassword />
-              </WithAuth>
-            }
-          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/"
             element={

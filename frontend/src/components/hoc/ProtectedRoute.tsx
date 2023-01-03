@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "@src/components/hoc/AuthContext";
+import {
+  AuhtContextInterface,
+  AuthContext,
+} from "@src/components/hoc/AuthContext";
 
 type Props = {
-  children: React.ReactNode;
+  children: JSX.Element;
 };
 
 const ProtectedRoute = ({ children }: Props) => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext) as AuhtContextInterface;
 
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
