@@ -120,15 +120,17 @@
       }
     }
 
-    &__phone {
+    &__phoneheadline {
       margin-bottom: 10px;
-
+      display: flex;
       .MuiInputBase-root {
         width: 356px;
       }
-
       .textfield {
         @include textfieldCustoms;
+      }
+      .headline-cls {
+        margin-right: 16px;
       }
     }
   }
@@ -331,8 +333,7 @@
 
   .btns {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 18px 18px 18px 0px;
+    margin-top: 18px;
 
     &__cancelBtn {
       box-shadow: none;
@@ -363,21 +364,22 @@
     }
 
     &__saveBtn {
-      box-shadow: none;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: 14px 24px;
-      gap: 7px;
-      width: 139px;
-      height: 47px;
+      color: white;
       background: #ff2f2f;
+      width: 123px;
+      height: 48px;
+      margin-right: 20px;
+      padding: 13px 20px;
+      font-size: 16px;
+      font-weight: 400;
       border-radius: 12px;
-
+      text-transform: capitalize;
       &:hover {
-        background: #ff2f2f;
-        box-shadow: none;
+        background: #ffcdcd;
+        color: white;
+      }
+      .MuiLoadingButton-loadingIndicator {
+        color: white;
       }
 
       &__btnText {

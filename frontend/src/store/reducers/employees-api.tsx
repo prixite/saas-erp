@@ -26,7 +26,7 @@ export const employeesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Employee"],
+  tagTypes: ["Employee", "Owner"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -41,6 +41,7 @@ export const employeesApi = createApi({
     }),
     getUser: builder.query<User, void>({
       query: () => `/me/`,
+      providesTags: ["Owner"],
     }),
     getFlags: builder.query<Flags[], void>({
       query: () => "/flags/",
@@ -95,6 +96,16 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
+    updateOwnerProfile: builder.mutation({
+      query: ({ updatedObj }) => {
+        return {
+          url: "/me/update/",
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Owner"],
+    }),
   }),
 });
 
@@ -114,4 +125,5 @@ export const {
   useGetRolesQuery,
   useGetDepartmentsQuery,
   useUpdateEmployeeMutation,
+  useUpdateOwnerProfileMutation,
 } = employeesApi;

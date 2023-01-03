@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 export const capitalizeFirstLowercaseRest = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
@@ -24,3 +25,73 @@ export const phoneRegex =
 export const onlyIntegerRegex = /^\d+\.?\d*$/;
 export const nicRegex = /^[1-4]{1}[0-9]{4}(-)?[0-9]{7}(-)?[0-9]{1}$/;
 /* eslint-enable */
+
+function iterateDeepObj(obj: unknown) {
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (obj[Object.keys(obj)[0]]) {
+    return iterateDeepObj(obj[Object.keys(obj)[0]]);
+  }
+  return obj;
+}
+export const toastAPIError = (
+  message: string,
+  status?: number,
+  data?: unknown
+) => {
+  switch (status) {
+    case 400: {
+      const errorToPrint = iterateDeepObj(data);
+      if (errorToPrint) {
+        toast.error(errorToPrint, {
+          autoClose: 3000,
+          pauseOnHover: false,
+        });
+      } else {
+        toast.error(
+          `${status} The server was unable to understand the request`,
+          {
+            autoClose: 3000,
+            pauseOnHover: false,
+          }
+        );
+      }
+      break;
+    }
+
+    case 401: {
+      toast.error(`${status} Unauthorized Request`, {
+        autoClose: 3000,
+        pauseOnHover: false,
+      });
+      break;
+    }
+
+    case 403: {
+      toast.error(
+        `Forbidden Request: Execution of access to this resource is forbidden.`,
+        {
+          autoClose: 3000,
+          pauseOnHover: false,
+        }
+      );
+      break;
+    }
+
+    case 404: {
+      toast.error(`${status} Requested resoure not found`, {
+        autoClose: 3000,
+        pauseOnHover: false,
+      });
+      break;
+    }
+
+    default: {
+      toast.error(message, {
+        autoClose: 3000,
+        pauseOnHover: false,
+      });
+    }
+  }
+};
