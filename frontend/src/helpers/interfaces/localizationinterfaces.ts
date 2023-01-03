@@ -225,14 +225,14 @@ export type EmployeeForm = {
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  image?: string;
   contactNumber: string;
   defaultRole?: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];
   orgId: string;
-  managing: number[];
+  managing: string[];
   totalExperience: string;
   manages: string[];
   nic: string;
