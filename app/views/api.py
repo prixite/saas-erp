@@ -312,13 +312,21 @@ class SlackApiView(APIView):
                         attendance.save()
 
                     elif command == "/leaves":
+                        get_detail = command_params.split("/")
+                        date_format = "%Y-%m-%d"
 
+                        date_from = datetime.strptime(get_detail[0], date_format)
+                        date_to = datetime.strptime(get_detail[1], date_format)
+
+                        if date_from < datetime.now():
+                            return Response(data={"text": "Date must be future date."})
+                        if date_to < datetime.now():
+                            return Response(data={"text": "Date must be future date."})
                         if employee.leave_count > 20:
                             return Response(
                                 data={"text": "Your leave count is already completed."}
                             )
                         try:
-                            get_detail = command_params.split("/")
                             models.Leave.objects.create(
                                 employee_id=employee.id,
                                 leave_from=get_detail[0],
