@@ -2,9 +2,8 @@ from datetime import datetime
 
 import slack
 from django.conf import settings
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import smart_bytes, smart_str
