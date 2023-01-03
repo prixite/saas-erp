@@ -286,6 +286,16 @@ const injectedRtkApi = api.injectEndpoints({
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
+    apiMeUpdatePartialUpdate: build.mutation<
+      ApiMeUpdatePartialUpdateApiResponse,
+      ApiMeUpdatePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/me/update/`,
+        method: "PATCH",
+        body: queryArg.patchedMeUpdate,
+      }),
+    }),
     apiProgramsList: build.query<
       ApiProgramsListApiResponse,
       ApiProgramsListApiArg
@@ -310,16 +320,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
-    }),
-    apiUpdateProfileUpdate: build.mutation<
-      ApiUpdateProfileUpdateApiResponse,
-      ApiUpdateProfileUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/update-profile/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.updateProfile,
-      }),
     }),
   }),
   overrideExisting: false,
@@ -454,6 +454,10 @@ export type ApiLoginCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
+export type ApiMeUpdatePartialUpdateApiArg = {
+  patchedMeUpdate: PatchedMeUpdate;
+};
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
 export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
@@ -464,12 +468,6 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
-export type ApiUpdateProfileUpdateApiResponse =
-  /** status 200  */ UpdateProfile;
-export type ApiUpdateProfileUpdateApiArg = {
-  id: number;
-  updateProfile: UpdateProfile;
-};
 export type AssetType = {
   id: number;
   name: string;
@@ -694,6 +692,20 @@ export type Me = {
   contact_number: string;
   allowed_modules: string;
 };
+export type MeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number: string;
+  headline: string;
+};
+export type PatchedMeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number?: string;
+  headline?: string;
+};
 export type Program = {
   id: number;
   name: string;
@@ -708,15 +720,6 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
-};
-export type UpdateProfile = {
-  first_name?: string;
-  last_name?: string;
-  image?: string;
-  contact_number: string;
-  headline: string;
-  password?: string;
-  password2?: string;
 };
 export const {
   useApiAssetTypeListQuery,
@@ -755,9 +758,9 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
+  useApiMeUpdatePartialUpdateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
-  useApiUpdateProfileUpdateMutation,
 } = injectedRtkApi;

@@ -1322,6 +1322,50 @@
                 }
             }
         },
+        "/api/me/update/": {
+            "patch": {
+                "operationId": "api_me_update_partial_update",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/programs/": {
             "get": {
                 "operationId": "api_programs_list",
@@ -1436,61 +1480,6 @@
                 "responses": {
                     "200": {
                         "description": "No response body"
-                    }
-                }
-            }
-        },
-        "/api/update-profile/{id}/": {
-            "put": {
-                "operationId": "api_update_profile_update",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateProfile"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateProfile"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateProfile"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UpdateProfile"
-                                }
-                            }
-                        },
-                        "description": ""
                     }
                 }
             }
@@ -2476,6 +2465,36 @@
                     "headline"
                 ]
             },
+            "MeUpdate": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "headline": {
+                        "type": "string",
+                        "maxLength": 255
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "headline"
+                ]
+            },
             "PatchedLeaveUpdate": {
                 "type": "object",
                 "properties": {
@@ -2486,6 +2505,32 @@
                             }
                         ],
                         "pattern": "^[-a-zA-Z0-9_]+$"
+                    }
+                }
+            },
+            "PatchedMeUpdate": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "headline": {
+                        "type": "string",
+                        "maxLength": 255
                     }
                 }
             },
@@ -2580,44 +2625,6 @@
                     "denied"
                 ],
                 "type": "string"
-            },
-            "UpdateProfile": {
-                "type": "object",
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "image": {
-                        "type": "string",
-                        "format": "uri",
-                        "maxLength": 200
-                    },
-                    "contact_number": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
-                    "headline": {
-                        "type": "string",
-                        "maxLength": 255
-                    },
-                    "password": {
-                        "type": "string",
-                        "writeOnly": true
-                    },
-                    "password2": {
-                        "type": "string",
-                        "writeOnly": true
-                    }
-                },
-                "required": [
-                    "contact_number",
-                    "headline"
-                ]
             },
             "UserPassword": {
                 "type": "object",
