@@ -2,15 +2,14 @@
   background-color: rgba(255, 205, 205, 0.2);
   border-radius: 12px;
   height: 108px;
-  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-top: 24px;
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-bottom: 24px;
 
   .icon-Container {
-    width: 96px;
-    height: 100%;
     position: relative;
     display: flex;
     justify-content: center;
@@ -22,8 +21,8 @@
     }
     .upload-btn-icon {
       position: absolute;
-      top: 65px;
-      left: 48px;
+      top: 49px;
+      left: 46px;
       border-radius: 50%;
       height: 30px;
       width: 30px;
@@ -49,19 +48,17 @@
     flex-wrap: wrap;
     width: 90%;
     height: 100%;
+    margin-top: 10px;
 
     .subContainer-row-one {
-      width: 100%;
       display: flex;
       align-items: center;
       justify-content: flex-start;
       flex-direction: row;
       height: 28px;
-      margin-top: 24px;
-      margin-bottom: 10px;
+      margin-left: 12px;
 
       .name {
-        width: 154px;
         height: 28px;
 
         font-family: "Lato";
@@ -143,9 +140,7 @@
       align-items: center;
       justify-content: flex-start;
       flex-direction: row;
-      height: 20px;
-      margin-top: 0px;
-      margin-bottom: 27px;
+      margin-top: 5px;
 
       .designation {
         width: 161px;
@@ -163,8 +158,6 @@
       }
 
       .email {
-        width: auto;
-        height: 20px;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;
@@ -175,9 +168,9 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        margin-right: 58.5px;
         flex: none;
         flex-grow: 0;
+        margin-left: 12px;
       }
 
       .contact {
@@ -196,6 +189,7 @@
         font-family: "Lato";
         flex: none;
         flex-grow: 0;
+        margin-left: 12px;
       }
     }
   }
