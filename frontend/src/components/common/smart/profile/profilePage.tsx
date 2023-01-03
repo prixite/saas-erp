@@ -145,7 +145,7 @@ function ProfilePage() {
   return (
     <>
       <ProfilePageHeader formik={formik} />
-      <form className="profilePage">
+      <div className="profilePage">
         <div className="basicInfo">
           <div className="basicInfo__heading">
             <Typography className="basicInfo__heading__text" gutterBottom>
@@ -363,7 +363,7 @@ function ProfilePage() {
             </div>
           </Grid>
         </div>
-      </form>
+      </div>
     </>
   );
 }
