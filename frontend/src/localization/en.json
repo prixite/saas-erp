@@ -80,7 +80,8 @@
       "firstNameError":"Invalid first name!",
       "lastNameError": "Invalid last name!",
       "emailError": "Invalid email!",
-      "phoneError": "Invalid phone!"
+      "phoneError": "Invalid phone!",
+      "headlineRequired":"Headline is required!"
 
     },
     "EmployeeButtons":{

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Grid,
   IconButton,
@@ -7,23 +8,33 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import ProfilePageHeader from "@src/components/common/presentational/profilePageHeader/ProfilePageHeader";
-import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { timeOut } from "@src/helpers/constants/constants";
+import {
+  LocalizationInterface,
+  S3Interface,
+} from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 import { emailRegX, nameRegex, phoneRegex } from "@src/helpers/utils/utils";
-import { useGetUserQuery } from "@src/store/reducers/employees-api";
+import {
+  useGetUserQuery,
+  useUpdateOwnerProfileMutation,
+} from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
+  const [loading, setLoading] = useState(false);
+  const [updateProfile] = useUpdateOwnerProfileMutation();
 
   const constantData: LocalizationInterface = localizedData();
   const {
@@ -36,7 +47,6 @@ function ProfilePage() {
     emailSub,
     phoneSub,
     saveBtn,
-    cancelBtn,
     firstNameRequired,
     lastNameRequired,
     emailRequired,
@@ -53,6 +63,8 @@ function ProfilePage() {
       lastname: "",
       email: "",
       phone: "",
+      image: "",
+      headline: "",
     },
     validationSchema: yup.object({
       firstname: yup
@@ -71,10 +83,11 @@ function ProfilePage() {
         .string()
         .matches(phoneRegex, phoneError)
         .required(phoneRequired),
+      headline: yup.string().required(phoneRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
-      resetForm();
+      handleEditEmployee();
     },
   });
 
@@ -85,18 +98,11 @@ function ProfilePage() {
         firstname: userData?.first_name || "",
         lastname: userData?.last_name || "",
         phone: userData?.contact_number || "",
+        image: userData?.image || "",
+        headline: userData?.headline,
       });
     }
   }, [userData, isSuccess]);
-
-  const resetForm = () => {
-    formik.setValues({
-      firstname: "",
-      lastname: "",
-      email: "",
-      phone: "",
-    });
-  };
   const [values, setValues] = useState({
     currentPassword: "",
     showCurrentPassword: false,
@@ -132,10 +138,50 @@ function ProfilePage() {
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
     };
+  const handleEditEmployee = async () => {
+    setLoading(true);
+    if (formik.values.image?.length) {
+      performEditOwner(formik.values.image);
+    } else {
+      await uploadImageToS3(formik.values.image || "")
+        .then(async (data: S3Interface) => {
+          performEditOwner(data.location);
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
+    }
+  };
+  const performEditOwner = async (data: string) => {
+    const updatedObj = getEmployeeObject(data);
+    await updateProfile({ updatedObj: updatedObj })
+      .unwrap()
+      .then(async () => {
+        toast.success("Profile successfully updated.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error(error);
+      });
+  };
+  const getEmployeeObject = (imageUrl: string) => {
+    return {
+      first_name: formik.values.firstname,
+      last_name: formik.values.lastname,
+      image: imageUrl,
+      contact_number: formik.values.phone,
+      headline: formik.values.headline,
+    };
+  };
+
   return (
     <>
-      <ProfilePageHeader />
-      <form className="profilePage" onSubmit={formik.handleSubmit}>
+      <ProfilePageHeader formik={formik} />
+      <form className="profilePage">
         <div className="basicInfo">
           <div className="basicInfo__heading">
             <Typography className="basicInfo__heading__text" gutterBottom>
@@ -147,19 +193,13 @@ function ProfilePage() {
             <div className="firstName">
               <TextField
                 className="firstName__textfield"
-                autoComplete="off"
-                id="firstName-id"
                 name="firstname"
                 label="First Name"
                 InputLabelProps={{
                   style: inputLabelColor,
                 }}
                 value={formik.values.firstname}
-                onChange={(e) => {
-                  if (nameRegex.test(e.target.value)) {
-                    formik.handleChange(e);
-                  }
-                }}
+                onChange={formik.handleChange}
               />
               <p className="requiredText">
                 {formik.touched.firstname && formik.errors.firstname}
@@ -168,8 +208,6 @@ function ProfilePage() {
             <div className="lastName">
               <TextField
                 className="lastName__textfield"
-                autoComplete="off"
-                id="lastname_id"
                 name="lastname"
                 label="Last Name"
                 size="medium"
@@ -177,11 +215,7 @@ function ProfilePage() {
                   style: inputLabelColor,
                 }}
                 value={formik.values.lastname}
-                onChange={(e) => {
-                  if (nameRegex.test(e.target.value)) {
-                    formik.handleChange(e);
-                  }
-                }}
+                onChange={formik.handleChange}
               />
               <p className="requiredText">
                 {formik.touched.lastname && formik.errors.lastname}
@@ -190,22 +224,15 @@ function ProfilePage() {
             <div className="email">
               <TextField
                 className="email__textfield"
-                id="email-id"
                 name="email"
-                type="new-password"
                 label="Email Address"
                 size="medium"
-                inputProps={{
-                  autoComplete: "new-password",
-                }}
+                disabled={true}
                 InputLabelProps={{
                   style: inputLabelColor,
                 }}
                 value={formik.values.email}
-                onChange={(e) => {
-                  formik.setFieldTouched("email");
-                  formik.handleChange(e);
-                }}
+                onChange={formik.handleChange}
               />
               <p className="requiredText">
                 {formik.touched.email && formik.errors.email}
@@ -213,32 +240,58 @@ function ProfilePage() {
             </div>
           </div>
 
-          <div className="basicInfo__phone">
-            <TextField
-              className="textfield"
-              id="phone_id_1"
-              name="phone"
-              type="phone"
-              label="Phone Number"
-              // placeholder="XX-XXX-XXXXXXX"
-              size="medium"
-              inputProps={{
-                autoComplete: "new-password",
-              }}
-              InputLabelProps={{
-                style: inputLabelColor,
-              }}
-              value={formik.values.phone}
-              onChange={(e) => {
-                // if (phoneRegex.test(e.target.value)) {
-                formik.setFieldTouched("phone");
-                formik.handleChange(e);
-                // }
-              }}
-            />
-            <p className="requiredText">
-              {formik.touched.phone && formik.errors.phone}
-            </p>
+          <div className="basicInfo__phoneheadline">
+            <div className="headline-cls">
+              <TextField
+                className="textfield"
+                name="phone"
+                type="phone"
+                label="Phone Number"
+                size="medium"
+                inputProps={{
+                  autoComplete: "new-password",
+                }}
+                InputLabelProps={{
+                  style: inputLabelColor,
+                }}
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+              />
+              <p className="requiredText">
+                {formik.touched.phone && formik.errors.phone}
+              </p>
+            </div>
+            <div className="phone">
+              <TextField
+                className="textfield"
+                name="headline"
+                type="phone"
+                label="Headline"
+                size="medium"
+                InputLabelProps={{
+                  style: inputLabelColor,
+                }}
+                value={formik.values.headline}
+                onChange={formik.handleChange}
+              />
+              <p className="requiredText">
+                {formik.touched.headline && formik.errors.headline}
+              </p>
+            </div>
+          </div>
+          <div className="btns">
+            <Stack spacing={2} direction="row">
+              <LoadingButton
+                loading={loading}
+                className="btns__saveBtn"
+                variant="contained"
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
+              >
+                <span className="btns__saveBtn__btnText">{saveBtn}</span>
+              </LoadingButton>
+            </Stack>
           </div>
         </div>
 
@@ -438,22 +491,6 @@ function ProfilePage() {
               </div>
             </div>
           </Grid>
-        </div>
-
-        <div className="btns">
-          <Stack spacing={2} direction="row">
-            <Button
-              onClick={resetForm}
-              className="btns__cancelBtn"
-              style={{ backgroundColor: "transparent" }}
-              variant="contained"
-            >
-              <span className="btns__cancelBtn__btnText">{cancelBtn}</span>
-            </Button>
-            <Button type="submit" className="btns__saveBtn" variant="contained">
-              <span className="btns__saveBtn__btnText">{saveBtn}</span>
-            </Button>
-          </Stack>
         </div>
       </form>
     </>

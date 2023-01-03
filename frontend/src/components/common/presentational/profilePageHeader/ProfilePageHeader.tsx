@@ -1,26 +1,20 @@
 import { useRef } from "react";
 import { Box } from "@mui/material";
-import { useFormik } from "formik";
-
 import cameraIcon from "@src/assets/svgs/camera.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone.svg";
 import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
+import { FormikOwner } from "@src/helpers/interfaces/localizationinterfaces";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
-
 import "@src/components/common/presentational/profilePageHeader/profilePageHeader.scss";
 
-function ProfilePageHeader() {
+interface Props {
+  formik: FormikOwner;
+}
+function ProfilePageHeader({ formik }: Props) {
   const { data: userData } = useGetUserQuery();
   const fileRef = useRef<HTMLInputElement>(null);
-  const formik = useFormik({
-    initialValues: {
-      file: "",
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+
   return (
     <>
       <div className="profile-Header-main">
@@ -31,13 +25,21 @@ function ProfilePageHeader() {
             type="file"
             onChange={(e) => {
               formik.setFieldValue(
-                "file",
+                "image",
                 (e.target as HTMLInputElement)?.files?.[0]
               );
             }}
           />
-          {formik.values.file ? (
-            <PreviewImage file={formik.values.file} />
+          {!fileRef.current?.value &&
+          formik.values.image &&
+          typeof formik.values.image === "string" ? (
+            <img
+              className="preview-img"
+              src={formik.values.image}
+              alt="upload icon"
+            />
+          ) : formik.values.image && typeof formik.values.image === "object" ? (
+            <PreviewImage file={formik.values.image} />
           ) : (
             <img
               className="profile-pic"
