@@ -2637,18 +2637,19 @@
                 "type": "object",
                 "properties": {
                     "uidb64": {
-                        "type": "string"
+                        "type": "string",
+                        "writeOnly": true
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "writeOnly": true
                     },
                     "password2": {
-                        "type": "string"
+                        "type": "string",
+                        "writeOnly": true
                     }
                 },
                 "required": [
-                    "password",
-                    "password2",
                     "uidb64"
                 ]
             },
@@ -2656,10 +2657,12 @@
                 "type": "object",
                 "properties": {
                     "uidb64": {
-                        "type": "string"
+                        "type": "string",
+                        "writeOnly": true
                     },
                     "token": {
-                        "type": "string"
+                        "type": "string",
+                        "writeOnly": true
                     }
                 },
                 "required": [

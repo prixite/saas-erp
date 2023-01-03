@@ -756,8 +756,8 @@ export type ResendEmailCode = {
 };
 export type PasswordResetComplete = {
   uidb64: string;
-  password: string;
-  password2: string;
+  password?: string;
+  password2?: string;
 };
 export type PasswordResetConfirm = {
   uidb64: string;
