@@ -126,5 +126,8 @@ urlpatterns = [
         "slack/attendance/",
         api.SlackApiView.as_view(),
     ),
-    path("update-profile/<int:pk>/", api.UpdateProfileView.as_view()),
+    path(
+        "me/update/",
+        api.MeUpdateViewSet.as_view(),
+    ),
 ]

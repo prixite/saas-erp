@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.authtoken import views as auth_views
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -372,34 +372,13 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class UpdateProfileView(generics.UpdateAPIView):
-    queryset = models.User.objects.all()
-    serializer_class = serializers.UpdateProfileSerializer
-    http_method_names = ("put",)
+class MeUpdateViewSet(UpdateAPIView):
+    serializer_class = serializers.MeUpdateSerializer
+    queryset = models.User.objects.none()
+    http_method_names = ("patch",)
 
-    def put(self, request, pk):
-        if not request.data:
-            return Response(
-                {
-                    "status": "empty payload",
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        super().put(request, pk)
-        user = get_object_or_404(models.User, pk=pk)
-        token, created = Token.objects.get_or_create(user=user)
-
-        return Response(
-            {
-                "status": "profile updated",
-                "token": token.key,
-                "user": serializers.MeSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-            },
-            status=status.HTTP_200_OK,
-        )
+    def get_object(self):
+        return self.request.user
 
 
 class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):

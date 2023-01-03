@@ -461,14 +461,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         fields = ["employee", "time_in", "time_out"]
 
 
-class UpdateProfileSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        write_only=True,
-        required=False,
-        validators=[password_validation.validate_password],
-    )
-    password2 = serializers.CharField(write_only=True, required=False)
-
+class MeUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = (
@@ -477,36 +470,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "image",
             "contact_number",
             "headline",
-            "password",
-            "password2",
         )
-
-    def validate(self, attrs):
-        if attrs.get("password") and attrs.get("password2"):
-            if attrs["password"] != attrs["password2"]:
-                raise serializers.ValidationError(
-                    {"password": "Password fields didn't match."}
-                )
-
-        return attrs
-
-    def update(self, instance, validated_data):
-        if validated_data.get("first_name"):
-            instance.first_name = validated_data["first_name"]
-        if validated_data.get("last_name"):
-            instance.last_name = validated_data["last_name"]
-        if validated_data.get("password"):
-            instance.password = make_password(validated_data["password"])
-        if validated_data.get("image"):
-            instance.image = validated_data["image"]
-        if validated_data.get("contact_number"):
-            instance.contact_number = validated_data["contact_number"]
-        if validated_data.get("headline"):
-            instance.headline = validated_data["headline"]
-
-        instance.save()
-
-        return instance
 
 
 class LeaveSerializer(serializers.ModelSerializer):
