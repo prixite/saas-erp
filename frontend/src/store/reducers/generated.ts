@@ -273,8 +273,28 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.patchedLeaveUpdate,
       }),
     }),
+    apiLoginCreate: build.mutation<
+      ApiLoginCreateApiResponse,
+      ApiLoginCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/login/`,
+        method: "POST",
+        body: queryArg.login,
+      }),
+    }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
+    }),
+    apiMeUpdatePartialUpdate: build.mutation<
+      ApiMeUpdatePartialUpdateApiResponse,
+      ApiMeUpdatePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/me/update/`,
+        method: "PATCH",
+        body: queryArg.patchedMeUpdate,
+      }),
     }),
     apiProgramsList: build.query<
       ApiProgramsListApiResponse,
@@ -292,16 +312,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.program,
       }),
     }),
-    apiRefreshTokenCreate: build.mutation<
-      ApiRefreshTokenCreateApiResponse,
-      ApiRefreshTokenCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/refresh-token/`,
-        method: "POST",
-        body: queryArg.refreshToken,
-      }),
-    }),
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
@@ -310,26 +320,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
-    }),
-    apiTokenCreate: build.mutation<
-      ApiTokenCreateApiResponse,
-      ApiTokenCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/token/`,
-        method: "POST",
-        body: queryArg.authToken,
-      }),
-    }),
-    apiUpdateProfileUpdate: build.mutation<
-      ApiUpdateProfileUpdateApiResponse,
-      ApiUpdateProfileUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/update-profile/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.updateProfile,
-      }),
     }),
   }),
   overrideExisting: false,
@@ -458,32 +448,26 @@ export type ApiLeavePartialUpdateApiArg = {
   id: number;
   patchedLeaveUpdate: PatchedLeaveUpdate;
 };
+export type ApiLoginCreateApiResponse = /** status 200  */ Login;
+export type ApiLoginCreateApiArg = {
+  login: Login;
+};
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
+export type ApiMeUpdatePartialUpdateApiArg = {
+  patchedMeUpdate: PatchedMeUpdate;
+};
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
 export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
 export type ApiProgramsCreateApiArg = {
   program: Program;
 };
-export type ApiRefreshTokenCreateApiResponse = /** status 200  */ RefreshToken;
-export type ApiRefreshTokenCreateApiArg = {
-  refreshToken: RefreshToken;
-};
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
-export type ApiTokenCreateApiResponse = /** status 200  */ AuthToken;
-export type ApiTokenCreateApiArg = {
-  authToken: AuthToken;
-};
-export type ApiUpdateProfileUpdateApiResponse =
-  /** status 200  */ UpdateProfile;
-export type ApiUpdateProfileUpdateApiArg = {
-  id: number;
-  updateProfile: UpdateProfile;
-};
 export type AssetType = {
   id: number;
   name: string;
@@ -695,6 +679,10 @@ export type LeaveUpdate = {
 export type PatchedLeaveUpdate = {
   status?: StatusEnum;
 };
+export type Login = {
+  email: string;
+  password: string;
+};
 export type Me = {
   first_name?: string;
   last_name?: string;
@@ -706,14 +694,25 @@ export type Me = {
   contact_number: string;
   allowed_modules: string;
 };
+export type MeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number: string;
+  headline: string;
+};
+export type PatchedMeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number?: string;
+  headline?: string;
+};
 export type Program = {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type RefreshToken = {
-  token_key: string;
 };
 export type PermissionEnum = "c" | "b" | "a";
 export type Role = {
@@ -723,19 +722,6 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
-};
-export type AuthToken = {
-  email: string;
-  password: string;
-};
-export type UpdateProfile = {
-  first_name?: string;
-  last_name?: string;
-  image?: string;
-  contact_number: string;
-  headline: string;
-  password?: string;
-  password2?: string;
 };
 export const {
   useApiAssetTypeListQuery,
@@ -772,12 +758,11 @@ export const {
   useApiInstituesCreateMutation,
   useApiLeaveListQuery,
   useApiLeavePartialUpdateMutation,
+  useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
+  useApiMeUpdatePartialUpdateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
-  useApiRefreshTokenCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
-  useApiTokenCreateMutation,
-  useApiUpdateProfileUpdateMutation,
 } = injectedRtkApi;

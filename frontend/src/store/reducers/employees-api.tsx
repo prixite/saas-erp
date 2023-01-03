@@ -20,13 +20,11 @@ export const employeesApi = createApi({
     baseUrl: "/api/",
     prepareHeaders: (headers) => {
       headers.append("Content-Type", "application/json");
-      headers.set("X-CSRFToken", document.forms.csrf.csrfmiddlewaretoken.value);
-      localStorage.getItem("token") &&
-        headers.set("Authorization", `Token ${localStorage.getItem("token")}`);
+      headers.set("X-Csrftoken", document.forms.csrf.csrfmiddlewaretoken.value);
       return headers;
     },
   }),
-  tagTypes: ["Employee"],
+  tagTypes: ["Employee", "Owner"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -41,6 +39,7 @@ export const employeesApi = createApi({
     }),
     getUser: builder.query<User, void>({
       query: () => `/me/`,
+      providesTags: ["Owner"],
     }),
     getFlags: builder.query<Flags[], void>({
       query: () => "/flags/",
@@ -95,6 +94,16 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
+    updateOwnerProfile: builder.mutation({
+      query: ({ updatedObj }) => {
+        return {
+          url: "/me/update/",
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Owner"],
+    }),
   }),
 });
 
@@ -114,4 +123,5 @@ export const {
   useGetRolesQuery,
   useGetDepartmentsQuery,
   useUpdateEmployeeMutation,
+  useUpdateOwnerProfileMutation,
 } = employeesApi;

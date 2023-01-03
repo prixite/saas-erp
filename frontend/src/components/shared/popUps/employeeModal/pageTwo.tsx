@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  TextField,
-  Typography,
-  Button,
-  Checkbox,
-} from "@mui/material";
+import { Box, Grid, TextField, Typography, Checkbox } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -16,7 +9,6 @@ import { FieldArray, getIn, FormikProvider } from "formik";
 import moment from "moment";
 import uploadIcon from "@src/assets/svgs/plus.svg";
 import crossIcon from "@src/assets/svgs/smallcross.svg";
-import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import {
   LocalizationInterface,
   Formik,
@@ -38,8 +30,6 @@ const PageTwo = ({ formik }: Props) => {
     uploadExperienceLetter,
     uploadfileDescription,
     imgSize,
-    uploadImg,
-    removeImg,
   } = constantData.Modals;
   return (
     <FormikProvider value={formik}>
@@ -53,38 +43,13 @@ const PageTwo = ({ formik }: Props) => {
                     <Box className="cross-icon" onClick={() => remove(index)}>
                       <img src={crossIcon} className="cross-btn" />
                     </Box>
-                    <Box className="employee-profile-img">
-                      <Box className="upload-img">
-                        <img
-                          className="upload-pic"
-                          src={UploadIcon}
-                          alt="upload icon"
-                        />
-                      </Box>
-                      <Box className="upload-btn">
-                        <Button
-                          className="upload-img-btn"
-                          sx={{ ml: "20px !important" }}
-                        >
-                          {uploadImg}
-                        </Button>
-                      </Box>
-                      <Box className="remove-btn-section">
-                        <Button
-                          className="remove-btn"
-                          sx={{ ml: "11px !important" }}
-                        >
-                          {removeImg}
-                        </Button>
-                      </Box>
-                    </Box>
                     <Grid className="grid-container-cls" container spacing={2}>
                       <Grid className="grid-item-cls" item xs={6}>
                         <Box className="text-field-box">
                           <TextField
                             className="text-field-cls"
-                            required
                             fullWidth
+                            required
                             name={`experience[${index}].title`}
                             value={exp.title}
                             label={employeeDesignationLabel}
@@ -102,6 +67,7 @@ const PageTwo = ({ formik }: Props) => {
                             className="text-field-cls"
                             select
                             fullWidth
+                            required
                             InputProps={{ sx: { height: 56 } }}
                             label={employeeCompnay}
                             name={`experience[${index}].company`}
@@ -150,6 +116,7 @@ const PageTwo = ({ formik }: Props) => {
                               }}
                               renderInput={(params) => (
                                 <TextField
+                                  required
                                   sx={{
                                     "& .MuiInputBase-input": {
                                       height: "21px",
@@ -186,6 +153,7 @@ const PageTwo = ({ formik }: Props) => {
                               }}
                               renderInput={(params) => (
                                 <TextField
+                                  required
                                   sx={{
                                     "& .MuiInputBase-input": {
                                       height: "21px",

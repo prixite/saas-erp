@@ -34,6 +34,7 @@ import {
   nameRegex,
   phoneRegex,
   nicRegex,
+  toastAPIError,
 } from "@src/helpers/utils/utils";
 import {
   useCreateEmployeeMutation,
@@ -127,7 +128,6 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     joiningDateRequired,
     CnicRequired,
     DesignationRequired,
-    ManagerRequired,
     EmployementTypeRequired,
     EmergencyContactRequired,
     CompanyRequired,
@@ -166,7 +166,6 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     nic: yup.string().matches(nicRegex, nicRegxError).required(CnicRequired),
     image: yup.string().required(employeeImageError),
     dateOfJoining: yup.string().required(joiningDateRequired),
-    manager: yup.string().required(ManagerRequired),
     designation: yup.string().required(DesignationRequired),
     emergencyContactNumber: yup
       .string()
@@ -236,8 +235,8 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   }, [action, employeeData]);
   const handleAddEmployee = async () => {
     setLoading(true);
-    await uploadImageToS3(formik.values.image).then(
-      async (data: S3Interface) => {
+    await uploadImageToS3(formik.values.image || "")
+      .then(async (data: S3Interface) => {
         const employeeObject = getEmployeeObject(data.location);
         await createEmployee(employeeObject)
           .unwrap()
@@ -255,25 +254,25 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
           })
           .catch((error) => {
             setLoading(false);
-            toast.error(
-              `${error?.data?.non_field_errors || ""}
-              ${error?.data?.user?.email || ""}
-              ${error?.data?.nic || ""}`
-            );
+            toastAPIError("Something went wrong.", error.status, error.data);
           });
-      }
-    );
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
   const handleEditEmployee = async () => {
     setLoading(true);
     if (formik.values.image?.length) {
       performEditEmployee(formik.values.image);
     } else {
-      await uploadImageToS3(formik.values.image).then(
-        async (data: S3Interface) => {
+      await uploadImageToS3(formik.values.image || "")
+        .then(async (data: S3Interface) => {
           performEditEmployee(data.location);
-        }
-      );
+        })
+        .catch((error) => {
+          toastAPIError("Something went wrong.", error.status, error.data);
+        });
     }
   };
   const performEditEmployee = async (data: string) => {
@@ -294,11 +293,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       })
       .catch((error) => {
         setLoading(false);
-        toast.error(
-          `${error?.data?.non_field_errors || ""}
-          ${error?.data?.user?.email || ""}
-          ${error?.data?.nic || ""}`
-        );
+        toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
   const populateEditableData = () => {
@@ -329,11 +324,11 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       dateOfJoining: employeeData?.date_of_joining || "",
       emergencyContactNumber: employeeData?.emergency_contact_number || "",
       designation: employeeData?.designation || "",
-      salary: employeeData?.salary || null,
+      salary: employeeData?.salary,
       userAllowed: employeeData?.user_allowed as boolean,
-      department: employeeData?.department?.id || null,
+      department: employeeData?.department?.id,
       manager: employeeData?.manager?.id,
-      type: employeeData?.type?.id || null,
+      type: employeeData?.type?.id,
       benefits: getBenefitsIds || [],
     });
   };

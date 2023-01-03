@@ -162,6 +162,7 @@ export interface profilePageInterface {
   lastNameError: string;
   emailError: string;
   phoneError: string;
+  headlineRequired: string;
 
   firstNameRequired: string;
   lastNameRequired: string;
@@ -225,14 +226,14 @@ export type EmployeeForm = {
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  image?: string;
   contactNumber: string;
   defaultRole?: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];
   orgId: string;
-  managing: number[];
+  managing: string[];
   totalExperience: string;
   manages: string[];
   nic: string;
@@ -264,6 +265,29 @@ export interface Formik {
     value: any,
     shouldValidate?: boolean | undefined
   ) => Promise<FormikErrors<EmployeeForm>> | Promise<void>;
+  submitCount: number;
+}
+export type OwnerForm = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  image?: string;
+  phone: string;
+  headline: string;
+};
+export interface FormikOwner {
+  initialValues: OwnerForm;
+  initialStatus: OwnerForm;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: EmployeeForm;
+  errors?: FormikErrors<OwnerForm>;
+  setFieldValue: (
+    field: string,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<OwnerForm>> | Promise<void>;
   submitCount: number;
 }
 export interface LocalizationInterface {
