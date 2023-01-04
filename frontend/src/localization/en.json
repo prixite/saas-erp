@@ -79,7 +79,8 @@
     "lastNameError": "Invalid last name!",
     "emailError": "Invalid email!",
     "phoneError": "Invalid phone!",
-    "headlineRequired": "Headline is required!"
+    "headlineRequired": "Headline is required!",
+    "passwordMatch": "New password and verify password do not match."
   },
   "EmployeeButtons": {
     "basicBtn": "Basic Information",

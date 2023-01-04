@@ -93,8 +93,8 @@
       }
 
       .firstName {
+        height: 84px !important;
         margin-right: 16px;
-        margin-bottom: 16px;
 
         &__textfield {
           @include textfieldCustoms;
@@ -103,7 +103,7 @@
 
       .lastName {
         margin-right: 16px;
-        margin-bottom: 16px;
+        height: 84px !important;
 
         &__textfield {
           @include textfieldCustoms;
@@ -112,7 +112,7 @@
 
       .email {
         margin-right: auto;
-        margin-bottom: 16px;
+        height: 84px !important;
 
         &__textfield {
           @include textfieldCustoms;
@@ -121,7 +121,6 @@
     }
 
     &__phoneheadline {
-      margin-bottom: 10px;
       display: flex;
       .MuiInputBase-root {
         width: 356px;
@@ -131,63 +130,7 @@
       }
       .headline-cls {
         margin-right: 16px;
-      }
-    }
-  }
-
-  .password {
-    width: 100%;
-    margin-bottom: 10px;
-    border: 1px solid #e7e7e7;
-    padding: 18px 18px 0px 18px;
-    border-radius: 12px;
-
-    &__heading {
-      margin-bottom: 26px;
-      @include headingText();
-    }
-
-    &__passwordfield {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-top: 26px;
-
-      .MuiInputBase-root {
-        width: 356px;
-      }
-
-      .currentPassword {
-        margin-right: 16px;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
-      }
-
-      .newPassword {
-        margin-right: 16px;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
-      }
-
-      .verifyPassword {
-        margin-right: auto;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
+        height: 84px !important;
       }
     }
   }
@@ -333,7 +276,6 @@
 
   .btns {
     width: 100%;
-    margin-top: 18px;
 
     &__cancelBtn {
       box-shadow: none;

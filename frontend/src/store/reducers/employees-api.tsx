@@ -104,6 +104,15 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Owner"],
     }),
+    updateOwnerPassword: builder.mutation({
+      query: ({ updatedObj }) => {
+        return {
+          url: "/change_password/",
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
+    }),
   }),
 });
 
@@ -124,4 +133,5 @@ export const {
   useGetDepartmentsQuery,
   useUpdateEmployeeMutation,
   useUpdateOwnerProfileMutation,
+  useUpdateOwnerPasswordMutation,
 } = employeesApi;
