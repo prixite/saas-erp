@@ -11,22 +11,31 @@ import {
   Stack,
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate, Navigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import { AuthContext } from "@src/components/hoc/AuthContext";
-import { useApiTokenCreateMutation } from "@src/store/api";
-import "@src/components/common/smart/login/login.scss";
+
+import {
+  AuhtContextInterface,
+  AuthContext,
+} from "@src/components/hoc/AuthContext";
+import { useApiLoginCreateMutation } from "@src/store/api";
+import "@src/components/common/presentational/login/login.scss";
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-  const [generateToken] = useApiTokenCreateMutation();
+  const [login] = useApiLoginCreateMutation();
+  const { setIsAuthenticated, isAuthenticated } = useContext(
+    AuthContext
+  ) as AuhtContextInterface;
 
-  const { signIn } = useContext(AuthContext);
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Box className="container">
@@ -56,16 +65,19 @@ const Login = () => {
           }
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting }) => {
-          try {
-            const resp = await generateToken({ authToken: values }).unwrap();
-            localStorage.setItem("token", resp.token);
-            signIn();
-            navigate("/");
-          } catch (error) {
-            toast.error(error.data.error[0]);
-          }
-          setSubmitting(false);
+        onSubmit={(values, { setSubmitting }) => {
+          login({ login: values })
+            .unwrap()
+            .then(() => {
+              setIsAuthenticated(true);
+              navigate("/");
+            })
+            .catch((error) =>
+              toast.error(error.data.detail || "Something went wrong")
+            )
+            .finally(() => {
+              setSubmitting(false);
+            });
         }}
       >
         {({ isSubmitting }) => (

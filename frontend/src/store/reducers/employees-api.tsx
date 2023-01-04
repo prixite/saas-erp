@@ -20,9 +20,7 @@ export const employeesApi = createApi({
     baseUrl: "/api/",
     prepareHeaders: (headers) => {
       headers.append("Content-Type", "application/json");
-      headers.set("X-CSRFToken", document.forms.csrf.csrfmiddlewaretoken.value);
-      localStorage.getItem("token") &&
-        headers.set("Authorization", `Token ${localStorage.getItem("token")}`);
+      headers.set("X-Csrftoken", document.forms.csrf.csrfmiddlewaretoken.value);
       return headers;
     },
   }),

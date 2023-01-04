@@ -273,6 +273,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.patchedLeaveUpdate,
       }),
     }),
+    apiLoginCreate: build.mutation<
+      ApiLoginCreateApiResponse,
+      ApiLoginCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/login/`,
+        method: "POST",
+        body: queryArg.login,
+      }),
+    }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
@@ -284,6 +294,36 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/me/update/`,
         method: "PATCH",
         body: queryArg.patchedMeUpdate,
+      }),
+    }),
+    apiPasswordResetCreate: build.mutation<
+      ApiPasswordResetCreateApiResponse,
+      ApiPasswordResetCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset/`,
+        method: "POST",
+        body: queryArg.resendEmailCode,
+      }),
+    }),
+    apiPasswordResetCompleteCreate: build.mutation<
+      ApiPasswordResetCompleteCreateApiResponse,
+      ApiPasswordResetCompleteCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-complete/`,
+        method: "POST",
+        body: queryArg.passwordResetComplete,
+      }),
+    }),
+    apiPasswordResetConfirmCreate: build.mutation<
+      ApiPasswordResetConfirmCreateApiResponse,
+      ApiPasswordResetConfirmCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-confirm/`,
+        method: "POST",
+        body: queryArg.passwordResetConfirm,
       }),
     }),
     apiProgramsList: build.query<
@@ -302,16 +342,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.program,
       }),
     }),
-    apiRefreshTokenCreate: build.mutation<
-      ApiRefreshTokenCreateApiResponse,
-      ApiRefreshTokenCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/refresh-token/`,
-        method: "POST",
-        body: queryArg.refreshToken,
-      }),
-    }),
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
@@ -320,16 +350,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
-    }),
-    apiTokenCreate: build.mutation<
-      ApiTokenCreateApiResponse,
-      ApiTokenCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/token/`,
-        method: "POST",
-        body: queryArg.authToken,
-      }),
     }),
   }),
   overrideExisting: false,
@@ -458,11 +478,30 @@ export type ApiLeavePartialUpdateApiArg = {
   id: number;
   patchedLeaveUpdate: PatchedLeaveUpdate;
 };
+export type ApiLoginCreateApiResponse = /** status 200  */ Login;
+export type ApiLoginCreateApiArg = {
+  login: Login;
+};
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
 export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdatePartialUpdateApiArg = {
   patchedMeUpdate: PatchedMeUpdate;
+};
+export type ApiPasswordResetCreateApiResponse =
+  /** status 200  */ ResendEmailCode;
+export type ApiPasswordResetCreateApiArg = {
+  resendEmailCode: ResendEmailCode;
+};
+export type ApiPasswordResetCompleteCreateApiResponse =
+  /** status 200  */ PasswordResetComplete;
+export type ApiPasswordResetCompleteCreateApiArg = {
+  passwordResetComplete: PasswordResetComplete;
+};
+export type ApiPasswordResetConfirmCreateApiResponse =
+  /** status 200  */ PasswordResetConfirm;
+export type ApiPasswordResetConfirmCreateApiArg = {
+  passwordResetConfirm: PasswordResetConfirm;
 };
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
@@ -470,18 +509,10 @@ export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
 export type ApiProgramsCreateApiArg = {
   program: Program;
 };
-export type ApiRefreshTokenCreateApiResponse = /** status 200  */ RefreshToken;
-export type ApiRefreshTokenCreateApiArg = {
-  refreshToken: RefreshToken;
-};
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
-export type ApiTokenCreateApiResponse = /** status 200  */ AuthToken;
-export type ApiTokenCreateApiArg = {
-  authToken: AuthToken;
-};
 export type AssetType = {
   id: number;
   name: string;
@@ -691,6 +722,10 @@ export type LeaveUpdate = {
 export type PatchedLeaveUpdate = {
   status?: StatusEnum;
 };
+export type Login = {
+  email: string;
+  password: string;
+};
 export type Me = {
   first_name?: string;
   last_name?: string;
@@ -716,14 +751,23 @@ export type PatchedMeUpdate = {
   contact_number?: string;
   headline?: string;
 };
+export type ResendEmailCode = {
+  email: string;
+};
+export type PasswordResetComplete = {
+  uidb64: string;
+  password: string;
+  password2: string;
+};
+export type PasswordResetConfirm = {
+  uidb64: string;
+  token: string;
+};
 export type Program = {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type RefreshToken = {
-  token_key: string;
 };
 export type PermissionEnum = "c" | "b" | "a";
 export type Role = {
@@ -733,10 +777,6 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
-};
-export type AuthToken = {
-  email: string;
-  password: string;
 };
 export const {
   useApiAssetTypeListQuery,
@@ -773,12 +813,14 @@ export const {
   useApiInstituesCreateMutation,
   useApiLeaveListQuery,
   useApiLeavePartialUpdateMutation,
+  useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
   useApiMeUpdatePartialUpdateMutation,
+  useApiPasswordResetCreateMutation,
+  useApiPasswordResetCompleteCreateMutation,
+  useApiPasswordResetConfirmCreateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
-  useApiRefreshTokenCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
-  useApiTokenCreateMutation,
 } = injectedRtkApi;
