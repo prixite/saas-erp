@@ -21,6 +21,7 @@ from waffle import get_waffle_switch_model
 from app import models, serializers
 from app.utils import send_email_forget_password, send_leave_email
 from app.views import mixins
+from django.middleware import csrf
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
@@ -41,7 +42,9 @@ class LoginView(generics.GenericAPIView):
 
             if user is not None:
                 login(request, user)
-                return Response({"detail": "User authenticated"})
+                return Response(
+                    {"detail": "User authenticated", "csrf": csrf.get_token(request)}
+                )
             else:
                 return Response(
                     {"detail": "Wrong email or password"},
