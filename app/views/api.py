@@ -402,16 +402,38 @@ class SlackApiView(APIView):
                         attendance.save()
 
                     elif command == "/leaves":
-                        if employee.leave_count > 20:
-                            return Response(
-                                data={"text": "Your leave count is already completed."}
-                            )
+                        get_detail = command_params.split("/")
+                        date_format = "%Y-%m-%d"
+
                         try:
-                            get_leave_date = command_params.split("/")
+                            date_from = datetime.strptime(get_detail[0], date_format)
+                            date_to = datetime.strptime(get_detail[1], date_format)
+                            total_leave = date_to - date_from
+                            remaining_leave = 10 - employee.leave_count
+
+                            if date_from < datetime.now() or date_to < datetime.now():
+                                return Response(
+                                    data={"text": "Date must be future date."}
+                                )
+
+                            if total_leave.days > remaining_leave:
+                                return Response(
+                                    data={
+                                        "text": f"Your remaining leaves ({remaining_leave}) are less then requested leaves."  # noqa
+                                    }
+                                )
+                            if date_from > date_to:
+                                return Response(
+                                    data={
+                                        "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves From_Date/To_Date/Reason"""  # noqa
+                                    }
+                                )
+
                             models.Leave.objects.create(
                                 employee_id=employee.id,
-                                leave_from=get_leave_date[0],
-                                leave_to=get_leave_date[1],
+                                leave_from=get_detail[0],
+                                leave_to=get_detail[1],
+                                description=get_detail[2],
                                 organization=employee.organization,
                             )
                             return Response(
@@ -422,8 +444,7 @@ class SlackApiView(APIView):
                             print(e)
                             return Response(
                                 data={
-                                    "text": """You submitted an invalid leave request.
-                                    Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD"""  # noqa
+                                    "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD/Reason"""  # noqa
                                 },
                                 status=status.HTTP_201_CREATED,
                             )
@@ -485,14 +506,20 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     def update(self, request, *args, **kwargs):
         leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
         employee = get_object_or_404(models.Employee, pk=leave.employee.id)
-        updated_by = get_object_or_404(models.Employee, user=request.user)
-        to_email = [leave.employee.user.email]
+        updated_by = get_object_or_404(models.User, email=request.user.email)
+        total_leave = leave.leave_to - leave.leave_from
         if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
-            employee.leave_count += 1
+            employee.leave_count += total_leave.days
         leave.updated_by = updated_by
         employee.save()
         leave.save()
-        if leave.employee.manager:
-            to_email.append(leave.employee.manager.user.email)
-        send_leave_email(to_email, request.data["status"])
-        return super().update(request, *args, **kwargs)
+        response = super().update(request, *args, **kwargs)
+        send_leave_email(
+            request.data["status"],
+            employee,
+            updated_by,
+            leave.leave_from,
+            leave.leave_to,
+            leave.hr_comment,
+        )
+        return response

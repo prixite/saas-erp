@@ -492,4 +492,4 @@ class LeaveSerializer(serializers.ModelSerializer):
 class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
-        fields = ("status",)
+        fields = ("status", "hr_comment")

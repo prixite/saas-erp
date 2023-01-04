@@ -709,6 +709,8 @@ export type Leave = {
   id: number;
   leave_from: string;
   leave_to: string;
+  description: string;
+  hr_comment?: string | null;
   status?: StatusEnum;
   created_at: string;
   updated_at: string;
@@ -718,9 +720,11 @@ export type Leave = {
 };
 export type LeaveUpdate = {
   status?: StatusEnum;
+  hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
   status?: StatusEnum;
+  hr_comment?: string | null;
 };
 export type Login = {
   email: string;
