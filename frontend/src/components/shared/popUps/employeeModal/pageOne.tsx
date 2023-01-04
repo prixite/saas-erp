@@ -38,7 +38,10 @@ interface Props {
 }
 const PageOne = ({ formik, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
-  const [checked, setChecked] = useState(false);
+
+  const [checked, setChecked] = useState(
+    formik.values.benefits.length > 0 ? true : false
+  );
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
