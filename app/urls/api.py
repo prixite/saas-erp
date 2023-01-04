@@ -7,6 +7,21 @@ urlpatterns = [
     path("login/", api.LoginView.as_view()),
     path("logout/", auth_views.LogoutView.as_view(next_page="/")),
     path(
+        "password-reset/",
+        api.PasswordResetEmailView.as_view(),
+        name="request-reset-email",
+    ),
+    path(
+        "password-reset-confirm/",
+        api.PasswordResetConfirmView.as_view(),
+        name="password-reset-confirm",
+    ),
+    path(
+        "password-reset-complete/",
+        api.PasswordResetCompleteView.as_view(),
+        name="password-reset-complete",
+    ),
+    path(
         "employees/",
         api.EmployeeViewSet.as_view(
             {

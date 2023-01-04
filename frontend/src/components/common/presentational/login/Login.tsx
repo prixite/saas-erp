@@ -23,7 +23,7 @@ import {
   AuthContext,
 } from "@src/components/hoc/AuthContext";
 import { useApiLoginCreateMutation } from "@src/store/api";
-import "@src/components/common/smart/login/login.scss";
+import "@src/components/common/presentational/login/login.scss";
 
 const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);

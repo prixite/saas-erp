@@ -216,6 +216,25 @@ export type Experirence = {
   start_date: string;
   end_date: string;
 };
+export interface AuthPages {
+  saas: string;
+  erp: string;
+  forgot_password_title: string;
+  reset_password_title: string;
+  reset_password_desc: string;
+  forgot_password_desc: string;
+  email_text: string;
+  password_text: string;
+  confirm_password_text: string;
+  save_password_text: string;
+  reset_password_btn: string;
+  Back_to: string;
+  login_text: string;
+  email_required_text: string;
+  invalid_email_text: string;
+  password_required_text: string;
+  confirm_password_required_text: string;
+}
 export type Benefit = {
   id: number;
   name: string;
@@ -306,4 +325,5 @@ export interface LocalizationInterface {
   MenuButtons: menuButtons;
   EditBenefitModal: editBenefitModal;
   BreadCrumbs: breadcrumbsInterface;
+  AuthPages: AuthPages;
 }

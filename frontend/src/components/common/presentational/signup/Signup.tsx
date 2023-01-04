@@ -14,13 +14,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 import HideIcon from "@src/assets/svgs/HideIcon.svg";
 import showIcon from "@src/assets/svgs/Show.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import { AuthContext } from "@src/components/hoc/AuthContext";
+import {
+  AuhtContextInterface,
+  AuthContext,
+} from "@src/components/hoc/AuthContext";
 import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
-import "@src/components/common/smart/signup/Signup.scss";
+import "@src/components/common/presentational/signup/Signup.scss";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext) as AuhtContextInterface;
 
   if (isAuthenticated) {
     return <Navigate to="/" />;
