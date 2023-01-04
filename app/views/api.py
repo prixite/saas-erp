@@ -301,14 +301,19 @@ class SlackApiView(APIView):
                         try:
                             date_from = datetime.strptime(get_detail[0], date_format)
                             date_to = datetime.strptime(get_detail[1], date_format)
+                            total_leave = date_to - date_from
+                            remaining_leave = 10 - employee.leave_count
 
-                            if date_from < datetime.now():
+                            if date_from < datetime.now() or date_to < datetime.now():
                                 return Response(
                                     data={"text": "Date must be future date."}
                                 )
-                            if date_to < datetime.now():
+
+                            if total_leave.days > remaining_leave:
                                 return Response(
-                                    data={"text": "Date must be future date."}
+                                    data={
+                                        "text": f"Your remaining leaves ({remaining_leave}) are less then requested leaves."  # noqa
+                                    }
                                 )
                             if date_from > date_to:
                                 return Response(
@@ -316,12 +321,7 @@ class SlackApiView(APIView):
                                         "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves From_Date/To_Date/Reason"""  # noqa
                                     }
                                 )
-                            if employee.leave_count > 20:
-                                return Response(
-                                    data={
-                                        "text": "Your leave count is already completed."
-                                    }
-                                )
+
                             models.Leave.objects.create(
                                 employee_id=employee.id,
                                 leave_from=get_detail[0],
@@ -400,8 +400,9 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
         leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
         employee = get_object_or_404(models.Employee, pk=leave.employee.id)
         updated_by = get_object_or_404(models.User, email=request.user.email)
+        total_leave = leave.leave_to - leave.leave_from
         if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
-            employee.leave_count += 1
+            employee.leave_count += total_leave.days
         leave.updated_by = updated_by
         employee.save()
         leave.save()
