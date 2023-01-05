@@ -80,6 +80,9 @@
     "emailError": "Invalid email!",
     "phoneError": "Invalid phone!",
     "headlineRequired": "Headline is required!",
+    "currentPasswordRequired": "Current password is required!",
+    "newPasswordRequired": "New password is required!",
+    "verifyPasswordRequired": "Verify password is required!",
     "passwordMatch": "New password and verify password do not match."
   },
   "EmployeeButtons": {

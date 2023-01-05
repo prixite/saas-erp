@@ -170,6 +170,9 @@ export interface profilePageInterface {
   phoneRequired: string;
   passwordRequired: string;
   passwordMatch: string;
+  currentPasswordRequired: string;
+  newPasswordRequired: string;
+  verifyPasswordRequired: string;
 }
 
 export interface employeeButtons {
