@@ -24,8 +24,14 @@ function ChangePassword() {
   const [changeOwnerPassword] = useUpdateOwnerPasswordMutation();
 
   const constantData: LocalizationInterface = localizedData();
-  const { changePasswordHeading, saveBtn, passwordRequired, passwordMatch } =
-    constantData.ProfilePage;
+  const {
+    changePasswordHeading,
+    saveBtn,
+    passwordMatch,
+    currentPasswordRequired,
+    newPasswordRequired,
+    verifyPasswordRequired,
+  } = constantData.ProfilePage;
 
   const formik = useFormik({
     initialValues: {
@@ -34,11 +40,11 @@ function ChangePassword() {
       verifynewpassword: "",
     },
     validationSchema: yup.object({
-      password: yup.string().required(passwordRequired),
-      newpassword: yup.string().required(passwordRequired),
+      password: yup.string().required(currentPasswordRequired),
+      newpassword: yup.string().required(newPasswordRequired),
       verifynewpassword: yup
         .string()
-        .required(passwordRequired)
+        .required(verifyPasswordRequired)
         .oneOf([yup.ref("newpassword"), null], passwordMatch),
     }),
     validateOnChange: true,

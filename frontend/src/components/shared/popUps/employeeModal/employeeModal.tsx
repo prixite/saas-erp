@@ -22,6 +22,7 @@ import PageOne from "@src/components/shared/popUps/employeeModal/pageOne";
 import PageThree from "@src/components/shared/popUps/employeeModal/pageThree";
 import PageTwo from "@src/components/shared/popUps/employeeModal/pageTwo";
 import { timeOut } from "@src/helpers/constants/constants";
+import { EmployeeData } from "@src/helpers/interfaces/employees-modal";
 import {
   LocalizationInterface,
   EmployeeForm,
@@ -29,6 +30,7 @@ import {
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
+
 import {
   emailRegX,
   nameRegex,
@@ -230,9 +232,22 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
 
   useEffect(() => {
     if (action === "edit") {
-      populateEditableData();
+      populateEditableData(employeeData);
     }
   }, [action, employeeData]);
+  const resetModal = () => {
+    if (action !== "edit") {
+      formik.resetForm();
+      handleClose();
+      setPage("1");
+      setOnChangeValidation(false);
+    } else {
+      populateEditableData(employeeData);
+      handleClose();
+      setPage("1");
+      setOnChangeValidation(false);
+    }
+  };
   const handleAddEmployee = async () => {
     setLoading(true);
     await uploadImageToS3(formik.values.image || "")
@@ -247,7 +262,6 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
             });
             setLoading(false);
             handleClose();
-            formik.resetForm();
             setOpenSucessModal(true);
             setOnChangeValidation(false);
             setPage("1");
@@ -296,7 +310,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
-  const populateEditableData = () => {
+  const populateEditableData = (employeeData: EmployeeData | undefined) => {
     const editableExperience = employeeData?.experience.map((item) => ({
       ...item,
       company: item.company.id,
@@ -375,11 +389,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     resetModal();
     setOpenSucessModal(false);
   };
-  const resetModal = () => {
-    handleClose();
-    setPage("1");
-    setOnChangeValidation(false);
-  };
+
   const addExpComponent = () => {
     formik.setFieldValue("experience", [
       ...formik.values.experience,
