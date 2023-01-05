@@ -75,7 +75,6 @@ INSTALLED_APPS = [
     "app",
     # 3rd party apps
     "rest_framework",
-    "rest_framework.authtoken",
     "drf_spectacular",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -192,6 +191,9 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
     ],
 }
 

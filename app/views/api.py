@@ -2,18 +2,19 @@ from datetime import datetime
 
 import slack
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.db import transaction
 from django.shortcuts import get_object_or_404
-from django.utils.decorators import method_decorator
 from django.utils.encoding import smart_str
 from django.utils.http import urlsafe_base64_decode
+from django.conf import settings
+from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.db import transaction
+from django.utils.encoding import smart_bytes, smart_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
-from rest_framework.authtoken import views as auth_views
-from rest_framework.authtoken.models import Token
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,56 +23,145 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
+from app.utils import send_email_forget_password, send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
 
 
-class AuthTokenView(auth_views.ObtainAuthToken):
-    serializer_class = serializers.AuthTokenSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
-
-        return Response(
-            {
-                "token": token.key,
-                "user": serializers.MeSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-
-class RefreshTokenView(generics.GenericAPIView):
-    queryset = Token.objects.all()
+class LoginView(generics.GenericAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = serializers.RefreshTokenSerializer
+    serializer_class = serializers.LoginSerializer
+
+    def post(self, request, format=None):
+        data = self.request.data
+
+        email = data["email"]
+        password = data["password"]
+
+        try:
+            user = authenticate(email=email, password=password)
+
+            if user is not None:
+                login(request, user)
+                return Response({"detail": "User authenticated"})
+            else:
+                return Response(
+                    {"detail": "Wrong email or password"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        except Exception:
+            return Response(
+                {"detail": "Something went wrong when logging in"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class PasswordResetEmailView(generics.GenericAPIView):
+    serializer_class = serializers.ResendEmailCodeSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        token = Token.objects.get(key=serializer.validated_data["token_key"])
+        try:
+            user = models.User.objects.get(email=serializer.validated_data["email"])
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+            password_reset_url = (
+                f"{settings.DOMAIN_NAME}/reset-password/?uidb64={uidb64}&token={token}"
+            )
+            try:
+                send_email_forget_password(
+                    {
+                        "password_reset_url": password_reset_url,
+                        "to_email": user.email,
+                        "user": user,
+                    },
+                )
+                return Response(
+                    {"status": "Password reset link sent"},
+                    status=status.HTTP_200_OK,
+                )
+            except Exception:
+                return Response(
+                    {"status": "Something went wrong"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        except models.User.DoesNotExist:
+            return Response(
+                {"error": "Account record not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+class PasswordResetConfirmView(generics.GenericAPIView):
+    serializer_class = serializers.PasswordResetConfirmSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        token = serializer.validated_data["token"]
+
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+            return Response({"token_valid": True}, status=status.HTTP_200_OK)
+
+        except Exception:
+            try:
+                if not PasswordResetTokenGenerator().check_token(user):
+                    return Response(
+                        {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            except Exception:
+                return Response(
+                    {"token_valid": False}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+
+class PasswordResetCompleteView(generics.GenericAPIView):
+    serializer_class = serializers.PasswordResetCompleteSerializer
+    queryset = models.User.objects.all()
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        uidb64 = serializer.validated_data["uidb64"]
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = models.User.objects.get(id=id)
+            user.set_password(serializer.validated_data["password"])
+            user.save()
+        except Exception:
+            return Response(
+                {"status": "Account record not found"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         return Response(
-            {
-                "status": "valid token",
-                "token": token.key,
-                "user": serializers.MeSerializer(
-                    token.user, context=self.get_serializer_context()
-                ).data,
-            },
+            {"status": "Password reset success"},
             status=status.HTTP_200_OK,
         )
 
 
-@method_decorator(login_required, name="dispatch")
 class HomeView(TemplateView):
     template_name = "app/api/home.html"
 
@@ -274,6 +364,7 @@ class SlackApiView(APIView):
                 channel_id = request.data.get("channel_id")
                 user_id = request.data.get("user_id")
                 command = request.data.get("command")
+                command_params = request.data.get("text")
 
                 if channel_id == SLACK_ATTENDACE_CHANNEL:
                     try:
@@ -283,11 +374,8 @@ class SlackApiView(APIView):
                         employee = models.Employee.objects.get(
                             user__email=user.get("profile").get("email")
                         )
-
                         employee.slack_id = user_id
-
                         employee.save()
-
                     last_record = models.Attendance.objects.filter(
                         employee=employee
                     ).last()
@@ -300,7 +388,6 @@ class SlackApiView(APIView):
                                 },
                                 status=status.HTTP_200_OK,
                             )
-
                         attendance = models.Attendance.objects.create(
                             employee=employee, organization=employee.organization
                         )
@@ -319,6 +406,54 @@ class SlackApiView(APIView):
                         attendance.time_out = datetime.now()
                         attendance.save()
 
+                    elif command == "/leaves":
+                        get_detail = command_params.split("/")
+                        date_format = "%Y-%m-%d"
+
+                        try:
+                            date_from = datetime.strptime(get_detail[0], date_format)
+                            date_to = datetime.strptime(get_detail[1], date_format)
+                            total_leave = date_to - date_from
+                            remaining_leave = 10 - employee.leave_count
+
+                            if date_from < datetime.now() or date_to < datetime.now():
+                                return Response(
+                                    data={"text": "Date must be future date."}
+                                )
+
+                            if total_leave.days > remaining_leave:
+                                return Response(
+                                    data={
+                                        "text": f"Your remaining leaves ({remaining_leave}) are less then requested leaves."  # noqa
+                                    }
+                                )
+                            if date_from > date_to:
+                                return Response(
+                                    data={
+                                        "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves From_Date/To_Date/Reason"""  # noqa
+                                    }
+                                )
+
+                            models.Leave.objects.create(
+                                employee_id=employee.id,
+                                leave_from=get_detail[0],
+                                leave_to=get_detail[1],
+                                description=get_detail[2],
+                                organization=employee.organization,
+                            )
+                            return Response(
+                                data={"text": "Leave request submitted successfully"},
+                                status=status.HTTP_201_CREATED,
+                            )
+                        except Exception as e:
+                            print(e)
+                            return Response(
+                                data={
+                                    "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD/Reason"""  # noqa
+                                },
+                                status=status.HTTP_201_CREATED,
+                            )
+
                     return Response(
                         data={"response_type": "in_channel"},
                         status=status.HTTP_200_OK,
@@ -330,7 +465,8 @@ class SlackApiView(APIView):
                     },
                     status=status.HTTP_200_OK,
                 )
-            except Exception:
+            except Exception as e:
+                print(e)
                 return Response(
                     data={
                         "text": "Something went wrong. Please try again.",
@@ -413,3 +549,45 @@ class EmployeeInvitationPasswordUpdateCompleteView(generics.GenericAPIView):
             {"status": "password reset success"},
             status=status.HTTP_200_OK,
         )
+
+
+class MeUpdateViewSet(UpdateAPIView):
+    serializer_class = serializers.MeUpdateSerializer
+    queryset = models.User.objects.none()
+    http_method_names = ("patch",)
+
+    def get_object(self):
+        return self.request.user
+
+
+class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.LeaveSerializer
+    queryset = models.Leave.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_class(self):
+        if self.action == "partial_update":
+            return serializers.LeaveUpdateSerializer
+        return self.serializer_class
+
+    @transaction.atomic
+    def update(self, request, *args, **kwargs):
+        leave = get_object_or_404(models.Leave, pk=kwargs.get("pk"))
+        employee = get_object_or_404(models.Employee, pk=leave.employee.id)
+        updated_by = get_object_or_404(models.User, email=request.user.email)
+        total_leave = leave.leave_to - leave.leave_from
+        if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
+            employee.leave_count += total_leave.days
+        leave.updated_by = updated_by
+        employee.save()
+        leave.save()
+        response = super().update(request, *args, **kwargs)
+        send_leave_email(
+            request.data["status"],
+            employee,
+            updated_by,
+            leave.leave_from,
+            leave.leave_to,
+            leave.hr_comment,
+        )
+        return response

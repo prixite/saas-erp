@@ -1,10 +1,26 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from app.views import api
 
 urlpatterns = [
-    path("token/", api.AuthTokenView.as_view(), name="obtain-auth-token"),
-    path("refresh-token/", api.RefreshTokenView.as_view(), name="refresh-auth-token"),
+    path("login/", api.LoginView.as_view()),
+    path("logout/", auth_views.LogoutView.as_view(next_page="/")),
+    path(
+        "password-reset/",
+        api.PasswordResetEmailView.as_view(),
+        name="request-reset-email",
+    ),
+    path(
+        "password-reset-confirm/",
+        api.PasswordResetConfirmView.as_view(),
+        name="password-reset-confirm",
+    ),
+    path(
+        "password-reset-complete/",
+        api.PasswordResetCompleteView.as_view(),
+        name="password-reset-complete",
+    ),
     path(
         "employees/",
         api.EmployeeViewSet.as_view(
@@ -111,6 +127,18 @@ urlpatterns = [
         api.AttendanceViewSet.as_view(),
     ),
     path(
+        "leave/",
+        api.LeaveView.as_view({"get": "list"}),
+    ),
+    path(
+        "leave/<int:pk>/",
+        api.LeaveView.as_view(
+            {
+                "patch": "partial_update",
+            }
+        ),
+    ),
+    path(
         "slack/attendance/",
         api.SlackApiView.as_view(),
     ),
@@ -121,5 +149,9 @@ urlpatterns = [
     path(
         "employee-invitation-password-complete/",
         api.EmployeeInvitationPasswordUpdateCompleteView.as_view(),
+    ),
+    path(
+        "me/update/",
+        api.MeUpdateViewSet.as_view(),
     ),
 ]

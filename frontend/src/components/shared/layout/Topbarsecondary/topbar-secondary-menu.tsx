@@ -4,6 +4,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -66,14 +67,15 @@ const TopbarSecondaryMenu = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleProfileClick = () => {
     navigate("/profile");
     handleClose();
   };
+
   return (
     <Box className="topbar-secondary">
       <Button
@@ -118,6 +120,12 @@ const TopbarSecondaryMenu = () => {
         <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
           More
+        </MenuItem>
+        <MenuItem disableRipple>
+          <LogoutIcon />
+          <a className="logout-link" href="/api/logout">
+            Logout
+          </a>
         </MenuItem>
       </StyledMenu>
     </Box>

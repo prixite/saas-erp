@@ -1,16 +1,16 @@
 from datetime import date
 
 from django.contrib.auth import authenticate, password_validation
+from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 from waffle import get_waffle_switch_model
 
 from app import models
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(
         label="Password",
@@ -37,28 +37,33 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
-class RefreshTokenSerializer(serializers.Serializer):
-    token_key = serializers.CharField(max_length=500, required=True)
-
-    def validate(self, attrs):
-        try:
-            Token.objects.get(key=attrs["token_key"])
-        except Token.DoesNotExist:
-            raise serializers.ValidationError({"token_key": "Token deos not exist."})
-
-        return attrs
-
-
 class DegreeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Degree
         fields = ["program", "institute", "year"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = {"id": instance.program.id, "name": instance.program.name}
+        data["institute"] = {
+            "id": instance.institute.id,
+            "name": instance.institute.name,
+        }
+        return data
 
 
 class ExperirenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["company"] = {
+            "id": instance.company.id,
+            "name": instance.company.name,
+        }
+        return data
 
 
 class BenefitSerializer(serializers.ModelSerializer):
@@ -156,6 +161,15 @@ class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
     email = serializers.EmailField(read_only=True)
 
 
+class ManagerSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(source="user.get_full_name")
+
+    class Meta:
+        model = models.Employee
+        fields = "id", "name"
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
     degrees = DegreeSerializer(many=True)
@@ -166,7 +180,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         write_only=True, queryset=models.Employee.objects.all(), many=True
     )
     total_experience = serializers.SerializerMethodField()
-    manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
@@ -187,6 +200,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user = user_ser.save()
         user.username = user.email
         user.organization = organization
+        user.is_active = validated_data.get("user_allowed", False)
         user.save()
         validated_data["user_id"] = user.id
         employee = super().create(validated_data)
@@ -246,12 +260,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["organization"] = instance.organization.name
+        data["manages"] = ManagerSerializer(instance.manages.all(), many=True).data
         if instance.department:
-            data["department"] = instance.department.name
+            data["department"] = {
+                "id": instance.department.id,
+                "name": instance.department.name,
+            }
         if instance.manager:
-            data["manager"] = instance.manager.user.get_full_name()
+            data["manager"] = {
+                "id": instance.manager.id,
+                "name": instance.manager.user.get_full_name(),
+            }
         if instance.type:
-            data["type"] = instance.type.name
+            data["type"] = {"id": instance.type.id, "title": instance.type.name}
         if instance.benefits:
             data["benefits"] = BenefitSerializer(
                 instance.benefits.all(), many=True
@@ -298,6 +319,7 @@ class EmployeeUpdateSerializer(EmployeeSerializer):
         user = models.User.objects.get(email=instance.user.email)
         user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
         user_ser.is_valid(raise_exception=True)
+        user.is_active = validated_data.get("user_allowed", False)
         user_ser.save()
 
         models.Degree.objects.filter(employee=instance).delete()
@@ -414,6 +436,29 @@ class UserPasswordSerializer(serializers.Serializer):
         return data
 
 
+class ResendEmailCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    token = serializers.CharField(required=True)
+
+
+class PasswordResetCompleteSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, validators=[validate_password])
+    password2 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        return attrs
+
+
 class WaffleSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_waffle_switch_model()
@@ -447,3 +492,27 @@ class EmployeeInvitationPasswordCompleteSerializer(serializers.Serializer):
             )
 
         return attrs
+
+
+class MeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "first_name",
+            "last_name",
+            "image",
+            "contact_number",
+            "headline",
+        )
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
+
+
+class LeaveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = ("status", "hr_comment")

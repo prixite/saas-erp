@@ -134,6 +134,10 @@ if settings.DEBUG:
     class AssetAdmin(admin.ModelAdmin):
         pass
 
+    @admin.register(models.Leave)
+    class LeaveAdmin(admin.ModelAdmin):
+        list_display = ["employee", "created_at", "updated_at"]
+
     @admin.register(models.Attendance)
     class AttendanceAdmin(admin.ModelAdmin):
         readonly_fields = ("time_in", "time_out")
