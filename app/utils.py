@@ -6,27 +6,37 @@ from django.template.loader import render_to_string
 def send_leave_email(status, employee, updated_by, leave_from, leave_to, hr_comment):
     subject = f"Leave {status}"
     data = {
-            "employee": employee,
-            "leave_from": leave_from,
-            "leave_to": leave_to,
-            "status": status,
-            "hr_comment": hr_comment,
-            "updated_by": updated_by.get_full_name()
-        }
+        "employee": employee,
+        "leave_from": leave_from,
+        "leave_to": leave_to,
+        "status": status,
+        "hr_comment": hr_comment,
+        "updated_by": updated_by.get_full_name(),
+    }
     html_emplyee_message = render_to_string(
         "app/email/leave_update.html",
         data,
     )
     email_from = settings.DEFAULT_FROM_EMAIL
     try:
-        send_mail(subject, "", email_from, [employee.user.email], html_message=html_emplyee_message)
+        send_mail(
+            subject,
+            "",
+            email_from,
+            [employee.user.email],
+            html_message=html_emplyee_message,
+        )
         if employee.manager:
             html_manager_message = render_to_string(
-            "app/email/leaveupdate_manager.html",
+                "app/email/leaveupdate_manager.html",
                 data,
             )
             send_mail(
-                subject, "", email_from, [employee.manager.user.email], html_message=html_manager_message
+                subject,
+                "",
+                email_from,
+                [employee.manager.user.email],
+                html_message=html_manager_message,
             )
     except Exception as e:
         return e
