@@ -1,6 +1,6 @@
-import factory
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from app import models
 
 from app import factories
 
@@ -11,84 +11,83 @@ class Command(BaseCommand):
         factories.UserFactory(
             is_superuser=True,
             is_staff=True,
+            first_name="Super",
+            last_name="Admin",
             email="super-admin@example.com",
+            username="super admin",
         )
-        organization = factories.OrganizationFactory()
-        employement_type = factories.EmploymentTypeFactory(name="Full time")
-
-        factories.CurrencyFactory.create_batch(size=3)
-        self.add_compensation_type_instances(organization)
-        self.add_compenstation_schedule_instances(organization)
-        self.add_document_type_instances(organization)
-
-        factories.InstituteFactory.create_batch(
-            size=3,
-            name=factory.Faker("name"),
+        organization = factories.OrganizationFactory(
+            name="Test Organization", address="USA"
+        )
+        employee_module = factories.ModuleFactory(
+            name="Employee", slug=models.Module.ModuleType.EMPLOYEES, is_enabled=True
+        )
+        factories.OrganizationModuleFactory(
+            module=employee_module, organization=organization, is_enabled=True
+        )
+        owner_role = factories.RoleFactory(
+            name="Test Organization Owner",
+            permission=models.Role.Permission.OWNER,
+            is_default=True,
             organization=organization,
         )
-        factories.EmployeeFactory.create_batch(
-            size=10,
-            department=factories.DepartmentFactory(),
+        member_role = factories.RoleFactory(
+            name="Test Organization Member",
+            permission=models.Role.Permission.MEMBER,
+            is_default=True,
             organization=organization,
-            manager=factories.EmployeeFactory(
-                organization=organization, type=employement_type
-            ),
-            type=employement_type,
+        )
+        factories.UserFactory(
+            first_name="Test",
+            last_name="Owner",
+            username="owner@example.com",
+            email="owner@example.com",
+            organization=organization,
+            default_role=owner_role,
+        )
+
+        org_user = factories.UserFactory(
+            first_name="Employee",
+            last_name="One",
+            username="employee1@example.com",
+            email="employee1@example.com",
+            organization=organization,
+            default_role=member_role,
+        )
+        org_user_2 = factories.UserFactory(
+            first_name="Employee",
+            last_name="Two",
+            username="employee2@example.com",
+            email="employee2@example.com",
+            organization=organization,
+            default_role=member_role,
+        )
+        department = factories.DepartmentFactory(
+            name="Frontend", organization=organization
+        )
+        employment_type = factories.EmploymentTypeFactory(
+            name="Full time", organization=organization
+        )
+
+        factories.EmployeeFactory(
+            user=org_user,
+            nic="2530119091339",
+            date_of_joining="2021-11-15",
+            emergency_contact_number="43223004234",
+            designation="Software Engineer backend",
+            organization=organization,
+            department=department,
+            type=employment_type,
+        )
+        factories.EmployeeFactory(
+            user=org_user_2,
+            nic="3900119091120",
+            date_of_joining="2020-11-15",
+            emergency_contact_number="43903004234",
+            designation="React js developer",
+            organization=organization,
+            department=department,
+            type=employment_type,
         )
 
         self.stdout.write(self.style.SUCCESS("Data generated Successfully"))
-
-    def add_compensation_type_instances(self, organization):
-        factories.CompensationTypeFactory(
-            name="hourly",
-            is_hourly=True,
-            organization=organization,
-        )
-        factories.CompensationTypeFactory(
-            name="monthly",
-            is_monthly=True,
-            organization=organization,
-        )
-        factories.CompensationTypeFactory(
-            name="milestone",
-            is_milestone=True,
-            organization=organization,
-        )
-
-    def add_compenstation_schedule_instances(self, organization):
-        factories.CompensationScheduleFactory(
-            name="monthly",
-            is_monthly=True,
-            organization=organization,
-        )
-        factories.CompensationScheduleFactory(
-            name="weekly",
-            is_weekly=True,
-            organization=organization,
-        )
-
-    def add_document_type_instances(self, organization):
-        factories.DocumentTypeFactory(
-            name="NDA",
-            organization=organization,
-        )
-        factories.DocumentTypeFactory(
-            name="Offer letter",
-            organization=organization,
-        )
-        factories.DocumentTypeFactory(
-            name="Experience Letter",
-            organization=organization,
-        )
-        factories.DocumentTypeFactory(
-            name="Acceptance letter",
-            organization=organization,
-        )
-        factories.DocumentTypeFactory(
-            name="Job Contract",
-            organization=organization,
-        )
-        factories.DocumentTypeFactory(
-            name="Contractor Agreement",
-            organization=organization,
-        )
