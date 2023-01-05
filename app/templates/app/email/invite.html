@@ -1,7 +1,8 @@
-Hi {{ user.get_full_name }},
-
-You have been invited to Prixite ERP. Please click the link below to create your account.
-
-{{ DOMAIN_NAME }}{% url "html:users-invite" user.invitation.slug %}
-
-Cheers!
+<h1>Password Reset</h1>
+<p>Hi {{ full_name }},</p>
+<p>
+  You have been invited to Prixite ERP. Please click the link below to create
+  your account.
+</p>
+{{invite_link}}
+<p>Cheers!</p>

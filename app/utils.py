@@ -3,18 +3,30 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
-def send_invitation_mail(to_email, name, url):
-    subject = f"welcome {name}"
+def send_invitation_mail(to_email, user, url):
+    subject = f"Welcome {user.get_full_name()}"
     message = f"Click below link to update your password \n {url}"
     email_from = settings.DEFAULT_FROM_EMAIL
     recipient_list = [
         to_email,
     ]
-
+    html_message = render_to_string(
+        "app/email/invite.html",
+        {
+            "full_name": user.get_full_name(),
+            "invite_link": url,
+        },
+    )
     try:
-        send_mail(subject, message, email_from, recipient_list)
+        send_mail(
+            subject,
+            message,
+            email_from,
+            recipient_list,
+            html_message=html_message,
+        )
     except Exception as e:
-        print(f"Exception when calling SMTPApi: {e}")
+        return e
 
 
 def send_leave_email(status, employee, updated_by, leave_from, leave_to, hr_comment):

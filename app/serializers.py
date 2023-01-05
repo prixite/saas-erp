@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.contrib.auth import authenticate, password_validation
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
@@ -469,29 +469,6 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]
-
-
-class EmployeeInvitationConfirmSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField(write_only=True, required=True)
-    token = serializers.CharField(write_only=True, required=True)
-
-
-class EmployeeInvitationPasswordCompleteSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField(write_only=True, required=True)
-    password = serializers.CharField(
-        write_only=True,
-        required=False,
-        validators=[password_validation.validate_password],
-    )
-    password2 = serializers.CharField(write_only=True, required=False)
-
-    def validate(self, attrs):
-        if attrs["password"] != attrs["password2"]:
-            raise serializers.ValidationError(
-                {"password": "Password fields didn't match."}
-            )
-
-        return attrs
 
 
 class MeUpdateSerializer(serializers.ModelSerializer):

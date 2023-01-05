@@ -145,26 +145,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.documentType,
       }),
     }),
-    apiEmployeeInvitationPasswordCompleteCreate: build.mutation<
-      ApiEmployeeInvitationPasswordCompleteCreateApiResponse,
-      ApiEmployeeInvitationPasswordCompleteCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/employee-invitation-password-complete/`,
-        method: "POST",
-        body: queryArg.employeeInvitationPasswordComplete,
-      }),
-    }),
-    apiEmployeeInvitationPasswordConfirmCreate: build.mutation<
-      ApiEmployeeInvitationPasswordConfirmCreateApiResponse,
-      ApiEmployeeInvitationPasswordConfirmCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/employee-invitation-password-confirm/`,
-        method: "POST",
-        body: queryArg.employeeInvitationConfirm,
-      }),
-    }),
     apiEmployeementTypeList: build.query<
       ApiEmployeementTypeListApiResponse,
       ApiEmployeementTypeListApiArg
@@ -434,16 +414,6 @@ export type ApiDocumentTypeCreateApiResponse = /** status 201  */ DocumentType;
 export type ApiDocumentTypeCreateApiArg = {
   documentType: DocumentType;
 };
-export type ApiEmployeeInvitationPasswordCompleteCreateApiResponse =
-  /** status 200  */ EmployeeInvitationPasswordComplete;
-export type ApiEmployeeInvitationPasswordCompleteCreateApiArg = {
-  employeeInvitationPasswordComplete: EmployeeInvitationPasswordComplete;
-};
-export type ApiEmployeeInvitationPasswordConfirmCreateApiResponse =
-  /** status 200  */ EmployeeInvitationConfirm;
-export type ApiEmployeeInvitationPasswordConfirmCreateApiArg = {
-  employeeInvitationConfirm: EmployeeInvitationConfirm;
-};
 export type ApiEmployeementTypeListApiResponse =
   /** status 200  */ EmployeementType[];
 export type ApiEmployeementTypeListApiArg = void;
@@ -613,15 +583,6 @@ export type DocumentType = {
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type EmployeeInvitationPasswordComplete = {
-  uidb64: string;
-  password?: string;
-  password2?: string;
-};
-export type EmployeeInvitationConfirm = {
-  uidb64: string;
-  token: string;
 };
 export type EmployeementType = {
   id: number;
@@ -840,8 +801,6 @@ export const {
   useApiDepartmentCreateMutation,
   useApiDocumentTypeListQuery,
   useApiDocumentTypeCreateMutation,
-  useApiEmployeeInvitationPasswordCompleteCreateMutation,
-  useApiEmployeeInvitationPasswordConfirmCreateMutation,
   useApiEmployeementTypeListQuery,
   useApiEmployeementTypeCreateMutation,
   useApiEmployeesListQuery,
