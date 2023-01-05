@@ -1,10 +1,10 @@
 from django.conf import settings
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_bytes
 from django.utils.http import urlsafe_base64_encode
+
 from app.utils import send_invitation_mail
 
 
