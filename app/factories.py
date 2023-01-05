@@ -103,3 +103,8 @@ class CompanyFactory(factory.django.DjangoModelFactory):
 class DocumentTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.DocumentType
+
+
+class LeaveFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Leave

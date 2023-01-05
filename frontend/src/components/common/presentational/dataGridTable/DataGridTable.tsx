@@ -16,7 +16,6 @@ import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { deleteEmployeeService } from "@src/services/employeeService";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
@@ -43,7 +42,6 @@ function DataGridTable() {
   const constantData: LocalizationInterface = localizedData();
   const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [userData, setUserData] = useState<Employee[]>([]);
-  const [page, setPage] = useState<number>(0);
   const { data: userInfo } = useGetUserQuery();
   const [pageSize, setPageSize] = useState<number>(10);
   const [deleteEmployee] = useDeleteEmployeeMutation();
@@ -55,6 +53,8 @@ function DataGridTable() {
   const navigate = useNavigate();
   const [rowCellId, setRowCellId] = useState<number>(0);
   const debouncedSearchTerm = useDebounce(query, 500);
+  const [action, setAction] = useState("add");
+
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -87,6 +87,7 @@ function DataGridTable() {
             <img
               style={{
                 height: "32px",
+                width: "32px",
                 left: "241px",
                 top: "154px",
                 marginRight: "8px",
@@ -140,7 +141,9 @@ function DataGridTable() {
             {userInfo?.allowed_modules.admin_modules.includes("employees") ||
             userInfo?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
-                onClick={handleModalOpen}
+                onClick={(event) =>
+                  handleEditModalOpen(event, cellValues?.row?.id)
+                }
                 aria-label="edit"
                 id="edit-btn-id"
                 className="edit-btn"
@@ -202,10 +205,6 @@ function DataGridTable() {
     }
   }, [debouncedSearchTerm]);
 
-  const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenModal(true);
-  };
   const handleModalClose = () => {
     setOpenModal(false);
   };
@@ -216,6 +215,15 @@ function DataGridTable() {
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
   };
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
   const handleDeleteModalOpen = (
     event: React.MouseEvent<HTMLElement>,
     cellId: number
@@ -225,7 +233,9 @@ function DataGridTable() {
     setOpenDeleteModal(true);
   };
   const handleEmployeeDelete = async () => {
-    await deleteEmployeeService(rowCellId, deleteEmployee);
+    await deleteEmployee({
+      id: rowCellId,
+    }).unwrap();
     toast.success(employeeDeleteSuccess, {
       autoClose: timeOut,
       pauseOnHover: false,
@@ -248,24 +258,12 @@ function DataGridTable() {
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
-                pageSize={pageSize}
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[10, 20]}
-                rowCount={10}
+                pageSize={pageSize}
+                rowsPerPageOptions={[10, 13]}
                 pagination
-                paginationMode="server"
                 density="standard"
                 onCellClick={handleOnCellClick}
-                page={page}
-                onPageChange={(_page) => {
-                  setPage(_page);
-                }}
-                initialState={{
-                  pagination: {
-                    page: 0,
-                    pageSize: 10,
-                  },
-                }}
                 loading={isLoading}
                 sx={{
                   cursor: "pointer",
@@ -359,7 +357,12 @@ function DataGridTable() {
           <RowSkeletonCard />
         </>
       )}
-      <EmployeeModal open={openModal} handleClose={handleModalClose} />
+      <EmployeeModal
+        empId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
       <DeleteModal
         open={openDeleteModal}
         handleEmployeeDelete={handleEmployeeDelete}

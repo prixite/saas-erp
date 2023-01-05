@@ -90,7 +90,7 @@ class PrivateApiMixin:
             return super().dispatch(request, *args, **kwargs)
 
         return JsonResponse(
-            data={"detail": "Not allowed"},
+            data={"detail": "Permission denied"},
             status=status.HTTP_403_FORBIDDEN,
         )
 

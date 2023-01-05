@@ -14,9 +14,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -63,9 +60,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -91,9 +85,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -122,9 +113,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -171,9 +159,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -218,9 +203,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -246,9 +228,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -295,9 +274,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -323,9 +299,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -372,9 +345,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -400,9 +370,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -449,9 +416,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -477,9 +441,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -526,9 +487,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -554,9 +512,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -603,9 +558,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -631,9 +583,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -680,9 +629,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -708,9 +654,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -757,9 +700,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -785,9 +725,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -834,9 +771,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -872,9 +806,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -890,8 +821,8 @@
                     }
                 }
             },
-            "patch": {
-                "operationId": "api_employees_partial_update",
+            "put": {
+                "operationId": "api_employees_update",
                 "parameters": [
                     {
                         "in": "path",
@@ -909,27 +840,25 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedEmployeeUpdate"
+                                "$ref": "#/components/schemas/EmployeeUpdate"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -963,9 +892,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -994,9 +920,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1050,9 +973,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1088,9 +1008,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1147,9 +1064,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1175,9 +1089,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1196,9 +1107,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1245,9 +1153,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1256,6 +1161,134 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Institue"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/leave/": {
+            "get": {
+                "operationId": "api_leave_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Leave"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/leave/{id}/": {
+            "patch": {
+                "operationId": "api_leave_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedLeaveUpdate"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LeaveUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/login/": {
+            "post": {
+                "operationId": "api_login_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Login"
                                 }
                             }
                         },
@@ -1273,9 +1306,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1284,6 +1314,188 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Me"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/me/update/": {
+            "patch": {
+                "operationId": "api_me_update_partial_update",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/password-reset/": {
+            "post": {
+                "operationId": "api_password_reset_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResendEmailCode"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResendEmailCode"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResendEmailCode"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResendEmailCode"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/password-reset-complete/": {
+            "post": {
+                "operationId": "api_password_reset_complete_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetComplete"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetComplete"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetComplete"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PasswordResetComplete"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/password-reset-confirm/": {
+            "post": {
+                "operationId": "api_password_reset_confirm_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetConfirm"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetConfirm"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetConfirm"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PasswordResetConfirm"
                                 }
                             }
                         },
@@ -1301,9 +1513,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1350,9 +1559,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1378,9 +1584,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     }
                 ],
                 "responses": {
@@ -1409,9 +1612,6 @@
                 "security": [
                     {
                         "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
                     },
                     {}
                 ],
@@ -1888,13 +2088,6 @@
                         "type": "string",
                         "readOnly": true
                     },
-                    "manages": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "readOnly": true
-                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -1914,6 +2107,9 @@
                     "salary": {
                         "type": "integer",
                         "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -1956,7 +2152,6 @@
                     "emergency_contact_number",
                     "experience",
                     "id",
-                    "manages",
                     "managing",
                     "nic",
                     "org_id",
@@ -2010,15 +2205,84 @@
             "EmployeeUpdate": {
                 "type": "object",
                 "properties": {
-                    "department": {
+                    "id": {
                         "type": "integer",
-                        "nullable": true
+                        "readOnly": true
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/EmployeeUpdateUser"
+                    },
+                    "degrees": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Degree"
+                        }
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
+                    },
+                    "experience": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Experirence"
+                        }
+                    },
+                    "org_id": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "managing": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "writeOnly": true
+                        },
+                        "writeOnly": true
+                    },
+                    "total_experience": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "emergency_contact_number": {
+                        "type": "string",
+                        "maxLength": 20
                     },
                     "designation": {
                         "type": "string",
                         "maxLength": 50
                     },
+                    "salary": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "leave_count": {
+                        "type": "integer"
+                    },
+                    "user_allowed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "department": {
+                        "type": "integer",
+                        "nullable": true
+                    },
                     "manager": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "type": {
                         "type": "integer",
                         "nullable": true
                     },
@@ -2027,17 +2291,56 @@
                         "items": {
                             "type": "integer"
                         }
-                    },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "user_allowed": {
-                        "type": "boolean"
                     }
                 },
                 "required": [
-                    "designation"
+                    "assets",
+                    "created_at",
+                    "degrees",
+                    "designation",
+                    "emergency_contact_number",
+                    "experience",
+                    "id",
+                    "managing",
+                    "org_id",
+                    "total_experience",
+                    "updated_at",
+                    "user"
+                ]
+            },
+            "EmployeeUpdateUser": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": true
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "default_role": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "email"
                 ]
             },
             "EmployeeUser": {
@@ -2166,6 +2469,101 @@
                     "updated_at"
                 ]
             },
+            "Leave": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "leave_from": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "leave_to": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "hr_comment": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "updated_by": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "organization": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "description",
+                    "employee",
+                    "id",
+                    "leave_from",
+                    "leave_to",
+                    "organization",
+                    "updated_at"
+                ]
+            },
+            "LeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "hr_comment": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
             "Me": {
                 "type": "object",
                 "properties": {
@@ -2217,33 +2615,110 @@
                     "headline"
                 ]
             },
-            "PatchedEmployeeUpdate": {
+            "MeUpdate": {
                 "type": "object",
                 "properties": {
-                    "department": {
-                        "type": "integer",
-                        "nullable": true
-                    },
-                    "designation": {
+                    "first_name": {
                         "type": "string",
-                        "maxLength": 50
+                        "maxLength": 150
                     },
-                    "manager": {
-                        "type": "integer",
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    },
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "headline": {
+                        "type": "string",
+                        "maxLength": 255
+                    }
+                },
+                "required": [
+                    "contact_number",
+                    "headline"
+                ]
+            },
+            "PasswordResetComplete": {
+                "type": "object",
+                "properties": {
+                    "uidb64": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password2": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "password",
+                    "password2",
+                    "uidb64"
+                ]
+            },
+            "PasswordResetConfirm": {
+                "type": "object",
+                "properties": {
+                    "uidb64": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "token",
+                    "uidb64"
+                ]
+            },
+            "PatchedLeaveUpdate": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusEnum"
+                            }
+                        ],
+                        "pattern": "^[-a-zA-Z0-9_]+$"
+                    },
+                    "hr_comment": {
+                        "type": "string",
                         "nullable": true
+                    }
+                }
+            },
+            "PatchedMeUpdate": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
                     },
-                    "benefits": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
                     },
-                    "type": {
-                        "type": "integer",
-                        "nullable": true
+                    "image": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
                     },
-                    "user_allowed": {
-                        "type": "boolean"
+                    "contact_number": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "headline": {
+                        "type": "string",
+                        "maxLength": 255
                     }
                 }
             },
@@ -2296,6 +2771,18 @@
                     "updated_at"
                 ]
             },
+            "ResendEmailCode": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "required": [
+                    "email"
+                ]
+            },
             "Role": {
                 "type": "object",
                 "properties": {
@@ -2331,6 +2818,14 @@
                     "updated_at"
                 ]
             },
+            "StatusEnum": {
+                "enum": [
+                    "pending",
+                    "approved",
+                    "denied"
+                ],
+                "type": "string"
+            },
             "UserPassword": {
                 "type": "object",
                 "properties": {
@@ -2349,10 +2844,6 @@
             }
         },
         "securitySchemes": {
-            "basicAuth": {
-                "type": "http",
-                "scheme": "basic"
-            },
             "cookieAuth": {
                 "type": "apiKey",
                 "in": "cookie",

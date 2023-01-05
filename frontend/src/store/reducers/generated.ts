@@ -183,14 +183,14 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/employees/${queryArg.id}/` }),
     }),
-    apiEmployeesPartialUpdate: build.mutation<
-      ApiEmployeesPartialUpdateApiResponse,
-      ApiEmployeesPartialUpdateApiArg
+    apiEmployeesUpdate: build.mutation<
+      ApiEmployeesUpdateApiResponse,
+      ApiEmployeesUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/employees/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedEmployeeUpdate,
+        method: "PUT",
+        body: queryArg.employeeUpdate,
       }),
     }),
     apiEmployeesDestroy: build.mutation<
@@ -260,8 +260,71 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.institue,
       }),
     }),
+    apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
+      query: () => ({ url: `/api/leave/` }),
+    }),
+    apiLeavePartialUpdate: build.mutation<
+      ApiLeavePartialUpdateApiResponse,
+      ApiLeavePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/leave/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedLeaveUpdate,
+      }),
+    }),
+    apiLoginCreate: build.mutation<
+      ApiLoginCreateApiResponse,
+      ApiLoginCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/login/`,
+        method: "POST",
+        body: queryArg.login,
+      }),
+    }),
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
+    }),
+    apiMeUpdatePartialUpdate: build.mutation<
+      ApiMeUpdatePartialUpdateApiResponse,
+      ApiMeUpdatePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/me/update/`,
+        method: "PATCH",
+        body: queryArg.patchedMeUpdate,
+      }),
+    }),
+    apiPasswordResetCreate: build.mutation<
+      ApiPasswordResetCreateApiResponse,
+      ApiPasswordResetCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset/`,
+        method: "POST",
+        body: queryArg.resendEmailCode,
+      }),
+    }),
+    apiPasswordResetCompleteCreate: build.mutation<
+      ApiPasswordResetCompleteCreateApiResponse,
+      ApiPasswordResetCompleteCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-complete/`,
+        method: "POST",
+        body: queryArg.passwordResetComplete,
+      }),
+    }),
+    apiPasswordResetConfirmCreate: build.mutation<
+      ApiPasswordResetConfirmCreateApiResponse,
+      ApiPasswordResetConfirmCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/password-reset-confirm/`,
+        method: "POST",
+        body: queryArg.passwordResetConfirm,
+      }),
     }),
     apiProgramsList: build.query<
       ApiProgramsListApiResponse,
@@ -369,11 +432,10 @@ export type ApiEmployeesRetrieveApiResponse = /** status 200  */ Employee;
 export type ApiEmployeesRetrieveApiArg = {
   id: number;
 };
-export type ApiEmployeesPartialUpdateApiResponse =
-  /** status 200  */ EmployeeUpdate;
-export type ApiEmployeesPartialUpdateApiArg = {
+export type ApiEmployeesUpdateApiResponse = /** status 200  */ EmployeeUpdate;
+export type ApiEmployeesUpdateApiArg = {
   id: number;
-  patchedEmployeeUpdate: PatchedEmployeeUpdate;
+  employeeUpdate: EmployeeUpdate;
 };
 export type ApiEmployeesDestroyApiResponse = unknown;
 export type ApiEmployeesDestroyApiArg = {
@@ -409,8 +471,38 @@ export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
 export type ApiInstituesCreateApiArg = {
   institue: Institue;
 };
+export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
+export type ApiLeaveListApiArg = void;
+export type ApiLeavePartialUpdateApiResponse = /** status 200  */ LeaveUpdate;
+export type ApiLeavePartialUpdateApiArg = {
+  id: number;
+  patchedLeaveUpdate: PatchedLeaveUpdate;
+};
+export type ApiLoginCreateApiResponse = /** status 200  */ Login;
+export type ApiLoginCreateApiArg = {
+  login: Login;
+};
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
+export type ApiMeUpdatePartialUpdateApiArg = {
+  patchedMeUpdate: PatchedMeUpdate;
+};
+export type ApiPasswordResetCreateApiResponse =
+  /** status 200  */ ResendEmailCode;
+export type ApiPasswordResetCreateApiArg = {
+  resendEmailCode: ResendEmailCode;
+};
+export type ApiPasswordResetCompleteCreateApiResponse =
+  /** status 200  */ PasswordResetComplete;
+export type ApiPasswordResetCompleteCreateApiArg = {
+  passwordResetComplete: PasswordResetComplete;
+};
+export type ApiPasswordResetConfirmCreateApiResponse =
+  /** status 200  */ PasswordResetConfirm;
+export type ApiPasswordResetConfirmCreateApiArg = {
+  passwordResetConfirm: PasswordResetConfirm;
+};
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
 export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
@@ -545,12 +637,12 @@ export type Employee = {
   org_id: string;
   managing: number[];
   total_experience: string;
-  manages: string[];
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
   designation: string;
   salary?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
   created_at: string;
   updated_at: string;
@@ -559,21 +651,34 @@ export type Employee = {
   type?: number | null;
   benefits?: number[];
 };
-export type EmployeeUpdate = {
-  department?: number | null;
-  designation: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
-  user_allowed?: boolean;
+export type EmployeeUpdateUser = {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number: string;
+  default_role?: number | null;
 };
-export type PatchedEmployeeUpdate = {
-  department?: number | null;
-  designation?: string;
-  manager?: number | null;
-  benefits?: number[];
-  type?: number | null;
+export type EmployeeUpdate = {
+  id: number;
+  user: EmployeeUpdateUser;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  org_id: string;
+  managing: number[];
+  total_experience: string;
+  emergency_contact_number: string;
+  designation: string;
+  salary?: number | null;
+  leave_count?: number;
   user_allowed?: boolean;
+  created_at: string;
+  updated_at: string;
+  department?: number | null;
+  manager?: number | null;
+  type?: number | null;
+  benefits?: number[];
 };
 export type Compensation = {
   id: number;
@@ -599,6 +704,32 @@ export type Institue = {
   created_at: string;
   updated_at: string;
 };
+export type StatusEnum = "pending" | "approved" | "denied";
+export type Leave = {
+  id: number;
+  leave_from: string;
+  leave_to: string;
+  description: string;
+  hr_comment?: string | null;
+  status?: StatusEnum;
+  created_at: string;
+  updated_at: string;
+  employee: number;
+  updated_by?: number | null;
+  organization: number;
+};
+export type LeaveUpdate = {
+  status?: StatusEnum;
+  hr_comment?: string | null;
+};
+export type PatchedLeaveUpdate = {
+  status?: StatusEnum;
+  hr_comment?: string | null;
+};
+export type Login = {
+  email: string;
+  password: string;
+};
 export type Me = {
   first_name?: string;
   last_name?: string;
@@ -609,6 +740,32 @@ export type Me = {
   headline: string;
   contact_number: string;
   allowed_modules: string;
+};
+export type MeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number: string;
+  headline: string;
+};
+export type PatchedMeUpdate = {
+  first_name?: string;
+  last_name?: string;
+  image?: string;
+  contact_number?: string;
+  headline?: string;
+};
+export type ResendEmailCode = {
+  email: string;
+};
+export type PasswordResetComplete = {
+  uidb64: string;
+  password: string;
+  password2: string;
+};
+export type PasswordResetConfirm = {
+  uidb64: string;
+  token: string;
 };
 export type Program = {
   id: number;
@@ -649,7 +806,7 @@ export const {
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
-  useApiEmployeesPartialUpdateMutation,
+  useApiEmployeesUpdateMutation,
   useApiEmployeesDestroyMutation,
   useApiEmployeesCompensationRetrieveQuery,
   useApiEmployeesCompensationCreateMutation,
@@ -658,7 +815,14 @@ export const {
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
+  useApiLeaveListQuery,
+  useApiLeavePartialUpdateMutation,
+  useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
+  useApiMeUpdatePartialUpdateMutation,
+  useApiPasswordResetCreateMutation,
+  useApiPasswordResetCompleteCreateMutation,
+  useApiPasswordResetConfirmCreateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,

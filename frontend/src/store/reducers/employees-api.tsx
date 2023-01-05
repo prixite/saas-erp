@@ -20,11 +20,11 @@ export const employeesApi = createApi({
     baseUrl: "/api/",
     prepareHeaders: (headers) => {
       headers.append("Content-Type", "application/json");
-      headers.set("X-CSRFToken", document.forms.csrf.csrfmiddlewaretoken.value);
+      headers.set("X-Csrftoken", document.forms.csrf.csrfmiddlewaretoken.value);
       return headers;
     },
   }),
-  tagTypes: ["Employee"],
+  tagTypes: ["Employee", "Owner"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -32,12 +32,14 @@ export const employeesApi = createApi({
     }),
     getEmployeeData: builder.query<EmployeeData, { id: number }>({
       query: ({ id }) => `/employees/${id}/`,
+      providesTags: ["Employee"],
     }),
     getEmployeeDocs: builder.query({
       query: ({ employeeId }) => `/employees/${employeeId}/documents/`,
     }),
     getUser: builder.query<User, void>({
       query: () => `/me/`,
+      providesTags: ["Owner"],
     }),
     getFlags: builder.query<Flags[], void>({
       query: () => "/flags/",
@@ -72,18 +74,44 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Employee"],
     }),
-    createEmployee: builder.mutation<
-      EmployeeData[],
-      { employee: EmployeeData[] }
-    >({
-      query: (employee) => {
+    createEmployee: builder.mutation({
+      query: (employeeObject) => {
         return {
           url: "/employees/",
           method: "POST",
-          body: employee,
+          body: employeeObject,
         };
       },
       invalidatesTags: ["Employee"],
+    }),
+    updateEmployee: builder.mutation({
+      query: ({ updatedObj, id }) => {
+        return {
+          url: `/employees/${id}/`,
+          method: "PUT",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Employee"],
+    }),
+    updateOwnerProfile: builder.mutation({
+      query: ({ updatedObj }) => {
+        return {
+          url: "/me/update/",
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Owner"],
+    }),
+    updateOwnerPassword: builder.mutation({
+      query: ({ updatedObj }) => {
+        return {
+          url: "/change_password/",
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
     }),
   }),
 });
@@ -103,4 +131,7 @@ export const {
   useGetInstituteQuery,
   useGetRolesQuery,
   useGetDepartmentsQuery,
+  useUpdateEmployeeMutation,
+  useUpdateOwnerProfileMutation,
+  useUpdateOwnerPasswordMutation,
 } = employeesApi;

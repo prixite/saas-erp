@@ -93,8 +93,8 @@
       }
 
       .firstName {
+        height: 84px !important;
         margin-right: 16px;
-        margin-bottom: 16px;
 
         &__textfield {
           @include textfieldCustoms;
@@ -103,7 +103,7 @@
 
       .lastName {
         margin-right: 16px;
-        margin-bottom: 16px;
+        height: 84px !important;
 
         &__textfield {
           @include textfieldCustoms;
@@ -112,7 +112,7 @@
 
       .email {
         margin-right: auto;
-        margin-bottom: 16px;
+        height: 84px !important;
 
         &__textfield {
           @include textfieldCustoms;
@@ -120,72 +120,17 @@
       }
     }
 
-    &__phone {
-      margin-bottom: 10px;
-
+    &__phoneheadline {
+      display: flex;
       .MuiInputBase-root {
         width: 356px;
       }
-
       .textfield {
         @include textfieldCustoms;
       }
-    }
-  }
-
-  .password {
-    width: 100%;
-    margin-bottom: 10px;
-    border: 1px solid #e7e7e7;
-    padding: 18px 18px 0px 18px;
-    border-radius: 12px;
-
-    &__heading {
-      margin-bottom: 26px;
-      @include headingText();
-    }
-
-    &__passwordfield {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-top: 26px;
-
-      .MuiInputBase-root {
-        width: 356px;
-      }
-
-      .currentPassword {
+      .headline-cls {
         margin-right: 16px;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
-      }
-
-      .newPassword {
-        margin-right: 16px;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
-      }
-
-      .verifyPassword {
-        margin-right: auto;
-        min-width: 356px;
-        margin-bottom: 18px;
-
-        &__textfield {
-          @include textfieldCustoms;
-        }
+        height: 84px !important;
       }
     }
   }
@@ -331,9 +276,7 @@
 
   .btns {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 18px 18px 18px 0px;
-
+    margin-top: 5px;
     &__cancelBtn {
       box-shadow: none;
       box-sizing: border-box;
@@ -363,21 +306,22 @@
     }
 
     &__saveBtn {
-      box-shadow: none;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: 14px 24px;
-      gap: 7px;
-      width: 139px;
-      height: 47px;
+      color: white;
       background: #ff2f2f;
+      width: 123px;
+      height: 48px;
+      margin-right: 20px;
+      padding: 13px 20px;
+      font-size: 16px;
+      font-weight: 400;
       border-radius: 12px;
-
+      text-transform: capitalize;
       &:hover {
-        background: #ff2f2f;
-        box-shadow: none;
+        background: #ffcdcd;
+        color: white;
+      }
+      .MuiLoadingButton-loadingIndicator {
+        color: white;
       }
 
       &__btnText {
