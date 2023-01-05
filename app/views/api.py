@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.middleware import csrf
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -21,7 +22,6 @@ from waffle import get_waffle_switch_model
 from app import models, serializers
 from app.utils import send_email_forget_password, send_leave_email
 from app.views import mixins
-from django.middleware import csrf
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
 client = slack.WebClient(token=SLACK_TOKEN)
