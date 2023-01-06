@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.middleware import csrf
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -41,7 +42,9 @@ class LoginView(generics.GenericAPIView):
 
             if user is not None:
                 login(request, user)
-                return Response({"detail": "User authenticated"})
+                return Response(
+                    {"detail": "User authenticated", "csrf": csrf.get_token(request)}
+                )
             else:
                 return Response(
                     {"detail": "Wrong email or password"},

@@ -68,8 +68,9 @@ const Login = () => {
         onSubmit={(values, { setSubmitting }) => {
           login({ login: values })
             .unwrap()
-            .then(() => {
+            .then((data) => {
               setIsAuthenticated(true);
+              document.forms.csrf.csrfmiddlewaretoken.value = data.csrf;
               navigate("/");
             })
             .catch((error) =>
