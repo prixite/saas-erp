@@ -16,6 +16,7 @@ services:
       dockerfile: docker/prod.Dockerfile
     env_file:
       - ./.env
+      - ./env.db
     container_name: saas-erp-prod
     command: ./docker/scripts/run-gunicorn
     volumes:
