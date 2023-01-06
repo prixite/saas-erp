@@ -3,6 +3,32 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
+def send_invitation_mail(to_email, user, url):
+    subject = f"Welcome {user.get_full_name()}"
+    message = f"Click below link to update your password \n {url}"
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [
+        to_email,
+    ]
+    html_message = render_to_string(
+        "app/email/invite.html",
+        {
+            "full_name": user.get_full_name(),
+            "invite_link": url,
+        },
+    )
+    try:
+        send_mail(
+            subject,
+            message,
+            email_from,
+            recipient_list,
+            html_message=html_message,
+        )
+    except Exception as e:
+        return e
+
+
 def send_leave_email(status, employee, updated_by, leave_from, leave_to, hr_comment):
     subject = f"Leave {status}"
     employee_message = f"Hi {employee.user.get_full_name()}, your leave request from {leave_from} to {leave_to} have been {status} by {updated_by.get_full_name()} with remarks as {hr_comment}."  # noqa

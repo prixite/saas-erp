@@ -55,6 +55,7 @@ class EmployeeUserForm(UserForm):
 
     def save(self):
         self.instance.organization = self.request.user.organization
+        self.instance.is_active = self.is_active
         return super().save()
 
 
@@ -86,8 +87,7 @@ class EmployeeForm(forms.ModelForm):
 
     @transaction.atomic
     def save(self):
+        self.user_form.is_active = self.cleaned_data.get("can_login", False)
         self.instance.user = self.user_form.save()
         self.instance.organization = self.request.user.organization
-        self.instance.user.is_active = self.cleaned_data.get("can_login", False)
-        self.instance.user.save()
         return super().save()

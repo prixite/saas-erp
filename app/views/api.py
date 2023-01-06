@@ -78,6 +78,7 @@ class PasswordResetEmailView(generics.GenericAPIView):
                     {
                         "password_reset_url": password_reset_url,
                         "to_email": user.email,
+                        "user": user,
                     },
                 )
                 return Response(
