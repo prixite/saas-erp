@@ -30,7 +30,7 @@ services:
       dockerfile: prod.Dockerfile
     restart: always
     ports:
-      - '127.0.0.1:8000:80'
+      - '127.0.0.1:9000:80'
     volumes:
       - static_volume:/opt/code/static
       - media_volume:/opt/code/media
