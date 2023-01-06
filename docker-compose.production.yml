@@ -3,6 +3,7 @@ version: '3.4'
 services:
   db:
     image: postgres:13.4-alpine
+    container_name: saas-erp-db-prod
     restart: always
     env_file:
       - ./env.db
@@ -15,7 +16,7 @@ services:
       dockerfile: docker/prod.Dockerfile
     env_file:
       - ./.env
-    container_name: saas-erp
+    container_name: saas-erp-prod
     command: ./docker/scripts/run-gunicorn
     volumes:
       - static_volume:/opt/code/static
@@ -29,6 +30,7 @@ services:
       context: ./nginx
       dockerfile: prod.Dockerfile
     restart: always
+    container_name: saas-erp-nginx-prod
     ports:
       - '127.0.0.1:9000:80'
     volumes:
