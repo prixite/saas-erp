@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
@@ -8,10 +8,12 @@ import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
+import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
 import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
+import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import {
@@ -22,21 +24,37 @@ import {
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
 
+const useDebounce = (value: string, delay: number): string => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 function DataGridTable() {
-  const navigate = useNavigate();
-  const { data: userData } = useGetUserQuery();
-  const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const { data: rows = [], isSuccess, isLoading } = useGetEmployeesQuery();
+  const constantData: LocalizationInterface = localizedData();
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [userData, setUserData] = useState<Employee[]>([]);
+  const { data: userInfo } = useGetUserQuery();
+  const [pageSize, setPageSize] = useState<number>(10);
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
   const allFlags = Object.assign({}, ...Flags);
-  const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [action, setAction] = useState("add");
-  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const [rowCellId, setRowCellId] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
-
+  const debouncedSearchTerm = useDebounce(query, 500);
+  const [action, setAction] = useState("add");
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -120,8 +138,8 @@ function DataGridTable() {
             className="renderCell-joiningDate"
             style={{ marginLeft: "10px" }}
           >
-            {userData?.allowed_modules.admin_modules.includes("employees") ||
-            userData?.allowed_modules.owner_modules.includes("employees") ? (
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
                 onClick={(event) =>
                   handleEditModalOpen(event, cellValues?.row?.id)
@@ -142,8 +160,8 @@ function DataGridTable() {
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
-            {userData?.allowed_modules.admin_modules.includes("employees") ||
-            userData?.allowed_modules.owner_modules.includes("employees") ? (
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
               <IconButton
                 onClick={(event) =>
                   handleDeleteModalOpen(event, cellValues?.row?.id)
@@ -166,6 +184,26 @@ function DataGridTable() {
       },
     },
   ];
+
+  useEffect(() => {
+    if (rows.length) {
+      setUserData(rows);
+    }
+  }, [rows]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setUserData(
+        rows.filter((userData: Employee) => {
+          return `${userData?.first_name} ${userData?.last_name}`
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setUserData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
   const handleModalClose = () => {
     setOpenModal(false);
   };
@@ -205,15 +243,16 @@ function DataGridTable() {
   };
   return (
     <Box className="dataGridTable-section">
+      <HeadBar setSearchText={setQuery} />
       {isSuccess ? (
         <>
-          {tableData?.length ? (
+          {userData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={tableData}
+                rows={[...userData]}
                 columns={columns}
                 disableColumnFilter
                 disableColumnMenu
@@ -226,7 +265,6 @@ function DataGridTable() {
                 onCellClick={handleOnCellClick}
                 loading={isLoading}
                 sx={{
-                  cursor: "pointer",
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",
                   },
@@ -238,7 +276,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
-                    cursor: "default",
+                    cursor: "default !important",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
