@@ -11,7 +11,13 @@ from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
-from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    CreateAPIView,
+    GenericAPIView,
+)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -527,3 +533,25 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
             leave.hr_comment,
         )
         return response
+
+
+class VerifyEmailAPIView(GenericAPIView):
+    serializer_class = serializers.VerifyEmailSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+        if not models.User.objects.filter(email=email).exists():
+            return Response({"detail": "Ok"}, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {"detail": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class OwnerOnboardingAPIView(CreateAPIView):
+    serializer_class = serializers.OwnerOnBoardingSerializer
+    queryset = models.User.objects.all()
+    permission_classes = (AllowAny,)

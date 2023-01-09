@@ -493,3 +493,58 @@ class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
         fields = ("status", "hr_comment")
+
+
+class VerifyEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OwnerOnBoardingSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer()
+
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email", "organization")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        organization = validated_data.pop("organization")
+        organization_serialzier = OrganizationSerializer(data=organization)
+        organization_serialzier.is_valid(raise_exception=True)
+        organization_serialzier.save()
+        models.Role.objects.bulk_create(
+            [
+                models.Role(
+                    name="Owner",
+                    permission=models.Role.Permission.OWNER,
+                    is_default=True,
+                    organization_id=organization_serialzier.data.get("id"),
+                ),
+                models.Role(
+                    name="Admin",
+                    permission=models.Role.Permission.ADMIN,
+                    is_default=True,
+                    organization_id=organization_serialzier.data.get("id"),
+                ),
+                models.Role(
+                    name="Member",
+                    permission=models.Role.Permission.MEMBER,
+                    is_default=True,
+                    organization_id=organization_serialzier.data.get("id"),
+                ),
+            ]
+        )
+        validated_data["username"] = validated_data.get("email")
+        validated_data["organization_id"] = organization_serialzier.data.get("id")
+        validated_data["default_role"] = models.Role.objects.filter(
+            organization_id=organization_serialzier.data.get("id"),
+            permission=models.Role.Permission.OWNER,
+            is_default=True,
+        ).first()
+        return super().create(validated_data)
