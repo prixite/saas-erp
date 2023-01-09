@@ -13,7 +13,6 @@ from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.generics import (
     CreateAPIView,
-    GenericAPIView,
     ListAPIView,
     RetrieveAPIView,
     UpdateAPIView,

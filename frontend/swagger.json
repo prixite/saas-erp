@@ -1323,8 +1323,8 @@
             }
         },
         "/api/me/update/": {
-            "patch": {
-                "operationId": "api_me_update_partial_update",
+            "put": {
+                "operationId": "api_me_update_update",
                 "tags": [
                     "api"
                 ],
@@ -1332,17 +1332,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         }
                     }
@@ -1664,52 +1664,6 @@
                 "responses": {
                     "200": {
                         "description": "No response body"
-                    }
-                }
-            }
-        },
-        "/api/verify-email/": {
-            "post": {
-                "operationId": "api_verify_email_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/VerifyEmail"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/VerifyEmail"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/VerifyEmail"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/VerifyEmail"
-                                }
-                            }
-                        },
-                        "description": ""
                     }
                 }
             }
@@ -2423,6 +2377,7 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "default_role": {
@@ -2431,7 +2386,6 @@
                     }
                 },
                 "required": [
-                    "contact_number",
                     "email"
                 ]
             },
@@ -2459,6 +2413,7 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "default_role": {
@@ -2467,7 +2422,6 @@
                     }
                 },
                 "required": [
-                    "contact_number",
                     "email"
                 ]
             },
@@ -2689,10 +2643,12 @@
                     },
                     "headline": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 255
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "allowed_modules": {
@@ -2702,9 +2658,7 @@
                 },
                 "required": [
                     "allowed_modules",
-                    "contact_number",
-                    "email",
-                    "headline"
+                    "email"
                 ]
             },
             "MeUpdate": {
@@ -2725,17 +2679,15 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "headline": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 255
                     }
-                },
-                "required": [
-                    "contact_number",
-                    "headline"
-                ]
+                }
             },
             "Organization": {
                 "type": "object",
@@ -2845,32 +2797,6 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
-                    }
-                }
-            },
-            "PatchedMeUpdate": {
-                "type": "object",
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "image": {
-                        "type": "string",
-                        "format": "uri",
-                        "maxLength": 200
-                    },
-                    "contact_number": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
-                    "headline": {
-                        "type": "string",
-                        "maxLength": 255
                     }
                 }
             },
@@ -2992,18 +2918,6 @@
                 "required": [
                     "old_password",
                     "password"
-                ]
-            },
-            "VerifyEmail": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    }
-                },
-                "required": [
-                    "email"
                 ]
             }
         },

@@ -286,14 +286,14 @@ const injectedRtkApi = api.injectEndpoints({
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
-    apiMeUpdatePartialUpdate: build.mutation<
-      ApiMeUpdatePartialUpdateApiResponse,
-      ApiMeUpdatePartialUpdateApiArg
+    apiMeUpdateUpdate: build.mutation<
+      ApiMeUpdateUpdateApiResponse,
+      ApiMeUpdateUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/me/update/`,
-        method: "PATCH",
-        body: queryArg.patchedMeUpdate,
+        method: "PUT",
+        body: queryArg.meUpdate,
       }),
     }),
     apiOwnerOnboardCreate: build.mutation<
@@ -360,16 +360,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
-    }),
-    apiVerifyEmailCreate: build.mutation<
-      ApiVerifyEmailCreateApiResponse,
-      ApiVerifyEmailCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/verify-email/`,
-        method: "POST",
-        body: queryArg.verifyEmail,
-      }),
     }),
   }),
   overrideExisting: false,
@@ -504,9 +494,9 @@ export type ApiLoginCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
-export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
-export type ApiMeUpdatePartialUpdateApiArg = {
-  patchedMeUpdate: PatchedMeUpdate;
+export type ApiMeUpdateUpdateApiResponse = /** status 200  */ MeUpdate;
+export type ApiMeUpdateUpdateApiArg = {
+  meUpdate: MeUpdate;
 };
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
@@ -538,10 +528,6 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
-export type ApiVerifyEmailCreateApiResponse = /** status 200  */ VerifyEmail;
-export type ApiVerifyEmailCreateApiArg = {
-  verifyEmail: VerifyEmail;
-};
 export type AssetType = {
   id: number;
   name: string;
@@ -633,7 +619,7 @@ export type EmployeeUser = {
   last_name?: string;
   email: string;
   image?: string;
-  contact_number: string;
+  contact_number?: string | null;
   default_role?: number | null;
 };
 export type Degree = {
@@ -685,7 +671,7 @@ export type EmployeeUpdateUser = {
   last_name?: string;
   email: string;
   image?: string;
-  contact_number: string;
+  contact_number?: string | null;
   default_role?: number | null;
 };
 export type EmployeeUpdate = {
@@ -766,23 +752,16 @@ export type Me = {
   organization?: string;
   image?: string;
   is_superuser?: boolean;
-  headline: string;
-  contact_number: string;
+  headline?: string | null;
+  contact_number?: string | null;
   allowed_modules: string;
 };
 export type MeUpdate = {
   first_name?: string;
   last_name?: string;
   image?: string;
-  contact_number: string;
-  headline: string;
-};
-export type PatchedMeUpdate = {
-  first_name?: string;
-  last_name?: string;
-  image?: string;
-  contact_number?: string;
-  headline?: string;
+  contact_number?: string | null;
+  headline?: string | null;
 };
 export type Organization = {
   id: number;
@@ -824,9 +803,6 @@ export type Role = {
   created_at: string;
   updated_at: string;
 };
-export type VerifyEmail = {
-  email: string;
-};
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
@@ -864,7 +840,7 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
-  useApiMeUpdatePartialUpdateMutation,
+  useApiMeUpdateUpdateMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -873,5 +849,4 @@ export const {
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
-  useApiVerifyEmailCreateMutation,
 } = injectedRtkApi;
