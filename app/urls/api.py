@@ -147,10 +147,6 @@ urlpatterns = [
         api.MeUpdateViewSet.as_view(),
     ),
     path(
-        "verify-email/",
-        api.VerifyEmailAPIView.as_view(),
-    ),
-    path(
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
     ),

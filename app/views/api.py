@@ -496,7 +496,7 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
 class MeUpdateViewSet(UpdateAPIView):
     serializer_class = serializers.MeUpdateSerializer
     queryset = models.User.objects.none()
-    http_method_names = ("patch",)
+    http_method_names = ("put",)
 
     def get_object(self):
         return self.request.user
@@ -533,22 +533,6 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
             leave.hr_comment,
         )
         return response
-
-
-class VerifyEmailAPIView(GenericAPIView):
-    serializer_class = serializers.VerifyEmailSerializer
-    permission_classes = (AllowAny,)
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        email = serializer.validated_data["email"]
-        if not models.User.objects.filter(email=email).exists():
-            return Response({"detail": "Ok"}, status=status.HTTP_200_OK)
-        else:
-            return Response(
-                {"detail": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST
-            )
 
 
 class OwnerOnboardingAPIView(CreateAPIView):

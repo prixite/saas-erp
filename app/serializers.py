@@ -495,10 +495,6 @@ class LeaveUpdateSerializer(serializers.ModelSerializer):
         fields = ("status", "hr_comment")
 
 
-class VerifyEmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Organization
@@ -514,37 +510,37 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        organization = validated_data.pop("organization")
-        organization_serialzier = OrganizationSerializer(data=organization)
-        organization_serialzier.is_valid(raise_exception=True)
-        organization_serialzier.save()
+        org_serializer = OrganizationSerializer(data=validated_data.pop("organization"))
+        org_serializer.is_valid(raise_exception=True)
+        organization = org_serializer.save()
         models.Role.objects.bulk_create(
             [
                 models.Role(
                     name="Owner",
                     permission=models.Role.Permission.OWNER,
                     is_default=True,
-                    organization_id=organization_serialzier.data.get("id"),
+                    organization=organization,
                 ),
                 models.Role(
                     name="Admin",
                     permission=models.Role.Permission.ADMIN,
                     is_default=True,
-                    organization_id=organization_serialzier.data.get("id"),
+                    organization=organization,
                 ),
                 models.Role(
                     name="Member",
                     permission=models.Role.Permission.MEMBER,
                     is_default=True,
-                    organization_id=organization_serialzier.data.get("id"),
+                    organization=organization,
                 ),
             ]
         )
         validated_data["username"] = validated_data.get("email")
-        validated_data["organization_id"] = organization_serialzier.data.get("id")
+        validated_data["organization"] = organization
         validated_data["default_role"] = models.Role.objects.filter(
-            organization_id=organization_serialzier.data.get("id"),
+            organization=organization,
             permission=models.Role.Permission.OWNER,
             is_default=True,
         ).first()
+
         return super().create(validated_data)

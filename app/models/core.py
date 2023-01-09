@@ -22,9 +22,9 @@ class User(AbstractUser):
         default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"  # noqa
     )
 
-    contact_number = models.CharField(max_length=20)
+    contact_number = models.CharField(max_length=20, null=True, blank=True)
 
-    headline = models.CharField(_("headline"), max_length=255)
+    headline = models.CharField(_("headline"), max_length=255, null=True, blank=True)
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
     is_onboarded = models.BooleanField(default=False)
