@@ -37,6 +37,7 @@ const useDebounce = (value: string, delay: number): string => {
 
   return debouncedValue;
 };
+
 function DataGridTable() {
   const { data: rows = [], isSuccess, isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
@@ -54,7 +55,6 @@ function DataGridTable() {
   const [rowCellId, setRowCellId] = useState<number>(0);
   const debouncedSearchTerm = useDebounce(query, 500);
   const [action, setAction] = useState("add");
-
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -192,8 +192,8 @@ function DataGridTable() {
   }, [rows]);
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
-      setUserData((prevState) =>
-        [...prevState].filter((userData: Employee) => {
+      setUserData(
+        rows.filter((userData: Employee) => {
           return `${userData?.first_name} ${userData?.last_name}`
             .trim()
             .toLowerCase()
@@ -203,8 +203,7 @@ function DataGridTable() {
     } else {
       setUserData(rows);
     }
-  }, [debouncedSearchTerm]);
-
+  }, [debouncedSearchTerm, rows]);
   const handleModalClose = () => {
     setOpenModal(false);
   };
@@ -266,7 +265,6 @@ function DataGridTable() {
                 onCellClick={handleOnCellClick}
                 loading={isLoading}
                 sx={{
-                  cursor: "pointer",
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",
                   },
@@ -278,7 +276,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
-                    cursor: "default",
+                    cursor: "default !important",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
