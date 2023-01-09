@@ -12,11 +12,11 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
 from rest_framework.generics import (
+    CreateAPIView,
+    GenericAPIView,
     ListAPIView,
     RetrieveAPIView,
     UpdateAPIView,
-    CreateAPIView,
-    GenericAPIView,
 )
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response

@@ -296,6 +296,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.patchedMeUpdate,
       }),
     }),
+    apiOwnerOnboardCreate: build.mutation<
+      ApiOwnerOnboardCreateApiResponse,
+      ApiOwnerOnboardCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/owner/onboard/`,
+        method: "POST",
+        body: queryArg.ownerOnBoarding,
+      }),
+    }),
     apiPasswordResetCreate: build.mutation<
       ApiPasswordResetCreateApiResponse,
       ApiPasswordResetCreateApiArg
@@ -350,6 +360,16 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
+    }),
+    apiVerifyEmailCreate: build.mutation<
+      ApiVerifyEmailCreateApiResponse,
+      ApiVerifyEmailCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/verify-email/`,
+        method: "POST",
+        body: queryArg.verifyEmail,
+      }),
     }),
   }),
   overrideExisting: false,
@@ -488,6 +508,11 @@ export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdatePartialUpdateApiArg = {
   patchedMeUpdate: PatchedMeUpdate;
 };
+export type ApiOwnerOnboardCreateApiResponse =
+  /** status 201  */ OwnerOnBoarding;
+export type ApiOwnerOnboardCreateApiArg = {
+  ownerOnBoarding: OwnerOnBoarding;
+};
 export type ApiPasswordResetCreateApiResponse =
   /** status 200  */ ResendEmailCode;
 export type ApiPasswordResetCreateApiArg = {
@@ -513,6 +538,10 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
+export type ApiVerifyEmailCreateApiResponse = /** status 200  */ VerifyEmail;
+export type ApiVerifyEmailCreateApiArg = {
+  verifyEmail: VerifyEmail;
+};
 export type AssetType = {
   id: number;
   name: string;
@@ -755,6 +784,19 @@ export type PatchedMeUpdate = {
   contact_number?: string;
   headline?: string;
 };
+export type Organization = {
+  id: number;
+  name: string;
+  address: string;
+  created_at: string;
+  updated_at: string;
+};
+export type OwnerOnBoarding = {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  organization: Organization;
+};
 export type ResendEmailCode = {
   email: string;
 };
@@ -781,6 +823,9 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
+};
+export type VerifyEmail = {
+  email: string;
 };
 export const {
   useApiAssetTypeListQuery,
@@ -820,6 +865,7 @@ export const {
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
   useApiMeUpdatePartialUpdateMutation,
+  useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
   useApiPasswordResetConfirmCreateMutation,
@@ -827,4 +873,5 @@ export const {
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
+  useApiVerifyEmailCreateMutation,
 } = injectedRtkApi;
