@@ -161,7 +161,7 @@ const Login = () => {
               <Typography mt={5}>
                 {"Don’t have an account yet? "}
                 <span
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/onbaord")}
                   className="red-text pointer"
                 >
                   {"Sign Up"}

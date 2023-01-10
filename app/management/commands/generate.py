@@ -30,7 +30,7 @@ class Command(BaseCommand):
             is_default=True,
             organization=organization,
         )
-        owner_role = factories.RoleFactory(
+        factories.RoleFactory(
             name="Admin",
             permission=models.Role.Permission.ADMIN,
             is_default=True,
