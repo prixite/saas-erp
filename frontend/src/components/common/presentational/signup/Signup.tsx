@@ -1,29 +1,29 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
-  IconButton,
-  InputAdornment,
   TextField,
   Typography,
   Stack,
+  CircularProgress,
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
-import HideIcon from "@src/assets/svgs/HideIcon.svg";
-import showIcon from "@src/assets/svgs/Show.svg";
+import { toast } from "react-toastify";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import {
   AuhtContextInterface,
   AuthContext,
 } from "@src/components/hoc/AuthContext";
-import { emailRegX, phoneRegex } from "@src/helpers/utils/utils";
+import { emailRegX, toastAPIError } from "@src/helpers/utils/utils";
+import { useApiOwnerOnboardCreateMutation } from "@src/store/api";
 import "@src/components/common/presentational/signup/Signup.scss";
 
 const Signup = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useContext(AuthContext) as AuhtContextInterface;
+  const [signup, { isLoading }] = useApiOwnerOnboardCreateMutation();
 
   if (isAuthenticated) {
     return <Navigate to="/" />;
@@ -43,59 +43,83 @@ const Signup = () => {
       </Typography>
       <Formik
         initialValues={{
-          fullname: "",
+          first_name: "",
+          last_name: "",
           email: "",
-          phone_number: "",
-          password: "",
-          confirm_password: "",
+          org_name: "",
+          org_address: "",
         }}
         validate={(values) => {
           const errors = {};
-          if (!values.fullname) {
-            errors.fullname = "Name is required";
+          if (!values.first_name) {
+            errors.first_name = "First name is required";
+          }
+          if (!values.last_name) {
+            errors.last_name = "Last name is required";
           }
           if (!values.email) {
             errors.email = "Email is required";
           } else if (!emailRegX.test(values.email)) {
             errors.email = "Invalid email address";
           }
-          if (!values.phone_number) {
-            errors.phone_number = "Phone number is required";
-          } else if (!phoneRegex.test(values.phone_number)) {
-            errors.phone_number = "Invalid phone number";
+          if (!values.org_name) {
+            errors.org_name = "Organization name is required";
           }
-          if (!values.password) {
-            errors.password = "Password is required";
-          }
-          if (!values.confirm_password) {
-            errors.confirm_password = "Confirm password is required";
-          } else if (
-            values.password &&
-            values.confirm_password != values.password
-          ) {
-            errors.confirm_password = "Passwords do not match";
+          if (!values.org_address) {
+            errors.org_address = "Organization address is required";
           }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          // eslint-disable-next-line no-unused-vars
-          resetForm();
-          setSubmitting(false);
-          navigate("/login");
+          signup({
+            ownerOnBoarding: {
+              first_name: values.first_name,
+              last_name: values.last_name,
+              email: values.email,
+              organization: {
+                name: values.org_name,
+                address: values.org_address,
+              },
+            },
+          })
+            .unwrap()
+            .then(() => {
+              resetForm();
+              setSubmitting(false);
+              toast.success(
+                "Please follow the instructions we sent to your email to reset your password."
+              );
+            })
+            .catch((error) => {
+              toastAPIError("Something went wrong.", error.status, error.data);
+            });
         }}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form className="signupForm">
             <Field
-              name="fullname"
+              name="first_name"
               render={({ field, form }) => (
                 <TextField
                   {...field}
-                  label="Full Name"
+                  label="First Name"
                   variant="outlined"
                   margin="normal"
-                  error={form.touched.fullname && form.errors.fullname}
-                  helperText={form.touched.fullname && form.errors.fullname}
+                  error={form.touched.first_name && form.errors.first_name}
+                  helperText={form.touched.first_name && form.errors.first_name}
+                />
+              )}
+            />
+            <Field
+              name="last_name"
+              render={({ field, form }) => (
+                <TextField
+                  {...field}
+                  label="Last Name"
+                  variant="outlined"
+                  margin="normal"
+                  error={form.touched.last_name && form.errors.last_name}
+                  helperText={form.touched.last_name && form.errors.last_name}
                 />
               )}
             />
@@ -113,104 +137,51 @@ const Signup = () => {
               )}
             />
             <Field
-              name="phone_number"
+              name="org_name"
               render={({ field, form }) => (
                 <TextField
                   {...field}
-                  label="Phone Number"
+                  label="Organization Name"
                   variant="outlined"
                   margin="normal"
-                  error={form.touched.phone_number && form.errors.phone_number}
-                  helperText={
-                    form.touched.phone_number && form.errors.phone_number
-                  }
+                  error={form.touched.org_name && form.errors.org_name}
+                  helperText={form.touched.org_name && form.errors.org_name}
                 />
               )}
             />
             <Field
-              name="password"
-              type="password"
-              render={({ field, form }) => {
-                const [showPassword, setShowPassword] = useState(false);
-                return (
-                  <TextField
-                    {...field}
-                    label="Password"
-                    variant="outlined"
-                    margin="normal"
-                    error={form.touched.password && form.errors.password}
-                    helperText={form.touched.password && form.errors.password}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            <img
-                              className="eye"
-                              src={showPassword ? showIcon : HideIcon}
-                              alt="eye"
-                            />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    type={showPassword ? "text" : "password"}
-                  />
-                );
-              }}
-            />
-            <Field
-              name="confirm_password"
-              type="password"
-              render={({ field, form }) => {
-                const [showPassword, setShowPassword] = useState(false);
-                return (
-                  <TextField
-                    {...field}
-                    label="Confirm Password"
-                    variant="outlined"
-                    margin="normal"
-                    error={
-                      form.touched.confirm_password &&
-                      form.errors.confirm_password
-                    }
-                    helperText={
-                      form.touched.confirm_password &&
-                      form.errors.confirm_password
-                    }
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            <img
-                              className="eye"
-                              src={showPassword ? showIcon : HideIcon}
-                              alt="eye"
-                            />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    type={showPassword ? "text" : "password"}
-                  />
-                );
-              }}
+              name="org_address"
+              render={({ field, form }) => (
+                <TextField
+                  {...field}
+                  label="Organization Address"
+                  variant="outlined"
+                  margin="normal"
+                  error={form.touched.org_address && form.errors.org_address}
+                  helperText={
+                    form.touched.org_address && form.errors.org_address
+                  }
+                />
+              )}
             />
             <Stack alignItems="center" mt={3}>
-              <Button
+              <LoadingButton
                 type="submit"
                 className="btn"
-                variant="contained"
-                disabled={isSubmitting}
+                loading={isLoading}
+                sx={{ m: "0px" }}
                 endIcon={<ArrowForwardIcon />}
+                loadingIndicator={
+                  <CircularProgress
+                    sx={{
+                      color: "white",
+                    }}
+                    size={16}
+                  />
+                }
               >
                 {"Create an account"}
-              </Button>
+              </LoadingButton>
               <Typography mt={5}>
                 {"Alreday have an account? "}
                 <span
