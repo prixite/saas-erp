@@ -22,8 +22,8 @@ import {
   phoneRegex,
   toastAPIError,
 } from "@src/helpers/utils/utils";
-import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import { useApiMeUpdateUpdateMutation } from "@src/store/api";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
