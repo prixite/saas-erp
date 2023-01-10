@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField, Typography, Button } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
@@ -53,6 +53,7 @@ function ProfilePage() {
     lastNameError,
     emailError,
     phoneError,
+    cancelBtn,
     headlineRequired,
   } = constantData.ProfilePage;
 
@@ -141,7 +142,16 @@ function ProfilePage() {
       headline: formik.values.headline,
     };
   };
-
+  const resetForm = () => {
+    formik.setValues({
+      email: userData?.email || "",
+      firstname: userData?.first_name || "",
+      lastname: userData?.last_name || "",
+      phone: userData?.contact_number || "",
+      image: userData?.image || "",
+      headline: userData?.headline || "",
+    });
+  };
   return (
     <>
       <ProfilePageHeader formik={formik} />
@@ -245,6 +255,14 @@ function ProfilePage() {
           </div>
           <div className="btns">
             <Stack spacing={2} direction="row">
+              <Button
+                onClick={resetForm}
+                className="btns__cancelBtn"
+                style={{ backgroundColor: "transparent" }}
+                variant="contained"
+              >
+                <span className="btns__cancelBtn__btnText">{cancelBtn}</span>
+              </Button>
               <LoadingButton
                 loading={loading}
                 className="btns__saveBtn"

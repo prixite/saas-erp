@@ -3,8 +3,6 @@ import { Divider, Grid, Typography, Box } from "@mui/material";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import CompanyLogoOne from "@src/assets/svgs/CompanyLogoOne.svg";
-import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
-import MenuButtons from "@src/components/shared/menuButtons/menuButtons";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { useGetEmployeeDataQuery } from "@src/store/reducers/employees-api";
@@ -27,14 +25,6 @@ function Experience() {
 
   const constantData: LocalizationInterface = localizedData();
   const { experienceHeading } = constantData.Experience;
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <>
       {employeeData?.experience.length ? (
@@ -54,24 +44,6 @@ function Experience() {
               <Typography className="experience-text">
                 {experienceHeading}
               </Typography>
-            </Grid>
-
-            <Grid className="icon-container" item xs={2} sm={2}>
-              <div className="box">
-                <Box sx={{ cursor: "pointer" }} className="subBox">
-                  <img
-                    className="profile-pic"
-                    src={ThreeDotter}
-                    alt="profile pic"
-                    onClick={handleClick}
-                  />
-                  <MenuButtons
-                    anchorEl={anchorEl}
-                    open={open}
-                    handleClose={handleClose}
-                  />
-                </Box>
-              </div>
             </Grid>
           </Grid>
 
