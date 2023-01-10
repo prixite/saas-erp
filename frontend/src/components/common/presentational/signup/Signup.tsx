@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
   TextField,
   Typography,
   Stack,
@@ -10,17 +10,15 @@ import {
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import appIcon from "@src/assets/svgs/sidebar.svg";
 import {
   AuhtContextInterface,
   AuthContext,
 } from "@src/components/hoc/AuthContext";
-import appIcon from "@src/assets/svgs/sidebar.svg";
-import { emailRegX } from "@src/helpers/utils/utils";
+import { emailRegX, toastAPIError } from "@src/helpers/utils/utils";
 import { useApiOwnerOnboardCreateMutation } from "@src/store/api";
 import "@src/components/common/presentational/signup/Signup.scss";
-import { toastAPIError } from "@src/helpers/utils/utils";
-import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -85,7 +83,7 @@ const Signup = () => {
             },
           })
             .unwrap()
-            .then((data) => {
+            .then(() => {
               resetForm();
               setSubmitting(false);
               toast.success(
@@ -97,7 +95,7 @@ const Signup = () => {
             });
         }}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form className="signupForm">
             <Field
               name="first_name"
@@ -172,6 +170,7 @@ const Signup = () => {
                 className="btn"
                 loading={isLoading}
                 sx={{ m: "0px" }}
+                endIcon={<ArrowForwardIcon />}
                 loadingIndicator={
                   <CircularProgress
                     sx={{
