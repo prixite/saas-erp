@@ -22,10 +22,8 @@ import {
   phoneRegex,
   toastAPIError,
 } from "@src/helpers/utils/utils";
-import {
-  useGetUserQuery,
-  useUpdateOwnerProfileMutation,
-} from "@src/store/reducers/employees-api";
+import { useApiMeUpdateUpdateMutation } from "@src/store/api";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
@@ -33,7 +31,7 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
   const [loading, setLoading] = useState(false);
-  const [updateProfile] = useUpdateOwnerProfileMutation();
+  const [updateProfile] = useApiMeUpdateUpdateMutation();
 
   const constantData: LocalizationInterface = localizedData();
   const {
@@ -48,13 +46,11 @@ function ProfilePage() {
     firstNameRequired,
     lastNameRequired,
     emailRequired,
-    phoneRequired,
     firstNameError,
     lastNameError,
     emailError,
     phoneError,
     cancelBtn,
-    headlineRequired,
   } = constantData.ProfilePage;
 
   const formik = useFormik({
@@ -79,11 +75,8 @@ function ProfilePage() {
         .string()
         .matches(emailRegX, emailError)
         .required(emailRequired),
-      phone: yup
-        .string()
-        .matches(phoneRegex, phoneError)
-        .required(phoneRequired),
-      headline: yup.string().required(headlineRequired),
+      phone: yup.string().matches(phoneRegex, phoneError),
+      headline: yup.string(),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -99,7 +92,7 @@ function ProfilePage() {
         lastname: userData?.last_name || "",
         phone: userData?.contact_number || "",
         image: userData?.image || "",
-        headline: userData?.headline,
+        headline: userData?.headline || "",
       });
     }
   }, [userData, isSuccess]);
@@ -118,8 +111,8 @@ function ProfilePage() {
     }
   };
   const performEditOwner = async (data: string) => {
-    const updatedObj = getEmployeeObject(data);
-    await updateProfile({ updatedObj: updatedObj })
+    const updatedObj = getProfileObject(data);
+    await updateProfile({ meUpdate: updatedObj })
       .unwrap()
       .then(async () => {
         toast.success("Profile successfully updated.", {
@@ -133,7 +126,7 @@ function ProfilePage() {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
-  const getEmployeeObject = (imageUrl: string) => {
+  const getProfileObject = (imageUrl: string) => {
     return {
       first_name: formik.values.firstname,
       last_name: formik.values.lastname,
