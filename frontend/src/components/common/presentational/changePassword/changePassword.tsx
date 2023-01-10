@@ -6,6 +6,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  Button,
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { useFormik } from "formik";
@@ -31,6 +32,7 @@ function ChangePassword() {
     currentPasswordRequired,
     newPasswordRequired,
     verifyPasswordRequired,
+    cancelBtn,
   } = constantData.ProfilePage;
 
   const formik = useFormik({
@@ -93,6 +95,7 @@ function ChangePassword() {
           autoClose: timeOut,
           pauseOnHover: false,
         });
+        formik.resetForm();
         setLoading(false);
       })
       .catch((error) => {
@@ -106,7 +109,13 @@ function ChangePassword() {
       old_password: formik.values.password,
     };
   };
-
+  const resetForm = () => {
+    formik.setValues({
+      password: "",
+      newpassword: "",
+      verifynewpassword: "",
+    });
+  };
   return (
     <>
       <form className="passwordPage">
@@ -121,6 +130,7 @@ function ChangePassword() {
                 name="password"
                 type={values.showCurrentPassword ? "text" : "password"}
                 label="Current Password"
+                value={formik.values.password}
                 onChange={formik.handleChange}
                 InputProps={{
                   style: inputLabelColor,
@@ -152,6 +162,7 @@ function ChangePassword() {
                 label="New Password"
                 name="newpassword"
                 onChange={formik.handleChange}
+                value={formik.values.newpassword}
                 InputProps={{
                   style: inputLabelColor,
                   endAdornment: (
@@ -182,6 +193,7 @@ function ChangePassword() {
                 label="Verify Password"
                 name="verifynewpassword"
                 onChange={formik.handleChange}
+                value={formik.values.verifynewpassword}
                 InputProps={{
                   style: inputLabelColor,
                   endAdornment: (
@@ -209,6 +221,14 @@ function ChangePassword() {
           </div>
           <div className="btns">
             <Stack direction="row">
+              <Button
+                onClick={resetForm}
+                className="btns__cancelBtn"
+                style={{ backgroundColor: "transparent" }}
+                variant="contained"
+              >
+                <span className="btns__cancelBtn__btnText">{cancelBtn}</span>
+              </Button>
               <LoadingButton
                 loading={loading}
                 className="btns__saveBtn"
