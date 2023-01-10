@@ -493,3 +493,54 @@ class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
         fields = ("status", "hr_comment")
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OwnerOnBoardingSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer()
+
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email", "organization")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        org_serializer = OrganizationSerializer(data=validated_data.pop("organization"))
+        org_serializer.is_valid(raise_exception=True)
+        organization = org_serializer.save()
+        models.Role.objects.bulk_create(
+            [
+                models.Role(
+                    name="Owner",
+                    permission=models.Role.Permission.OWNER,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Admin",
+                    permission=models.Role.Permission.ADMIN,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Member",
+                    permission=models.Role.Permission.MEMBER,
+                    is_default=True,
+                    organization=organization,
+                ),
+            ]
+        )
+        validated_data["username"] = validated_data.get("email")
+        validated_data["organization"] = organization
+        validated_data["default_role"] = models.Role.objects.filter(
+            organization=organization,
+            permission=models.Role.Permission.OWNER,
+            is_default=True,
+        ).first()
+
+        return super().create(validated_data)

@@ -286,14 +286,24 @@ const injectedRtkApi = api.injectEndpoints({
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
-    apiMeUpdatePartialUpdate: build.mutation<
-      ApiMeUpdatePartialUpdateApiResponse,
-      ApiMeUpdatePartialUpdateApiArg
+    apiMeUpdateUpdate: build.mutation<
+      ApiMeUpdateUpdateApiResponse,
+      ApiMeUpdateUpdateApiArg
     >({
       query: (queryArg) => ({
         url: `/api/me/update/`,
-        method: "PATCH",
-        body: queryArg.patchedMeUpdate,
+        method: "PUT",
+        body: queryArg.meUpdate,
+      }),
+    }),
+    apiOwnerOnboardCreate: build.mutation<
+      ApiOwnerOnboardCreateApiResponse,
+      ApiOwnerOnboardCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/owner/onboard/`,
+        method: "POST",
+        body: queryArg.ownerOnBoarding,
       }),
     }),
     apiPasswordResetCreate: build.mutation<
@@ -484,9 +494,14 @@ export type ApiLoginCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
-export type ApiMeUpdatePartialUpdateApiResponse = /** status 200  */ MeUpdate;
-export type ApiMeUpdatePartialUpdateApiArg = {
-  patchedMeUpdate: PatchedMeUpdate;
+export type ApiMeUpdateUpdateApiResponse = /** status 200  */ MeUpdate;
+export type ApiMeUpdateUpdateApiArg = {
+  meUpdate: MeUpdate;
+};
+export type ApiOwnerOnboardCreateApiResponse =
+  /** status 201  */ OwnerOnBoarding;
+export type ApiOwnerOnboardCreateApiArg = {
+  ownerOnBoarding: OwnerOnBoarding;
 };
 export type ApiPasswordResetCreateApiResponse =
   /** status 200  */ ResendEmailCode;
@@ -604,7 +619,7 @@ export type EmployeeUser = {
   last_name?: string;
   email: string;
   image?: string;
-  contact_number: string;
+  contact_number?: string | null;
   default_role?: number | null;
 };
 export type Degree = {
@@ -656,7 +671,7 @@ export type EmployeeUpdateUser = {
   last_name?: string;
   email: string;
   image?: string;
-  contact_number: string;
+  contact_number?: string | null;
   default_role?: number | null;
 };
 export type EmployeeUpdate = {
@@ -737,23 +752,29 @@ export type Me = {
   organization?: string;
   image?: string;
   is_superuser?: boolean;
-  headline: string;
-  contact_number: string;
+  headline?: string | null;
+  contact_number?: string | null;
   allowed_modules: string;
 };
 export type MeUpdate = {
   first_name?: string;
   last_name?: string;
   image?: string;
-  contact_number: string;
-  headline: string;
+  contact_number?: string | null;
+  headline?: string | null;
 };
-export type PatchedMeUpdate = {
+export type Organization = {
+  id: number;
+  name: string;
+  address: string;
+  created_at: string;
+  updated_at: string;
+};
+export type OwnerOnBoarding = {
   first_name?: string;
   last_name?: string;
-  image?: string;
-  contact_number?: string;
-  headline?: string;
+  email: string;
+  organization: Organization;
 };
 export type ResendEmailCode = {
   email: string;
@@ -819,7 +840,8 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
-  useApiMeUpdatePartialUpdateMutation,
+  useApiMeUpdateUpdateMutation,
+  useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
   useApiPasswordResetConfirmCreateMutation,

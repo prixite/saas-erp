@@ -25,13 +25,19 @@ class Command(BaseCommand):
             module=employee_module, organization=organization, is_enabled=True
         )
         owner_role = factories.RoleFactory(
-            name="Test Organization Owner",
+            name="Owner",
             permission=models.Role.Permission.OWNER,
             is_default=True,
             organization=organization,
         )
+        owner_role = factories.RoleFactory(
+            name="Admin",
+            permission=models.Role.Permission.ADMIN,
+            is_default=True,
+            organization=organization,
+        )
         member_role = factories.RoleFactory(
-            name="Test Organization Member",
+            name="Member",
             permission=models.Role.Permission.MEMBER,
             is_default=True,
             organization=organization,

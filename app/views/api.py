@@ -11,7 +11,12 @@ from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
-from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -490,7 +495,7 @@ class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.Organization
 class MeUpdateViewSet(UpdateAPIView):
     serializer_class = serializers.MeUpdateSerializer
     queryset = models.User.objects.none()
-    http_method_names = ("patch",)
+    http_method_names = ("put",)
 
     def get_object(self):
         return self.request.user
@@ -527,3 +532,9 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
             leave.hr_comment,
         )
         return response
+
+
+class OwnerOnboardingAPIView(CreateAPIView):
+    serializer_class = serializers.OwnerOnBoardingSerializer
+    queryset = models.User.objects.all()
+    permission_classes = (AllowAny,)

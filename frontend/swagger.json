@@ -1323,8 +1323,8 @@
             }
         },
         "/api/me/update/": {
-            "patch": {
-                "operationId": "api_me_update_partial_update",
+            "put": {
+                "operationId": "api_me_update_update",
                 "tags": [
                     "api"
                 ],
@@ -1332,17 +1332,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedMeUpdate"
+                                "$ref": "#/components/schemas/MeUpdate"
                             }
                         }
                     }
@@ -1358,6 +1358,52 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/MeUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/owner/onboard/": {
+            "post": {
+                "operationId": "api_owner_onboard_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OwnerOnBoarding"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OwnerOnBoarding"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OwnerOnBoarding"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OwnerOnBoarding"
                                 }
                             }
                         },
@@ -2331,6 +2377,7 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "default_role": {
@@ -2339,7 +2386,6 @@
                     }
                 },
                 "required": [
-                    "contact_number",
                     "email"
                 ]
             },
@@ -2367,6 +2413,7 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "default_role": {
@@ -2375,7 +2422,6 @@
                     }
                 },
                 "required": [
-                    "contact_number",
                     "email"
                 ]
             },
@@ -2597,10 +2643,12 @@
                     },
                     "headline": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 255
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "allowed_modules": {
@@ -2610,9 +2658,7 @@
                 },
                 "required": [
                     "allowed_modules",
-                    "contact_number",
-                    "email",
-                    "headline"
+                    "email"
                 ]
             },
             "MeUpdate": {
@@ -2633,16 +2679,74 @@
                     },
                     "contact_number": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 20
                     },
                     "headline": {
                         "type": "string",
+                        "nullable": true,
                         "maxLength": 255
+                    }
+                }
+            },
+            "Organization": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "address": {
+                        "type": "string",
+                        "maxLength": 200
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
                     }
                 },
                 "required": [
-                    "contact_number",
-                    "headline"
+                    "address",
+                    "created_at",
+                    "id",
+                    "name",
+                    "updated_at"
+                ]
+            },
+            "OwnerOnBoarding": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email address",
+                        "maxLength": 254
+                    },
+                    "organization": {
+                        "$ref": "#/components/schemas/Organization"
+                    }
+                },
+                "required": [
+                    "email",
+                    "organization"
                 ]
             },
             "PasswordResetComplete": {
@@ -2693,32 +2797,6 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
-                    }
-                }
-            },
-            "PatchedMeUpdate": {
-                "type": "object",
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "image": {
-                        "type": "string",
-                        "format": "uri",
-                        "maxLength": 200
-                    },
-                    "contact_number": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
-                    "headline": {
-                        "type": "string",
-                        "maxLength": 255
                     }
                 }
             },

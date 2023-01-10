@@ -146,4 +146,8 @@ urlpatterns = [
         "me/update/",
         api.MeUpdateViewSet.as_view(),
     ),
+    path(
+        "owner/onboard/",
+        api.OwnerOnboardingAPIView.as_view(),
+    ),
 ]
