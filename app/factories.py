@@ -10,6 +10,7 @@ fake.seed_instance(1234)
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.User
+        django_get_or_create = ("email",)
 
     @factory.post_generation
     def password(obj, create, extracted, **kwargs):
@@ -23,6 +24,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 class OrganizationFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Organization
+        django_get_or_create = ("name",)
 
 
 class OrganizationModuleFactory(factory.django.DjangoModelFactory):
@@ -33,6 +35,7 @@ class OrganizationModuleFactory(factory.django.DjangoModelFactory):
 class EmployeeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Employee
+        django_get_or_create = ("nic",)
 
 
 class AssetTypeFactory(factory.django.DjangoModelFactory):
@@ -48,6 +51,7 @@ class ModuleFactory(factory.django.DjangoModelFactory):
 class RoleFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Role
+        django_get_or_create = ("name", "organization")
 
 
 class UserModuleRoleFactory(factory.django.DjangoModelFactory):
@@ -58,11 +62,13 @@ class UserModuleRoleFactory(factory.django.DjangoModelFactory):
 class DepartmentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Department
+        django_get_or_create = ("name",)
 
 
 class EmploymentTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.EmploymentType
+        django_get_or_create = ("name",)
 
 
 class CurrencyFactory(factory.django.DjangoModelFactory):
@@ -103,3 +109,8 @@ class CompanyFactory(factory.django.DjangoModelFactory):
 class DocumentTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.DocumentType
+
+
+class LeaveFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Leave

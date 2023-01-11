@@ -1,3 +1,4 @@
+import { FormikErrors } from "formik";
 export interface btnsInterface {
   createButton: string;
   filterButton: string;
@@ -15,6 +16,7 @@ export interface employeeInterface {
   employeeExperienceLetters: string;
   uploadDocument: string;
   notFound: string;
+  employeeDeleteSuccess: string;
 }
 export interface userInterface {
   userHeading: string;
@@ -32,6 +34,8 @@ export interface modalsInterface {
   filterDesignationLabel: string;
   createEmployeeHeading: string;
   createEmployeeSubheading: string;
+  updateEmployeeHeading: string;
+  updateEmployeeSubheading: string;
   createEmployeeClose: string;
   createEmployeeNext: string;
   createEmployeeSave: string;
@@ -67,11 +71,53 @@ export interface modalsInterface {
   employeeDegree: string;
   employeeUniveristy: string;
   newEmployeeCreated: string;
+  employeeUpdated: string;
   congrats: string;
   backToListing: string;
   wantToDelete: string;
   yes: string;
   no: string;
+  employeeFirstName: string;
+  employeeLastName: string;
+  year: string;
+  firstNameRequired: string;
+  lastNameRequired: string;
+  phoneRequired: string;
+  emailRequired: string;
+  joiningDateRequired: string;
+  CnicRequired: string;
+  DesignationRequired: string;
+  ManagerRequired: string;
+  SalaryRequired: string;
+  EmployementTypeRequired: string;
+  EmergencyContactRequired: string;
+  AssetsRequired: string;
+  CompanyRequired: string;
+  StartDateRequired: string;
+  EndDateRequired: string;
+  DegreeRequired: string;
+  UniversityRequired: string;
+  DepartmentRequired: string;
+  DefaultRoleRequired: string;
+  YearRequired: string;
+  emailrRegxError: string;
+  defaultRoleLabel: string;
+  departmentsLabel: string;
+  firstNameRegxError: string;
+  lastNameRegxError: string;
+  nicRegxError: string;
+  employeeImageError: string;
+  phoneRegxError: string;
+  uploadImg: string;
+  removeImg: string;
+  uploadfileDescription: string;
+  imgSize: string;
+  uploadImgDescription: string;
+  uploadOrganizationLogo: string;
+  uploadCompanyLogo: string;
+  uploadImage: string;
+  dragToAdjust: string;
+  saveChanges: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -112,11 +158,21 @@ export interface profilePageInterface {
   phoneSub: string;
   saveBtn: string;
   cancelBtn: string;
+  firstNameError: string;
+  lastNameError: string;
+  emailError: string;
+  phoneError: string;
+  headlineRequired: string;
 
   firstNameRequired: string;
   lastNameRequired: string;
   emailRequired: string;
   phoneRequired: string;
+  passwordRequired: string;
+  passwordMatch: string;
+  currentPasswordRequired: string;
+  newPasswordRequired: string;
+  verifyPasswordRequired: string;
 }
 
 export interface employeeButtons {
@@ -140,6 +196,124 @@ export interface editBenefitModal {
   DinnerAllowance: string;
   MealAllowance: string;
 }
+export type Degree = {
+  program: string;
+  institute: string;
+  year: string;
+};
+export type Asset = {
+  id: number;
+  name: string;
+  attribute_values: {
+    [key: string]: string;
+  };
+  created_at: string;
+  updated_at: string;
+  type: number;
+};
+export type CompanyEdit = {
+  id: string;
+  name: string;
+};
+export type Experirence = {
+  title: string;
+  company: CompanyEdit | string;
+  start_date: string;
+  end_date: string;
+};
+export interface AuthPages {
+  saas: string;
+  erp: string;
+  forgot_password_title: string;
+  reset_password_title: string;
+  reset_password_desc: string;
+  forgot_password_desc: string;
+  email_text: string;
+  password_text: string;
+  confirm_password_text: string;
+  save_password_text: string;
+  reset_password_btn: string;
+  Back_to: string;
+  login_text: string;
+  email_required_text: string;
+  invalid_email_text: string;
+  password_required_text: string;
+  confirm_password_required_text: string;
+}
+export type Benefit = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
+export type EmployeeForm = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  image?: string;
+  contactNumber: string;
+  defaultRole?: number;
+  degrees: Degree[];
+  assets: Asset[];
+  experience: Experirence[];
+  orgId: string;
+  managing: string[];
+  totalExperience: string;
+  manages: string[];
+  nic: string;
+  dateOfJoining: string;
+  emergencyContactNumber: string;
+  designation: string;
+  salary?: number;
+  userAllowed?: boolean;
+  department?: number;
+  manager?: number;
+  type?: number;
+  benefits: number[];
+};
+export interface S3Interface {
+  bucket: string;
+  key: string;
+  location: string;
+}
+export interface Formik {
+  initialValues: EmployeeForm;
+  initialStatus: EmployeeForm;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: EmployeeForm;
+  errors?: FormikErrors<EmployeeForm>;
+  setFieldValue: (
+    field: string,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<EmployeeForm>> | Promise<void>;
+  submitCount: number;
+}
+export type OwnerForm = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  image?: string;
+  phone: string;
+  headline: string;
+};
+export interface FormikOwner {
+  initialValues: OwnerForm;
+  initialStatus: OwnerForm;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  values: EmployeeForm;
+  errors?: FormikErrors<OwnerForm>;
+  setFieldValue: (
+    field: string,
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<FormikErrors<OwnerForm>> | Promise<void>;
+  submitCount: number;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -156,4 +330,5 @@ export interface LocalizationInterface {
   MenuButtons: menuButtons;
   EditBenefitModal: editBenefitModal;
   BreadCrumbs: breadcrumbsInterface;
+  AuthPages: AuthPages;
 }

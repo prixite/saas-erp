@@ -1,12 +1,40 @@
 from datetime import date
 
-from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from waffle import get_waffle_switch_model
 
 from app import models
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        label="Password",
+        style={"input_type": "password"},
+        trim_whitespace=False,
+    )
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = authenticate(
+                request=self.context.get("request"), email=email, password=password
+            )
+            if not user:
+                msg = {"error": "Please enter correct Email/Password."}
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = {"error": "Must include 'email' and 'password'."}
+            raise serializers.ValidationError(msg, code="authorization")
+
+        attrs["user"] = user
+        return attrs
 
 
 class DegreeSerializer(serializers.ModelSerializer):
@@ -16,8 +44,11 @@ class DegreeSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["program"] = instance.program.name
-        data["institute"] = instance.institute.name
+        data["program"] = {"id": instance.program.id, "name": instance.program.name}
+        data["institute"] = {
+            "id": instance.institute.id,
+            "name": instance.institute.name,
+        }
         return data
 
 
@@ -28,7 +59,10 @@ class ExperirenceSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["company"] = instance.company.name
+        data["company"] = {
+            "id": instance.company.id,
+            "name": instance.company.name,
+        }
         return data
 
 
@@ -122,10 +156,18 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["image"] = f"{settings.DOMAIN_NAME}{instance.image.url}"
-        return data
+
+class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
+    email = serializers.EmailField(read_only=True)
+
+
+class ManagerSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(source="user.get_full_name")
+
+    class Meta:
+        model = models.Employee
+        fields = "id", "name"
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -138,7 +180,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         write_only=True, queryset=models.Employee.objects.all(), many=True
     )
     total_experience = serializers.SerializerMethodField()
-    manages = serializers.StringRelatedField(read_only=True, many=True)
 
     class Meta:
         model = models.Employee
@@ -159,6 +200,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user = user_ser.save()
         user.username = user.email
         user.organization = organization
+        user.is_active = validated_data.get("user_allowed", False)
         user.save()
         validated_data["user_id"] = user.id
         employee = super().create(validated_data)
@@ -218,12 +260,19 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["organization"] = instance.organization.name
+        data["manages"] = ManagerSerializer(instance.manages.all(), many=True).data
         if instance.department:
-            data["department"] = instance.department.name
+            data["department"] = {
+                "id": instance.department.id,
+                "name": instance.department.name,
+            }
         if instance.manager:
-            data["manager"] = instance.manager.user.get_full_name()
+            data["manager"] = {
+                "id": instance.manager.id,
+                "name": instance.manager.user.get_full_name(),
+            }
         if instance.type:
-            data["type"] = instance.type.name
+            data["type"] = {"id": instance.type.id, "title": instance.type.name}
         if instance.benefits:
             data["benefits"] = BenefitSerializer(
                 instance.benefits.all(), many=True
@@ -235,7 +284,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name", read_only=True)
     last_name = serializers.CharField(source="user.last_name", read_only=True)
     contact_number = serializers.CharField(source="user.contact_number", read_only=True)
-    image = serializers.SerializerMethodField()
+    image = serializers.CharField(source="user.image", read_only=True)
 
     class Meta:
         model = models.Employee
@@ -249,21 +298,49 @@ class EmployeeListSerializer(serializers.ModelSerializer):
             "image",
         ]
 
-    def get_image(self, data):
-        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
 
+class EmployeeUpdateSerializer(EmployeeSerializer):
+    user = EmployeeUpdateUserSerializer()
 
-class EmployeeUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employee
-        fields = [
-            "department",
-            "designation",
-            "manager",
-            "benefits",
-            "type",
-            "user_allowed",
-        ]
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        organization = self.context.get("request").user.organization
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user.is_active = validated_data.get("user_allowed", False)
+        user_ser.save()
+
+        models.Degree.objects.filter(employee=instance).delete()
+        models.Asset.objects.filter(employee=instance).delete()
+        models.Experience.objects.filter(employee=instance).delete()
+        models.Employee.objects.filter(manager=instance).update(manager=None)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = instance
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=instance)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=instance)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=instance, organization=organization
+            )
+
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -315,8 +392,6 @@ class MeSerializer(serializers.ModelSerializer):
         default="",
     )
 
-    image = serializers.SerializerMethodField()
-
     allowed_modules = serializers.SerializerMethodField()
 
     class Meta:
@@ -334,24 +409,15 @@ class MeSerializer(serializers.ModelSerializer):
         ]
 
     def get_allowed_modules(self, data):
-        member_modules = [
-            module.slug for module in self.context.get("request").user.member_modules
-        ]
-        admin_modules = [
-            module.slug for module in self.context.get("request").user.admin_modules
-        ]
-        owner_modules = [
-            module.slug for module in self.context.get("request").user.owner_modules
-        ]
+        member_modules = [module.slug for module in data.member_modules]
+        admin_modules = [module.slug for module in data.admin_modules]
+        owner_modules = [module.slug for module in data.owner_modules]
 
         return {
             "member_modules": member_modules,
             "admin_modules": admin_modules,
             "owner_modules": owner_modules,
         }
-
-    def get_image(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
 
 
 class UserPasswordSerializer(serializers.Serializer):
@@ -370,6 +436,29 @@ class UserPasswordSerializer(serializers.Serializer):
         return data
 
 
+class ResendEmailCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    token = serializers.CharField(required=True)
+
+
+class PasswordResetCompleteSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, validators=[validate_password])
+    password2 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        return attrs
+
+
 class WaffleSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_waffle_switch_model()
@@ -380,3 +469,78 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ["employee", "time_in", "time_out"]
+
+
+class MeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "first_name",
+            "last_name",
+            "image",
+            "contact_number",
+            "headline",
+        )
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
+
+
+class LeaveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = ("status", "hr_comment")
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OwnerOnBoardingSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer()
+
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email", "organization")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        org_serializer = OrganizationSerializer(data=validated_data.pop("organization"))
+        org_serializer.is_valid(raise_exception=True)
+        organization = org_serializer.save()
+        models.Role.objects.bulk_create(
+            [
+                models.Role(
+                    name="Owner",
+                    permission=models.Role.Permission.OWNER,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Admin",
+                    permission=models.Role.Permission.ADMIN,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Member",
+                    permission=models.Role.Permission.MEMBER,
+                    is_default=True,
+                    organization=organization,
+                ),
+            ]
+        )
+        validated_data["username"] = validated_data.get("email")
+        validated_data["organization"] = organization
+        validated_data["default_role"] = models.Role.objects.filter(
+            organization=organization,
+            permission=models.Role.Permission.OWNER,
+            is_default=True,
+        ).first()
+
+        return super().create(validated_data)

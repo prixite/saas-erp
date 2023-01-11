@@ -18,15 +18,13 @@ class User(AbstractUser):
         "Organization", on_delete=models.CASCADE, null=True
     )
 
-    image = models.ImageField(
-        upload_to="profile",
-        null=True,
-        default="../static/app/assets/profile_default.png",
+    image = models.URLField(
+        default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"  # noqa
     )
 
-    contact_number = models.CharField(max_length=20)
+    contact_number = models.CharField(max_length=20, null=True, blank=True)
 
-    headline = models.CharField(_("headline"), max_length=255)
+    headline = models.CharField(_("headline"), max_length=255, null=True, blank=True)
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
     is_onboarded = models.BooleanField(default=False)
@@ -44,7 +42,18 @@ class User(AbstractUser):
     def get_modules(self, permission):
         module_roles = self.module_roles.filter(module__is_enabled=True)
 
-        if self.default_role and self.default_role.permission == Role.Permission.OWNER:
+        if (
+            self.default_role
+            and self.default_role.permission == Role.Permission.OWNER
+            and permission is not Role.Permission.OWNER
+        ):
+            return []
+
+        if (
+            self.default_role
+            and self.default_role.permission == Role.Permission.OWNER
+            and permission == Role.Permission.OWNER
+        ):
             return self.organization_modules
 
         module_roles = module_roles.filter(role__permission=permission)

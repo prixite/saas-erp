@@ -1,35 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
+import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-import { employeeConstants } from "@src/helpers/constants/constants";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
+import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
+  useDeleteEmployeeMutation,
+  useGetUserQuery,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
+
+const useDebounce = (value: string, delay: number): string => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 function DataGridTable() {
-  const navigate = useNavigate();
-  const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const { data: rows = [], isSuccess, isLoading } = useGetEmployeesQuery();
+  const constantData: LocalizationInterface = localizedData();
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [userData, setUserData] = useState<Employee[]>([]);
+  const { data: userInfo } = useGetUserQuery();
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
   const allFlags = Object.assign({}, ...Flags);
-  const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { notFound } = constantData.Employee;
-  const [page, setPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
-
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const [rowCellId, setRowCellId] = useState<number>(0);
+  const debouncedSearchTerm = useDebounce(query, 500);
+  const [action, setAction] = useState("add");
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -62,6 +87,7 @@ function DataGridTable() {
             <img
               style={{
                 height: "32px",
+                width: "32px",
                 left: "241px",
                 top: "154px",
                 marginRight: "8px",
@@ -75,6 +101,7 @@ function DataGridTable() {
         );
       },
     },
+
     {
       field: "contact_Number",
       headerName: "Contact Number",
@@ -105,20 +132,27 @@ function DataGridTable() {
       field: "actions",
       headerName: "Actions",
       width: 350,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
           <Box
             className="renderCell-joiningDate"
             style={{ marginLeft: "10px" }}
           >
-            <IconButton
-              onClick={handleModalOpen}
-              aria-label="edit"
-              id="edit-btn-id"
-              className="edit-btn"
-            >
-              <img className="profile-pic" src={EditIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={(event) =>
+                  handleEditModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="edit"
+                id="edit-btn-id"
+                className="edit-btn"
+              >
+                <img className="profile-pic" src={EditIcon} alt="profile pic" />
+              </IconButton>
+            ) : (
+              ""
+            )}
             <IconButton
               aria-label="Show"
               id="show-btn-id"
@@ -126,72 +160,111 @@ function DataGridTable() {
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
-            <IconButton
-              onClick={handleDeleteModalOpen}
-              aria-label="delete"
-              id="delete-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={(event) =>
+                  handleDeleteModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="delete"
+                id="delete-btn-id"
+                className="delete-btn"
+              >
+                <img
+                  className="profile-pic"
+                  src={DeleteIcon}
+                  alt="profile pic"
+                />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </Box>
         );
       },
     },
   ];
-  const handleModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenModal(true);
-  };
+
+  useEffect(() => {
+    if (rows.length) {
+      setUserData(rows);
+    }
+  }, [rows]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setUserData(
+        rows.filter((userData: Employee) => {
+          return `${userData?.first_name} ${userData?.last_name}`
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setUserData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
   const handleModalClose = () => {
     setOpenModal(false);
   };
-  const handleDeleteModalOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setOpenDeleteModal(true);
-  };
+
   const handleDeleteModalClose = () => {
     setOpenDeleteModal(false);
   };
   const handleOnCellClick = (params: GridCellParams) => {
     navigate(`/employees/${params.row.id}`);
   };
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleEmployeeDelete = async () => {
+    await deleteEmployee({
+      id: rowCellId,
+    }).unwrap();
+    toast.success(employeeDeleteSuccess, {
+      autoClose: timeOut,
+      pauseOnHover: false,
+    });
+    handleDeleteModalClose();
+  };
   return (
     <Box className="dataGridTable-section">
+      <HeadBar setSearchText={setQuery} />
       {isSuccess ? (
         <>
-          {tableData?.length ? (
+          {userData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={tableData}
+                rows={[...userData]}
                 columns={columns}
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
-                pageSize={pageSize}
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[10, 20]}
-                rowCount={10}
+                pageSize={pageSize}
+                rowsPerPageOptions={[10, 13]}
                 pagination
-                paginationMode="server"
                 density="standard"
                 onCellClick={handleOnCellClick}
-                page={page}
-                onPageChange={(_page) => {
-                  setPage(_page);
-                }}
-                initialState={{
-                  pagination: {
-                    page: 0,
-                    pageSize: 10,
-                  },
-                }}
                 loading={isLoading}
                 sx={{
-                  cursor: "pointer",
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",
                   },
@@ -203,7 +276,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
-                    cursor: "default",
+                    cursor: "default !important",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
@@ -282,9 +355,15 @@ function DataGridTable() {
           <RowSkeletonCard />
         </>
       )}
-      <EmployeeModal open={openModal} handleClose={handleModalClose} />
+      <EmployeeModal
+        empId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
       <DeleteModal
         open={openDeleteModal}
+        handleEmployeeDelete={handleEmployeeDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>

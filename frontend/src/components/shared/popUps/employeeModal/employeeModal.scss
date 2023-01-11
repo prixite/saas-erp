@@ -65,6 +65,8 @@
   }
   &__Content {
     display: flex;
+    height: auto;
+    overflow: hidden;
     flex-direction: column;
     width: 100%;
   }
@@ -110,6 +112,10 @@
       .submit-img {
         margin-left: 10px;
         display: flex;
+        margin-top: 4px;
+      }
+      .MuiLoadingButton-loadingIndicator {
+        color: white;
       }
     }
     .actions-btns-wrapper {

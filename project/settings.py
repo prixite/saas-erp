@@ -36,6 +36,7 @@ env = environ.Env(
     DOMAIN_NAME=(str, "https://erp.prixite.com"),
     SLACK_TOKEN=(str, None),
     SLACK_ATTENDACE_CHANNEL=(str, None),
+    SLACK_SIGNING_SECRET=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -57,6 +58,8 @@ DOMAIN_NAME = env("DOMAIN_NAME")
 SLACK_TOKEN = env("SLACK_TOKEN")
 
 SLACK_ATTENDACE_CHANNEL = env("SLACK_ATTENDACE_CHANNEL")
+
+SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 
 # Application definition
 
@@ -188,6 +191,9 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
     ],
 }
 

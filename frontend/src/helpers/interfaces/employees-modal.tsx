@@ -1,24 +1,37 @@
 export interface Employee {
-  name: string;
-  contact_number: number;
-  nic: number;
-  emergency_contact_number: number;
-  date_of_joining: Date;
-  organization: number;
-  type: number;
-  department: number;
+  first_name: string;
+  last_name: string;
+  contact_number: string;
+  id: number;
+  image: string;
+  org_id: string;
+  date_of_joining: string;
 }
 export interface Education {
-  program: string;
-  institute: string;
+  program: {
+    id: string;
+    name: string;
+  };
+  institute: {
+    id: string;
+    name: string;
+  };
   year: string;
 }
 export interface Experience {
+  id: string;
   title: string;
-  company: string;
+  company: {
+    id: string;
+    name: string;
+  };
   start_date: string;
   end_date: string;
 }
+export type Manage = {
+  id: string;
+  name: string;
+};
 export type Benefit = {
   id: number;
   name: string;
@@ -33,6 +46,7 @@ export interface EmployeeData {
     email: string;
     image: string;
     contact_number: string;
+    default_role: number;
   };
   total_experience: string;
   benefits: Benefit[];
@@ -41,13 +55,26 @@ export interface EmployeeData {
   contact_number: string;
   date_of_joining: string;
   nic: string;
+  manages: Manage[];
+  managing: Manage[];
   designation: string;
   emergency_contact_number: string;
   organization: number;
-  type: number;
-  manager?: string;
-  department: number;
+  type: {
+    id: number;
+    title: string;
+  };
+  manager?: {
+    id: number;
+    name: string;
+  };
+  department: {
+    id: number;
+    name: string;
+  };
   org_id: string;
+  salary: number;
+  user_allowed: boolean;
 }
 export interface Doc {
   id: number;
@@ -60,6 +87,11 @@ export interface EmployeeDoc {
   docs: Doc[];
 }
 
+interface AllowedModules {
+  member_modules: string[];
+  admin_modules: string[];
+  owner_modules: string[];
+}
 export interface User {
   image: string;
   email: string;
@@ -68,7 +100,8 @@ export interface User {
   is_superuser: boolean;
   last_name: string;
   organization: string;
-  allowed_modules: string[];
+  contact_number: string;
+  allowed_modules: AllowedModules;
 }
 export interface Flags {
   show_users_module: string;
@@ -77,4 +110,49 @@ export interface Flags {
   show_accounts_module: string;
   show_dashboard_module: boolean;
   show_setting_module: string;
+}
+export interface EmployeementTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface CompaniesTypes {
+  id: number;
+  name: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface ProgramsTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface InstituteTypes {
+  id: number;
+  name: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface roleTypes {
+  id: number;
+  name: string;
+  permission: string;
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
+export interface departmentsTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface Benefits {
+  id: number;
+  name: string;
+  created_at: string;
 }

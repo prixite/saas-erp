@@ -22,6 +22,7 @@ class Employee(models.Model):
     )
     salary = models.PositiveIntegerField(null=True, blank=True)
     slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
+    leave_count = models.IntegerField(default=0)
     user_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,6 +33,9 @@ class Employee(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_full_name()
+
+    class Meta:
+        ordering = ["id"]
 
 
 class Document(models.Model):
@@ -138,7 +142,7 @@ class Institute(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="institutes", null=True, blank=True)
+    image = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -207,7 +211,7 @@ class Company(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="companies", null=True, blank=True)
+    image = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

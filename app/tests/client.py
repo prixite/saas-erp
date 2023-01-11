@@ -1,7 +1,6 @@
 from functools import wraps
 
 from django import test
-from rest_framework.authtoken.models import Token
 
 
 def add_default_json_content_type(func):
@@ -30,13 +29,8 @@ class Client(test.Client):
 
     @add_default_json_content_type
     def put(self, *args, **kwargs):
-        return super().put(*args, **kwargs)
+        return super().put(*args, **{**self.default_headers, **kwargs})
 
     @add_default_json_content_type
     def patch(self, *args, **kwargs):
-        return super().patch(*args, **kwargs)
-
-    def force_token_login(self, user):
-        self.default_headers[
-            "HTTP_AUTHORIZATION"
-        ] = f"Token {Token.objects.get(user=user).key}"
+        return super().patch(*args, **{**self.default_headers, **kwargs})
