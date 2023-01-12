@@ -16,6 +16,7 @@ import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
@@ -234,12 +235,18 @@ function DataGridTable() {
   const handleEmployeeDelete = async () => {
     await deleteEmployee({
       id: rowCellId,
-    }).unwrap();
-    toast.success(employeeDeleteSuccess, {
-      autoClose: timeOut,
-      pauseOnHover: false,
-    });
-    handleDeleteModalClose();
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success(employeeDeleteSuccess, {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleDeleteModalClose();
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
   return (
     <Box className="dataGridTable-section">
