@@ -8,6 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useFormik } from "formik";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import backIcon from "@src/assets/svgs/back.svg";
@@ -94,6 +95,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [openSuccessModal, setOpenSucessModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   const [page, setPage] = useState("1");
   const [onChangeValidation, setOnChangeValidation] = useState(false);
   const [createEmployee] = useCreateEmployeeMutation();
@@ -298,12 +300,20 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        setLoading(false);
-        handleClose();
-        formik.resetForm();
-        setOpenSucessModal(true);
-        setOnChangeValidation(false);
-        setPage("1");
+        if (location.pathname === "/employees/") {
+          setLoading(false);
+          handleClose();
+          formik.resetForm();
+          setOpenSucessModal(true);
+          setOnChangeValidation(false);
+          setPage("1");
+        } else {
+          setLoading(false);
+          handleClose();
+          formik.resetForm();
+          setOnChangeValidation(false);
+          setPage("1");
+        }
       })
       .catch((error) => {
         setLoading(false);

@@ -39,9 +39,7 @@ interface Props {
 const PageOne = ({ formik, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
 
-  const [checked, setChecked] = useState(
-    formik.values.benefits.length > 0 ? true : false
-  );
+  const [checked, setChecked] = useState(false);
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
@@ -69,7 +67,12 @@ const PageOne = ({ formik, action }: Props) => {
     removeImg,
   } = constantData.Modals;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+    if (event.target.checked === true) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+      formik.setFieldValue("benefits", []);
+    }
   };
   const handleOnChangeBenefit = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -96,11 +99,6 @@ const PageOne = ({ formik, action }: Props) => {
       setChecked(true);
     }
   }, [formik.values.benefits]);
-  useEffect(() => {
-    if (!checked) {
-      formik.setFieldValue("benefits", []);
-    }
-  }, [checked]);
   const filterItselfManager = employeetableData?.filter((employee) => {
     return employee.id !== formik.values.manager;
   });
