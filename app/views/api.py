@@ -369,7 +369,7 @@ class SlackApiView(APIView):
                 user_id = request.data.get("user_id")
                 command = request.data.get("command")
                 command_params = request.data.get("text")
-
+                get_detail = command_params.split("/")
                 if channel_id == SLACK_ATTENDACE_CHANNEL:
                     try:
                         employee = models.Employee.objects.get(slack_id=user_id)
@@ -384,84 +384,105 @@ class SlackApiView(APIView):
                         employee=employee
                     ).last()
 
-                    if command == "/timein":
-                        if last_record and last_record.time_out is None:
+                    if command == "/erp":
+                        if get_detail[0] == "timein":
+                            if last_record and last_record.time_out is None:
+                                return Response(
+                                    data={
+                                        "text": "Please do time out before timing in.",
+                                    },
+                                    status=status.HTTP_200_OK,
+                                )
+                            attendance = models.Attendance.objects.create(
+                                employee=employee, organization=employee.organization
+                            )
+
+                        elif get_detail[0] == "timeout":
+                            if last_record and last_record.time_out is not None:
+                                return Response(
+                                    data={
+                                        "text": "Please do time in before 'timing' out.",  # noqa
+                                    },
+                                    status=status.HTTP_200_OK,
+                                )
+                            attendance = models.Attendance.objects.filter(
+                                employee=employee
+                            ).last()
+                            attendance.time_out = datetime.now()
+                            attendance.save()
+                        elif get_detail[0] == "help":
                             return Response(
                                 data={
-                                    "text": "Please do time out before timing in.",
+                                    "text": "Hi there :wave: here are some ideas of what you can do:\n*Time In*\n  `/erp timein | used for time in.`\n\n*Time Out*\n  `/erp timeout | used for time out.` \n\n*leave*\n  `/erp leave | Used for leave submittion.`",  # noqa
                                 },
                                 status=status.HTTP_200_OK,
                             )
-                        attendance = models.Attendance.objects.create(
-                            employee=employee, organization=employee.organization
+                        elif get_detail[0] == "leave":
+
+                            date_format = "%Y-%m-%d"
+
+                            try:
+                                date_from = datetime.strptime(
+                                    get_detail[1], date_format
+                                )
+                                date_to = datetime.strptime(get_detail[2], date_format)
+                                total_leave = date_to - date_from
+                                remaining_leave = 20 - employee.leave_count
+
+                                if (
+                                    date_from < datetime.now()
+                                    or date_to < datetime.now()
+                                ):
+                                    return Response(
+                                        data={"text": "Date must be future date."}
+                                    )
+
+                                if total_leave.days > remaining_leave:
+                                    return Response(
+                                        data={
+                                            "text": f"Your remaining leaves ({remaining_leave}) are less then requested leaves."  # noqa
+                                        }
+                                    )
+                                if date_from > date_to:
+                                    return Response(
+                                        data={
+                                            "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /erp leave/From_Date/To_Date/Reason"""  # noqa
+                                        }
+                                    )
+
+                                models.Leave.objects.create(
+                                    employee_id=employee.id,
+                                    leave_from=get_detail[1],
+                                    leave_to=get_detail[2],
+                                    description=get_detail[3],
+                                    organization=employee.organization,
+                                )
+                                return Response(
+                                    data={
+                                        "text": "Leave request submitted successfully"
+                                    },
+                                    status=status.HTTP_201_CREATED,
+                                )
+
+                            except Exception as e:
+                                print(e)
+                                return Response(
+                                    data={
+                                        "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /erp leave/YYYY-MM-DD/YYYY-MM-DD/Reason"""  # noqa
+                                    },
+                                    status=status.HTTP_201_CREATED,
+                                )
+                        else:
+                            return Response(
+                                data={
+                                    "text": ":no_entry_sign: *Invalid Command* \n Please use this command for help.`/erp help`"  # noqa
+                                },
+                                status=status.HTTP_201_CREATED,
+                            )
+                        return Response(
+                            data={"response_type": "in_channel"},
+                            status=status.HTTP_200_OK,
                         )
-
-                    elif command == "/timeout":
-                        if last_record and last_record.time_out is not None:
-                            return Response(
-                                data={
-                                    "text": "Please do time in before timing out.",
-                                },
-                                status=status.HTTP_200_OK,
-                            )
-                        attendance = models.Attendance.objects.filter(
-                            employee=employee
-                        ).last()
-                        attendance.time_out = datetime.now()
-                        attendance.save()
-
-                    elif command == "/leaves":
-                        get_detail = command_params.split("/")
-                        date_format = "%Y-%m-%d"
-
-                        try:
-                            date_from = datetime.strptime(get_detail[0], date_format)
-                            date_to = datetime.strptime(get_detail[1], date_format)
-                            total_leave = date_to - date_from
-                            remaining_leave = 10 - employee.leave_count
-
-                            if date_from < datetime.now() or date_to < datetime.now():
-                                return Response(
-                                    data={"text": "Date must be future date."}
-                                )
-
-                            if total_leave.days > remaining_leave:
-                                return Response(
-                                    data={
-                                        "text": f"Your remaining leaves ({remaining_leave}) are less then requested leaves."  # noqa
-                                    }
-                                )
-                            if date_from > date_to:
-                                return Response(
-                                    data={
-                                        "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves From_Date/To_Date/Reason"""  # noqa
-                                    }
-                                )
-
-                            models.Leave.objects.create(
-                                employee_id=employee.id,
-                                leave_from=get_detail[0],
-                                leave_to=get_detail[1],
-                                description=get_detail[2],
-                                organization=employee.organization,
-                            )
-                            return Response(
-                                data={"text": "Leave request submitted successfully"},
-                                status=status.HTTP_201_CREATED,
-                            )
-                        except Exception as e:
-                            print(e)
-                            return Response(
-                                data={
-                                    "text": """You submitted an invalid leave request. Please note that the correct format for leave request is: /leaves YYYY-MM-DD/YYYY-MM-DD/Reason"""  # noqa
-                                },
-                                status=status.HTTP_201_CREATED,
-                            )
-
-                    return Response(
-                        data={"response_type": "in_channel"},
-                        status=status.HTTP_200_OK,
-                    )
 
                 return Response(
                     data={
