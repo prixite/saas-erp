@@ -361,6 +361,38 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
     }),
+    apiStandupList: build.query<
+      ApiStandupListApiResponse,
+      ApiStandupListApiArg
+    >({
+      query: () => ({ url: `/api/standup/` }),
+    }),
+    apiStandupCreate: build.mutation<
+      ApiStandupCreateApiResponse,
+      ApiStandupCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup/`,
+        method: "POST",
+        body: queryArg.standup,
+      }),
+    }),
+    apiStandupUpdateList: build.query<
+      ApiStandupUpdateListApiResponse,
+      ApiStandupUpdateListApiArg
+    >({
+      query: () => ({ url: `/api/standup_update/` }),
+    }),
+    apiStandupUpdateCreate: build.mutation<
+      ApiStandupUpdateCreateApiResponse,
+      ApiStandupUpdateCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup_update/`,
+        method: "POST",
+        body: queryArg.standupUpdate,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -528,6 +560,20 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
+export type ApiStandupListApiResponse = /** status 200  */ Standup[];
+export type ApiStandupListApiArg = void;
+export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
+export type ApiStandupCreateApiArg = {
+  standup: Standup;
+};
+export type ApiStandupUpdateListApiResponse =
+  /** status 200  */ StandupUpdate[];
+export type ApiStandupUpdateListApiArg = void;
+export type ApiStandupUpdateCreateApiResponse =
+  /** status 201  */ StandupUpdate;
+export type ApiStandupUpdateCreateApiArg = {
+  standupUpdate: StandupUpdate;
+};
 export type AssetType = {
   id: number;
   name: string;
@@ -719,14 +765,14 @@ export type Institue = {
   created_at: string;
   updated_at: string;
 };
-export type StatusEnum = "pending" | "approved" | "denied";
+export type Status913Enum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
   leave_from: string;
   leave_to: string;
   description: string;
   hr_comment?: string | null;
-  status?: StatusEnum;
+  status?: Status913Enum;
   created_at: string;
   updated_at: string;
   employee: number;
@@ -734,11 +780,11 @@ export type Leave = {
   organization: number;
 };
 export type LeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type Login = {
@@ -803,6 +849,23 @@ export type Role = {
   created_at: string;
   updated_at: string;
 };
+export type Standup = {
+  id: number;
+  created_at: string;
+  team: number;
+};
+export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
+export type StandupUpdate = {
+  id: number;
+  status: StandupUpdateStatusEnum;
+  work_done_yesterday?: string | null;
+  work_to_do?: string | null;
+  blockers?: string | null;
+  created_at: string;
+  updated_at: string;
+  standup: number;
+  employee: number;
+};
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
@@ -849,4 +912,8 @@ export const {
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
+  useApiStandupListQuery,
+  useApiStandupCreateMutation,
+  useApiStandupUpdateListQuery,
+  useApiStandupUpdateCreateMutation,
 } = injectedRtkApi;

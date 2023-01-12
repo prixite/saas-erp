@@ -544,3 +544,15 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         ).first()
 
         return super().create(validated_data)
+
+
+class StandupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Standup
+        fields = "__all__"
+
+
+class StandupUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StandupUpdate
+        fields = "__all__"

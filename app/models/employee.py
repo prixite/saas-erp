@@ -32,7 +32,7 @@ class Employee(models.Model):
         return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
 
     def __str__(self) -> str:
-        return self.user.get_full_name()
+        return self.user.username
 
     class Meta:
         ordering = ["id"]
@@ -92,18 +92,27 @@ class Team(models.Model):
 
 
 class Standup(models.Model):
-    team = models.ForeignKey("Team", on_delete=models.CASCADE)
-    standup_time = models.DateTimeField(auto_now_add=True)
+    team = models.OneToOneField("Team", on_delete=models.CASCADE, unique=True)
+    created_at = models.DateTimeField()
+
+    def __str__(self) -> str:
+        return self.team.name
 
 
 class StandupUpdate(models.Model):
+    class StatusType(models.TextChoices):
+        MISSED = "missed", "Missed"
+        JOINED = "joined", "Joined"
+        LEAVE = "leave", "Leave"
+
     standup = models.ForeignKey("Standup", on_delete=models.CASCADE)
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
-    update_time = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50)
-    work_done_yesterday = models.TextField()
-    work_to_do = models.TextField()
-    blockers = models.TextField()
+    status = models.CharField(max_length=10, choices=StatusType.choices)
+    work_done_yesterday = models.TextField(blank=True, null=True)
+    work_to_do = models.TextField(blank=True, null=True)
+    blockers = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Degree(models.Model):
