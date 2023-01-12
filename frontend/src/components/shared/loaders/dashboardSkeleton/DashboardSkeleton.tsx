@@ -12,6 +12,7 @@ export default function DashboardSkeleton() {
       md={12}
       lg={12}
       xl={12}
+      mt={2}
       className={`dashboardSkeleton`}
     >
       <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>

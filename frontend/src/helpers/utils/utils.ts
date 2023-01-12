@@ -23,7 +23,8 @@ export const nameRegex = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
 export const phoneRegex =
   /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
 export const onlyIntegerRegex = /^\d+\.?\d*$/;
-export const nicRegex = /^\d+\.?\d*$/;
+export const intRegex = /^\d+\.?\d*$/;
+export const nicRegex = /^(\d!*){10,}$/;
 /* eslint-enable */
 
 function iterateDeepObj(obj: unknown) {

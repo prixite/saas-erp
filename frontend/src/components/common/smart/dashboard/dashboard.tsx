@@ -8,7 +8,7 @@ const Dashboard = () => {
   const constantData: LocalizationInterface = localizedData();
   const { dashboardHeading } = constantData.Dashboard;
   return (
-    <Box>
+    <Box sx={{ mt: "25px" }}>
       <Typography variant="h1">{dashboardHeading}</Typography>
       <DashboardSkeleton />
       <RowSkeletonCard />
