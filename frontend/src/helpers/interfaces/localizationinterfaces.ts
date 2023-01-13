@@ -118,6 +118,7 @@ export interface modalsInterface {
   uploadImage: string;
   dragToAdjust: string;
   saveChanges: string;
+  canLogin: string;
 }
 export interface payrollInterface {
   payrollHeading: string;

@@ -221,11 +221,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
         except models.User.DoesNotExist:
             user_ser = EmployeeUserSerializer(data=user_data, context=self.context)
         user_ser.is_valid(raise_exception=True)
-        user = user_ser.save()
-        user.username = user.email
-        user.organization = organization
-        user.is_active = validated_data.get("user_allowed", False)
-        user.save()
+        user = user_ser.save(
+            is_active=validated_data.get("user_allowed", False),
+            username=user_data.get("email"),
+            organization=organization,
+        )
         validated_data["user_id"] = user.id
         employee = super().create(validated_data)
 
@@ -512,6 +512,19 @@ class LeaveSerializer(serializers.ModelSerializer):
         model = models.Leave
         fields = "__all__"
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
+
+        return data
+
 
 class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -525,12 +538,19 @@ class OrganizationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class OwnerEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = ("date_of_joining", "nic")
+
+
 class OwnerOnBoardingSerializer(serializers.ModelSerializer):
     organization = OrganizationSerializer()
+    employee = OwnerEmployeeSerializer(required=False)
 
     class Meta:
         model = models.User
-        fields = ("first_name", "last_name", "email", "organization")
+        fields = ("first_name", "last_name", "email", "organization", "employee")
 
     @transaction.atomic
     def create(self, validated_data):
@@ -559,6 +579,12 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
                 ),
             ]
         )
+        for module in models.Module.objects.filter(is_enabled=True):
+            models.OrganizationModule.objects.create(
+                organization=organization,
+                module=module,
+                is_enabled=True,
+            )
         validated_data["username"] = validated_data.get("email")
         validated_data["organization"] = organization
         validated_data["default_role"] = models.Role.objects.filter(
@@ -566,5 +592,10 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
             permission=models.Role.Permission.OWNER,
             is_default=True,
         ).first()
-
-        return super().create(validated_data)
+        emp_data = validated_data.pop("employee", {})
+        user = super().create(validated_data)
+        if emp_data:
+            emp_ser = OwnerEmployeeSerializer(data=emp_data)
+            emp_ser.is_valid(raise_exception=True)
+            emp_ser.save(user=user, organization=organization, user_allowed=True)
+        return user

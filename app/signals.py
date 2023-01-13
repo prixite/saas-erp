@@ -10,7 +10,7 @@ from app.utils import send_invitation_mail
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def send_passord_reset_email(sender, instance, created, **kwargs):
-    if created:
+    if created and instance.is_active:
         uidb64 = urlsafe_base64_encode(smart_bytes(instance.id))
         token = PasswordResetTokenGenerator().make_token(instance)
         url = f"{settings.DOMAIN_NAME}/reset-password/?uidb64={uidb64}&token={token}"

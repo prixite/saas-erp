@@ -36,10 +36,15 @@
     }
   }
   .switch-section {
-    margin-top: 15px;
+    margin-top: 10px;
     .switch-cls {
       display: flex;
       align-items: center;
+    }
+    .can-login {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
     }
     .checkbox-cls {
       margin-top: 19px;

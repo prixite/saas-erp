@@ -719,9 +719,13 @@ export type Institue = {
   created_at: string;
   updated_at: string;
 };
+export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
+export type BlankEnum = "";
+export type NullEnum = null;
 export type StatusEnum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
   leave_from: string;
   leave_to: string;
   description: string;
@@ -770,11 +774,16 @@ export type Organization = {
   created_at: string;
   updated_at: string;
 };
+export type OwnerEmployee = {
+  date_of_joining: string;
+  nic: string;
+};
 export type OwnerOnBoarding = {
   first_name?: string;
   last_name?: string;
   email: string;
   organization: Organization;
+  employee?: OwnerEmployee;
 };
 export type ResendEmailCode = {
   email: string;
