@@ -770,11 +770,16 @@ export type Organization = {
   created_at: string;
   updated_at: string;
 };
+export type OwnerEmployee = {
+  date_of_joining: string;
+  nic: string;
+};
 export type OwnerOnBoarding = {
   first_name?: string;
   last_name?: string;
   email: string;
   organization: Organization;
+  employee?: OwnerEmployee;
 };
 export type ResendEmailCode = {
   email: string;

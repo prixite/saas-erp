@@ -183,7 +183,8 @@
     "removeImg": "Remove",
     "uploadImage": "Upload",
     "dragToAdjust": "Drag to adjust the image",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "canLogin": "Can Login?"
   },
   "AuthPages": {
     "saas": "SaaS",

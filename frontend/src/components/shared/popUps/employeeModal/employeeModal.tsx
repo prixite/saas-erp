@@ -375,7 +375,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       emergency_contact_number: formik.values.emergencyContactNumber,
       designation: formik.values.designation,
       salary: formik.values.salary,
-      user_allowed: true,
+      user_allowed: formik.values.userAllowed,
       department: formik.values.department,
       manager: formik.values.manager,
       type: formik.values.type,

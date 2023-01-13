@@ -2723,6 +2723,23 @@
                     "updated_at"
                 ]
             },
+            "OwnerEmployee": {
+                "type": "object",
+                "properties": {
+                    "date_of_joining": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "nic": {
+                        "type": "string",
+                        "maxLength": 25
+                    }
+                },
+                "required": [
+                    "date_of_joining",
+                    "nic"
+                ]
+            },
             "OwnerOnBoarding": {
                 "type": "object",
                 "properties": {
@@ -2742,6 +2759,9 @@
                     },
                     "organization": {
                         "$ref": "#/components/schemas/Organization"
+                    },
+                    "employee": {
+                        "$ref": "#/components/schemas/OwnerEmployee"
                     }
                 },
                 "required": [

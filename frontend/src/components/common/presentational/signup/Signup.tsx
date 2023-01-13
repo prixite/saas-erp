@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -7,7 +7,14 @@ import {
   Typography,
   Stack,
   CircularProgress,
+  Switch,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Field, Form, Formik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,11 +30,11 @@ import "@src/components/common/presentational/signup/Signup.scss";
 const Signup = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useContext(AuthContext) as AuhtContextInterface;
-  const [signup, { isLoading }] = useApiOwnerOnboardCreateMutation();
-
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
+  const [isEmployee, setIsEmployee] = useState(false);
+  const [signup, { isLoading }] = useApiOwnerOnboardCreateMutation();
 
   return (
     <Box className="signup_container">
@@ -48,9 +55,13 @@ const Signup = () => {
           email: "",
           org_name: "",
           org_address: "",
+          date_of_joining: "",
+          nic: "",
         }}
         validate={(values) => {
-          const errors = {};
+          const errors: {
+            [key: string]: any;
+          } = {};
           if (!values.first_name) {
             errors.first_name = "First name is required";
           }
@@ -68,19 +79,42 @@ const Signup = () => {
           if (!values.org_address) {
             errors.org_address = "Organization address is required";
           }
+          if (isEmployee) {
+            if (!values.date_of_joining) {
+              errors.date_of_joining = "Date of joining is required";
+            }
+            if (isNaN(values.nic)) {
+              errors.nic = "Invalid number";
+            }
+            if (!isNaN(values.nic) && values.nic.length < 10) {
+              errors.nic = "Nic should be at least 10 digits";
+            }
+          }
           return errors;
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          signup({
-            ownerOnBoarding: {
-              first_name: values.first_name,
-              last_name: values.last_name,
-              email: values.email,
-              organization: {
-                name: values.org_name,
-                address: values.org_address,
-              },
+          let user_obj = {
+            first_name: values.first_name,
+            last_name: values.last_name,
+            email: values.email,
+            organization: {
+              name: values.org_name,
+              address: values.org_address,
             },
+          };
+          if (isEmployee) {
+            user_obj = {
+              ...user_obj,
+              employee: {
+                date_of_joining: moment(values.date_of_joining).format(
+                  "YYYY-MM-DD"
+                ),
+                nic: values.nic,
+              },
+            };
+          }
+          signup({
+            ownerOnBoarding: user_obj,
           })
             .unwrap()
             .then(() => {
@@ -164,6 +198,71 @@ const Signup = () => {
                 />
               )}
             />
+            {isEmployee && (
+              <>
+                <Field
+                  name="date_of_joining"
+                  render={({ field, form }) => (
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        className="text-field-cls"
+                        label="Date Of Joining"
+                        value={field.value}
+                        onChange={(newValue) => {
+                          form.setFieldValue("date_of_joining", newValue);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            sx={{
+                              "& .MuiInputBase-input": {
+                                height: "21px",
+                              },
+                            }}
+                            {...params}
+                            InputLabelProps={{ className: "textfield_label" }}
+                            error={
+                              form.touched.date_of_joining &&
+                              form.errors.date_of_joining
+                            }
+                            helperText={
+                              form.touched.date_of_joining &&
+                              form.errors.date_of_joining
+                            }
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  )}
+                />
+                <Field
+                  name="nic"
+                  render={({ field, form }) => (
+                    <TextField
+                      {...field}
+                      label="Nic"
+                      variant="outlined"
+                      margin="normal"
+                      error={form.touched.nic && form.errors.nic}
+                      helperText={form.touched.nic && form.errors.nic}
+                    />
+                  )}
+                />
+              </>
+            )}
+            <FormGroup>
+              <FormControlLabel
+                className="light-text"
+                control={
+                  <Switch
+                    checked={isEmployee}
+                    onChange={(event) => setIsEmployee(event.target.checked)}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label="Create self employee?"
+              />
+            </FormGroup>
+
             <Stack alignItems="center" mt={3}>
               <LoadingButton
                 type="submit"

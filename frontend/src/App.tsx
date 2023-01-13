@@ -13,7 +13,7 @@ window.Buffer = Buffer;
 
 const App = () => {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
   }, []);
 
   return (
