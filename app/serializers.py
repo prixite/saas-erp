@@ -597,5 +597,5 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         if emp_data:
             emp_ser = OwnerEmployeeSerializer(data=emp_data)
             emp_ser.is_valid(raise_exception=True)
-            emp_ser.save(user=user, organization=organization)
+            emp_ser.save(user=user, organization=organization, user_allowed=True)
         return user

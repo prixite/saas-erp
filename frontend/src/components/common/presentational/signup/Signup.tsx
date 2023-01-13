@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import moment from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Field, Form, Formik } from "formik";
+import moment from "moment";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import appIcon from "@src/assets/svgs/sidebar.svg";
@@ -60,7 +60,7 @@ const Signup = () => {
         }}
         validate={(values) => {
           const errors: {
-            [key: string]: any;
+            [key: string]: string;
           } = {};
           if (!values.first_name) {
             errors.first_name = "First name is required";

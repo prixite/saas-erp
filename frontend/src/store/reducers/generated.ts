@@ -719,9 +719,13 @@ export type Institue = {
   created_at: string;
   updated_at: string;
 };
+export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
+export type BlankEnum = "";
+export type NullEnum = null;
 export type StatusEnum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
   leave_from: string;
   leave_to: string;
   description: string;

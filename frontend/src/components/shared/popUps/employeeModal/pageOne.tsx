@@ -40,7 +40,6 @@ const PageOne = ({ formik, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
 
   const [checked, setChecked] = useState(false);
-  const [can_login, setCanLogin] = useState(false);
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
@@ -79,7 +78,6 @@ const PageOne = ({ formik, action }: Props) => {
   const handleCanLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("userAllowed", event.target.checked);
   };
-  console.log(formik.values.userAllowed);
 
   const handleOnChangeBenefit = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -511,7 +509,7 @@ const PageOne = ({ formik, action }: Props) => {
           />
           <Typography
             sx={{
-              color: can_login ? "black" : "#6C6C6C",
+              color: formik.values.userAllowed ? "black" : "#6C6C6C",
               fontSize: "16px",
               fontWeight: "400",
               ml: "10px",
