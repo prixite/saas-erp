@@ -2402,9 +2402,7 @@
                     },
                     "email": {
                         "type": "string",
-                        "format": "email",
-                        "title": "Email address",
-                        "maxLength": 254
+                        "format": "email"
                     },
                     "image": {
                         "type": "string",
