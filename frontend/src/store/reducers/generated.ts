@@ -296,6 +296,44 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.meUpdate,
       }),
     }),
+    apiModuleList: build.query<ApiModuleListApiResponse, ApiModuleListApiArg>({
+      query: () => ({ url: `/api/module/` }),
+    }),
+    apiModuleCreate: build.mutation<
+      ApiModuleCreateApiResponse,
+      ApiModuleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/module/`,
+        method: "POST",
+        body: queryArg.module,
+      }),
+    }),
+    apiModuleRetrieve: build.query<
+      ApiModuleRetrieveApiResponse,
+      ApiModuleRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/module/${queryArg.id}/` }),
+    }),
+    apiModuleUpdate: build.mutation<
+      ApiModuleUpdateApiResponse,
+      ApiModuleUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/module/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.module,
+      }),
+    }),
+    apiModuleDestroy: build.mutation<
+      ApiModuleDestroyApiResponse,
+      ApiModuleDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/module/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
       ApiOwnerOnboardCreateApiArg
@@ -497,6 +535,25 @@ export type ApiMeRetrieveApiArg = void;
 export type ApiMeUpdateUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdateUpdateApiArg = {
   meUpdate: MeUpdate;
+};
+export type ApiModuleListApiResponse = /** status 200  */ Module[];
+export type ApiModuleListApiArg = void;
+export type ApiModuleCreateApiResponse = /** status 201  */ Module;
+export type ApiModuleCreateApiArg = {
+  module: Module;
+};
+export type ApiModuleRetrieveApiResponse = /** status 200  */ Module;
+export type ApiModuleRetrieveApiArg = {
+  id: number;
+};
+export type ApiModuleUpdateApiResponse = /** status 200  */ Module;
+export type ApiModuleUpdateApiArg = {
+  id: number;
+  module: Module;
+};
+export type ApiModuleDestroyApiResponse = unknown;
+export type ApiModuleDestroyApiArg = {
+  id: number;
 };
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
@@ -767,6 +824,20 @@ export type MeUpdate = {
   contact_number?: string | null;
   headline?: string | null;
 };
+export type SlugEnum =
+  | "payroll"
+  | "user"
+  | "employees"
+  | "inventory"
+  | "settings";
+export type Module = {
+  id: number;
+  slug: SlugEnum;
+  name: string;
+  is_enabled?: boolean;
+  created_at: string;
+  updated_at: string;
+};
 export type Organization = {
   id: number;
   name: string;
@@ -850,6 +921,11 @@ export const {
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
   useApiMeUpdateUpdateMutation,
+  useApiModuleListQuery,
+  useApiModuleCreateMutation,
+  useApiModuleRetrieveQuery,
+  useApiModuleUpdateMutation,
+  useApiModuleDestroyMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
