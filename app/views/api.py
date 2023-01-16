@@ -530,6 +530,15 @@ class MeUpdateViewSet(UpdateAPIView):
         return self.request.user
 
 
+class MeUpdateNotificationViewSet(UpdateAPIView):
+    serializer_class = serializers.MeUpdateNotificationSerializer
+    queryset = models.User.objects.none()
+    http_method_names = ("put",)
+
+    def get_object(self):
+        return self.request.user
+
+
 class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()

@@ -286,6 +286,16 @@ const injectedRtkApi = api.injectEndpoints({
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
+    apiMeNotificationUpdateUpdate: build.mutation<
+      ApiMeNotificationUpdateUpdateApiResponse,
+      ApiMeNotificationUpdateUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/me-notification/update/`,
+        method: "PUT",
+        body: queryArg.meUpdateNotification,
+      }),
+    }),
     apiMeUpdateUpdate: build.mutation<
       ApiMeUpdateUpdateApiResponse,
       ApiMeUpdateUpdateApiArg
@@ -494,6 +504,11 @@ export type ApiLoginCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type ApiMeNotificationUpdateUpdateApiResponse =
+  /** status 200  */ MeUpdateNotification;
+export type ApiMeNotificationUpdateUpdateApiArg = {
+  meUpdateNotification: MeUpdateNotification;
+};
 export type ApiMeUpdateUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdateUpdateApiArg = {
   meUpdate: MeUpdate;
@@ -760,6 +775,14 @@ export type Me = {
   contact_number?: string | null;
   allowed_modules: string;
 };
+export type MeUpdateNotification = {
+  bill_update_email?: boolean;
+  bill_update_phone?: boolean;
+  new_team_member_email?: boolean;
+  new_team_member_phone?: boolean;
+  newsletters_email?: boolean;
+  newsletters_phone?: boolean;
+};
 export type MeUpdate = {
   first_name?: string;
   last_name?: string;
@@ -849,6 +872,7 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
+  useApiMeNotificationUpdateUpdateMutation,
   useApiMeUpdateUpdateMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,

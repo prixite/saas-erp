@@ -507,6 +507,19 @@ class MeUpdateSerializer(serializers.ModelSerializer):
         )
 
 
+class MeUpdateNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "bill_update_email",
+            "bill_update_phone",
+            "new_team_member_email",
+            "new_team_member_phone",
+            "newsletters_email",
+            "newsletters_phone",
+        )
+
+
 class LeaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave

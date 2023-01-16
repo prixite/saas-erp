@@ -1322,6 +1322,50 @@
                 }
             }
         },
+        "/api/me-notification/update/": {
+            "put": {
+                "operationId": "api_me_notification_update_update",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MeUpdateNotification"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MeUpdateNotification"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MeUpdateNotification"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeUpdateNotification"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/me/update/": {
             "put": {
                 "operationId": "api_me_update_update",
@@ -2701,6 +2745,29 @@
                         "type": "string",
                         "nullable": true,
                         "maxLength": 255
+                    }
+                }
+            },
+            "MeUpdateNotification": {
+                "type": "object",
+                "properties": {
+                    "bill_update_email": {
+                        "type": "boolean"
+                    },
+                    "bill_update_phone": {
+                        "type": "boolean"
+                    },
+                    "new_team_member_email": {
+                        "type": "boolean"
+                    },
+                    "new_team_member_phone": {
+                        "type": "boolean"
+                    },
+                    "newsletters_email": {
+                        "type": "boolean"
+                    },
+                    "newsletters_phone": {
+                        "type": "boolean"
                     }
                 }
             },
