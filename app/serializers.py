@@ -546,6 +546,12 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Team
+        fields = "__all__"
+
+
 class StandupSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Standup

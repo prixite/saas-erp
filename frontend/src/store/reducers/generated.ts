@@ -393,6 +393,22 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standupUpdate,
       }),
     }),
+    apiTeamMembersRetrieve: build.query<
+      ApiTeamMembersRetrieveApiResponse,
+      ApiTeamMembersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
+    }),
+    apiTeamCreateCreate: build.mutation<
+      ApiTeamCreateCreateApiResponse,
+      ApiTeamCreateCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/team_create/`,
+        method: "POST",
+        body: queryArg.team,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -573,6 +589,14 @@ export type ApiStandupUpdateCreateApiResponse =
   /** status 201  */ StandupUpdate;
 export type ApiStandupUpdateCreateApiArg = {
   standupUpdate: StandupUpdate;
+};
+export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
+export type ApiTeamMembersRetrieveApiArg = {
+  id: number;
+};
+export type ApiTeamCreateCreateApiResponse = /** status 201  */ Team;
+export type ApiTeamCreateCreateApiArg = {
+  team: Team;
 };
 export type AssetType = {
   id: number;
@@ -851,8 +875,10 @@ export type Role = {
 };
 export type Standup = {
   id: number;
+  name: string;
   created_at: string;
   team: number;
+  organization: number;
 };
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
 export type StandupUpdate = {
@@ -864,7 +890,16 @@ export type StandupUpdate = {
   created_at: string;
   updated_at: string;
   standup: number;
+  organization: number;
   employee: number;
+};
+export type Team = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  organization: number;
+  members: number[];
 };
 export const {
   useApiAssetTypeListQuery,
@@ -916,4 +951,6 @@ export const {
   useApiStandupCreateMutation,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
+  useApiTeamMembersRetrieveQuery,
+  useApiTeamCreateCreateMutation,
 } = injectedRtkApi;

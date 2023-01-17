@@ -93,6 +93,8 @@ class Team(models.Model):
 
 class Standup(models.Model):
     team = models.OneToOneField("Team", on_delete=models.CASCADE, unique=True)
+    name = models.CharField(max_length=128, unique="True")
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField()
 
     def __str__(self) -> str:
@@ -106,6 +108,7 @@ class StandupUpdate(models.Model):
         LEAVE = "leave", "Leave"
 
     standup = models.ForeignKey("Standup", on_delete=models.CASCADE)
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=StatusType.choices)
     work_done_yesterday = models.TextField(blank=True, null=True)

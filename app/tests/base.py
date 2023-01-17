@@ -125,5 +125,8 @@ class BaseTestCase(TestCase):
         self.team1 = factories.TeamFactory(name="Team1", organization=self.organization)
 
         self.standup = factories.StandupFactory(
-            team=self.team, created_at="2023-01-12T11:15:00+05:00"
+            name="Standup-1",
+            team=self.team,
+            organization=self.organization,
+            created_at="2023-01-12T11:15:00+05:00",
         )
