@@ -12,7 +12,7 @@
     "@mui/lab": "^5.0.0-alpha.115",
     "@mui/material": "^5.11.4",
     "@mui/x-data-grid": "^5.17.19",
-    "@mui/x-date-pickers": "^5.0.13",
+    "@mui/x-date-pickers": "^5.0.14",
     "@reduxjs/toolkit": "^1.9.1",
     "@rtk-query/codegen-openapi": "^1.0.0",
     "@testing-library/jest-dom": "^5.16.5",
