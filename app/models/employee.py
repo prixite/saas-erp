@@ -32,7 +32,7 @@ class Employee(models.Model):
         return f"{self.organization.name.strip().upper()[:3]}-{self.pk}"
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.user.get_full_name()
 
     class Meta:
         ordering = ["id"]

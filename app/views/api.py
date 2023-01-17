@@ -570,19 +570,21 @@ class OwnerOnboardingAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
 
 
-class StandupViewSet(ModelViewSet, mixins.OrganizationMixin):
+class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.StandupSerializer
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class StandupUpdateViewSet(ModelViewSet, mixins.OrganizationMixin):
+class StandupUpdateViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
 
-class TeamViewSet(ModelViewSet, mixins.OrganizationMixin):
+class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
