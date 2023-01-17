@@ -4,10 +4,11 @@ import CheckingTime from "@src/components/common/presentational/checkingTime/che
 import LeaveRequests from "@src/components/common/presentational/leaveRequests/leaveRequests";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 const Dashboard = () => {
   const constantData: LocalizationInterface = localizedData();
   const { dashboardHeading } = constantData.Dashboard;
+  const { data: userData } = useGetUserQuery();
   return (
     <Box sx={{ mt: "25px" }}>
       <Typography variant="h1">{dashboardHeading}</Typography>
@@ -19,7 +20,14 @@ const Dashboard = () => {
         spacing={2}
       >
         <Grid item xs={8}>
-          <LeaveRequests />
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
+            <div className="x-4">
+              <LeaveRequests />
+            </div>
+          ) : (
+            ""
+          )}
         </Grid>
         <Grid item xs={4}>
           <CheckingTime />

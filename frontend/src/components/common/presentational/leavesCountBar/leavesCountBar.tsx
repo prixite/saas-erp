@@ -12,13 +12,13 @@ const LeavesCountBar = ({ employeeLeavesData }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const { AnnualLeaves, CausalLeaves, SickLeaves } = constantData.Leaves;
   const annualLeaves = employeeLeavesData?.filter(
-    (e) => e.leave_type.toLowerCase() === "annual leave"
-  ).length;
-  const casualLeaves = employeeLeavesData?.filter(
-    (e) => e.leave_type.toLowerCase() === "sick leave"
+    (e) => e?.leave_type?.toLowerCase() === "annual leave"
   ).length;
   const sickLeaves = employeeLeavesData?.filter(
-    (e) => e?.leave_type?.toLowerCase() === "causal leave"
+    (e) => e?.leave_type?.toLowerCase() === "sick leave"
+  ).length;
+  const casualLeaves = employeeLeavesData?.filter(
+    (e) => e?.leave_type?.toLowerCase() === "casual leave"
   ).length;
   return (
     <Stack className="stack-cls" direction="row" spacing={1}>

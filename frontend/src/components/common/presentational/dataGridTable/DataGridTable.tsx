@@ -313,6 +313,7 @@ function DataGridTable() {
                   "& .MuiDataGrid-virtualScrollerRenderZone": {
                     "& .MuiDataGrid-row": {
                       backgroundColor: "white",
+                      cursor: "pointer",
                     },
                   },
                   "& .MuiDataGrid-cell:focus, .MuiDataGrid-cell:focus-within": {
