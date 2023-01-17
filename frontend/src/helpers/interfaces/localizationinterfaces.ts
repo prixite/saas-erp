@@ -315,6 +315,25 @@ export interface FormikOwner {
   ) => Promise<FormikErrors<OwnerForm>> | Promise<void>;
   submitCount: number;
 }
+export interface leavesData {
+  AnnualLeaves: string;
+  CausalLeaves: string;
+  SickLeaves: string;
+  AttendanceSummary: string;
+  Present: string;
+  Absent: string;
+  LateArrival: string;
+  Leaves: string;
+  ShortDuration: string;
+  LeaveRequests: string;
+  CheckingTime: string;
+  Action: string;
+  Accepted: string;
+  Rejected: string;
+  ViewAllLeaves: string;
+  ClockError: string;
+  LeavesManagement: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -332,4 +351,5 @@ export interface LocalizationInterface {
   EditBenefitModal: editBenefitModal;
   BreadCrumbs: breadcrumbsInterface;
   AuthPages: AuthPages;
+  Leaves: leavesData;
 }

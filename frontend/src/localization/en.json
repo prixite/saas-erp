@@ -220,5 +220,25 @@
   },
   "BreadCrumbs": {
     "Home": "Home"
+  },
+  "Leaves" : {
+    "AnnualLeaves": "Annual Leaves",
+    "CausalLeaves": "Causal Leaves",
+    "SickLeaves": "Sick Leaves",
+    "AttendanceSummary": "Attendance Summary",
+    "Present": "Present",
+    "Absent": "Absent",
+    "LateArrival": "Late Arrival",
+    "Leaves": "Leaves",
+    "ShortDuration": "Short Duration",
+    "LeaveRequests":"Leave Requests",
+    "CheckingTime":"Checking Time",
+    "Action": "Action",
+    "Accepted": "Accepted",
+    "Rejected": "Rejected",
+    "ViewAllLeaves":"View All Leaves",
+    "ClockError": "Haven’t clock in Yet",
+    "LeavesManagement": "Leaves Management"
+
   }
 }

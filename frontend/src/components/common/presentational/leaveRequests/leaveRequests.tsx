@@ -1,37 +1,26 @@
+import "@src/components/common/presentational/leaveRequests/leaveRequests.scss";
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  InputAdornment,
-  TextField,
-  Button,
-  Tooltip,
-} from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import moment from "moment";
-import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
+import { useNavigate } from "react-router-dom";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
-import searchBox from "@src/assets/svgs/searchBox.svg";
-import LeavesCountBar from "@src/components/common/presentational/leavesCountBar/leavesCountBar";
+import ThreeDotter from "@src/assets/svgs/ThreeDotter.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString } from "@src/helpers/utils/utils";
 import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
-function Leaves() {
+const LeaveRequests = () => {
   const { data: rows = [], isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const { notFound } = constantData.Employee;
-  const { LeavesManagement, Accepted, Rejected } = constantData.Leaves;
-  const { filterButton } = constantData.Buttons;
+  const { LeaveRequests, ViewAllLeaves } = constantData.Leaves;
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const navigate = useNavigate();
 
   const columns: GridColDef[] = [
     {
@@ -94,64 +83,6 @@ function Leaves() {
       },
     },
     {
-      field: "Leave_From",
-      headerName: "Leave From",
-      sortable: false,
-      width: 250,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.leave_from).format("ll")}
-          </p>
-        );
-      },
-    },
-    {
-      field: "Leave_To",
-      headerName: "Leave To",
-      sortable: false,
-      width: 250,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.leave_to).format("ll")}
-          </p>
-        );
-      },
-    },
-    {
-      field: "reason",
-      headerName: "Reason",
-      sortable: false,
-      width: 400,
-      renderCell: (cellValues) => {
-        return (
-          <Tooltip title={cellValues.row?.description}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues.row?.description, 40)}
-            </p>
-          </Tooltip>
-        );
-      },
-    },
-
-    {
-      field: "Hr_Comments",
-      headerName: "Hr Comments",
-      sortable: false,
-      width: 350,
-      renderCell: (cellValues) => {
-        return (
-          <Tooltip title={cellValues?.row?.hr_comment}>
-            <p style={{ marginLeft: "20px" }}>
-              {truncateString(cellValues?.row?.hr_comment, 40)}
-            </p>
-          </Tooltip>
-        );
-      },
-    },
-    {
       field: "Status",
       headerName: "Status",
       sortable: false,
@@ -189,68 +120,12 @@ function Leaves() {
         );
       },
     },
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 250,
-      renderCell: () => {
-        return (
-          <Box className="actions-col">
-            <TextField
-              select
-              label="Actions"
-              size="small"
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused": {
-                  "& > fieldset": {
-                    borderColor: "#6c6c6c",
-                    borderWidth: "1px",
-                  },
-                },
-                "& .MuiOutlinedInput-root:hover": {
-                  "& > fieldset": {
-                    borderColor: "#6c6c6c",
-                  },
-                },
-                fontWeight: "400",
-                fontSize: "14px",
-              }}
-              InputProps={{
-                sx: {
-                  height: 28,
-                  width: 110,
-                  borderRadius: "16px",
-                  fontWeight: "400",
-                  fontSize: "14px",
-                },
-              }}
-              InputLabelProps={{
-                sx: {
-                  fontWeight: "400",
-                  fontSize: "12px",
-                  color: "#6c6c6c !important",
-                  top: "-0.5vh",
-                  "&.MuiInputLabel-shrink": { top: 0 },
-                },
-              }}
-            >
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }}>
-                {Accepted}
-              </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }}>
-                {Rejected}
-              </MenuItem>
-            </TextField>
-          </Box>
-        );
-      },
-    },
   ];
 
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setLeavesData(rows);
+        setLeavesData(rows.slice(0, 3));
       } else {
         setLeavesData([]);
       }
@@ -258,95 +133,30 @@ function Leaves() {
     }
   }, [rows, isLoading]);
   return (
-    <Box className="leavesDataGridTable-section">
-      <Box
-        className="top-bar-cls"
-        sx={{ display: "flex", justifyContent: "space-between" }}
-      >
-        <Typography className="title-cls">{LeavesManagement}</Typography>
-        <Box
-          className="filter-section"
-          sx={{ display: "flex", justifyContent: "space-between" }}
-        >
-          <Box className="text-cls">
-            <TextField
-              className="searchbox"
-              id="search-headbox"
-              variant="outlined"
-              placeholder="Search Employee here"
-              sx={{
-                "& label.Mui-focused": {
-                  color: "#999999",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "#E7E7E7",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#E7E7E7",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#999999",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#999999",
-                  },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
-                    <img
-                      className="profile-pic"
-                      src={searchBox}
-                      alt="profile pic"
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          <Box className="filter-btn-cls">
-            <Button
-              className="filter-btn"
-              id="filter-btn-id"
-              variant="outlined"
-              startIcon={
-                <img
-                  className="profile-pic"
-                  src={FilterIcon}
-                  alt="profile pic"
-                />
-              }
-            >
-              {" "}
-              <p>{filterButton}</p>
-            </Button>
-          </Box>
+    <Box className="leave-requests-section">
+      <Box className="heading-section">
+        <Typography className="heading-cls">{LeaveRequests}</Typography>
+        <Box className="menu-cls">
+          <img className="menu-pic" src={ThreeDotter} alt="menu" />
         </Box>
       </Box>
-      <LeavesCountBar employeeLeavesData={leavesData} />
       {!dataLoading ? (
         <>
           {leavesData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
-                rowHeight={80}
+                rowHeight={75}
                 autoHeight
                 rows={[...leavesData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick
+                hideFooterPagination
+                hideFooterSelectedRowCount
                 disableColumnMenu
                 disableColumnSelector
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                pageSize={pageSize}
-                rowsPerPageOptions={[10, 13]}
-                pagination
                 density="standard"
-                loading={isLoading}
                 sx={{
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",
@@ -417,11 +227,16 @@ function Leaves() {
                     {
                       outline: "none",
                     },
-                  "& .MuiTablePagination-root:last-child": {
-                    display: "block",
-                  },
                 }}
               />
+              <Box className="view-all-btn">
+                <Button
+                  className="view-all"
+                  onClick={() => navigate("leaves/")}
+                >
+                  {ViewAllLeaves}
+                </Button>
+              </Box>
             </div>
           ) : (
             <Box className="error-img">
@@ -435,10 +250,11 @@ function Leaves() {
         </>
       ) : (
         <>
-          <RowSkeletonCard pathString="employees" />
+          <RowSkeletonCard pathString="leaves" />
         </>
       )}
     </Box>
   );
-}
-export default Leaves;
+};
+
+export default LeaveRequests;

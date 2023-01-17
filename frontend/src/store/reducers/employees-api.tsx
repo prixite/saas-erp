@@ -12,7 +12,7 @@ import {
   CompaniesTypes,
   departmentsTypes,
   roleTypes,
-  Leaves,
+  empLeaves,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -114,7 +114,7 @@ export const employeesApi = createApi({
         };
       },
     }),
-    getLeaves: builder.query<Leaves[], void>({
+    getLeaves: builder.query<empLeaves[], void>({
       query: () => "/leave/",
     }),
   }),
