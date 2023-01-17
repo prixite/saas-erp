@@ -21,6 +21,11 @@ class Leave(models.Model):
         APPROVED = "approved", "Approved"
         DENIED = "denied", "Denied"
 
+    class LeaveType(models.TextChoices):
+        SICK_LEAVE = "sick leave", "Sick Leave"
+        ANNUAL_LEAVE = "annual leave", "Annual Leave"
+        CASUAL_LEAVE = "casual leave", "Casual Leave"
+
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="leaves"
     )
@@ -31,11 +36,16 @@ class Leave(models.Model):
         null=True,
         blank=True,
     )
+    leave_type = models.CharField(
+        max_length=20, choices=LeaveType.choices, blank=True, null=True
+    )
     leave_from = models.DateField()
     leave_to = models.DateField()
     description = models.TextField()
     hr_comment = models.TextField(blank=True, null=True)
-    status = models.SlugField(choices=LeaveStatus.choices, default="pending")
+    status = models.CharField(
+        max_length=20, choices=LeaveStatus.choices, default="pending"
+    )
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

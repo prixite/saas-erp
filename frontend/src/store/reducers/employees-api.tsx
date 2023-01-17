@@ -12,6 +12,7 @@ import {
   CompaniesTypes,
   departmentsTypes,
   roleTypes,
+  Leaves,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -113,6 +114,9 @@ export const employeesApi = createApi({
         };
       },
     }),
+    getLeaves: builder.query<Leaves[], void>({
+      query: () => "/leave/",
+    }),
   }),
 });
 
@@ -134,4 +138,5 @@ export const {
   useUpdateEmployeeMutation,
   useUpdateOwnerProfileMutation,
   useUpdateOwnerPasswordMutation,
+  useGetLeavesQuery,
 } = employeesApi;

@@ -65,6 +65,7 @@ const PageOne = ({ formik, action }: Props) => {
     departmentsLabel,
     uploadImg,
     removeImg,
+    canLogin,
   } = constantData.Modals;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked === true) {
@@ -74,6 +75,10 @@ const PageOne = ({ formik, action }: Props) => {
       formik.setFieldValue("benefits", []);
     }
   };
+  const handleCanLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    formik.setFieldValue("userAllowed", event.target.checked);
+  };
+
   const handleOnChangeBenefit = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -494,6 +499,25 @@ const PageOne = ({ formik, action }: Props) => {
         </Grid>
       </Grid>
       <Box className="switch-section" sx={{ width: "100%" }}>
+        <Box className="can-login">
+          <Switch
+            size="small"
+            {...label}
+            sx={{ paddingLeft: "5px" }}
+            checked={formik.values.userAllowed}
+            onChange={handleCanLogin}
+          />
+          <Typography
+            sx={{
+              color: formik.values.userAllowed ? "black" : "#6C6C6C",
+              fontSize: "16px",
+              fontWeight: "400",
+              ml: "10px",
+            }}
+          >
+            {canLogin}
+          </Typography>
+        </Box>
         <Box className="switch-cls">
           <Switch
             size="small"

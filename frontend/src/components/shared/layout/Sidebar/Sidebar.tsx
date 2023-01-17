@@ -22,6 +22,8 @@ import bagIcon from "@src/assets/svgs/Bag.svg";
 import workIconRed from "@src/assets/svgs/bagred.svg";
 import categoryIcon from "@src/assets/svgs/Category.svg";
 import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
+import leavesIcon from "@src/assets/svgs/Leave.svg";
+import leavesRedIcon from "@src/assets/svgs/leaveRed.svg";
 import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
@@ -203,7 +205,25 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
+            <ListItemButton
+              onClick={() => {
+                navigate("leaves/");
+              }}
+              className="list-items-btn"
+            >
+              <ListItemIcon className="list-item-icon">
+                <img
+                  className="icon-img"
+                  src={currentPath === "/leaves/" ? leavesRedIcon : leavesIcon}
+                />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          ) : (
+            ""
+          )}
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
               {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}

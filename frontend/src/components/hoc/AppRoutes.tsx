@@ -7,6 +7,7 @@ import Signup from "@src/components/common/presentational/signup/Signup";
 import Accounts from "@src/components/common/smart/accounts/accounts";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
+import Leaves from "@src/components/common/smart/leaves/leaves";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Users from "@src/components/common/smart/users/users";
@@ -53,6 +54,7 @@ const AppRoutes = () => {
             {allFlags.show_payroll_module && (
               <Route path="payroll/" element={<Payroll />} />
             )}
+            <Route path="leaves/" element={<Leaves />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

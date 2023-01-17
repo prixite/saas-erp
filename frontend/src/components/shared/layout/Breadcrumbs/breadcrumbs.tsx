@@ -63,6 +63,8 @@ const BreadCrumbs = () => {
                     ? ""
                     : `${EmployeeData?.user?.first_name} ${EmployeeData?.user?.last_name}`
                 } `
+              : name === "leaves"
+              ? "Leaves Management"
               : capitalizeFirstLowercaseRest(name)}
           </Typography>
         ) : (
@@ -76,6 +78,8 @@ const BreadCrumbs = () => {
           >
             {name === "employees"
               ? capitalizeFirstLowercaseRest("employee's")
+              : name === "leaves"
+              ? capitalizeFirstLowercaseRest("leaves management")
               : capitalizeFirstLowercaseRest(name)}
           </Link>
         );

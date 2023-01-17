@@ -156,3 +156,16 @@ export interface Benefits {
   name: string;
   created_at: string;
 }
+export interface Leaves {
+  id: number;
+  created_at: string;
+  description: string;
+  employee: number;
+  hr_comment: string;
+  status: string;
+  updated_at: string;
+  updated_by: null;
+  organization: number;
+  leave_from: string;
+  leave_to: string;
+}

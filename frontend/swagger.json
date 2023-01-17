@@ -2016,6 +2016,11 @@
                     "updated_at"
                 ]
             },
+            "BlankEnum": {
+                "enum": [
+                    ""
+                ]
+            },
             "Company": {
                 "type": "object",
                 "properties": {
@@ -2636,9 +2641,7 @@
                     },
                     "email": {
                         "type": "string",
-                        "format": "email",
-                        "title": "Email address",
-                        "maxLength": 254
+                        "format": "email"
                     },
                     "image": {
                         "type": "string",
@@ -2756,6 +2759,20 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "leave_type": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LeaveTypeEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
                     "leave_from": {
                         "type": "string",
                         "format": "date"
@@ -2772,12 +2789,7 @@
                         "nullable": true
                     },
                     "status": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/Status913Enum"
-                            }
-                        ],
-                        "pattern": "^[-a-zA-Z0-9_]+$"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "created_at": {
                         "type": "string",
@@ -2811,16 +2823,19 @@
                     "updated_at"
                 ]
             },
+            "LeaveTypeEnum": {
+                "enum": [
+                    "sick leave",
+                    "annual leave",
+                    "casual leave"
+                ],
+                "type": "string"
+            },
             "LeaveUpdate": {
                 "type": "object",
                 "properties": {
                     "status": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/Status913Enum"
-                            }
-                        ],
-                        "pattern": "^[-a-zA-Z0-9_]+$"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
@@ -2923,6 +2938,11 @@
                     }
                 }
             },
+            "NullEnum": {
+                "enum": [
+                    null
+                ]
+            },
             "Organization": {
                 "type": "object",
                 "properties": {
@@ -2957,6 +2977,23 @@
                     "updated_at"
                 ]
             },
+            "OwnerEmployee": {
+                "type": "object",
+                "properties": {
+                    "date_of_joining": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "nic": {
+                        "type": "string",
+                        "maxLength": 25
+                    }
+                },
+                "required": [
+                    "date_of_joining",
+                    "nic"
+                ]
+            },
             "OwnerOnBoarding": {
                 "type": "object",
                 "properties": {
@@ -2976,6 +3013,9 @@
                     },
                     "organization": {
                         "$ref": "#/components/schemas/Organization"
+                    },
+                    "employee": {
+                        "$ref": "#/components/schemas/OwnerEmployee"
                     }
                 },
                 "required": [
@@ -3021,12 +3061,7 @@
                 "type": "object",
                 "properties": {
                     "status": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/Status913Enum"
-                            }
-                        ],
-                        "pattern": "^[-a-zA-Z0-9_]+$"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
