@@ -40,7 +40,7 @@ const useDebounce = (value: string, delay: number): string => {
 };
 
 function DataGridTable() {
-  const { data: rows = [], isSuccess, isLoading } = useGetEmployeesQuery();
+  const { data: rows = [], isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
   const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [userData, setUserData] = useState<Employee[]>([]);
@@ -51,6 +51,7 @@ function DataGridTable() {
   const allFlags = Object.assign({}, ...Flags);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const [rowCellId, setRowCellId] = useState<number>(0);
@@ -187,10 +188,15 @@ function DataGridTable() {
   ];
 
   useEffect(() => {
-    if (rows.length) {
-      setUserData(rows);
+    if (!isLoading) {
+      if (rows.length) {
+        setUserData(rows);
+      } else {
+        setUserData([]);
+      }
+      setIsDataLoading(false);
     }
-  }, [rows]);
+  }, [rows, isLoading]);
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
       setUserData(
@@ -251,7 +257,7 @@ function DataGridTable() {
   return (
     <Box className="dataGridTable-section">
       <HeadBar setSearchText={setQuery} />
-      {isSuccess ? (
+      {!dataLoading ? (
         <>
           {userData?.length ? (
             <div className="dataGridTable-main">
@@ -359,7 +365,7 @@ function DataGridTable() {
         </>
       ) : (
         <>
-          <RowSkeletonCard />
+          <RowSkeletonCard pathString="employees" />
         </>
       )}
       <EmployeeModal
