@@ -10,7 +10,17 @@ class CustomUserAdmin(CoreUserAdmin):
     fieldsets = CoreUserAdmin.fieldsets + (
         (
             "More Info",
-            {"fields": ("contact_number",)},
+            {
+                "fields": (
+                    "contact_number",
+                    "bill_update_email",
+                    "bill_update_phone",
+                    "new_team_member_email",
+                    "new_team_member_phone",
+                    "newsletters_email",
+                    "newsletters_phone",
+                )
+            },
         ),
     )
 

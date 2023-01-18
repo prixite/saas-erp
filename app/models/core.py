@@ -29,6 +29,15 @@ class User(AbstractUser):
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
     is_onboarded = models.BooleanField(default=False)
 
+    bill_update_email = models.BooleanField(default=False)
+    bill_update_phone = models.BooleanField(default=False)
+
+    new_team_member_email = models.BooleanField(default=False)
+    new_team_member_phone = models.BooleanField(default=False)
+
+    newsletters_email = models.BooleanField(default=False)
+    newsletters_phone = models.BooleanField(default=False)
+
     # this field should not be stored in DB. This field will be updated by
     # view to True if the user is admin for the module being accessed.
     is_module_admin = False

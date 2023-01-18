@@ -147,6 +147,10 @@ urlpatterns = [
         api.MeUpdateViewSet.as_view(),
     ),
     path(
+        "me-notification/update/",
+        api.MeUpdateNotificationViewSet.as_view(),
+    ),
+    path(
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
     ),
