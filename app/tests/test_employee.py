@@ -416,3 +416,59 @@ class LeaveTesCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/attendance/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class StandupTestCase(BaseTestCase):
+    def test_standup_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/standup/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standup_post(self):
+        self.client.force_login(self.owner)
+        standup_data = {
+            "name": "Standup",
+            "team": self.team1.id,
+            "organization": self.organization.id,
+            "created_at": "2023-01-12T01:52:00+05:00",
+        }
+        response = self.client.post("/api/standup/", data=standup_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class StandupUpdateTestCase(BaseTestCase):
+    def test_standup_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/standup_update/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standup_post(self):
+        self.client.force_login(self.owner)
+        standup_update_data = {
+            "standup": self.standup.id,
+            "organization": self.organization.id,
+            "employee": self.employee.id,
+            "status": "joined",
+            "work_done_yesterday": "Worked on standup API",
+            "work_to_do": "Will work on saas erp",
+            "blockers": "Requirements are unclear",
+        }
+        response = self.client.post("/api/standup_update/", data=standup_update_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class TeamTestCase(BaseTestCase):
+    def test_team_get_members(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/team/{self.team.id}/members/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_team_create(self):
+        self.client.force_login(self.owner)
+        team_data = {
+            "name": "Test Team",
+            "organization": self.organization.id,
+            "members": [self.employee.id],
+        }
+        response = self.client.post("/api/team_create/", data=team_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

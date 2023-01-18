@@ -114,3 +114,13 @@ class DocumentTypeFactory(factory.django.DjangoModelFactory):
 class LeaveFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Leave
+
+
+class TeamFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Team
+
+
+class StandupFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Standup

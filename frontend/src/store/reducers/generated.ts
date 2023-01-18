@@ -286,6 +286,16 @@ const injectedRtkApi = api.injectEndpoints({
     apiMeRetrieve: build.query<ApiMeRetrieveApiResponse, ApiMeRetrieveApiArg>({
       query: () => ({ url: `/api/me/` }),
     }),
+    apiMeNotificationUpdateUpdate: build.mutation<
+      ApiMeNotificationUpdateUpdateApiResponse,
+      ApiMeNotificationUpdateUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/me-notification/update/`,
+        method: "PUT",
+        body: queryArg.meUpdateNotification,
+      }),
+    }),
     apiMeUpdateUpdate: build.mutation<
       ApiMeUpdateUpdateApiResponse,
       ApiMeUpdateUpdateApiArg
@@ -398,6 +408,54 @@ const injectedRtkApi = api.injectEndpoints({
       ApiSlackAttendanceCreateApiArg
     >({
       query: () => ({ url: `/api/slack/attendance/`, method: "POST" }),
+    }),
+    apiStandupList: build.query<
+      ApiStandupListApiResponse,
+      ApiStandupListApiArg
+    >({
+      query: () => ({ url: `/api/standup/` }),
+    }),
+    apiStandupCreate: build.mutation<
+      ApiStandupCreateApiResponse,
+      ApiStandupCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup/`,
+        method: "POST",
+        body: queryArg.standup,
+      }),
+    }),
+    apiStandupUpdateList: build.query<
+      ApiStandupUpdateListApiResponse,
+      ApiStandupUpdateListApiArg
+    >({
+      query: () => ({ url: `/api/standup_update/` }),
+    }),
+    apiStandupUpdateCreate: build.mutation<
+      ApiStandupUpdateCreateApiResponse,
+      ApiStandupUpdateCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup_update/`,
+        method: "POST",
+        body: queryArg.standupUpdate,
+      }),
+    }),
+    apiTeamMembersRetrieve: build.query<
+      ApiTeamMembersRetrieveApiResponse,
+      ApiTeamMembersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
+    }),
+    apiTeamCreateCreate: build.mutation<
+      ApiTeamCreateCreateApiResponse,
+      ApiTeamCreateCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/team_create/`,
+        method: "POST",
+        body: queryArg.team,
+      }),
     }),
   }),
   overrideExisting: false,
@@ -532,6 +590,11 @@ export type ApiLoginCreateApiArg = {
 };
 export type ApiMeRetrieveApiResponse = /** status 200  */ Me;
 export type ApiMeRetrieveApiArg = void;
+export type ApiMeNotificationUpdateUpdateApiResponse =
+  /** status 200  */ MeUpdateNotification;
+export type ApiMeNotificationUpdateUpdateApiArg = {
+  meUpdateNotification: MeUpdateNotification;
+};
 export type ApiMeUpdateUpdateApiResponse = /** status 200  */ MeUpdate;
 export type ApiMeUpdateUpdateApiArg = {
   meUpdate: MeUpdate;
@@ -585,6 +648,28 @@ export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
+export type ApiStandupListApiResponse = /** status 200  */ Standup[];
+export type ApiStandupListApiArg = void;
+export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
+export type ApiStandupCreateApiArg = {
+  standup: Standup;
+};
+export type ApiStandupUpdateListApiResponse =
+  /** status 200  */ StandupUpdate[];
+export type ApiStandupUpdateListApiArg = void;
+export type ApiStandupUpdateCreateApiResponse =
+  /** status 201  */ StandupUpdate;
+export type ApiStandupUpdateCreateApiArg = {
+  standupUpdate: StandupUpdate;
+};
+export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
+export type ApiTeamMembersRetrieveApiArg = {
+  id: number;
+};
+export type ApiTeamCreateCreateApiResponse = /** status 201  */ Team;
+export type ApiTeamCreateCreateApiArg = {
+  team: Team;
+};
 export type AssetType = {
   id: number;
   name: string;
@@ -779,7 +864,7 @@ export type Institue = {
 export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
 export type BlankEnum = "";
 export type NullEnum = null;
-export type StatusEnum = "pending" | "approved" | "denied";
+export type Status913Enum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
   leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
@@ -787,7 +872,7 @@ export type Leave = {
   leave_to: string;
   description: string;
   hr_comment?: string | null;
-  status?: StatusEnum;
+  status?: Status913Enum;
   created_at: string;
   updated_at: string;
   employee: number;
@@ -795,11 +880,11 @@ export type Leave = {
   organization: number;
 };
 export type LeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type Login = {
@@ -816,6 +901,14 @@ export type Me = {
   headline?: string | null;
   contact_number?: string | null;
   allowed_modules: string;
+};
+export type MeUpdateNotification = {
+  bill_update_email?: boolean;
+  bill_update_phone?: boolean;
+  new_team_member_email?: boolean;
+  new_team_member_phone?: boolean;
+  newsletters_email?: boolean;
+  newsletters_phone?: boolean;
 };
 export type MeUpdate = {
   first_name?: string;
@@ -883,6 +976,34 @@ export type Role = {
   created_at: string;
   updated_at: string;
 };
+export type Standup = {
+  id: number;
+  name: string;
+  created_at: string;
+  team: number;
+  organization: number;
+};
+export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
+export type StandupUpdate = {
+  id: number;
+  status: StandupUpdateStatusEnum;
+  work_done_yesterday?: string | null;
+  work_to_do?: string | null;
+  blockers?: string | null;
+  created_at: string;
+  updated_at: string;
+  standup: number;
+  organization: number;
+  employee: number;
+};
+export type Team = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  organization: number;
+  members: number[];
+};
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
@@ -920,6 +1041,7 @@ export const {
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
   useApiMeRetrieveQuery,
+  useApiMeNotificationUpdateUpdateMutation,
   useApiMeUpdateUpdateMutation,
   useApiModuleListQuery,
   useApiModuleCreateMutation,
@@ -934,4 +1056,10 @@ export const {
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
+  useApiStandupListQuery,
+  useApiStandupCreateMutation,
+  useApiStandupUpdateListQuery,
+  useApiStandupUpdateCreateMutation,
+  useApiTeamMembersRetrieveQuery,
+  useApiTeamCreateCreateMutation,
 } = injectedRtkApi;

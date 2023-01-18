@@ -21,6 +21,8 @@ from app.models.employee import (
     Experience,
     Institute,
     Program,
+    Standup,
+    StandupUpdate,
     Team,
 )
 from app.models.inventory import Asset, AssetType
@@ -64,4 +66,6 @@ __all__ = [
     "Experience",
     "Attendance",
     "Leave",
+    "Standup",
+    "StandupUpdate",
 ]
