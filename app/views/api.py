@@ -11,6 +11,7 @@ from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
+from rest_framework.decorators import action
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
@@ -576,3 +577,30 @@ class OwnerOnboardingAPIView(CreateAPIView):
     serializer_class = serializers.OwnerOnBoardingSerializer
     queryset = models.User.objects.all()
     permission_classes = (AllowAny,)
+
+
+class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.StandupSerializer
+    queryset = models.Standup.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class StandupUpdateViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.StandupUpdateSerializer
+    queryset = models.StandupUpdate.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+
+class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.TeamSerializer
+    queryset = models.Team.objects.all()
+    module = models.Module.ModuleType.EMPLOYEES
+
+    @action(detail=True, methods=["get"], url_path="members", url_name="members")
+    def team_members(self, request, *args, **kwargs):
+        team = self.get_object()
+        members = team.members.all()
+        serializer = serializers.EmployeeSerializer(members, many=True)
+        return Response(serializer.data)

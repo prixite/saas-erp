@@ -1711,6 +1711,228 @@
                     }
                 }
             }
+        },
+        "/api/standup/": {
+            "get": {
+                "operationId": "api_standup_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Standup"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_standup_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Standup"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Standup"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Standup"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Standup"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/standup_update/": {
+            "get": {
+                "operationId": "api_standup_update_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StandupUpdate"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_standup_update_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StandupUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/team/{id}/members/": {
+            "get": {
+                "operationId": "api_team_members_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/team_create/": {
+            "post": {
+                "operationId": "api_team_create_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Team"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Team"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Team"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1896,10 +2118,14 @@
                     },
                     "max_hours_per_week": {
                         "type": "integer",
+                        "maximum": 32767,
+                        "minimum": -32768,
                         "nullable": true
                     },
                     "expected_hours_per_week": {
                         "type": "integer",
+                        "maximum": 32767,
+                        "minimum": -32768,
                         "nullable": true
                     },
                     "updated_at": {
@@ -2201,10 +2427,14 @@
                     },
                     "salary": {
                         "type": "integer",
+                        "maximum": 2147483647,
+                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 2147483647,
+                        "minimum": -2147483648
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -2351,10 +2581,14 @@
                     },
                     "salary": {
                         "type": "integer",
+                        "maximum": 2147483647,
+                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 2147483647,
+                        "minimum": -2147483648
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -2599,7 +2833,7 @@
                         "nullable": true
                     },
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "created_at": {
                         "type": "string",
@@ -2645,7 +2879,7 @@
                 "type": "object",
                 "properties": {
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
@@ -2894,7 +3128,7 @@
                 "type": "object",
                 "properties": {
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
@@ -2998,13 +3232,143 @@
                     "updated_at"
                 ]
             },
-            "StatusEnum": {
+            "Standup": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "team": {
+                        "type": "integer"
+                    },
+                    "organization": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "id",
+                    "name",
+                    "organization",
+                    "team"
+                ]
+            },
+            "StandupUpdate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/StandupUpdateStatusEnum"
+                    },
+                    "work_done_yesterday": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "work_to_do": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "blockers": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "standup": {
+                        "type": "integer"
+                    },
+                    "organization": {
+                        "type": "integer"
+                    },
+                    "employee": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "employee",
+                    "id",
+                    "organization",
+                    "standup",
+                    "status",
+                    "updated_at"
+                ]
+            },
+            "StandupUpdateStatusEnum": {
+                "enum": [
+                    "missed",
+                    "joined",
+                    "leave"
+                ],
+                "type": "string"
+            },
+            "Status913Enum": {
                 "enum": [
                     "pending",
                     "approved",
                     "denied"
                 ],
                 "type": "string"
+            },
+            "Team": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "organization": {
+                        "type": "integer"
+                    },
+                    "members": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "id",
+                    "members",
+                    "name",
+                    "organization",
+                    "updated_at"
+                ]
             },
             "UserPassword": {
                 "type": "object",

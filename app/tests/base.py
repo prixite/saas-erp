@@ -119,3 +119,14 @@ class BaseTestCase(TestCase):
             currency=self.currency,
             employee=self.employee,
         )
+
+        self.team = factories.TeamFactory(name="Team", organization=self.organization)
+
+        self.team1 = factories.TeamFactory(name="Team1", organization=self.organization)
+
+        self.standup = factories.StandupFactory(
+            name="Standup-1",
+            team=self.team,
+            organization=self.organization,
+            created_at="2023-01-12T11:15:00+05:00",
+        )

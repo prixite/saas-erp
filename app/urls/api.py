@@ -154,4 +154,14 @@ urlpatterns = [
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
     ),
+    path("standup/", api.StandupViewSet.as_view({"get": "list", "post": "create"})),
+    path(
+        "standup_update/",
+        api.StandupUpdateViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "team_create/",
+        api.TeamViewSet.as_view({"post": "create"}),
+    ),
+    path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "team_members"})),
 ]
