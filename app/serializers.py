@@ -605,8 +605,19 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
             permission=models.Role.Permission.OWNER,
             is_default=True,
         ).first()
+        emp_data = validated_data.pop("employee", {})
+        user = super().create(validated_data)
+        if emp_data:
+            emp_ser = OwnerEmployeeSerializer(data=emp_data)
+            emp_ser.is_valid(raise_exception=True)
+            emp_ser.save(user=user, organization=organization, user_allowed=True)
+        return user
 
-        return super().create(validated_data)
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Module
+        fields = "__all__"
 
 
 class TeamSerializer(serializers.ModelSerializer):

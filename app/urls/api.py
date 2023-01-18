@@ -154,6 +154,25 @@ urlpatterns = [
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
     ),
+    path(
+        "module/",
+        api.ModuleViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "module/<int:pk>/",
+        api.ModuleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
     path("standup/", api.StandupViewSet.as_view({"get": "list", "post": "create"})),
     path(
         "standup_update/",
