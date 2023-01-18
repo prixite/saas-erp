@@ -1,76 +1,248 @@
 from datetime import date
 
-from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.db import transaction
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from waffle import get_waffle_switch_model
 
 from app import models
 
 
-class EmployeeListSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source="user.first_name", read_only=True)
-    last_name = serializers.CharField(source="user.last_name", read_only=True)
-    avatar = serializers.SerializerMethodField()
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        label="Password",
+        style={"input_type": "password"},
+        trim_whitespace=False,
+    )
 
-    class Meta:
-        model = models.Employee
-        fields = [
-            "id",
-            "org_id",
-            "first_name",
-            "last_name",
-            "contact_number",
-            "date_of_joining",
-            "avatar",
-        ]
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
 
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.user.image.url}"
+        if email and password:
+            user = authenticate(
+                request=self.context.get("request"), email=email, password=password
+            )
+            if not user:
+                msg = {"error": "Please enter correct Email/Password."}
+                raise serializers.ValidationError(msg, code="authorization")
+        else:
+            msg = {"error": "Must include 'email' and 'password'."}
+            raise serializers.ValidationError(msg, code="authorization")
 
-
-class EmployeeUserSerializer(serializers.ModelSerializer):
-    avatar = serializers.SerializerMethodField()
-
-    class Meta:
-        model = models.User
-        fields = ["first_name", "last_name", "email", "avatar"]
-
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
+        attrs["user"] = user
+        return attrs
 
 
 class DegreeSerializer(serializers.ModelSerializer):
-    program = serializers.CharField(source="program.name")
-    institute = serializers.CharField(source="institute.name")
-
     class Meta:
         model = models.Degree
         fields = ["program", "institute", "year"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["program"] = {"id": instance.program.id, "name": instance.program.name}
+        data["institute"] = {
+            "id": instance.institute.id,
+            "name": instance.institute.name,
+        }
+        return data
+
 
 class ExperirenceSerializer(serializers.ModelSerializer):
-    company = serializers.CharField(source="company.name")
-
     class Meta:
         model = models.Experience
         fields = ["title", "company", "start_date", "end_date"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["company"] = {
+            "id": instance.company.id,
+            "name": instance.company.name,
+        }
+        return data
+
+
+class BenefitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Benefit
+        exclude = ("organization",)
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Company
+        exclude = ("organization",)
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Program
+        exclude = ("organization",)
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Department
+        exclude = ("organization",)
+
+
+class EmployeementTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.EmploymentType
+        exclude = ("organization",)
+
+
+class InstitueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Institute
+        exclude = ("organization",)
+
+
+class CompensationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationType
+        exclude = ("organization",)
+
+
+class CompensationScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CompensationSchedule
+        exclude = ("organization",)
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Currency
+        exclude = ("organization",)
+
+
+class DocumentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DocumentType
+        exclude = ("organization",)
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Role
+        exclude = ("organization",)
+
+
+class AssetTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AssetType
+        exclude = ("organization",)
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Asset
+        exclude = ("organization", "employee")
+
+
+class EmployeeUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        model = models.User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
+
+    def validate_email(self, value):
+        organization = self.context.get("request").user.organization
+
+        if models.Employee.objects.filter(
+            organization=organization, user__email=value
+        ).exists():
+            raise serializers.ValidationError(
+                "employee with this email already exists."
+            )
+        if models.User.objects.filter(
+            ~Q(organization=organization) & Q(email=value)
+        ).exists():
+            raise serializers.ValidationError("user with this email already exists.")
+        return value
+
+
+class EmployeeUpdateUserSerializer(EmployeeUserSerializer):
+    email = serializers.EmailField(read_only=True)
+
+
+class ManagerSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(source="user.get_full_name")
+
+    class Meta:
+        model = models.Employee
+        fields = "id", "name"
+
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = EmployeeUserSerializer()
-    degrees = DegreeSerializer(many=True, read_only=True)
-    experience = ExperirenceSerializer(many=True, read_only=True)
-    benefits = serializers.SlugRelatedField(
-        slug_field="name", read_only=True, many=True
-    )
+    degrees = DegreeSerializer(many=True)
+    assets = AssetSerializer(many=True)
+    experience = ExperirenceSerializer(many=True)
     org_id = serializers.CharField(read_only=True)
-
+    managing = serializers.PrimaryKeyRelatedField(
+        write_only=True, queryset=models.Employee.objects.all(), many=True
+    )
     total_experience = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Employee
+        exclude = ("organization", "slack_id")
 
-        fields = "__all__"
+    @transaction.atomic
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        organization = self.context.get("request").user.organization
+        try:
+            user = models.User.objects.get(email=user_data.get("email"))
+            user_ser = EmployeeUserSerializer(
+                data=user_data, instance=user, context=self.context
+            )
+        except models.User.DoesNotExist:
+            user_ser = EmployeeUserSerializer(data=user_data, context=self.context)
+        user_ser.is_valid(raise_exception=True)
+        user = user_ser.save(
+            is_active=validated_data.get("user_allowed", False),
+            username=user_data.get("email"),
+            organization=organization,
+        )
+        validated_data["user_id"] = user.id
+        employee = super().create(validated_data)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = employee
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=employee)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=employee)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=employee, organization=organization
+            )
+
+        return employee
 
     def get_total_experience(self, data):
         total_days = 0
@@ -95,24 +267,104 @@ class EmployeeSerializer(serializers.ModelSerializer):
         total_experience += f"{months} months" if months > 1 else f"{months} month"
         return total_experience
 
-    def create(self, validated_data):
-        user_data = validated_data.pop("user")
-        user = models.User.objects.create(
-            username=user_data["email"],
-            first_name=user_data["first_name"],
-        )
-        return models.Employee.objects.create(user=user, **validated_data)
+    def validate(self, data):
+        organization = self.context.get("request").user.organization
+
+        if data.get("manager") and not data.get("manager").organization == organization:
+            raise serializers.ValidationError("Manager employee does not exists.")
+        for manages in data.get("managing"):
+            if not manages.organization == organization:
+                raise serializers.ValidationError("Managing employee does not exists.")
+            if manages == data.get("manager"):
+                raise serializers.ValidationError(
+                    "Employee can not be the manager of his own manager."
+                )
+        return data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["organization"] = instance.organization.name
+        data["manages"] = ManagerSerializer(instance.manages.all(), many=True).data
         if instance.department:
-            data["department"] = instance.department.name
+            data["department"] = {
+                "id": instance.department.id,
+                "name": instance.department.name,
+            }
         if instance.manager:
-            data["manager"] = instance.manager.user.get_full_name()
+            data["manager"] = {
+                "id": instance.manager.id,
+                "name": instance.manager.user.get_full_name(),
+            }
         if instance.type:
-            data["type"] = instance.type.name
+            data["type"] = {"id": instance.type.id, "title": instance.type.name}
+        if instance.benefits:
+            data["benefits"] = BenefitSerializer(
+                instance.benefits.all(), many=True
+            ).data
         return data
+
+
+class EmployeeListSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source="user.first_name", read_only=True)
+    last_name = serializers.CharField(source="user.last_name", read_only=True)
+    contact_number = serializers.CharField(source="user.contact_number", read_only=True)
+    image = serializers.CharField(source="user.image", read_only=True)
+
+    class Meta:
+        model = models.Employee
+        fields = [
+            "id",
+            "org_id",
+            "first_name",
+            "last_name",
+            "contact_number",
+            "date_of_joining",
+            "image",
+        ]
+
+
+class EmployeeUpdateSerializer(EmployeeSerializer):
+    user = EmployeeUpdateUserSerializer()
+
+    class Meta:
+        model = models.Employee
+        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        organization = self.context.get("request").user.organization
+        user_data = validated_data.pop("user")
+        degrees_data = validated_data.pop("degrees")
+        experience_data = validated_data.pop("experience")
+        assets_data = validated_data.pop("assets")
+        managing = validated_data.pop("managing")
+        if user_data.get("default_role"):
+            user_data["default_role"] = user_data.pop("default_role").id
+        user = models.User.objects.get(email=instance.user.email)
+        user_ser = EmployeeUpdateUserSerializer(instance=user, data=user_data)
+        user_ser.is_valid(raise_exception=True)
+        user.is_active = validated_data.get("user_allowed", False)
+        user_ser.save()
+
+        models.Degree.objects.filter(employee=instance).delete()
+        models.Asset.objects.filter(employee=instance).delete()
+        models.Experience.objects.filter(employee=instance).delete()
+        models.Employee.objects.filter(manager=instance).update(manager=None)
+
+        for manages in managing:
+            emp = models.Employee.objects.get(id=manages.id)
+            emp.manager = instance
+            emp.save()
+        for degree in degrees_data:
+            models.Degree.objects.create(**degree, employee=instance)
+        for experience in experience_data:
+            models.Experience.objects.create(**experience, employee=instance)
+        for asset in assets_data:
+            models.Asset.objects.create(
+                **asset, employee=instance, organization=organization
+            )
+
+        return super().update(instance, validated_data)
 
 
 class CompensationSerializer(serializers.ModelSerializer):
@@ -163,8 +415,8 @@ class MeSerializer(serializers.ModelSerializer):
         source="organization.name",
         default="",
     )
-    avatar = serializers.SerializerMethodField()
-    contact_number = serializers.CharField(source="employee.contact_number")
+
+    allowed_modules = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
@@ -173,14 +425,23 @@ class MeSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "organization",
-            "avatar",
+            "image",
             "is_superuser",
             "headline",
             "contact_number",
+            "allowed_modules",
         ]
 
-    def get_avatar(self, data):
-        return f"{settings.DOMAIN_NAME}{data.image.url}"
+    def get_allowed_modules(self, data):
+        member_modules = [module.slug for module in data.member_modules]
+        admin_modules = [module.slug for module in data.admin_modules]
+        owner_modules = [module.slug for module in data.owner_modules]
+
+        return {
+            "member_modules": member_modules,
+            "admin_modules": admin_modules,
+            "owner_modules": owner_modules,
+        }
 
 
 class UserPasswordSerializer(serializers.Serializer):
@@ -197,3 +458,181 @@ class UserPasswordSerializer(serializers.Serializer):
                 "New password can not be same as new password."
             )
         return data
+
+
+class ResendEmailCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    token = serializers.CharField(required=True)
+
+
+class PasswordResetCompleteSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, validators=[validate_password])
+    password2 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        return attrs
+
+
+class WaffleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_waffle_switch_model()
+        fields = ["name", "active"]
+
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Attendance
+        fields = ["employee", "time_in", "time_out"]
+
+
+class MeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "first_name",
+            "last_name",
+            "image",
+            "contact_number",
+            "headline",
+        )
+
+
+class MeUpdateNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "bill_update_email",
+            "bill_update_phone",
+            "new_team_member_email",
+            "new_team_member_phone",
+            "newsletters_email",
+            "newsletters_phone",
+        )
+
+
+class LeaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
+
+        return data
+
+
+class LeaveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Leave
+        fields = ("status", "hr_comment")
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OwnerEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Employee
+        fields = ("date_of_joining", "nic")
+
+
+class OwnerOnBoardingSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer()
+    employee = OwnerEmployeeSerializer(required=False)
+
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email", "organization", "employee")
+
+    @transaction.atomic
+    def create(self, validated_data):
+        org_serializer = OrganizationSerializer(data=validated_data.pop("organization"))
+        org_serializer.is_valid(raise_exception=True)
+        organization = org_serializer.save()
+        models.Role.objects.bulk_create(
+            [
+                models.Role(
+                    name="Owner",
+                    permission=models.Role.Permission.OWNER,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Admin",
+                    permission=models.Role.Permission.ADMIN,
+                    is_default=True,
+                    organization=organization,
+                ),
+                models.Role(
+                    name="Member",
+                    permission=models.Role.Permission.MEMBER,
+                    is_default=True,
+                    organization=organization,
+                ),
+            ]
+        )
+        for module in models.Module.objects.filter(is_enabled=True):
+            models.OrganizationModule.objects.create(
+                organization=organization,
+                module=module,
+                is_enabled=True,
+            )
+        validated_data["username"] = validated_data.get("email")
+        validated_data["organization"] = organization
+        validated_data["default_role"] = models.Role.objects.filter(
+            organization=organization,
+            permission=models.Role.Permission.OWNER,
+            is_default=True,
+        ).first()
+        emp_data = validated_data.pop("employee", {})
+        user = super().create(validated_data)
+        if emp_data:
+            emp_ser = OwnerEmployeeSerializer(data=emp_data)
+            emp_ser.is_valid(raise_exception=True)
+            emp_ser.save(user=user, organization=organization, user_allowed=True)
+        return user
+
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Module
+        fields = "__all__"
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Team
+        fields = "__all__"
+
+
+class StandupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Standup
+        fields = "__all__"
+
+
+class StandupUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StandupUpdate
+        fields = "__all__"

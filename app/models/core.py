@@ -18,16 +18,25 @@ class User(AbstractUser):
         "Organization", on_delete=models.CASCADE, null=True
     )
 
-    image = models.ImageField(
-        upload_to="profile",
-        null=True,
-        default="../static/app/assets/profile_default.png",
+    image = models.URLField(
+        default="https://prixite-erp-dev.s3.ap-southeast-1.amazonaws.com/media/bpD666m3TGWrvp75gU8nhh.png"  # noqa
     )
 
-    headline = models.CharField(_("headline"), max_length=255)
+    contact_number = models.CharField(max_length=20, null=True, blank=True)
+
+    headline = models.CharField(_("headline"), max_length=255, null=True, blank=True)
 
     default_role = models.ForeignKey("Role", on_delete=models.SET_NULL, null=True)
     is_onboarded = models.BooleanField(default=False)
+
+    bill_update_email = models.BooleanField(default=False)
+    bill_update_phone = models.BooleanField(default=False)
+
+    new_team_member_email = models.BooleanField(default=False)
+    new_team_member_phone = models.BooleanField(default=False)
+
+    newsletters_email = models.BooleanField(default=False)
+    newsletters_phone = models.BooleanField(default=False)
 
     # this field should not be stored in DB. This field will be updated by
     # view to True if the user is admin for the module being accessed.
@@ -41,17 +50,24 @@ class User(AbstractUser):
 
     def get_modules(self, permission):
         module_roles = self.module_roles.filter(module__is_enabled=True)
-        if self.default_role and self.default_role.permission >= permission:
-            module_roles = module_roles.filter(
-                role__permission__lte=self.default_role.permission,
-            )
-        else:
-            module_roles = module_roles.filter(role__permission=permission)
 
-        if self.default_role and self.default_role.permission == Role.Permission.OWNER:
+        if (
+            self.default_role
+            and self.default_role.permission == Role.Permission.OWNER
+            and permission is not Role.Permission.OWNER
+        ):
+            return []
+
+        if (
+            self.default_role
+            and self.default_role.permission == Role.Permission.OWNER
+            and permission == Role.Permission.OWNER
+        ):
             return self.organization_modules
 
-        return {x.module for x in module_roles} & self.organization_modules
+        module_roles = module_roles.filter(role__permission=permission)
+
+        return {x.module for x in module_roles}
 
     @property
     def organization_modules(self):
@@ -125,6 +141,9 @@ class OrganizationModule(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.organization.name} {self.module.name}"
+
     def validate_unique(self, exclude):
         if (
             self.__class__.objects.filter(
@@ -153,6 +172,9 @@ class UserModuleRole(models.Model):
     role = models.ForeignKey("Role", on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} {self.module.name} {self.role.permission}"
 
 
 class Module(models.Model):
@@ -214,7 +236,7 @@ class Role(models.Model):
         ]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.organization.name}"
 
 
 class Currency(models.Model):
@@ -226,5 +248,6 @@ class Currency(models.Model):
 
     code = models.CharField(max_length=3)
     symbol = models.CharField(max_length=1)
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

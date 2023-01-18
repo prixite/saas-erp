@@ -2,6 +2,7 @@ Pipfile
 Pipfile.lock
 db.sqlite3
 .env
+env.db
 node_modules
 frontend/dist
 *.pyc
@@ -14,3 +15,4 @@ venv
 /media
 /static
 webpack-stats.json
+htmlcov/

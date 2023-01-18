@@ -4,7 +4,7 @@
 .additional-Information-main {
   border: 1px solid #e7e7e7;
   padding: 18px;
-  height: 123px;
+  height: auto;
   background: #ffffff;
   border-radius: 12px;
 
@@ -37,10 +37,6 @@
           height: 19px;
           width: 19px;
           background: inherit;
-        }
-        .css-1y8u6dt-MuiButtonBase-root-MuiMenuItem-root {
-          display: flex;
-          justify-content: space-evenly;
         }
       }
     }

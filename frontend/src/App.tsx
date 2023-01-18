@@ -1,22 +1,29 @@
 import { Suspense, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import Routes from "@src/components/hoc/AppRoutes";
-import Layout from "@src/components/shared/layout";
+import { Buffer } from "buffer";
+import { ToastContainer } from "react-toastify";
+import AppRoutes from "@src/components/hoc/AppRoutes";
+import { AuthProvider } from "@src/components/hoc/AuthContext";
 import baseTheme from "@src/theme/base-theme";
+import "react-toastify/dist/ReactToastify.css";
 
 const loading = <span>Loading....</span>;
 
+window.Buffer = Buffer;
+
 const App = () => {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
   }, []);
+
   return (
     <>
+      <ToastContainer />
       <Suspense fallback={loading}>
         <ThemeProvider theme={baseTheme}>
-          <Layout>
-            <Routes />
-          </Layout>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
         </ThemeProvider>
       </Suspense>
     </>

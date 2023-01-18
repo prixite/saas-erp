@@ -1,3 +1,4 @@
+from app.models.attendance import Attendance, Leave
 from app.models.core import (
     Currency,
     Invitation,
@@ -20,6 +21,8 @@ from app.models.employee import (
     Experience,
     Institute,
     Program,
+    Standup,
+    StandupUpdate,
     Team,
 )
 from app.models.inventory import Asset, AssetType
@@ -61,4 +64,8 @@ __all__ = [
     "UserModuleRole",
     "Company",
     "Experience",
+    "Attendance",
+    "Leave",
+    "Standup",
+    "StandupUpdate",
 ]

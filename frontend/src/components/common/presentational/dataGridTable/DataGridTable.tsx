@@ -1,32 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
-import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/rowSkeletonCard";
-import { employeeConstants } from "@src/helpers/constants/constants";
+import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
+import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
+import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
+import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { useGetEmployeesQuery } from "@src/store/reducers/employees-api";
+import { toastAPIError } from "@src/helpers/utils/utils";
+import {
+  useGetEmployeesQuery,
+  useGetFlagsQuery,
+  useDeleteEmployeeMutation,
+  useGetUserQuery,
+} from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
+
+const useDebounce = (value: string, delay: number): string => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 function DataGridTable() {
-  const navigate = useNavigate();
-  const { data: tableData, isSuccess, isLoading } = useGetEmployeesQuery();
+  const { data: rows = [], isLoading } = useGetEmployeesQuery();
   const constantData: LocalizationInterface = localizedData();
-  const { notFound } = constantData.Employee;
-  const [page, setPage] = useState<number>(0);
+  const { notFound, employeeDeleteSuccess } = constantData.Employee;
+  const [userData, setUserData] = useState<Employee[]>([]);
+  const { data: userInfo } = useGetUserQuery();
   const [pageSize, setPageSize] = useState<number>(10);
-  const columns = [
+  const [deleteEmployee] = useDeleteEmployeeMutation();
+  const { data: Flags = [] } = useGetFlagsQuery();
+  const allFlags = Object.assign({}, ...Flags);
+  const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [dataLoading, setIsDataLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const [rowCellId, setRowCellId] = useState<number>(0);
+  const debouncedSearchTerm = useDebounce(query, 500);
+  const [action, setAction] = useState("add");
+  const columns: GridColDef[] = [
     {
       field: "id",
       headerName: "ID",
       sortable: false,
       width: 200,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
@@ -40,12 +76,11 @@ function DataGridTable() {
       headerName: "Name",
       sortable: false,
       width: 400,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <div
             style={{
-              marginLeft: "20px",
+              marginLeft: "16px",
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
@@ -54,12 +89,13 @@ function DataGridTable() {
             <img
               style={{
                 height: "32px",
+                width: "32px",
                 left: "241px",
                 top: "154px",
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row.avatar}`}
+              src={`${cellValues.row.image}`}
               alt="profile pic"
             />
             <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
@@ -67,12 +103,12 @@ function DataGridTable() {
         );
       },
     },
+
     {
       field: "contact_Number",
       headerName: "Contact Number",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -86,7 +122,6 @@ function DataGridTable() {
       headerName: "Joining Date",
       sortable: false,
       width: 350,
-      headerAlign: "start",
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
@@ -98,22 +133,28 @@ function DataGridTable() {
     {
       field: "actions",
       headerName: "Actions",
-      headerAlign: "start",
       width: 350,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
           <Box
             className="renderCell-joiningDate"
             style={{ marginLeft: "10px" }}
           >
-            <IconButton
-              onClick={handleIconClicks}
-              aria-label="edit"
-              id="edit-btn-id"
-              className="edit-btn"
-            >
-              <img className="profile-pic" src={EditIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={(event) =>
+                  handleEditModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="edit"
+                id="edit-btn-id"
+                className="edit-btn"
+              >
+                <img className="profile-pic" src={EditIcon} alt="profile pic" />
+              </IconButton>
+            ) : (
+              ""
+            )}
             <IconButton
               aria-label="Show"
               id="show-btn-id"
@@ -121,65 +162,122 @@ function DataGridTable() {
             >
               <img className="profile-pic" src={ShowIcon} alt="profile pic" />
             </IconButton>
-            <IconButton
-              onClick={handleIconClicks}
-              aria-label="delete"
-              id="delete-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
-            </IconButton>
+            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
+            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
+              <IconButton
+                onClick={(event) =>
+                  handleDeleteModalOpen(event, cellValues?.row?.id)
+                }
+                aria-label="delete"
+                id="delete-btn-id"
+                className="delete-btn"
+              >
+                <img
+                  className="profile-pic"
+                  src={DeleteIcon}
+                  alt="profile pic"
+                />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </Box>
         );
       },
-      valueGetter: (params) =>
-        `${params.getValue(params.id, "firstName") || ""} ${
-          params.getValue(params.id, "contact_Number") || ""
-        }`,
     },
   ];
-  const handleIconClicks = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (rows.length) {
+        setUserData(rows);
+      } else {
+        setUserData([]);
+      }
+      setIsDataLoading(false);
+    }
+  }, [rows, isLoading]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setUserData(
+        rows.filter((userData: Employee) => {
+          return `${userData?.first_name} ${userData?.last_name}`
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setUserData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
+  const handleModalClose = () => {
+    setOpenModal(false);
   };
-  const handleOnCellClick = (params) => {
-    navigate(`/react/employees/${params.row.id}`);
+
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleOnCellClick = (params: GridCellParams) => {
+    navigate(`/employees/${params.row.id}`);
+  };
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleEmployeeDelete = async () => {
+    await deleteEmployee({
+      id: rowCellId,
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success(employeeDeleteSuccess, {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleDeleteModalClose();
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
   return (
     <Box className="dataGridTable-section">
-      {isSuccess ? (
+      <HeadBar setSearchText={setQuery} />
+      {!dataLoading ? (
         <>
-          {tableData?.length ? (
+          {userData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...tableData]}
-                columns={[...columns]}
+                rows={[...userData]}
+                columns={columns}
                 disableColumnFilter
                 disableColumnMenu
                 disableColumnSelector
-                pageSize={pageSize}
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[10, 20]}
-                rowCount={10}
+                pageSize={pageSize}
+                rowsPerPageOptions={[10, 13]}
                 pagination
-                paginationMode="server"
                 density="standard"
                 onCellClick={handleOnCellClick}
-                page={page}
-                onPageChange={(_page) => {
-                  setPage(_page);
-                }}
-                initialState={{
-                  pagination: {
-                    page: 0,
-                    pageSize: 10,
-                  },
-                }}
                 loading={isLoading}
                 sx={{
-                  cursor: "pointer",
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",
                   },
@@ -191,6 +289,7 @@ function DataGridTable() {
                     fontSize: "14px",
                     lineHeight: "18px",
                     letterSpacing: "-0.011em",
+                    cursor: "default !important",
                     color: "#6C6C6C",
                     ":focus": {
                       outline: "white",
@@ -214,6 +313,7 @@ function DataGridTable() {
                   "& .MuiDataGrid-virtualScrollerRenderZone": {
                     "& .MuiDataGrid-row": {
                       backgroundColor: "white",
+                      cursor: "pointer",
                     },
                   },
                   "& .MuiDataGrid-cell:focus, .MuiDataGrid-cell:focus-within": {
@@ -248,7 +348,9 @@ function DataGridTable() {
                     {
                       outline: "none",
                     },
-                  "& .css-17jjc08-MuiDataGrid-footerContainer": {},
+                  "& .MuiTablePagination-root:last-child": {
+                    display: allFlags.show_pagination_module ? "block" : "none",
+                  },
                 }}
               />
             </div>
@@ -264,9 +366,20 @@ function DataGridTable() {
         </>
       ) : (
         <>
-          <RowSkeletonCard />
+          <RowSkeletonCard pathString="employees" />
         </>
       )}
+      <EmployeeModal
+        empId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        handleEmployeeDelete={handleEmployeeDelete}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }

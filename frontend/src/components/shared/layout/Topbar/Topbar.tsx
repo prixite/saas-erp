@@ -61,7 +61,7 @@ const Topbar = (props) => {
           }}
           className="appbar-toolbar-cls"
         >
-          {location.pathname === "/react/" ? (
+          {location.pathname === "/" ? (
             <Box
               className="user-box"
               sx={{ display: "flex", flexGrow: 1, ml: "25px" }}
@@ -73,7 +73,7 @@ const Topbar = (props) => {
                 component="h2"
                 className="user-title"
               >
-                Hey Umair
+                Hey {userData?.first_name}
               </Typography>
               <img className="hey-img" src={wavingIcon} />
             </Box>
@@ -99,7 +99,7 @@ const Topbar = (props) => {
 
           <img
             className="profile-pic"
-            src={userData?.avatar}
+            src={userData?.image}
             alt="profile pic"
             style={{ height: "32px", borderRadius: "50%" }}
           />

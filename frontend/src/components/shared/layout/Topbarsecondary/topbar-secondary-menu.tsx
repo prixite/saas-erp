@@ -4,6 +4,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -11,8 +12,9 @@ import Divider from "@mui/material/Divider";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
-import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 import { useNavigate } from "react-router-dom";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
+import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -58,20 +60,22 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 const TopbarSecondaryMenu = () => {
+  const { data: userData } = useGetUserQuery();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleProfileClick = () => {
-    navigate("/react/profile");
+    navigate("/profile");
     handleClose();
   };
+
   return (
     <Box className="topbar-secondary">
       <Button
@@ -83,9 +87,9 @@ const TopbarSecondaryMenu = () => {
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ color: "#130F26" }}
+        sx={{ color: "#130F26", textTransform: "capitalize" }}
       >
-        Umair Khan
+        {userData?.first_name} {userData?.last_name}
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -116,6 +120,12 @@ const TopbarSecondaryMenu = () => {
         <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
           More
+        </MenuItem>
+        <MenuItem disableRipple>
+          <LogoutIcon />
+          <a className="logout-link" href="/api/logout">
+            Logout
+          </a>
         </MenuItem>
       </StyledMenu>
     </Box>

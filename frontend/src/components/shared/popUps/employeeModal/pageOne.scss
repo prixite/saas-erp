@@ -1,0 +1,121 @@
+.pageone-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  height: auto;
+  .grid-container-cls {
+    .grid-item-cls {
+      .text-field-box {
+        height: 84px !important;
+        .text-field-cls {
+          .MuiOutlinedInput-notchedOutline {
+            border: 1px solid #d4d6db;
+          }
+          .MuiFormLabel-root-MuiInputLabel-root {
+            color: #6c6c6c;
+          }
+          input {
+            border: 1px solid transparent;
+          }
+          .textfield_label {
+            color: #6c6c6c;
+            font-weight: 400;
+            font-size: 16px;
+            .MuiFormLabel-asterisk {
+              color: #6c6c6c !important;
+            }
+          }
+        }
+        .errorText {
+          color: #ff1744;
+          font-size: 0.8rem;
+          margin-top: 2px;
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+  .switch-section {
+    margin-top: 10px;
+    .switch-cls {
+      display: flex;
+      align-items: center;
+    }
+    .can-login {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .checkbox-cls {
+      margin-top: 19px;
+      display: flex;
+      text-transform: capitalize;
+      flex-wrap: wrap;
+      .checkbox-section {
+        width: 179px;
+      }
+    }
+  }
+  .employee-profile-section {
+    height: 100px;
+    .employee-profile-img {
+      display: flex;
+      .upload-img {
+        height: 70px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid #ebebeb;
+        border-radius: 50%;
+        background: #f5f5f5;
+      }
+      .preview-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+      }
+      .upload-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .upload-img-btn {
+          color: black;
+          background: white;
+          width: 110px;
+          height: 34px;
+          padding: 10px 16px;
+          font-size: 12px;
+          font-weight: 400;
+          border-radius: 60px;
+          border: 1px solid #e7e7e7;
+          text-transform: capitalize;
+        }
+      }
+      .remove-btn-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .remove-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 12px;
+          opacity: 0.5;
+          color: #aaaaaa;
+          text-transform: capitalize;
+          font-size: 12px;
+          font-weight: 400;
+          width: 100%;
+          .upload-img {
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

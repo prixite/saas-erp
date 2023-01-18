@@ -1,0 +1,49 @@
+.attendance-section {
+  padding: 24px 24px 24px 24px;
+  margin-top: 52px;
+  border: 1px solid #e7e7e7;
+  border-radius: 16px;
+  .heading-section {
+    display: flex;
+    justify-content: space-between;
+    .heading-cls {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .menu-cls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      height: 28px;
+      width: 28px;
+      background: white;
+      border: 1px solid rgb(231, 231, 231);
+      box-shadow: rgba(221, 221, 221, 0.15) 10px 10px 24px 1px;
+      border-radius: 8px;
+      .menu-pic {
+        height: 20px;
+        width: 20px;
+        border: none;
+      }
+    }
+  }
+  .stack-cls {
+    display: flex;
+    justify-content: space-between;
+    .section-item-cls {
+      display: flex;
+      .item-detail-cls {
+        margin-left: 16px;
+        .item-detail {
+          font-size: 16px;
+          font-weight: 400;
+        }
+        .item-count {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
