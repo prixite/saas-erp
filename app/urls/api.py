@@ -147,8 +147,31 @@ urlpatterns = [
         api.MeUpdateViewSet.as_view(),
     ),
     path(
+        "me-notification/update/",
+        api.MeUpdateNotificationViewSet.as_view(),
+    ),
+    path(
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
+    ),
+    path(
+        "module/",
+        api.ModuleViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "module/<int:pk>/",
+        api.ModuleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
     ),
     path(
         "organization-module/",
@@ -169,4 +192,14 @@ urlpatterns = [
             }
         ),
     ),
+    path("standup/", api.StandupViewSet.as_view({"get": "list", "post": "create"})),
+    path(
+        "standup_update/",
+        api.StandupUpdateViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "team_create/",
+        api.TeamViewSet.as_view({"post": "create"}),
+    ),
+    path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "team_members"})),
 ]

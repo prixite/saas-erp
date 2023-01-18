@@ -507,6 +507,19 @@ class MeUpdateSerializer(serializers.ModelSerializer):
         )
 
 
+class MeUpdateNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            "bill_update_email",
+            "bill_update_phone",
+            "new_team_member_email",
+            "new_team_member_phone",
+            "newsletters_email",
+            "newsletters_phone",
+        )
+
+
 class LeaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
@@ -604,4 +617,28 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
 class OrganizationModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrganizationModule
+        fields = "__all__"
+
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Module
+        fields = "__all__"
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Team
+        fields = "__all__"
+
+
+class StandupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Standup
+        fields = "__all__"
+
+
+class StandupUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StandupUpdate
         fields = "__all__"
