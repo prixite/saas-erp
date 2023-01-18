@@ -599,3 +599,9 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
             emp_ser.is_valid(raise_exception=True)
             emp_ser.save(user=user, organization=organization, user_allowed=True)
         return user
+
+
+class OrganizationModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrganizationModule
+        fields = "__all__"

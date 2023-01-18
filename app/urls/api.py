@@ -150,4 +150,23 @@ urlpatterns = [
         "owner/onboard/",
         api.OwnerOnboardingAPIView.as_view(),
     ),
+    path(
+        "organization-module/",
+        api.OrganizationModuleViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "organization-module/<int:pk>/",
+        api.OrganizationModuleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
 ]

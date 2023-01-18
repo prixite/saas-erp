@@ -567,3 +567,9 @@ class OwnerOnboardingAPIView(CreateAPIView):
     serializer_class = serializers.OwnerOnBoardingSerializer
     queryset = models.User.objects.all()
     permission_classes = (AllowAny,)
+
+
+class OrganizationModuleViewSet(ModelViewSet):
+
+    serializer_class = serializers.OrganizationModuleSerializer
+    queryset = models.OrganizationModule.objects.all()
