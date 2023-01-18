@@ -126,10 +126,10 @@ function Leaves() {
       width: 400,
       renderCell: (cellValues) => {
         return (
-          <Tooltip title={cellValues.row?.description}>
+          <Tooltip title={cellValues?.row?.description}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues.row?.description, 40)}
+              {truncateString(cellValues?.row?.description, 40)}
             </p>
           </Tooltip>
         );
