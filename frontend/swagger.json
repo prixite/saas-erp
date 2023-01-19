@@ -2748,6 +2748,11 @@
                         "type": "string",
                         "readOnly": true
                     },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
                     "emergency_contact_number": {
                         "type": "string",
                         "maxLength": 20

@@ -1,6 +1,7 @@
 from django.db import models
 
 from project.settings import AUTH_USER_MODEL
+
 from .soft_delete import SoftDeleteModel
 
 
