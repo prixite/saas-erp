@@ -1,9 +1,10 @@
 from django.db import models
 
 from project.settings import AUTH_USER_MODEL
+from .soft_delete import SoftDeleteModel
 
 
-class Employee(models.Model):
+class Employee(SoftDeleteModel):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     nic = models.CharField(max_length=25, unique=True)
     date_of_joining = models.DateField()

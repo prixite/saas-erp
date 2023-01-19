@@ -162,13 +162,13 @@ class EmployeeUserSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         organization = self.context.get("request").user.organization
 
-        if models.Employee.objects.filter(
+        if models.Employee.all_objects.filter(
             organization=organization, user__email=value
         ).exists():
             raise serializers.ValidationError(
                 "employee with this email already exists."
             )
-        if models.User.objects.filter(
+        if models.User.all_objects.filter(
             ~Q(organization=organization) & Q(email=value)
         ).exists():
             raise serializers.ValidationError("user with this email already exists.")
@@ -201,7 +201,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Employee
-        exclude = ("organization", "slack_id")
+        exclude = ("organization", "slack_id", "deleted_at")
 
     @transaction.atomic
     def create(self, validated_data):
@@ -612,6 +612,11 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
             emp_ser.is_valid(raise_exception=True)
             emp_ser.save(user=user, organization=organization, user_allowed=True)
         return user
+
+    def validate_email(self, value):
+        if models.User.all_objects.filter(email=value).exists():
+            raise serializers.ValidationError("user with this email already exists.")
+        return value
 
 
 class ModuleSerializer(serializers.ModelSerializer):
