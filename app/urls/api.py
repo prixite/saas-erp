@@ -183,4 +183,5 @@ urlpatterns = [
         api.TeamViewSet.as_view({"post": "create"}),
     ),
     path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "team_members"})),
+    path("create_user_module/", api.CreateUserModule.as_view({"get": "list", "post":"create"})),
 ]

@@ -610,3 +610,10 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
         members = team.members.all()
         serializer = serializers.EmployeeSerializer(members, many=True)
         return Response(serializer.data)
+
+class CreateUserModule(ModelViewSet):
+    serializer_class = serializers.MeSerializer
+
+    def get_queryset(self):
+        queryset = models.User.objects.filter(organization = self.request.user.organization)
+        return queryset
