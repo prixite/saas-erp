@@ -56,10 +56,10 @@ class ModuleFilterTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-class RollFilterTestCase(BaseTestCase):
-    def test_get_roll_filter_data(self):
+class RoleFilterTestCase(BaseTestCase):
+    def test_get_role_filter_data(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/roll_filter/")
+        response = self.client.get("/api/role_filter/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
