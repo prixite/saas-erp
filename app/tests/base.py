@@ -43,8 +43,15 @@ class BaseTestCase(TestCase):
         self.employee_module = factories.ModuleFactory(
             name="Employee", slug=models.Module.ModuleType.EMPLOYEES, is_enabled=True
         )
+        self.user_module = factories.ModuleFactory(
+            name="user", slug=models.Module.ModuleType.USER, is_enabled=True
+        )
+
         self.employee_org_module = factories.OrganizationModuleFactory(
             module=self.employee_module, organization=self.organization, is_enabled=True
+        )
+        self.user_org_module = factories.OrganizationModuleFactory(
+            module=self.user_module, organization=self.organization, is_enabled=True
         )
         self.org_user = factories.UserFactory(
             username="user@example.com",

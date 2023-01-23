@@ -598,6 +598,29 @@ class StandupUpdateViewSet(
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_class(self):
+        permission = self.request.user.default_role.permission
+        if permission == "c" or permission == "b":
+            return self.serializer_class
+        else:
+            return serializers.StandupUpdateEmployeeSerializer
+
+    def perform_create(self, serializer):
+        organization = self.request.user.organization
+        permission = self.request.user.default_role.permission
+        if permission == "c" or permission == "b":
+            serializer.save(organization=organization)
+
+        else:
+            employee = models.Employee.objects.get(user=self.request.user)
+            serializer.save(employee=employee, organization=organization)
+
+    def has_permission(self, request, view):
+        permission = self.request.user.default_role.permission
+        if permission == "c" or permission == "b":
+            return False
+        return True
+
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer
@@ -611,9 +634,40 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
         serializer = serializers.EmployeeSerializer(members, many=True)
         return Response(serializer.data)
 
-class CreateUserModule(ModelViewSet):
-    serializer_class = serializers.MeSerializer
+
+class ModuleFilterViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.ModuleSerializer
+    module = "user"
 
     def get_queryset(self):
-        queryset = models.User.objects.filter(organization = self.request.user.organization)
-        return queryset
+        return models.Module.objects.filter(
+            id__in={x.id for x in self.request.user.organization_modules}
+        )
+
+
+class RoleFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.RoleSerializer
+    module = "user"
+
+    def get_queryset(self):
+        return models.Role.objects.filter(organization=self.request.user.organization)
+
+
+class UserFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.UserSerializer
+    module = "user"
+
+    def get_queryset(self):
+        return models.User.objects.filter(organization=self.request.user.organization)
+
+
+class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+    serializer_class = serializers.UserModuleRoleSerializer
+    module = "user"
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context

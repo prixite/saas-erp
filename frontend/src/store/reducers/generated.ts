@@ -97,6 +97,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.compensationType,
       }),
     }),
+    apiCreateUserModuleRoleCreate: build.mutation<
+      ApiCreateUserModuleRoleCreateApiResponse,
+      ApiCreateUserModuleRoleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/create_user_module_role/`,
+        method: "POST",
+        body: queryArg.userModuleRole,
+      }),
+    }),
     apiCurrencyList: build.query<
       ApiCurrencyListApiResponse,
       ApiCurrencyListApiArg
@@ -344,6 +354,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiModuleFilterList: build.query<
+      ApiModuleFilterListApiResponse,
+      ApiModuleFilterListApiArg
+    >({
+      query: () => ({ url: `/api/module_filter/` }),
+    }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
       ApiOwnerOnboardCreateApiArg
@@ -403,6 +419,12 @@ const injectedRtkApi = api.injectEndpoints({
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
+    apiRoleFilterList: build.query<
+      ApiRoleFilterListApiResponse,
+      ApiRoleFilterListApiArg
+    >({
+      query: () => ({ url: `/api/role_filter/` }),
+    }),
     apiSlackAttendanceCreate: build.mutation<
       ApiSlackAttendanceCreateApiResponse,
       ApiSlackAttendanceCreateApiArg
@@ -425,9 +447,9 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
-    apiStandupUpdateList: build.query<
-      ApiStandupUpdateListApiResponse,
-      ApiStandupUpdateListApiArg
+    apiStandupUpdateRetrieve: build.query<
+      ApiStandupUpdateRetrieveApiResponse,
+      ApiStandupUpdateRetrieveApiArg
     >({
       query: () => ({ url: `/api/standup_update/` }),
     }),
@@ -435,11 +457,7 @@ const injectedRtkApi = api.injectEndpoints({
       ApiStandupUpdateCreateApiResponse,
       ApiStandupUpdateCreateApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/standup_update/`,
-        method: "POST",
-        body: queryArg.standupUpdate,
-      }),
+      query: () => ({ url: `/api/standup_update/`, method: "POST" }),
     }),
     apiTeamMembersRetrieve: build.query<
       ApiTeamMembersRetrieveApiResponse,
@@ -456,6 +474,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
         body: queryArg.team,
       }),
+    }),
+    apiUserFilterList: build.query<
+      ApiUserFilterListApiResponse,
+      ApiUserFilterListApiArg
+    >({
+      query: () => ({ url: `/api/user_filter/` }),
     }),
   }),
   overrideExisting: false,
@@ -501,6 +525,11 @@ export type ApiCompensationTypeCreateApiResponse =
   /** status 201  */ CompensationType;
 export type ApiCompensationTypeCreateApiArg = {
   compensationType: CompensationType;
+};
+export type ApiCreateUserModuleRoleCreateApiResponse =
+  /** status 201  */ UserModuleRole;
+export type ApiCreateUserModuleRoleCreateApiArg = {
+  userModuleRole: UserModuleRole;
 };
 export type ApiCurrencyListApiResponse = /** status 200  */ Currency[];
 export type ApiCurrencyListApiArg = void;
@@ -618,6 +647,8 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+export type ApiModuleFilterListApiResponse = /** status 200  */ Module[];
+export type ApiModuleFilterListApiArg = void;
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -646,6 +677,8 @@ export type ApiProgramsCreateApiArg = {
 };
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
+export type ApiRoleFilterListApiResponse = /** status 200  */ Role[];
+export type ApiRoleFilterListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
 export type ApiStandupListApiResponse = /** status 200  */ Standup[];
@@ -654,14 +687,10 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
-export type ApiStandupUpdateListApiResponse =
-  /** status 200  */ StandupUpdate[];
-export type ApiStandupUpdateListApiArg = void;
-export type ApiStandupUpdateCreateApiResponse =
-  /** status 201  */ StandupUpdate;
-export type ApiStandupUpdateCreateApiArg = {
-  standupUpdate: StandupUpdate;
-};
+export type ApiStandupUpdateRetrieveApiResponse = unknown;
+export type ApiStandupUpdateRetrieveApiArg = void;
+export type ApiStandupUpdateCreateApiResponse = unknown;
+export type ApiStandupUpdateCreateApiArg = void;
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
   id: number;
@@ -670,6 +699,8 @@ export type ApiTeamCreateCreateApiResponse = /** status 201  */ Team;
 export type ApiTeamCreateCreateApiArg = {
   team: Team;
 };
+export type ApiUserFilterListApiResponse = /** status 200  */ User[];
+export type ApiUserFilterListApiArg = void;
 export type AssetType = {
   id: number;
   name: string;
@@ -721,6 +752,14 @@ export type CompensationType = {
   is_milestone?: boolean;
   created_at: string;
   updated_at: string;
+};
+export type UserModuleRole = {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  module: number;
+  user: number;
+  role: number;
 };
 export type Currency = {
   id: number;
@@ -864,7 +903,7 @@ export type Institue = {
 export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
 export type BlankEnum = "";
 export type NullEnum = null;
-export type Status913Enum = "pending" | "approved" | "denied";
+export type StatusEnum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
   leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
@@ -872,7 +911,7 @@ export type Leave = {
   leave_to: string;
   description: string;
   hr_comment?: string | null;
-  status?: Status913Enum;
+  status?: StatusEnum;
   created_at: string;
   updated_at: string;
   employee: number;
@@ -880,11 +919,11 @@ export type Leave = {
   organization: number;
 };
 export type LeaveUpdate = {
-  status?: Status913Enum;
+  status?: StatusEnum;
   hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
-  status?: Status913Enum;
+  status?: StatusEnum;
   hr_comment?: string | null;
 };
 export type Login = {
@@ -983,19 +1022,6 @@ export type Standup = {
   team: number;
   organization: number;
 };
-export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
-export type StandupUpdate = {
-  id: number;
-  status: StandupUpdateStatusEnum;
-  work_done_yesterday?: string | null;
-  work_to_do?: string | null;
-  blockers?: string | null;
-  created_at: string;
-  updated_at: string;
-  standup: number;
-  organization: number;
-  employee: number;
-};
 export type Team = {
   id: number;
   name: string;
@@ -1003,6 +1029,33 @@ export type Team = {
   updated_at: string;
   organization: number;
   members: number[];
+};
+export type User = {
+  id: number;
+  password: string;
+  last_login?: string | null;
+  is_superuser?: boolean;
+  username: string;
+  first_name?: string;
+  last_name?: string;
+  is_staff?: boolean;
+  is_active?: boolean;
+  date_joined?: string;
+  email: string;
+  image?: string;
+  contact_number?: string | null;
+  headline?: string | null;
+  is_onboarded?: boolean;
+  bill_update_email?: boolean;
+  bill_update_phone?: boolean;
+  new_team_member_email?: boolean;
+  new_team_member_phone?: boolean;
+  newsletters_email?: boolean;
+  newsletters_phone?: boolean;
+  organization?: number | null;
+  default_role?: number | null;
+  groups?: number[];
+  user_permissions?: number[];
 };
 export const {
   useApiAssetTypeListQuery,
@@ -1017,6 +1070,7 @@ export const {
   useApiCompensationScheduleCreateMutation,
   useApiCompensationTypeListQuery,
   useApiCompensationTypeCreateMutation,
+  useApiCreateUserModuleRoleCreateMutation,
   useApiCurrencyListQuery,
   useApiCurrencyCreateMutation,
   useApiDepartmentListQuery,
@@ -1048,6 +1102,7 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiModuleFilterListQuery,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1055,11 +1110,13 @@ export const {
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
+  useApiRoleFilterListQuery,
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
-  useApiStandupUpdateListQuery,
+  useApiStandupUpdateRetrieveQuery,
   useApiStandupUpdateCreateMutation,
   useApiTeamMembersRetrieveQuery,
   useApiTeamCreateCreateMutation,
+  useApiUserFilterListQuery,
 } = injectedRtkApi;

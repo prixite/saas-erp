@@ -636,3 +636,34 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StandupUpdate
         fields = "__all__"
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = "__all__"
+
+
+class UserModuleRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserModuleRole
+        fields = "__all__"
+
+    def validate(self, data):
+        module = data["module"]
+        user = data["user"]
+        role = data["role"]
+        request = self.context["request"]
+        modules = models.Module.objects.filter(
+            id__in={x.id for x in request.user.organization_modules}
+        )
+        if module not in modules:
+            raise serializers.ValidationError("Invalid Module selected")
+        users = models.User.objects.filter(organization=request.user.organization)
+        if user not in users:
+            raise serializers.ValidationError("Invlid User selected")
+        roles = models.Role.objects.filter(organization=request.user.organization)
+        if role not in roles:
+            raise serializers.ValidationError("Invlid role selected")
+
+        return data
