@@ -641,10 +641,10 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
         user = self.context.get("request").user
         employee = data.get("employee")
         standup = data.get("standup")
-        team_members = models.Team.objects.get(id=standup.team.id).members.all()
+        team_members = standup.team.members.all()
         permission = user.default_role.permission
-        if permission == "a":
-            if not models.Employee.objects.get(user=user) == employee:
+        if permission == models.Role.Permission.MEMBER:
+            if not user.employee == employee:
                 raise serializers.ValidationError(
                     "You cannot add standup update of other employee"
                 )
