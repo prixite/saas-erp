@@ -598,6 +598,11 @@ class StandupUpdateViewSet(
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer
