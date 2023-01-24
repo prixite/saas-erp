@@ -201,7 +201,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Employee
-        exclude = ("organization", "slack_id", "deleted_at")
+        exclude = ("organization", "slack_id", "deleted_at", "is_deleted")
 
     @transaction.atomic
     def create(self, validated_data):
