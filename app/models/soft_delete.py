@@ -5,20 +5,23 @@ from django.utils import timezone
 
 class SoftDeleteManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(is_deleted=False)
 
 
 class SoftDeleteModel(models.Model):
 
+    is_deleted = models.BooleanField(default=False, db_index=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
     objects = SoftDeleteManager()
     all_objects = models.Manager()
 
     def soft_delete(self):
+        self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
 
     def restore(self):
+        self.is_deleted = False
         self.deleted_at = None
         self.save()
 
@@ -28,7 +31,7 @@ class SoftDeleteModel(models.Model):
 
 class SoftDeleteUserManager(UserManager):
     def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(is_deleted=False)
 
 
 class SoftDeleteUserModel(SoftDeleteModel):

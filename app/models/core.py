@@ -14,7 +14,7 @@ class User(SoftDeleteUserModel, AbstractUser):
     employee, but an employee might not be a user.
     """
 
-    email = models.EmailField(_("email address"), unique=True)
+    email = models.EmailField(_("email address"), unique=True, db_index=True)
 
     organization = models.ForeignKey(
         "Organization", on_delete=models.CASCADE, null=True

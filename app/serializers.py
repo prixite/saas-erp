@@ -270,6 +270,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
     def validate(self, data):
         organization = self.context.get("request").user.organization
 
+        if models.Employee.all_objects.filter(nic=data.get("nic")).exists():
+            raise serializers.ValidationError("employee with this nic already exists.")
         if data.get("manager") and not data.get("manager").organization == organization:
             raise serializers.ValidationError("Manager employee does not exists.")
         for manages in data.get("managing"):
