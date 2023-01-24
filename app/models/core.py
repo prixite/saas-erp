@@ -12,7 +12,9 @@ class User(AbstractUser):
     employee, but an employee might not be a user.
     """
 
-    email = models.EmailField(_("email address"), unique=True)
+    username = models.CharField(max_length=100, unique=True)
+
+    email = models.EmailField(_("email address"))
 
     organization = models.ForeignKey(
         "Organization", on_delete=models.CASCADE, null=True
@@ -45,8 +47,8 @@ class User(AbstractUser):
     # view to True if the user is owner for the module being accessed.
     is_module_owner = False
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username"]
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
 
     def get_modules(self, permission):
         module_roles = self.module_roles.filter(module__is_enabled=True)
@@ -91,6 +93,13 @@ class User(AbstractUser):
     @property
     def owner_modules(self):
         return self.get_modules(Role.Permission.OWNER)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["email", "organization"], name="unique_organization_user"
+            ),
+        ]
 
 
 class Invitation(models.Model):
