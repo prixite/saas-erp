@@ -119,6 +119,9 @@ export interface modalsInterface {
   dragToAdjust: string;
   saveChanges: string;
   canLogin: string;
+  leaveTypeLabel: string;
+  leaveStatusLabel: string;
+  leaveHrCommentsLabel: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -333,6 +336,8 @@ export interface leavesData {
   ViewAllLeaves: string;
   ClockError: string;
   LeavesManagement: string;
+  Leave: string;
+  Leavesubheading: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
