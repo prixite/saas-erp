@@ -2071,7 +2071,7 @@
         },
         "/api/standup_update/": {
             "get": {
-                "operationId": "api_standup_update_retrieve",
+                "operationId": "api_standup_update_list",
                 "tags": [
                     "api"
                 ],
@@ -2082,7 +2082,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "No response body"
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StandupUpdate"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             },
@@ -2091,6 +2101,26 @@
                 "tags": [
                     "api"
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StandupUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "security": [
                     {
                         "cookieAuth": []
@@ -2098,7 +2128,14 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "No response body"
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StandupUpdate"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -3110,7 +3147,7 @@
                         "nullable": true
                     },
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "created_at": {
                         "type": "string",
@@ -3156,7 +3193,7 @@
                 "type": "object",
                 "properties": {
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
@@ -3446,7 +3483,7 @@
                 "type": "object",
                 "properties": {
                     "status": {
-                        "$ref": "#/components/schemas/StatusEnum"
+                        "$ref": "#/components/schemas/Status913Enum"
                     },
                     "hr_comment": {
                         "type": "string",
@@ -3590,7 +3627,67 @@
                     "team"
                 ]
             },
-            "StatusEnum": {
+            "StandupUpdate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/StandupUpdateStatusEnum"
+                    },
+                    "work_done_yesterday": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "work_to_do": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "blockers": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "standup": {
+                        "type": "integer"
+                    },
+                    "organization": {
+                        "type": "integer"
+                    },
+                    "employee": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "employee",
+                    "id",
+                    "organization",
+                    "standup",
+                    "status",
+                    "updated_at"
+                ]
+            },
+            "StandupUpdateStatusEnum": {
+                "enum": [
+                    "missed",
+                    "joined",
+                    "leave"
+                ],
+                "type": "string"
+            },
+            "Status913Enum": {
                 "enum": [
                     "pending",
                     "approved",

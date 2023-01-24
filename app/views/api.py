@@ -598,29 +598,6 @@ class StandupUpdateViewSet(
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    def get_serializer_class(self):
-        permission = self.request.user.default_role.permission
-        if permission == "c" or permission == "b":
-            return self.serializer_class
-        else:
-            return serializers.StandupUpdateEmployeeSerializer
-
-    def perform_create(self, serializer):
-        organization = self.request.user.organization
-        permission = self.request.user.default_role.permission
-        if permission == "c" or permission == "b":
-            serializer.save(organization=organization)
-
-        else:
-            employee = models.Employee.objects.get(user=self.request.user)
-            serializer.save(employee=employee, organization=organization)
-
-    def has_permission(self, request, view):
-        permission = self.request.user.default_role.permission
-        if permission == "c" or permission == "b":
-            return False
-        return True
-
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer

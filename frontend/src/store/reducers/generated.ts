@@ -447,9 +447,9 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
-    apiStandupUpdateRetrieve: build.query<
-      ApiStandupUpdateRetrieveApiResponse,
-      ApiStandupUpdateRetrieveApiArg
+    apiStandupUpdateList: build.query<
+      ApiStandupUpdateListApiResponse,
+      ApiStandupUpdateListApiArg
     >({
       query: () => ({ url: `/api/standup_update/` }),
     }),
@@ -457,7 +457,11 @@ const injectedRtkApi = api.injectEndpoints({
       ApiStandupUpdateCreateApiResponse,
       ApiStandupUpdateCreateApiArg
     >({
-      query: () => ({ url: `/api/standup_update/`, method: "POST" }),
+      query: (queryArg) => ({
+        url: `/api/standup_update/`,
+        method: "POST",
+        body: queryArg.standupUpdate,
+      }),
     }),
     apiTeamMembersRetrieve: build.query<
       ApiTeamMembersRetrieveApiResponse,
@@ -687,10 +691,14 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
-export type ApiStandupUpdateRetrieveApiResponse = unknown;
-export type ApiStandupUpdateRetrieveApiArg = void;
-export type ApiStandupUpdateCreateApiResponse = unknown;
-export type ApiStandupUpdateCreateApiArg = void;
+export type ApiStandupUpdateListApiResponse =
+  /** status 200  */ StandupUpdate[];
+export type ApiStandupUpdateListApiArg = void;
+export type ApiStandupUpdateCreateApiResponse =
+  /** status 201  */ StandupUpdate;
+export type ApiStandupUpdateCreateApiArg = {
+  standupUpdate: StandupUpdate;
+};
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
   id: number;
@@ -903,7 +911,7 @@ export type Institue = {
 export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
 export type BlankEnum = "";
 export type NullEnum = null;
-export type StatusEnum = "pending" | "approved" | "denied";
+export type Status913Enum = "pending" | "approved" | "denied";
 export type Leave = {
   id: number;
   leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
@@ -911,7 +919,7 @@ export type Leave = {
   leave_to: string;
   description: string;
   hr_comment?: string | null;
-  status?: StatusEnum;
+  status?: Status913Enum;
   created_at: string;
   updated_at: string;
   employee: number;
@@ -919,11 +927,11 @@ export type Leave = {
   organization: number;
 };
 export type LeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type PatchedLeaveUpdate = {
-  status?: StatusEnum;
+  status?: Status913Enum;
   hr_comment?: string | null;
 };
 export type Login = {
@@ -1022,6 +1030,19 @@ export type Standup = {
   team: number;
   organization: number;
 };
+export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
+export type StandupUpdate = {
+  id: number;
+  status: StandupUpdateStatusEnum;
+  work_done_yesterday?: string | null;
+  work_to_do?: string | null;
+  blockers?: string | null;
+  created_at: string;
+  updated_at: string;
+  standup: number;
+  organization: number;
+  employee: number;
+};
 export type Team = {
   id: number;
   name: string;
@@ -1114,7 +1135,7 @@ export const {
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
-  useApiStandupUpdateRetrieveQuery,
+  useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
   useApiTeamMembersRetrieveQuery,
   useApiTeamCreateCreateMutation,
