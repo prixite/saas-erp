@@ -794,6 +794,7 @@ export type Employee = {
   org_id: string;
   managing: number[];
   total_experience: string;
+  is_deleted?: boolean;
   nic: string;
   date_of_joining: string;
   emergency_contact_number: string;
@@ -825,6 +826,7 @@ export type EmployeeUpdate = {
   org_id: string;
   managing: number[];
   total_experience: string;
+  is_deleted?: boolean;
   deleted_at?: string | null;
   emergency_contact_number: string;
   designation: string;

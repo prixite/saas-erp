@@ -2590,6 +2590,9 @@
                         "type": "string",
                         "readOnly": true
                     },
+                    "is_deleted": {
+                        "type": "boolean"
+                    },
                     "nic": {
                         "type": "string",
                         "maxLength": 25
@@ -2747,6 +2750,9 @@
                     "total_experience": {
                         "type": "string",
                         "readOnly": true
+                    },
+                    "is_deleted": {
+                        "type": "boolean"
                     },
                     "deleted_at": {
                         "type": "string",
