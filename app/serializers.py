@@ -623,16 +623,29 @@ class ModuleSerializer(serializers.ModelSerializer):
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Team
-        fields = "__all__"
+        exclude = ('organization', )
 
 
 class StandupSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Standup
-        fields = "__all__"
+        exclude = ('organization', )
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StandupUpdate
-        fields = "__all__"
+        exclude = ('organization', )
+
+        def validate(self, data):  
+            employee = data.get('employee')
+            standup = data.get('standup')
+            team_members = Team.objects.get(id=standup.team.id.members.all())
+            if employee not in team_members:
+                raise serializers.ValidationError('This Employee is not a team member of this standup')
+            return data  
+
+class StandupUpdateEmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StandupUpdate
+        exclude = ('organization', 'employee')      
