@@ -223,7 +223,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         user_ser.is_valid(raise_exception=True)
         user = user_ser.save(
             is_active=validated_data.get("user_allowed", False),
-            username=user_data.get("email"),
+            username=user_data.get("email") + str(organization.id),
             organization=organization,
         )
         validated_data["user_id"] = user.id
@@ -598,7 +598,7 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
                 module=module,
                 is_enabled=True,
             )
-        validated_data["username"] = validated_data.get("email")
+        validated_data["username"] = validated_data.get("email") + str(organization.id)
         validated_data["organization"] = organization
         validated_data["default_role"] = models.Role.objects.filter(
             organization=organization,
