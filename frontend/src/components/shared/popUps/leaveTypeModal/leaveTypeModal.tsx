@@ -125,7 +125,6 @@ const LeaveModal = ({ open, handleClose }: Props) => {
               label={leaveHrCommentsLabel}
               name="hrcomments"
               onChange={handleStatus}
-              value={designation}
               autoComplete="family-name"
               multiline
               rows={4}
