@@ -598,21 +598,10 @@ class StandupUpdateViewSet(
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    def get_serializer_class(self):
-        permission = self.request.user.default_role.permission
-        if permission=='c' or permission=='b': 
-            return self.serializer_class
-        else:
-            return serializers.StandupUpdateEmployeeSerializer
-
-    def perform_create(self, serializer):
-        permission = self.request.user.default_role.permission
-        if permission=='c' or permission=='b': 
-            serializer.save() 
-
-        else:
-            employee = models.Employee.objects.get(user=self.request.user)
-            serializer.save(employee=employee)            
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):

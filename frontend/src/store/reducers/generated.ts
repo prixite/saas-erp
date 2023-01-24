@@ -981,7 +981,6 @@ export type Standup = {
   name: string;
   created_at: string;
   team: number;
-  organization: number;
 };
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
 export type StandupUpdate = {
@@ -993,7 +992,6 @@ export type StandupUpdate = {
   created_at: string;
   updated_at: string;
   standup: number;
-  organization: number;
   employee: number;
 };
 export type Team = {
@@ -1001,7 +999,6 @@ export type Team = {
   name: string;
   created_at: string;
   updated_at: string;
-  organization: number;
   members: number[];
 };
 export const {

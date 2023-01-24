@@ -124,6 +124,8 @@ class BaseTestCase(TestCase):
 
         self.team1 = factories.TeamFactory(name="Team1", organization=self.organization)
 
+        self.team.members.add(self.employee.id)
+
         self.standup = factories.StandupFactory(
             name="Standup-1",
             team=self.team,
