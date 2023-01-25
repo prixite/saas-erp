@@ -422,7 +422,7 @@ class SlackApiView(APIView):
                         elif get_detail[0] == "help":
                             return Response(
                                 data={
-                                    "text": "Hi there :wave: here are some ideas of what you can do:\n*Time In*\n  `/erp timein | used for time in.`\n\n*Time Out*\n  `/erp timeout | used for time out.` \n\n*leave*\n  `/erp leave | Used for leave submittion.`",  # noqa
+                                    "text": "Hi there :wave: here are some ideas of what you can do:\n*Time In*\n  `/erp timein | This command is used for marked attendance time in.`\n\n*Time Out*\n  `/erp timeout | This command is used for marked attendance time out.` \n\n*leave*\n  `/erp leave/From_Date/To_Date/Reason | This command is used for leave submittion.`",  # noqa
                                 },
                                 status=status.HTTP_200_OK,
                             )
