@@ -629,16 +629,38 @@ class ModuleSerializer(serializers.ModelSerializer):
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Team
-        fields = "__all__"
+        exclude = ("organization",)
 
 
 class StandupSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Standup
-        fields = "__all__"
+        exclude = ("organization",)
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StandupUpdate
-        fields = "__all__"
+        exclude = ("organization",)
+
+    def validate(self, data):
+        user = self.context.get("request").user
+        employee = data.get("employee")
+        standup = data.get("standup")
+        team_members = standup.team.members.all()
+        permission = user.default_role.permission
+        if permission == models.Role.Permission.MEMBER:
+            if not user.employee == employee:
+                raise serializers.ValidationError(
+                    "You cannot add standup update of other employee"
+                )
+            if employee not in team_members:
+                raise serializers.ValidationError("You are not a part of this team")
+
+        else:
+            if employee not in team_members:
+                raise serializers.ValidationError(
+                    "This employee does not belong to this standup team"
+                )
+
+        return data

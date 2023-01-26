@@ -98,7 +98,7 @@ class Standup(models.Model):
     created_at = models.DateTimeField()
 
     def __str__(self) -> str:
-        return self.team.name
+        return self.name
 
 
 class StandupUpdate(models.Model):

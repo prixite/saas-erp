@@ -422,7 +422,7 @@ class SlackApiView(APIView):
                         elif get_detail[0] == "help":
                             return Response(
                                 data={
-                                    "text": "Hi there :wave: here are some ideas of what you can do:\n*Time In*\n  `/erp timein | used for time in.`\n\n*Time Out*\n  `/erp timeout | used for time out.` \n\n*leave*\n  `/erp leave | Used for leave submittion.`",  # noqa
+                                    "text": "Here are some ideas for you: :wave: :\n*Time In*\n  `/erp timein | Use this command to mark attendance time in.`\n\n*Time Out*\n  `/erp timeout | Use this command to mark attendance time out.` \n\n*leave*\n  `/erp leave/From_Date/To_Date/Reason | Use this command to submit a leave request.`",  # noqa
                                 },
                                 status=status.HTTP_200_OK,
                             )
@@ -603,6 +603,11 @@ class StandupUpdateViewSet(
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
