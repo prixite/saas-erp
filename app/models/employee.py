@@ -2,7 +2,7 @@ from django.db import models
 
 from project.settings import AUTH_USER_MODEL
 
-from .soft_delete import SoftDeleteModel
+from .soft_delete import SoftDeleteModel, ActiveEmployeeModel
 
 
 class Employee(SoftDeleteModel):
@@ -40,7 +40,7 @@ class Employee(SoftDeleteModel):
         ordering = ["id"]
 
 
-class Document(models.Model):
+class Document(ActiveEmployeeModel):
     """
     The documents will be uploaded to cloud storage. We will only store URL of
     the document in this model.
@@ -103,7 +103,7 @@ class Standup(models.Model):
         return self.team.name
 
 
-class StandupUpdate(models.Model):
+class StandupUpdate(ActiveEmployeeModel):
     class StatusType(models.TextChoices):
         MISSED = "missed", "Missed"
         JOINED = "joined", "Joined"
@@ -120,7 +120,7 @@ class StandupUpdate(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Degree(models.Model):
+class Degree(ActiveEmployeeModel):
     """
     The educational degrees of an employee.
     """
@@ -233,7 +233,7 @@ class Company(models.Model):
         return self.name
 
 
-class Experience(models.Model):
+class Experience(ActiveEmployeeModel):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="experience"
     )

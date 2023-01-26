@@ -41,3 +41,17 @@ class SoftDeleteUserModel(SoftDeleteModel):
 
     class Meta:
         abstract = True
+
+
+class ActiveEmployeeManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(employee__is_deleted=False)
+
+
+class ActiveEmployeeModel(models.Model):
+
+    objects = ActiveEmployeeManager()
+    all_objects = models.Manager()
+
+    class Meta:
+        abstract = True
