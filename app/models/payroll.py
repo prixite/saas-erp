@@ -1,4 +1,5 @@
 from django.db import models
+
 from .soft_delete import ActiveEmployeeModel
 
 
