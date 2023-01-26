@@ -28,11 +28,13 @@ function Leaves() {
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [checkState, setCheckState] = useState(false);
   const { notFound } = constantData.Employee;
-  const { LeavesManagement } = constantData.Leaves;
+  const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [rowCellId, setRowCellId] = useState<number>(0);
 
   const columns: GridColDef[] = [
     {
@@ -194,7 +196,7 @@ function Leaves() {
       field: "actions",
       headerName: "Actions",
       width: 250,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
           <Box
             sx={{
@@ -203,6 +205,7 @@ function Leaves() {
               borderRadius: "16px",
               border: "0.5px solid",
               borderColor: "#e7e7e7",
+              color: "#696969",
               display: "flex",
               cursor: "pointer",
               alignItems: "center",
@@ -211,18 +214,25 @@ function Leaves() {
               fontSize: "12px",
               fontWeight: "400",
             }}
-            onClick={handleModalOpen}
+            onClick={(event) => handleModalOpen(event, cellValues?.row?.id)}
           >
-            Modal
+            {Actions}
           </Box>
         );
       },
     },
   ];
   const handleModalClose = () => {
+    setCheckState(false);
     setOpenModal(false);
   };
-  const handleModalOpen = () => {
+  const handleModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setCheckState(true);
     setOpenModal(true);
   };
 
@@ -417,7 +427,12 @@ function Leaves() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
-      <LeaveModal open={openModal} handleClose={handleModalClose} />
+      <LeaveModal
+        open={openModal}
+        handleClose={handleModalClose}
+        empId={rowCellId}
+        checkState={checkState}
+      />
     </Box>
   );
 }

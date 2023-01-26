@@ -122,6 +122,8 @@ export interface modalsInterface {
   leaveTypeLabel: string;
   leaveStatusLabel: string;
   leaveHrCommentsLabel: string;
+  cancelBtn: string;
+  saveBtn: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -338,6 +340,16 @@ export interface leavesData {
   LeavesManagement: string;
   Leave: string;
   Leavesubheading: string;
+  LeaveTypeRequired: string;
+  LeaveStatusRequired: string;
+  LeaveHRCommentsRequired: string;
+  Actions: string;
+  CasualLeave: string;
+  SickLeave: string;
+  AnnualLeave: string;
+  Pending: string;
+  Approved: string;
+  Denied: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

@@ -99,8 +99,8 @@
     "filterNameLabel": "Please Enter Name",
     "filterDesignationLabel": "Please Enter Designation",
     "leaveTypeLabel": "Leave Type",
-    "leaveStatusLabel": "Leave Status",
-    "leaveHrCommentsLabel": "Please Enter HR Comments",
+    "leaveStatusLabel": "Status",
+    "leaveHrCommentsLabel": "HR Comments box",
     "createEmployeeHeading": "Create an Employee",
     "employeeUpdated": "Employee successfully updated!",
     "createEmployeeSubheading": "Fill the following fields to add an employee",
@@ -187,7 +187,9 @@
     "uploadImage": "Upload",
     "dragToAdjust": "Drag to adjust the image",
     "saveChanges": "Save Changes",
-    "canLogin": "Can Login?"
+    "canLogin": "Can Login?",
+    "cancelBtn": "Cancel",
+    "saveBtn": "Save"
   },
   "AuthPages": {
     "saas": "SaaS",
@@ -233,8 +235,8 @@
     "Absent": "Absent",
     "LateArrival": "Late Arrival",
     "Leaves": "Leaves",
-    "Leave": "Leave",
-    "Leavesubheading":"Describe your leave parameters.",
+    "Leave": "Leave Actions",
+    "Leavesubheading":"Please add comments while performing action.",
     "ShortDuration": "Short Duration",
     "LeaveRequests":"Leave Requests",
     "CheckingTime":"Checking Time",
@@ -243,7 +245,18 @@
     "Rejected": "Rejected",
     "ViewAllLeaves":"View All Leaves",
     "ClockError": "Haven’t clock in Yet",
-    "LeavesManagement": "Leaves Management"
+    "LeavesManagement": "Leaves Management",
+    "LeaveTypeRequired": "Leave type is required!",
+    "LeaveStatusRequired": "Leave status is required!",
+    "LeaveHRCommentsRequired": "Hr comments is required!",
+    "Actions":"Actions",
+    "CasualLeave":"Casual Leave",
+    "SickLeave": "Sick Leave",
+    "AnnualLeave":" Annual Leave",
+    "Pending":"Pending",
+    "Approved":"Approved",
+    "Denied":"Denied"
+
 
   }
 }

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -7,46 +8,97 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
-import "@src/components/shared/popUps/leaveTypeModal/leaveTypeModal.scss";
 import submitIcon from "@src/assets/svgs/Frame.svg";
-import resetIcon from "@src/assets/svgs/reset.svg";
+import { timeOut } from "@src/helpers/constants/constants";
+import "@src/components/shared/popUps/leaveTypeModal/leaveTypeModal.scss";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { toastAPIError } from "@src/helpers/utils/utils";
+import { useUpdateLeaveParametersMutation } from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
+  checkState: boolean;
   handleClose: () => void;
+  empId: number;
 }
 
-const LeaveModal = ({ open, handleClose }: Props) => {
+const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
   const constantData: LocalizationInterface = localizedData();
+  const [loading, setLoading] = useState(false);
+  const [updateLeaveParameters] = useUpdateLeaveParametersMutation();
   const {
-    filterResetBtn,
-    filterSubmitBtn,
+    cancelBtn,
+    saveBtn,
     leaveStatusLabel,
     leaveTypeLabel,
     leaveHrCommentsLabel,
   } = constantData.Modals;
-  const { Leave, Leavesubheading } = constantData.Leaves;
-  const [name, setName] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [designationErrror, setDesignationError] = useState("");
+  const {
+    Leave,
+    Leavesubheading,
+    LeaveStatusRequired,
+    LeaveTypeRequired,
+    LeaveHRCommentsRequired,
+    CasualLeave,
+    AnnualLeave,
+    SickLeave,
+    Pending,
+    Approved,
+    Denied,
+  } = constantData.Leaves;
 
-  const handleType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length) {
-      setNameError("");
-    }
-    setName(e.target?.value);
+  const formik = useFormik({
+    initialValues: {
+      leave_type: "",
+      leave_status: "",
+      hr_comments: "",
+    },
+    validationSchema: yup.object({
+      leave_type: yup.string().required(LeaveTypeRequired),
+      leave_status: yup.string().required(LeaveStatusRequired),
+      hr_comments: yup.string().required(LeaveHRCommentsRequired),
+    }),
+    validateOnChange: true,
+    onSubmit: () => {
+      handleUpdateLeave();
+    },
+  });
+  const handleUpdateLeave = async () => {
+    setLoading(true);
+    const updatedObj = getLeaveObject();
+    await updateLeaveParameters({ id: empId, updatedObj: updatedObj })
+      .unwrap()
+      .then(async () => {
+        toast.success("Leave successfully updated.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        formik.resetForm();
+        handleClose();
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
-  const handleStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length) {
-      setDesignationError("");
-    }
-    setDesignation(e.target?.value);
+  const getLeaveObject = () => {
+    return {
+      status: formik.values.leave_status,
+      type: formik.values.leave_type,
+      hr_comment: formik.values.hr_comments,
+    };
   };
-
+  useEffect(() => {
+    if (!checkState) {
+      formik.resetForm();
+    }
+  }, [checkState]);
   return (
     <>
       <Dialog open={open} onClose={handleClose} className="LeaveModal">
@@ -64,33 +116,34 @@ const LeaveModal = ({ open, handleClose }: Props) => {
           </Box>
         </DialogTitle>
         <DialogContent className="LeaveModal__Content">
-          <Box className="fields-cls">
+          <Box className="fields-cls" sx={{ height: "85px !important" }}>
             <TextField
               margin="normal"
               className="text-field-cls"
               select
               required
               fullWidth
-              name="leavetype"
+              name="leave_type"
               label={leaveTypeLabel}
-              onChange={handleType}
-              value={name}
-              autoComplete="family-name"
+              onChange={formik.handleChange}
+              value={formik.values.leave_type}
               InputLabelProps={{ className: "textfield_label" }}
             >
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={10}>
-                Casual Leave
+              <MenuItem className="menu-item-cls" value="casual leave">
+                {CasualLeave}
               </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={20}>
-                Sick Leave
+              <MenuItem className="menu-item-cls" value="sick leave">
+                {SickLeave}
               </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={30}>
-                Annual Leave
+              <MenuItem className="menu-item-cls" value="annual leave">
+                {AnnualLeave}
               </MenuItem>
             </TextField>
-            <p className="errorText">{nameError}</p>
+            <Typography className="errorText">
+              {formik.touched.leave_type && formik.errors.leave_type}
+            </Typography>
           </Box>
-          <Box className="fields-cls">
+          <Box className="fields-cls" sx={{ height: "85px !important" }}>
             <TextField
               margin="normal"
               className="text-field-cls"
@@ -98,23 +151,24 @@ const LeaveModal = ({ open, handleClose }: Props) => {
               select
               fullWidth
               label={leaveStatusLabel}
-              name="status"
-              onChange={handleStatus}
-              value={designation}
-              autoComplete="family-name"
+              name="leave_status"
+              onChange={formik.handleChange}
+              value={formik.values.leave_status}
               InputLabelProps={{ className: "textfield_label" }}
             >
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={10}>
-                Pending
+              <MenuItem className="menu-item-cls" value="pending">
+                {Pending}
               </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={20}>
-                Approved
+              <MenuItem className="menu-item-cls" value="approved">
+                {Approved}
               </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }} value={30}>
-                Rejected
+              <MenuItem className="menu-item-cls" value="denied">
+                {Denied}
               </MenuItem>
             </TextField>
-            <p className="errorText">{designationErrror}</p>
+            <Typography className="errorText">
+              {formik.touched.leave_status && formik.errors.leave_status}
+            </Typography>
           </Box>
           <Box className="fields-cls">
             <TextField
@@ -123,31 +177,39 @@ const LeaveModal = ({ open, handleClose }: Props) => {
               required
               fullWidth
               label={leaveHrCommentsLabel}
-              name="hrcomments"
-              onChange={handleStatus}
-              autoComplete="family-name"
+              value={formik.values.hr_comments}
+              name="hr_comments"
+              onChange={formik.handleChange}
               multiline
               rows={4}
               InputLabelProps={{ className: "textfield_label" }}
             ></TextField>
-            <p className="errorText">{designationErrror}</p>
+            <Typography className="errorText">
+              {formik.touched.hr_comments && formik.errors.hr_comments}
+            </Typography>
           </Box>
         </DialogContent>
         <DialogActions className="LeaveModal__Actions">
           <Button className="resetBtn" onClick={handleClose}>
-            <span>
-              {" "}
-              <img className="reset-img" src={resetIcon} alt="reset" />
-            </span>{" "}
-            {filterResetBtn}
+            {cancelBtn}
           </Button>
-          <Button className="submitBtn">
-            {filterSubmitBtn}
-            <span>
-              {" "}
-              <img className="submit-img" src={submitIcon} alt="submit" />
-            </span>{" "}
-          </Button>
+          <LoadingButton
+            className="submitBtn"
+            loading={loading}
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+          >
+            {!loading && (
+              <span style={{ display: "flex" }}>
+                {saveBtn}
+                <span>
+                  {" "}
+                  <img className="submit-img" src={submitIcon} alt="submit" />
+                </span>{" "}
+              </span>
+            )}
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </>

@@ -1,8 +1,8 @@
 .LeaveModal {
   .MuiDialog-paper {
-    padding: 24px;
+    padding: 24px 24px 0px 24px;
     width: 458px;
-    height: 800px;
+    height: 550px;
     align-items: center;
     box-shadow: unset;
     border-radius: 12px;
@@ -59,6 +59,19 @@
           font-size: 16px;
           letter-spacing: -0.011em;
         }
+        .menu-item-cls {
+          font-size: 14px;
+          font-weight: 600 !important;
+        }
+      }
+      .errorText {
+        color: #ff1744;
+        font-size: 0.8rem;
+        margin-top: 1px;
+        margin-bottom: 0px;
+      }
+      .MuiTextField-root {
+        margin-bottom: 0px !important;
       }
     }
     .salary-range-box {
@@ -85,11 +98,11 @@
   }
   &__Actions {
     width: 100%;
-    justify-content: space-between !important;
+    padding: 20px 24px 24px 24px !important;
     .resetBtn {
       color: black;
       background: white;
-      width: 48%;
+      width: 96px;
       height: 48px;
       padding: 13px 20px;
       font-size: 16px;
@@ -109,7 +122,7 @@
     .submitBtn {
       color: white;
       background: #ff2f2f;
-      width: 48%;
+      width: 96px;
       height: 48px;
       padding: 13px 20px;
       font-size: 16px;
@@ -123,6 +136,10 @@
       .submit-img {
         margin-left: 10px;
         display: flex;
+        margin-top: 4px;
+      }
+      .MuiLoadingButton-loadingIndicator {
+        color: white;
       }
     }
   }

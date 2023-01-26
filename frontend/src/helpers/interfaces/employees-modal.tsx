@@ -162,6 +162,11 @@ export interface EmployeeLeaves {
   image: string;
   department: string;
 }
+export interface EmployeeLeavesParameters {
+  hr_comment: string;
+  status: string;
+  type: string;
+}
 export interface empLeaves {
   id: number;
   created_at: string;
