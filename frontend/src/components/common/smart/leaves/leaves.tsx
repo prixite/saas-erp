@@ -7,7 +7,6 @@ import {
   Button,
   Tooltip,
 } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
@@ -15,6 +14,7 @@ import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import searchBox from "@src/assets/svgs/searchBox.svg";
 import LeavesCountBar from "@src/components/common/presentational/leavesCountBar/leavesCountBar";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import LeaveModal from "@src/components/shared/popUps/leaveTypeModal/leaveTypeModal";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
@@ -27,11 +27,14 @@ function Leaves() {
   const { data: rows = [], isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const [checkState, setCheckState] = useState(false);
   const { notFound } = constantData.Employee;
-  const { LeavesManagement, Accepted, Rejected } = constantData.Leaves;
+  const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [rowCellId, setRowCellId] = useState<number>(0);
 
   const columns: GridColDef[] = [
     {
@@ -126,10 +129,10 @@ function Leaves() {
       width: 400,
       renderCell: (cellValues) => {
         return (
-          <Tooltip title={cellValues.row?.description}>
+          <Tooltip title={cellValues?.row?.description}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues.row?.description, 40)}
+              {truncateString(cellValues?.row?.description, 40)}
             </p>
           </Tooltip>
         );
@@ -193,59 +196,45 @@ function Leaves() {
       field: "actions",
       headerName: "Actions",
       width: 250,
-      renderCell: () => {
+      renderCell: (cellValues) => {
         return (
-          <Box className="actions-col">
-            <TextField
-              select
-              label="Actions"
-              size="small"
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused": {
-                  "& > fieldset": {
-                    borderColor: "#6c6c6c",
-                    borderWidth: "1px",
-                  },
-                },
-                "& .MuiOutlinedInput-root:hover": {
-                  "& > fieldset": {
-                    borderColor: "#6c6c6c",
-                  },
-                },
-                fontWeight: "400",
-                fontSize: "14px",
-              }}
-              InputProps={{
-                sx: {
-                  height: 28,
-                  width: 110,
-                  borderRadius: "16px",
-                  fontWeight: "400",
-                  fontSize: "14px",
-                },
-              }}
-              InputLabelProps={{
-                sx: {
-                  fontWeight: "400",
-                  fontSize: "12px",
-                  color: "#6c6c6c !important",
-                  top: "-0.5vh",
-                  "&.MuiInputLabel-shrink": { top: 0 },
-                },
-              }}
-            >
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }}>
-                {Accepted}
-              </MenuItem>
-              <MenuItem sx={{ fontWeight: "400", fontSize: "14px" }}>
-                {Rejected}
-              </MenuItem>
-            </TextField>
+          <Box
+            sx={{
+              width: "91px",
+              height: "28px",
+              borderRadius: "16px",
+              border: "0.5px solid",
+              borderColor: "#e7e7e7",
+              color: "#696969",
+              display: "flex",
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+              textTransform: "capitalize",
+              fontSize: "12px",
+              fontWeight: "400",
+            }}
+            onClick={(event) => handleModalOpen(event, cellValues?.row?.id)}
+          >
+            {Actions}
           </Box>
         );
       },
     },
   ];
+  const handleModalClose = () => {
+    setCheckState(false);
+    setOpenModal(false);
+  };
+  const handleModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setCheckState(true);
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -438,6 +427,12 @@ function Leaves() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
+      <LeaveModal
+        open={openModal}
+        handleClose={handleModalClose}
+        empId={rowCellId}
+        checkState={checkState}
+      />
     </Box>
   );
 }
