@@ -155,6 +155,10 @@ urlpatterns = [
         api.OwnerOnboardingAPIView.as_view(),
     ),
     path(
+        "organization/",
+        api.OrganizationViewSet.as_view({"get": "list"}),
+    ),
+    path(
         "module/",
         api.ModuleViewSet.as_view(
             {

@@ -344,6 +344,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiOrganizationList: build.query<
+      ApiOrganizationListApiResponse,
+      ApiOrganizationListApiArg
+    >({
+      query: () => ({ url: `/api/organization/` }),
+    }),
     apiOrganizationModuleList: build.query<
       ApiOrganizationModuleListApiResponse,
       ApiOrganizationModuleListApiArg
@@ -661,6 +667,8 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
+export type ApiOrganizationListApiArg = void;
 export type ApiOrganizationModuleListApiResponse =
   /** status 200  */ OrganizationModule[];
 export type ApiOrganizationModuleListApiArg = void;
@@ -997,6 +1005,13 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
+export type Organization = {
+  id: number;
+  name: string;
+  address: string;
+  created_at: string;
+  updated_at: string;
+};
 export type OrganizationModule = {
   id: number;
   is_enabled?: boolean;
@@ -1004,13 +1019,6 @@ export type OrganizationModule = {
   updated_at: string;
   module: number;
   organization: number;
-};
-export type Organization = {
-  id: number;
-  name: string;
-  address: string;
-  created_at: string;
-  updated_at: string;
 };
 export type OwnerEmployee = {
   date_of_joining: string;
@@ -1119,6 +1127,7 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiOrganizationListQuery,
   useApiOrganizationModuleListQuery,
   useApiOrganizationModuleCreateMutation,
   useApiOrganizationModuleRetrieveQuery,

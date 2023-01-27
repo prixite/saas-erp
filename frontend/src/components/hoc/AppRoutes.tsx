@@ -8,6 +8,10 @@ import Accounts from "@src/components/common/smart/accounts/accounts";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
 import Leaves from "@src/components/common/smart/leaves/leaves";
+import AdminSettings from "@src/components/common/smart/adminSettings/adminSettings";
+import Organization from "@src/components/common/smart/organizations/organization";
+import Modules from "@src/components/common/smart/modules/modules";
+import OrganizationModules from "@src/components/common/smart/organizationModules/organizationModules";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Users from "@src/components/common/smart/users/users";
@@ -55,6 +59,13 @@ const AppRoutes = () => {
               <Route path="payroll/" element={<Payroll />} />
             )}
             <Route path="leaves/" element={<Leaves />} />
+            <Route path="settings/" element={<AdminSettings />} />
+            <Route path="organizations/" element={<Organization />} />
+            <Route path="modules/" element={<Modules />} />
+            <Route
+              path="/organization/modules/"
+              element={<OrganizationModules />}
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

@@ -579,14 +579,23 @@ class OwnerOnboardingAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
 
 
-class OrganizationModuleViewSet(ModelViewSet):
+class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
+    allow_superuser = True
+    serializer_class = serializers.OrganizationSerializer
+    queryset = models.Organization.objects.all()
+
+
+class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+
+    allow_superuser = True
     serializer_class = serializers.OrganizationModuleSerializer
     queryset = models.OrganizationModule.objects.all()
 
 
 class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
+    allow_superuser = True
     serializer_class = serializers.ModuleSerializer
     queryset = models.Module.objects.all()
 

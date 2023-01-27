@@ -614,10 +614,22 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         return user
 
 
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
 class OrganizationModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrganizationModule
         fields = "__all__"
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = instance.module.name
+        data["organization"] = instance.organization.name
+        return data
 
 
 class ModuleSerializer(serializers.ModelSerializer):

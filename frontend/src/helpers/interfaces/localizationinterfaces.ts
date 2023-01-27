@@ -1,3 +1,4 @@
+import { SlugEnum } from "@src/store/api";
 import { FormikErrors } from "formik";
 export interface btnsInterface {
   createButton: string;
@@ -353,3 +354,23 @@ export interface LocalizationInterface {
   AuthPages: AuthPages;
   Leaves: leavesData;
 }
+
+export interface OrganizationInterface {
+  id: number;
+  name: string;
+  address: string;
+}
+
+export type OrganizationModuleInterface = {
+  id: number;
+  is_enabled?: boolean;
+  module: number;
+  organization: number;
+};
+
+export type ModuleInterface = {
+  id: number;
+  slug: SlugEnum;
+  name: string;
+  is_enabled?: boolean;
+};

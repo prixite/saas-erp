@@ -24,9 +24,10 @@ import categoryIcon from "@src/assets/svgs/Category.svg";
 import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
 import leavesIcon from "@src/assets/svgs/Leave.svg";
 import leavesRedIcon from "@src/assets/svgs/leaveRed.svg";
-import settingIcon from "@src/assets/svgs/Setting.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
+import settingIcon from "@src/assets/svgs/setting.svg";
+import settingIconRed from "@src/assets/svgs/settingRed.svg";
 import bagIconRed from "@src/assets/svgs/workred.svg";
 import {
   useGetUserQuery,
@@ -234,6 +235,24 @@ const Sidebar = (props) => {
               <ListItemIcon sx={{ ml: "8px" }}>
                 <img src={settingIcon} />
               </ListItemIcon>
+            </ListItemButton>
+          ) : (
+            ""
+          )}
+          {userData?.is_superuser ? (
+            <ListItemButton
+              onClick={() => {
+                navigate("settings/");
+              }}
+              className="list-items-btn"
+            >
+              <ListItemIcon className="list-item-icon">
+                <img
+                  className="icon-img"
+                  src={currentPath === "/settings/" ? settingIconRed : settingIcon}
+                />
+              </ListItemIcon>
+              <ListItemText primary="Setting" />
             </ListItemButton>
           ) : (
             ""
