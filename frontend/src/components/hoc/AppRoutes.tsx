@@ -10,6 +10,7 @@ import EmployeeSection from "@src/components/common/smart/employeeSection/Employ
 import Leaves from "@src/components/common/smart/leaves/leaves";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
+import Standup from "@src/components/common/smart/standup/standup";
 import Users from "@src/components/common/smart/users/users";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
 import Layout from "@src/components/shared/layout";
@@ -55,6 +56,7 @@ const AppRoutes = () => {
               <Route path="payroll/" element={<Payroll />} />
             )}
             <Route path="leaves/" element={<Leaves />} />
+            <Route path="standup/" element={<Standup />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

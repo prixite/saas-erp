@@ -151,6 +151,12 @@ export interface departmentsTypes {
   created_at: string;
   updated_at: string;
 }
+export interface standupTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  team: string;
+}
 export interface Benefits {
   id: number;
   name: string;
