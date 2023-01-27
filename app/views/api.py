@@ -185,19 +185,18 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 
+    @transaction.atomic
     def destroy(self, request, *args, **kwargs):
         if models.Employee.objects.get(id=kwargs.get("pk")).user == self.request.user:
             return Response(
                 {"detail": "Can not delete self employee"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        return super().destroy(request, *args, **kwargs)
-
-    @transaction.atomic
-    def perform_destroy(self, instance):
+        instance = self.get_object()
         user = get_object_or_404(models.User, employee=instance)
-        user.delete()
-        return super().perform_destroy(instance)
+        user.soft_delete()
+        instance.soft_delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CompensationViewSet(mixins.PrivateApiMixin, ModelViewSet):

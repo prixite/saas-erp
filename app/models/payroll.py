@@ -1,7 +1,9 @@
 from django.db import models
 
+from .soft_delete import ActiveEmployeeModel
 
-class CompensationHistory(models.Model):
+
+class CompensationHistory(ActiveEmployeeModel):
     """
     All the compensations given to an employee.
     """

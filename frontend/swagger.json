@@ -2756,6 +2756,14 @@
                         "type": "string",
                         "readOnly": true
                     },
+                    "is_deleted": {
+                        "type": "boolean"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
                     "emergency_contact_number": {
                         "type": "string",
                         "maxLength": 20
