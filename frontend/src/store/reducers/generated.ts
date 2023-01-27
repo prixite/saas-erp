@@ -441,21 +441,24 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standupUpdate,
       }),
     }),
+    apiTeamList: build.query<ApiTeamListApiResponse, ApiTeamListApiArg>({
+      query: () => ({ url: `/api/team/` }),
+    }),
+    apiTeamCreate: build.mutation<
+      ApiTeamCreateApiResponse,
+      ApiTeamCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/team/`,
+        method: "POST",
+        body: queryArg.team,
+      }),
+    }),
     apiTeamMembersRetrieve: build.query<
       ApiTeamMembersRetrieveApiResponse,
       ApiTeamMembersRetrieveApiArg
     >({
       query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
-    }),
-    apiTeamCreateCreate: build.mutation<
-      ApiTeamCreateCreateApiResponse,
-      ApiTeamCreateCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/team_create/`,
-        method: "POST",
-        body: queryArg.team,
-      }),
     }),
   }),
   overrideExisting: false,
@@ -662,13 +665,15 @@ export type ApiStandupUpdateCreateApiResponse =
 export type ApiStandupUpdateCreateApiArg = {
   standupUpdate: StandupUpdate;
 };
+export type ApiTeamListApiResponse = /** status 200  */ Team[];
+export type ApiTeamListApiArg = void;
+export type ApiTeamCreateApiResponse = /** status 201  */ Team;
+export type ApiTeamCreateApiArg = {
+  team: Team;
+};
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
   id: number;
-};
-export type ApiTeamCreateCreateApiResponse = /** status 201  */ Team;
-export type ApiTeamCreateCreateApiArg = {
-  team: Team;
 };
 export type AssetType = {
   id: number;
@@ -985,6 +990,8 @@ export type Standup = {
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
 export type StandupUpdate = {
   id: number;
+  time: string;
+  date: string;
   status: StandupUpdateStatusEnum;
   work_done_yesterday?: string | null;
   work_to_do?: string | null;
@@ -1057,6 +1064,7 @@ export const {
   useApiStandupCreateMutation,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
+  useApiTeamListQuery,
+  useApiTeamCreateMutation,
   useApiTeamMembersRetrieveQuery,
-  useApiTeamCreateCreateMutation,
 } = injectedRtkApi;

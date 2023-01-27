@@ -168,3 +168,18 @@ class LeaveAdmin(admin.ModelAdmin):
 @admin.register(models.Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
     readonly_fields = ("time_in", "time_out")
+
+
+@admin.register(models.Team)
+class TeamAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.Standup)
+class StandupAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.StandupUpdate)
+class StandupUpdateAdmin(admin.ModelAdmin):
+    pass

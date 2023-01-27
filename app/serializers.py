@@ -633,6 +633,9 @@ class StandupSerializer(serializers.ModelSerializer):
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
+    time = serializers.SerializerMethodField()
+    date = serializers.SerializerMethodField()
+
     class Meta:
         model = models.StandupUpdate
         exclude = ("organization",)
@@ -657,4 +660,24 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
                     "This employee does not belong to this standup team"
                 )
 
+        return data
+
+    def get_time(self, obj):
+        time = obj.standup.created_at.time().strftime("%H:%M %p")
+        return time
+
+    def get_date(self, obj):
+        date = obj.standup.created_at.date().strftime("%B %d, %Y")
+        return date
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
         return data
