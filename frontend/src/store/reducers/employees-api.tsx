@@ -13,6 +13,7 @@ import {
   departmentsTypes,
   roleTypes,
   empLeaves,
+  EmployeeLeavesParameters,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -25,7 +26,7 @@ export const employeesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Employee", "Owner"],
+  tagTypes: ["Employee", "Owner", "Leaves"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -116,6 +117,20 @@ export const employeesApi = createApi({
     }),
     getLeaves: builder.query<empLeaves[], void>({
       query: () => "/leave/",
+      providesTags: ["Leaves"],
+    }),
+    updateLeaveParameters: builder.mutation<
+      void,
+      { updatedObj: EmployeeLeavesParameters; id: number }
+    >({
+      query: ({ updatedObj, id }) => {
+        return {
+          url: `/leave/${id}/`,
+          method: "PATCH",
+          body: updatedObj,
+        };
+      },
+      invalidatesTags: ["Leaves"],
     }),
   }),
 });
@@ -139,4 +154,5 @@ export const {
   useUpdateOwnerProfileMutation,
   useUpdateOwnerPasswordMutation,
   useGetLeavesQuery,
+  useUpdateLeaveParametersMutation,
 } = employeesApi;

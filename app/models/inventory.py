@@ -1,7 +1,9 @@
 from django.db import models
 
+from .soft_delete import ActiveEmployeeModel
 
-class Asset(models.Model):
+
+class Asset(ActiveEmployeeModel):
     """
     The asset in an organization.
 

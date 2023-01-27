@@ -5,14 +5,16 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .soft_delete import SoftDeleteUserModel
 
-class User(AbstractUser):
+
+class User(SoftDeleteUserModel, AbstractUser):
     """
     This model represents a user that can log into ERP. A user can also be an
     employee, but an employee might not be a user.
     """
 
-    email = models.EmailField(_("email address"), unique=True)
+    email = models.EmailField(_("email address"), unique=True, db_index=True)
 
     organization = models.ForeignKey(
         "Organization", on_delete=models.CASCADE, null=True
