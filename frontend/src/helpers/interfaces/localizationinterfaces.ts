@@ -351,6 +351,38 @@ export interface leavesData {
   Approved: string;
   Denied: string;
 }
+export interface standupData {
+  standup: string;
+  createStandup: string;
+  addStandup: string;
+  StandupSelection: string;
+  EmployeeName: string;
+  Status: string;
+  Date: string;
+  WorkDoneYesterday: string;
+  TodayPlan: string;
+  Blockers: string;
+  AddStandupHeading: string;
+  AddStandupSubheading: string;
+  FullTime: string;
+  PartTime: string;
+  StandupSelectionRequired: string;
+  EmployeeNameRequired: string;
+  StatusRequired: string;
+  DateRequired: string;
+  WorkDoneYesterdayRequired: string;
+  TodayPlanRequired: string;
+  BlockersRequired: string;
+  CreateStandupHeading: string;
+  CreateStandupSubheading: string;
+  Team: string;
+  StandupName: string;
+  TeamRequired: string;
+  StandupNameRequired: string;
+  Frontend: string;
+  Backend: string;
+  Marketing: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -369,4 +401,5 @@ export interface LocalizationInterface {
   BreadCrumbs: breadcrumbsInterface;
   AuthPages: AuthPages;
   Leaves: leavesData;
+  Standup: standupData;
 }

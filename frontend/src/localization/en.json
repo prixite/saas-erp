@@ -256,7 +256,38 @@
     "Pending":"Pending",
     "Approved":"Approved",
     "Denied":"Denied"
-
+  },
+  "Standup":{
+    "standup": "Standup",
+    "createStandup": "Create Standup",
+    "addStandup": "Add Standup",
+    "StandupSelection":"Standup Selection",
+    "EmployeeName": "Employee Name",
+    "Status": "Status",
+    "Date": "Date",
+    "WorkDoneYesterday":"Work done yesterday",
+    "TodayPlan":"Today's Plan",
+    "Blockers": "Blockers",
+    "AddStandupHeading":"Add Standup",
+    "AddStandupSubheading":"While adding compensation please do add comments",
+    "FullTime":"Full Time",
+    "PartTime": "Part Time",
+    "StandupSelectionRequired":"Standup selection is required!",
+    "EmployeeNameRequired": "Employee name is required!",
+    "StatusRequired": "Status is required!",
+    "DateRequired": "Date is required!",
+    "WorkDoneYesterdayRequired":"Work done yesterday is required!",
+    "TodayPlanRequired":"Today's plan is required!",
+    "BlockersRequired": "Blockers is required!",
+    "CreateStandupHeading": "Create Standup",
+    "CreateStandupSubheading": "You can create a standup here.",
+    "Team": "Team",
+    "StandupName": "Standup Name",
+    "TeamRequired":"Team is required!",
+    "StandupNameRequired":"Standup name is required!",
+    "Frontend":"Frontend",
+    "Backend":"Backend",
+    "Marketing":"Marketing"
 
   }
 }
