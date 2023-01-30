@@ -14,6 +14,7 @@ import OrganizationModules from "@src/components/common/smart/organizationModule
 import Organization from "@src/components/common/smart/organizations/organization";
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
+import Standup from "@src/components/common/smart/standup/standup";
 import Users from "@src/components/common/smart/users/users";
 import AdminRoute from "@src/components/hoc/AdminRoute";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
@@ -60,6 +61,7 @@ const AppRoutes = () => {
               <Route path="payroll/" element={<Payroll />} />
             )}
             <Route path="leaves/" element={<Leaves />} />
+            <Route path="standup/" element={<Standup />} />
           </Route>
           <Route
             path="/"

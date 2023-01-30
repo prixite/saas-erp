@@ -6,6 +6,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.exceptions import NotFound, PermissionDenied
 from waffle import get_waffle_switch_model
 
 from app import models
@@ -664,6 +665,14 @@ class TeamSerializer(serializers.ModelSerializer):
         model = models.Team
         exclude = ("organization",)
 
+    def validate(self, data):
+        user = self.context.get("request").user
+        members = data.get("members")
+        for member in members:
+            if member.organization != user.organization:
+                raise NotFound(detail="Not Found")
+        return data
+
 
 class StandupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -672,6 +681,9 @@ class StandupSerializer(serializers.ModelSerializer):
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
+    time = serializers.SerializerMethodField()
+    date = serializers.SerializerMethodField()
+
     class Meta:
         model = models.StandupUpdate
         exclude = ("organization",)
@@ -684,16 +696,38 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
         permission = user.default_role.permission
         if permission == models.Role.Permission.MEMBER:
             if not user.employee == employee:
-                raise serializers.ValidationError(
-                    "You cannot add standup update of other employee"
-                )
+                if employee in team_members and user.employee in team_members:
+                    raise PermissionDenied(detail="Forbidden")
+                else:
+                    raise NotFound(detail="Not Found")
+
             if employee not in team_members:
-                raise serializers.ValidationError("You are not a part of this team")
+                raise NotFound(detail="Not Found")
 
         else:
-            if employee not in team_members:
-                raise serializers.ValidationError(
-                    "This employee does not belong to this standup team"
-                )
+            if employee.organization == user.organization == standup.organization:
+                if employee not in team_members:
+                    raise serializers.ValidationError({"detail": "Invalid request"})
+            else:
+                raise NotFound(detail="Not Found")
+        return data
 
+    def get_time(self, obj):
+        time = obj.standup.created_at.time().strftime("%H:%M %p")
+        return time
+
+    def get_date(self, obj):
+        date = obj.standup.created_at.date().strftime("%B %d, %Y")
+        return date
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
         return data

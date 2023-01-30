@@ -14,6 +14,7 @@ import {
   roleTypes,
   empLeaves,
   EmployeeLeavesParameters,
+  standupTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -132,6 +133,9 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Leaves"],
     }),
+    getStandup: builder.query<standupTypes[], void>({
+      query: () => "/standup/",
+    }),
   }),
 });
 
@@ -155,4 +159,5 @@ export const {
   useUpdateOwnerPasswordMutation,
   useGetLeavesQuery,
   useUpdateLeaveParametersMutation,
+  useGetStandupQuery,
 } = employeesApi;
