@@ -124,20 +124,17 @@ const CreateStandupModal = ({ open, handleClose }: Props) => {
           </Button>
           <LoadingButton
             className="submitBtn"
-            loading={loading}
             onClick={() => {
               formik.handleSubmit();
             }}
           >
-            {!loading && (
-              <span style={{ display: "flex" }}>
-                {saveBtn}
-                <span>
-                  {" "}
-                  <img className="submit-img" src={submitIcon} alt="submit" />
-                </span>{" "}
-              </span>
-            )}
+            <span style={{ display: "flex" }}>
+              {saveBtn}
+              <span>
+                {" "}
+                <img className="submit-img" src={submitIcon} alt="submit" />
+              </span>{" "}
+            </span>
           </LoadingButton>
         </DialogActions>
       </Dialog>
