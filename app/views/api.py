@@ -590,7 +590,7 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
 
 
 class StandupUpdateViewSet(
-    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+    mixins.PrivateMixinAPI, ModelViewSet, mixins.OrganizationMixin
 ):
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
