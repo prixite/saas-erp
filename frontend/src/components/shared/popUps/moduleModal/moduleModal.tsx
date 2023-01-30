@@ -1,36 +1,58 @@
 import { useState, useEffect } from "react";
+import {
+  Box,
+  Switch,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Switch, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import { timeOut } from "@src/helpers/constants/constants";
-import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
-import { localizedData } from "@src/helpers/utils/language";
+import { ModuleInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { toastAPIError } from "@src/helpers/utils/utils";
-import { useApiModuleCreateMutation } from "@src/store/api";
-import { ModeOutlined } from "@mui/icons-material";
+import {
+  useApiModuleCreateMutation,
+  useApiModuleUpdateMutation,
+  useApiModuleRetrieveQuery,
+} from "@src/store/api";
 import "@src/components/shared/popUps/moduleModal/moduleModal.scss";
 
 interface Props {
+  moduleId?: number;
+  action?: string;
   open: boolean;
   handleClose: () => void;
 }
 
-const ModuleModal = ({ open, handleClose }: Props) => {
-  const constantData: LocalizationInterface = localizedData();
-  const [loading, setLoading] = useState(false);
+const ModuleModal = ({ moduleId, action, open, handleClose }: Props) => {
   const [createModule] = useApiModuleCreateMutation();
+  const [updateModule] = useApiModuleUpdateMutation();
+  const { data: moduleData } = useApiModuleRetrieveQuery(
+    {
+      id: Number(moduleId || ""),
+    },
+    { skip: !moduleId }
+  );
 
+  const [loading, setLoading] = useState(false);
+
+  const populateEditableData = (moduleData: ModuleInterface | undefined) => {
+    formik.setValues({
+      name: moduleData?.name as string,
+      slug: moduleData?.slug as string,
+      is_enabled: moduleData?.is_enabled as boolean,
+    });
+  };
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -44,7 +66,11 @@ const ModuleModal = ({ open, handleClose }: Props) => {
     }),
     validateOnChange: true,
     onSubmit: () => {
-      handleModuleCreate();
+      if (action === "edit") {
+        handleModuleEdit();
+      } else {
+        handleModuleCreate();
+      }
     },
   });
   const handleModuleCreate = async () => {
@@ -62,8 +88,31 @@ const ModuleModal = ({ open, handleClose }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        formik.resetForm();
-        handleClose();
+        resetModal();
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
+  };
+  const handleModuleEdit = async () => {
+    setLoading(true);
+    await updateModule({
+      id: moduleId as number,
+      module: {
+        name: formik.values.name,
+        slug: formik.values.slug,
+        is_enabled: formik.values.is_enabled,
+      },
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success("Module updated successfully.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        resetModal();
         setLoading(false);
       })
       .catch((error) => {
@@ -80,25 +129,38 @@ const ModuleModal = ({ open, handleClose }: Props) => {
     { name: "Settings", value: "settings" },
   ];
 
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData(moduleData);
+    }
+  }, [action, moduleData, moduleId]);
+
+  const resetModal = () => {
+    formik.resetForm();
+    handleClose();
+  };
+
   return (
     <>
-      <Dialog open={open} onClose={handleClose} className="moduleModal">
+      <Dialog open={open} onClose={resetModal} className="moduleModal">
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
               <Typography className="heading-text">
-                {"Create a module"}
+                {action == "edit" ? "Update a module" : "Create a module"}
               </Typography>
               <Typography className="subheading-text">
-                {"Fill the following fields to add a module"}
+                {action == "edit"
+                  ? "Fill the following fields to update a module"
+                  : "Fill the following fields to add a module"}
               </Typography>
             </Box>
-            <Box className="cross-icon-box" onClick={handleClose}>
+            <Box className="cross-icon-box" onClick={resetModal}>
               <img src={crossIcon} className="cross-btn" />
             </Box>
           </Box>
         </DialogTitle>
-        <DialogContent className="ModuleModal__Content">
+        <DialogContent className="moduleModal__Content">
           <Box className="fields-cls" sx={{ height: "85px !important" }}>
             <Box className="fields-cls">
               <TextField
@@ -110,8 +172,6 @@ const ModuleModal = ({ open, handleClose }: Props) => {
                 value={formik.values.name}
                 name="name"
                 onChange={formik.handleChange}
-                multiline
-                rows={4}
                 InputLabelProps={{ className: "textfield_label" }}
               ></TextField>
               <Typography className="errorText">
@@ -133,7 +193,11 @@ const ModuleModal = ({ open, handleClose }: Props) => {
               >
                 {moduleSlugs.map((item) => {
                   return (
-                    <MenuItem className="menu-item-cls" value={item.value}>
+                    <MenuItem
+                      className="menu-item-cls"
+                      value={item.value}
+                      key={item.value}
+                    >
                       {item.name}
                     </MenuItem>
                   );
@@ -143,20 +207,30 @@ const ModuleModal = ({ open, handleClose }: Props) => {
                 {formik.touched.slug && formik.errors.slug}
               </Typography>
             </Box>
-            <Box className="fields-cls">
+            <Box className="fields-cls is_enabled">
               <Switch
                 size="small"
                 sx={{ paddingLeft: "5px" }}
                 checked={formik.values.is_enabled}
                 onChange={(event) =>
-                  formik.setFieldValue("userAllowed", event.target.checked)
+                  formik.setFieldValue("is_enabled", event.target.checked)
                 }
               />
+              <Typography
+                sx={{
+                  color: formik.values.is_enabled ? "black" : "#6C6C6C",
+                  fontSize: "16px",
+                  fontWeight: "400",
+                  ml: "10px",
+                }}
+              >
+                {"Is enabled"}
+              </Typography>
             </Box>
           </Box>
         </DialogContent>
-        <DialogActions className="ModuleModal__Actions">
-          <Button className="resetBtn" onClick={handleClose}>
+        <DialogActions className="moduleModal__Actions">
+          <Button className="resetBtn" onClick={resetModal}>
             {"Cancel"}
           </Button>
           <LoadingButton

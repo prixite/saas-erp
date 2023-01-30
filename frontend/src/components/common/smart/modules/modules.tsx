@@ -5,37 +5,92 @@ import {
   InputAdornment,
   TextField,
   Button,
+  IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import AddIcon from "@mui/icons-material/Add";
+import { toast } from "react-toastify";
+import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
+import EditIcon from "@src/assets/svgs/Edit.svg";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import searchBox from "@src/assets/svgs/searchBox.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
+import ModuleModal from "@src/components/shared/popUps/moduleModal/moduleModal";
+import { toastAPIError } from "@src/helpers/utils/utils";
+import { localizedData } from "@src/helpers/utils/language";
+import { timeOut } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   ModuleInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
-import { localizedData } from "@src/helpers/utils/language";
-import { useApiModuleListQuery } from "@src/store/api";
-import { useNavigate } from "react-router-dom";
+import {
+  useApiModuleListQuery,
+  useApiModuleDestroyMutation,
+} from "@src/store/api";
 import "@src/components/common/smart/modules/modules.scss";
-import ModuleModal from "@src/components/shared/popUps/moduleModal/moduleModal";
 
 function Modules() {
   const { data: rows = [], isLoading } = useApiModuleListQuery();
+  const [deleteModule] = useApiModuleDestroyMutation();
   const constantData: LocalizationInterface = localizedData();
-  const [dataLoading, setIsDataLoading] = useState(true);
   const { filterButton } = constantData.Buttons;
+
+  const [action, setAction] = useState("add");
+  const [dataLoading, setIsDataLoading] = useState(true);
+  const [rowCellId, setRowCellId] = useState<number | undefined>(undefined);
   const [moduleData, setModuleData] = useState<ModuleInterface[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
-
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
   const handleModalOpen = () => {
     setOpenModal(true);
   };
+
   const handleModalClose = () => {
+    setRowCellId(undefined);
+    setAction("add");
     setOpenModal(false);
+  };
+
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleModuleDelete = async () => {
+    await deleteModule({
+      id: rowCellId,
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success("Module deleted successfully", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleDeleteModalClose();
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
 
   const columns: GridColDef[] = [
@@ -47,7 +102,7 @@ function Modules() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.name}
+            {cellValues.row.name}
           </p>
         );
       },
@@ -56,12 +111,44 @@ function Modules() {
       field: "is_enabled",
       headerName: "Enabled",
       sortable: false,
-      width: 200,
+      width: 300,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.is_enabled ? "True" : "False"}
+            {cellValues.row.is_enabled ? "True" : "False"}
           </p>
+        );
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Box
+            className="renderCell-joiningDate"
+            style={{ marginLeft: "10px" }}
+          >
+            <IconButton
+              onClick={(event) => handleEditModalOpen(event, cellValues.row.id)}
+              aria-label="edit"
+              id="edit-btn-id"
+              className="edit-btn"
+            >
+              <img className="profile-pic" src={EditIcon} alt="profile pic" />
+            </IconButton>
+            <IconButton
+              onClick={(event) =>
+                handleDeleteModalOpen(event, cellValues.row.id)
+              }
+              aria-label="delete"
+              id="delete-btn-id"
+              className="delete-btn"
+            >
+              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
+            </IconButton>
+          </Box>
         );
       },
     },
@@ -77,6 +164,7 @@ function Modules() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+
   return (
     <Box className="modulesDataGridTable-section">
       <Box
@@ -262,10 +350,20 @@ function Modules() {
         </>
       ) : (
         <>
-          <RowSkeletonCard pathString="organization/modules" />
+          <RowSkeletonCard pathString="modules" />
         </>
       )}
-      <ModuleModal open={openModal} handleClose={handleModalClose} />
+      <ModuleModal
+        moduleId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        handleObjDelete={handleModuleDelete}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }

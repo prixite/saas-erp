@@ -191,7 +191,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
       />
       <DeleteModal
         open={openDeleteModal}
-        handleEmployeeDelete={handleEmployeeDelete}
+        handleObjDelete={handleEmployeeDelete}
         handleClose={handleDeleteModalClose}
       />
     </>

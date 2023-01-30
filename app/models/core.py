@@ -197,7 +197,7 @@ class Module(models.Model):
         SETTINGS = "settings", "Settings"
 
     slug = models.SlugField(choices=ModuleType.choices)
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

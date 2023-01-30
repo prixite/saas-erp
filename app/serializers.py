@@ -632,10 +632,24 @@ class OrganizationModuleSerializer(serializers.ModelSerializer):
         model = models.OrganizationModule
         fields = "__all__"
 
+    def validate(self, attrs):
+        if self.context.get("request").method == "POST" and (
+            models.OrganizationModule.objects.filter(
+                module=attrs.get("module"), organization=attrs.get("organization")
+            ).exists()
+        ):
+            raise serializers.ValidationError(
+                "This module already exists in this organization."
+            )
+        return super().validate(attrs)
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["module"] = instance.module.name
-        data["organization"] = instance.organization.name
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["organization"] = {
+            "id": instance.organization.id,
+            "name": instance.organization.name,
+        }
         return data
 
 

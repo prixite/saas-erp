@@ -16,6 +16,7 @@ import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Users from "@src/components/common/smart/users/users";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
+import AdminRoute from "@src/components/hoc/AdminRoute";
 import Layout from "@src/components/shared/layout";
 import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
 
@@ -59,15 +60,24 @@ const AppRoutes = () => {
               <Route path="payroll/" element={<Payroll />} />
             )}
             <Route path="leaves/" element={<Leaves />} />
+          </Route>
+          <Route
+            path="/"
+            element={
+              <AdminRoute>
+                <Layout />
+              </AdminRoute>
+            }
+          >
             <Route path="settings/" element={<AdminSettings />} />
             <Route path="organizations/" element={<Organization />} />
             <Route path="modules/" element={<Modules />} />
             <Route
-              path="/organization/modules/"
+              path="organizations/modules/"
               element={<OrganizationModules />}
             />
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       ) : (
         <p>Loading ...</p>

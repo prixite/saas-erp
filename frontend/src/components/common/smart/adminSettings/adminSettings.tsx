@@ -15,7 +15,7 @@ const AdminSettings = () => {
       <Link className="link" to="/modules">
         {"View Modules"}
       </Link>
-      <Link className="link" to="/organization/modules">
+      <Link className="link" to="/organizations/modules">
         {"View Organization Modules"}
       </Link>
     </Box>

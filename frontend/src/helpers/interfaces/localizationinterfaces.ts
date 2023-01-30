@@ -1,5 +1,5 @@
-import { SlugEnum } from "@src/store/api";
 import { FormikErrors } from "formik";
+import { SlugEnum } from "@src/store/api";
 export interface btnsInterface {
   createButton: string;
   filterButton: string;
@@ -381,8 +381,8 @@ export interface OrganizationInterface {
 export type OrganizationModuleInterface = {
   id: number;
   is_enabled?: boolean;
-  module: number;
-  organization: number;
+  module: { id: number; name: string };
+  organization: { id: number; name: string };
 };
 
 export type ModuleInterface = {

@@ -16,20 +16,19 @@ import {
   OrganizationInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import "@src/components/common/smart/organizations/organization.scss";
 import { useApiOrganizationListQuery } from "@src/store/api";
-import { useNavigate } from "react-router-dom";
+import "@src/components/common/smart/organizations/organization.scss";
 
 function Organization() {
   const { data: rows = [], isLoading } = useApiOrganizationListQuery();
   const constantData: LocalizationInterface = localizedData();
-  const [dataLoading, setIsDataLoading] = useState(true);
   const { filterButton } = constantData.Buttons;
+
+  const [dataLoading, setIsDataLoading] = useState(true);
   const [organizationsData, setOrganizationsData] = useState<
     OrganizationInterface[]
   >([]);
   const [pageSize, setPageSize] = useState<number>(10);
-  const navigate = useNavigate();
 
   const columns: GridColDef[] = [
     {
@@ -70,6 +69,7 @@ function Organization() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+
   return (
     <Box className="organizationDataGridTable-section">
       <Box
@@ -86,7 +86,7 @@ function Organization() {
               className="searchbox"
               id="search-headbox"
               variant="outlined"
-              placeholder="Search Organization here"
+              placeholder="Search organizations here"
               sx={{
                 "& label.Mui-focused": {
                   color: "#999999",
@@ -109,7 +109,6 @@ function Organization() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
                     <img
                       className="profile-pic"
                       src={searchBox}

@@ -5,33 +5,109 @@ import {
   InputAdornment,
   TextField,
   Button,
+  IconButton,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import AddIcon from "@mui/icons-material/Add";
+import { toast } from "react-toastify";
+import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
+import EditIcon from "@src/assets/svgs/Edit.svg";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import searchBox from "@src/assets/svgs/searchBox.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
+import OrganizationModuleModal from "@src/components/shared/popUps/organizationModuleModal/organizationModuleModal";
+import { toastAPIError } from "@src/helpers/utils/utils";
+import { timeOut } from "@src/helpers/constants/constants";
+import { localizedData } from "@src/helpers/utils/language";
 import {
   LocalizationInterface,
   OrganizationModuleInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
-import { localizedData } from "@src/helpers/utils/language";
-import { useApiOrganizationModuleListQuery } from "@src/store/api";
-import { useNavigate } from "react-router-dom";
+import {
+  useApiOrganizationModuleListQuery,
+  useApiOrganizationModuleDestroyMutation,
+} from "@src/store/api";
 import "@src/components/common/smart/organizationModules/organizationModules.scss";
 
 function OrganizationModules() {
   const { data: rows = [], isLoading } = useApiOrganizationModuleListQuery();
+  const [deleteOrganizationModule] = useApiOrganizationModuleDestroyMutation();
   const constantData: LocalizationInterface = localizedData();
-  const [dataLoading, setIsDataLoading] = useState(true);
   const { filterButton } = constantData.Buttons;
+
+  const [action, setAction] = useState("add");
+  const [rowCellId, setRowCellId] = useState<number | undefined>(undefined);
+  const [dataLoading, setIsDataLoading] = useState(true);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [openModal, setOpenModal] = useState(false);
   const [organizationModuleData, setOrganizationModuleData] = useState<
     OrganizationModuleInterface[]
   >([]);
-  const [pageSize, setPageSize] = useState<number>(10);
-  const navigate = useNavigate();
+
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
+  const handleModalClose = () => {
+    setRowCellId(undefined);
+    setAction("add");
+    setOpenModal(false);
+  };
+
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleOrgModuleDelete = async () => {
+    await deleteOrganizationModule({
+      id: rowCellId,
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success("Organization module deleted successfully", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleDeleteModalClose();
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
+  };
 
   const columns: GridColDef[] = [
+    {
+      field: "organization",
+      headerName: "Organization",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues.row.organization.name}
+          </p>
+        );
+      },
+    },
     {
       field: "module",
       headerName: "Module",
@@ -40,20 +116,7 @@ function OrganizationModules() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.module}
-          </p>
-        );
-      },
-    },
-    {
-      field: "organization",
-      headerName: "Organization",
-      sortable: false,
-      width: 200,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.organization}
+            {cellValues.row.module.name}
           </p>
         );
       },
@@ -62,12 +125,44 @@ function OrganizationModules() {
       field: "is_enabled",
       headerName: "Enabled",
       sortable: false,
-      width: 200,
+      width: 300,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.is_enabled ? "True" : "False"}
+            {cellValues.row.is_enabled ? "True" : "False"}
           </p>
+        );
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Box
+            className="renderCell-joiningDate"
+            style={{ marginLeft: "10px" }}
+          >
+            <IconButton
+              onClick={(event) => handleEditModalOpen(event, cellValues.row.id)}
+              aria-label="edit"
+              id="edit-btn-id"
+              className="edit-btn"
+            >
+              <img className="profile-pic" src={EditIcon} alt="profile pic" />
+            </IconButton>
+            <IconButton
+              onClick={(event) =>
+                handleDeleteModalOpen(event, cellValues.row.id)
+              }
+              aria-label="delete"
+              id="delete-btn-id"
+              className="delete-btn"
+            >
+              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
+            </IconButton>
+          </Box>
         );
       },
     },
@@ -83,6 +178,7 @@ function OrganizationModules() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+
   return (
     <Box className="organizationModuleDataGridTable-section">
       <Box
@@ -122,7 +218,6 @@ function OrganizationModules() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
                     <img
                       className="profile-pic"
                       src={searchBox}
@@ -148,6 +243,15 @@ function OrganizationModules() {
             >
               {" "}
               <p>{filterButton}</p>
+            </Button>
+            <Button
+              variant="outlined"
+              className="create-btn"
+              style={{ borderRadius: "12px" }}
+              startIcon={<AddIcon />}
+              onClick={handleModalOpen}
+            >
+              <p id="create-btn-text">{"Create"}</p>
             </Button>
           </Box>
         </Box>
@@ -252,16 +356,27 @@ function OrganizationModules() {
             <Box className="error-img">
               <img src={NotfoundIcon} alt="notfound" />
               <Typography className="error-msg">
-                {"No modules found!"}
+                {"No organization modules found!"}
               </Typography>
             </Box>
           )}
         </>
       ) : (
         <>
-          <RowSkeletonCard pathString="organization/modules" />
+          <RowSkeletonCard pathString="organizations/modules" />
         </>
       )}
+      <OrganizationModuleModal
+        orgModuleId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        handleObjDelete={handleOrgModuleDelete}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }
