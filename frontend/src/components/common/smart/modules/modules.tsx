@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Typography,
@@ -8,7 +9,6 @@ import {
   IconButton,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
@@ -18,13 +18,13 @@ import searchBox from "@src/assets/svgs/searchBox.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import ModuleModal from "@src/components/shared/popUps/moduleModal/moduleModal";
-import { toastAPIError } from "@src/helpers/utils/utils";
-import { localizedData } from "@src/helpers/utils/language";
 import { timeOut } from "@src/helpers/constants/constants";
 import {
   LocalizationInterface,
   ModuleInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
+import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   useApiModuleListQuery,
   useApiModuleDestroyMutation,

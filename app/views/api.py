@@ -608,7 +608,7 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 

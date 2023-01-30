@@ -24,13 +24,13 @@ import {
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { toastAPIError } from "@src/helpers/utils/utils";
-import { useApiOrganizationModuleCreateMutation } from "@src/store/api";
 import {
+  useApiOrganizationModuleCreateMutation,
   useApiOrganizationListQuery,
   useApiOrganizationModuleRetrieveQuery,
   useApiOrganizationModuleUpdateMutation,
+  useApiModuleListQuery,
 } from "@src/store/api";
-import { useApiModuleListQuery } from "@src/store/api";
 import "@src/components/shared/popUps/organizationModuleModal/organizationModuleModal.scss";
 
 interface Props {

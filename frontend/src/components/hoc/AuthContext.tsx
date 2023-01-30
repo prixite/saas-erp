@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import { User } from "@src/helpers/interfaces/employees-modal";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 
 export interface AuhtContextInterface {
   isAuthenticated: boolean;
