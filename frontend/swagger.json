@@ -2039,19 +2039,9 @@
                 }
             }
         },
-        "/api/team/{id}/members/": {
+        "/api/team/": {
             "get": {
-                "operationId": "api_team_members_retrieve",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
+                "operationId": "api_team_list",
                 "tags": [
                     "api"
                 ],
@@ -2065,18 +2055,19 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Team"
+                                    }
                                 }
                             }
                         },
                         "description": ""
                     }
                 }
-            }
-        },
-        "/api/team_create/": {
+            },
             "post": {
-                "operationId": "api_team_create_create",
+                "operationId": "api_team_create",
                 "tags": [
                     "api"
                 ],
@@ -2107,6 +2098,41 @@
                 ],
                 "responses": {
                     "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Team"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/team/{id}/members/": {
+            "get": {
+                "operationId": "api_team_members_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3509,6 +3535,14 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "time": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "date": {
+                        "type": "string",
+                        "readOnly": true
+                    },
                     "status": {
                         "$ref": "#/components/schemas/StandupUpdateStatusEnum"
                     },
@@ -3543,10 +3577,12 @@
                 },
                 "required": [
                     "created_at",
+                    "date",
                     "employee",
                     "id",
                     "standup",
                     "status",
+                    "time",
                     "updated_at"
                 ]
             },
