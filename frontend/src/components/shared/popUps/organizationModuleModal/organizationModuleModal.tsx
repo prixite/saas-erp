@@ -18,11 +18,7 @@ import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import { timeOut } from "@src/helpers/constants/constants";
-import {
-  LocalizationInterface,
-  OrganizationModuleInterface,
-} from "@src/helpers/interfaces/localizationinterfaces";
-import { localizedData } from "@src/helpers/utils/language";
+import { OrganizationModuleInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   useApiOrganizationModuleCreateMutation,
