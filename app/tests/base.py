@@ -137,5 +137,5 @@ class BaseTestCase(TestCase):
             name="Standup-1",
             team=self.team,
             organization=self.organization,
-            created_at="2023-01-12T11:15:00+05:00",
+            time="11:15:00+05:00",
         )

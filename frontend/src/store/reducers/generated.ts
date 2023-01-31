@@ -344,6 +344,7 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+<<<<<<< HEAD
     apiOrganizationModulesList: build.query<
       ApiOrganizationModulesListApiResponse,
       ApiOrganizationModulesListApiArg
@@ -355,6 +356,56 @@ const injectedRtkApi = api.injectEndpoints({
       ApiOrganizationRolesListApiArg
     >({
       query: () => ({ url: `/api/organization_roles/` }),
+=======
+    apiOrganizationList: build.query<
+      ApiOrganizationListApiResponse,
+      ApiOrganizationListApiArg
+    >({
+      query: () => ({ url: `/api/organization/` }),
+    }),
+    apiOrganizationModuleList: build.query<
+      ApiOrganizationModuleListApiResponse,
+      ApiOrganizationModuleListApiArg
+    >({
+      query: () => ({ url: `/api/organization-module/` }),
+    }),
+    apiOrganizationModuleCreate: build.mutation<
+      ApiOrganizationModuleCreateApiResponse,
+      ApiOrganizationModuleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/`,
+        method: "POST",
+        body: queryArg.organizationModule,
+      }),
+    }),
+    apiOrganizationModuleRetrieve: build.query<
+      ApiOrganizationModuleRetrieveApiResponse,
+      ApiOrganizationModuleRetrieveApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+      }),
+    }),
+    apiOrganizationModuleUpdate: build.mutation<
+      ApiOrganizationModuleUpdateApiResponse,
+      ApiOrganizationModuleUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.organizationModule,
+      }),
+    }),
+    apiOrganizationModuleDestroy: build.mutation<
+      ApiOrganizationModuleDestroyApiResponse,
+      ApiOrganizationModuleDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
     }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
@@ -437,6 +488,12 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
+    apiStandupMembersRetrieve: build.query<
+      ApiStandupMembersRetrieveApiResponse,
+      ApiStandupMembersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/standup/${queryArg.id}/members/` }),
+    }),
     apiStandupUpdateList: build.query<
       ApiStandupUpdateListApiResponse,
       ApiStandupUpdateListApiArg
@@ -466,6 +523,7 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.team,
       }),
     }),
+<<<<<<< HEAD
     apiTeamMembersRetrieve: build.query<
       ApiTeamMembersRetrieveApiResponse,
       ApiTeamMembersRetrieveApiArg
@@ -516,6 +574,8 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+=======
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
   }),
   overrideExisting: false,
 });
@@ -677,10 +737,38 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+<<<<<<< HEAD
 export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
 export type ApiOrganizationModulesListApiArg = void;
 export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
 export type ApiOrganizationRolesListApiArg = void;
+=======
+export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
+export type ApiOrganizationListApiArg = void;
+export type ApiOrganizationModuleListApiResponse =
+  /** status 200  */ OrganizationModule[];
+export type ApiOrganizationModuleListApiArg = void;
+export type ApiOrganizationModuleCreateApiResponse =
+  /** status 201  */ OrganizationModule;
+export type ApiOrganizationModuleCreateApiArg = {
+  organizationModule: OrganizationModule;
+};
+export type ApiOrganizationModuleRetrieveApiResponse =
+  /** status 200  */ OrganizationModule;
+export type ApiOrganizationModuleRetrieveApiArg = {
+  id: number;
+};
+export type ApiOrganizationModuleUpdateApiResponse =
+  /** status 200  */ OrganizationModule;
+export type ApiOrganizationModuleUpdateApiArg = {
+  id: number;
+  organizationModule: OrganizationModule;
+};
+export type ApiOrganizationModuleDestroyApiResponse = unknown;
+export type ApiOrganizationModuleDestroyApiArg = {
+  id: number;
+};
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -717,6 +805,10 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
+export type ApiStandupMembersRetrieveApiResponse = /** status 200  */ Standup;
+export type ApiStandupMembersRetrieveApiArg = {
+  id: number;
+};
 export type ApiStandupUpdateListApiResponse =
   /** status 200  */ StandupUpdate[];
 export type ApiStandupUpdateListApiArg = void;
@@ -731,6 +823,7 @@ export type ApiTeamCreateApiResponse = /** status 201  */ Team;
 export type ApiTeamCreateApiArg = {
   team: Team;
 };
+<<<<<<< HEAD
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
   id: number;
@@ -760,6 +853,8 @@ export type ApiUsersAccessDestroyApiResponse = unknown;
 export type ApiUsersAccessDestroyApiArg = {
   id: number;
 };
+=======
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
 export type AssetType = {
   id: number;
   name: string;
@@ -974,10 +1069,12 @@ export type Leave = {
 export type LeaveUpdate = {
   status?: Status913Enum;
   hr_comment?: string | null;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
 };
 export type PatchedLeaveUpdate = {
   status?: Status913Enum;
   hr_comment?: string | null;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
 };
 export type Login = {
   email: string;
@@ -1039,6 +1136,14 @@ export type Organization = {
   created_at: string;
   updated_at: string;
 };
+export type OrganizationModule = {
+  id: number;
+  is_enabled?: boolean;
+  created_at: string;
+  updated_at: string;
+  module: number;
+  organization: number;
+};
 export type OwnerEmployee = {
   date_of_joining: string;
   nic: string;
@@ -1071,7 +1176,9 @@ export type Program = {
 export type Standup = {
   id: number;
   name: string;
+  time: string;
   created_at: string;
+  updated_at: string;
   team: number;
 };
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
@@ -1153,8 +1260,17 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+<<<<<<< HEAD
   useApiOrganizationModulesListQuery,
   useApiOrganizationRolesListQuery,
+=======
+  useApiOrganizationListQuery,
+  useApiOrganizationModuleListQuery,
+  useApiOrganizationModuleCreateMutation,
+  useApiOrganizationModuleRetrieveQuery,
+  useApiOrganizationModuleUpdateMutation,
+  useApiOrganizationModuleDestroyMutation,
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1165,10 +1281,12 @@ export const {
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
+  useApiStandupMembersRetrieveQuery,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
   useApiTeamListQuery,
   useApiTeamCreateMutation,
+<<<<<<< HEAD
   useApiTeamMembersRetrieveQuery,
   useApiUsersListQuery,
   useApiUsersAccessListQuery,
@@ -1176,4 +1294,6 @@ export const {
   useApiUsersAccessRetrieveQuery,
   useApiUsersAccessUpdateMutation,
   useApiUsersAccessDestroyMutation,
+=======
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
 } = injectedRtkApi;

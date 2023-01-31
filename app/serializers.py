@@ -545,7 +545,7 @@ class LeaveSerializer(serializers.ModelSerializer):
 class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
-        fields = ("status", "hr_comment")
+        fields = ("status", "hr_comment", "leave_type")
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -622,6 +622,38 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         return value
 
 
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OrganizationModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrganizationModule
+        fields = "__all__"
+
+    def validate(self, attrs):
+        if self.context.get("request").method == "POST" and (
+            models.OrganizationModule.objects.filter(
+                module=attrs.get("module"), organization=attrs.get("organization")
+            ).exists()
+        ):
+            raise serializers.ValidationError(
+                "This module already exists in this organization."
+            )
+        return super().validate(attrs)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["organization"] = {
+            "id": instance.organization.id,
+            "name": instance.organization.name,
+        }
+        return data
+
+
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Module
@@ -638,7 +670,7 @@ class TeamSerializer(serializers.ModelSerializer):
         members = data.get("members")
         for member in members:
             if member.organization != user.organization:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Employee not found")
         return data
 
 
@@ -665,19 +697,23 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
         if permission == models.Role.Permission.MEMBER:
             if not user.employee == employee:
                 if employee in team_members and user.employee in team_members:
-                    raise PermissionDenied(detail="Forbidden")
+                    raise PermissionDenied(
+                        detail="You are not authorized to add standup updates for your team member."  # noqa
+                    )
                 else:
-                    raise NotFound(detail="Not Found")
+                    raise NotFound(detail="Employee not found")
 
             if employee not in team_members:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Standup not found")
 
         else:
             if employee.organization == user.organization == standup.organization:
                 if employee not in team_members:
-                    raise serializers.ValidationError({"detail": "Invalid request"})
+                    raise serializers.ValidationError(
+                        {"detail": "Employee does not belong to this standup"}
+                    )
             else:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Detail not found")
         return data
 
     def get_time(self, obj):

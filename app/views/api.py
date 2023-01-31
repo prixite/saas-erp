@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.db.models.deletion import ProtectedError
 from django.middleware import csrf
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import smart_bytes, smart_str
@@ -577,16 +578,50 @@ class OwnerOnboardingAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
 
 
+class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
+
+    allow_superuser = True
+    serializer_class = serializers.OrganizationSerializer
+    queryset = models.Organization.objects.all()
+
+
+class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+
+    allow_superuser = True
+    serializer_class = serializers.OrganizationModuleSerializer
+    queryset = models.OrganizationModule.objects.all()
+
+
 class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
+    allow_superuser = True
     serializer_class = serializers.ModuleSerializer
     queryset = models.Module.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object.organization
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.StandupSerializer
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def retrieve(self, request, pk=None):
+        standup = self.get_object()
+        members = standup.team.members.all()
+        serializer = serializers.EmployeeListSerializer(members, many=True)
+        return Response(serializer.data)
 
 
 class StandupUpdateViewSet(

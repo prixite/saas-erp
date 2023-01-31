@@ -1595,9 +1595,15 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/organization_modules/": {
             "get": {
                 "operationId": "api_organization_modules_list",
+=======
+        "/api/organization/": {
+            "get": {
+                "operationId": "api_organization_list",
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                 "tags": [
                     "api"
                 ],
@@ -1613,7 +1619,11 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
+<<<<<<< HEAD
                                         "$ref": "#/components/schemas/Module"
+=======
+                                        "$ref": "#/components/schemas/Organization"
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                                     }
                                 }
                             }
@@ -1623,9 +1633,15 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/organization_roles/": {
             "get": {
                 "operationId": "api_organization_roles_list",
+=======
+        "/api/organization-module/": {
+            "get": {
+                "operationId": "api_organization_module_list",
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                 "tags": [
                     "api"
                 ],
@@ -1641,7 +1657,11 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
+<<<<<<< HEAD
                                         "$ref": "#/components/schemas/Role"
+=======
+                                        "$ref": "#/components/schemas/OrganizationModule"
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                                     }
                                 }
                             }
@@ -1649,6 +1669,166 @@
                         "description": ""
                     }
                 }
+<<<<<<< HEAD
+=======
+            },
+            "post": {
+                "operationId": "api_organization_module_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationModule"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/organization-module/{id}/": {
+            "get": {
+                "operationId": "api_organization_module_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationModule"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "api_organization_module_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationModule"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationModule"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "api_organization_module_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
             }
         },
         "/api/owner/onboard/": {
@@ -2024,6 +2204,41 @@
                 }
             }
         },
+        "/api/standup/{id}/members/": {
+            "get": {
+                "operationId": "api_standup_members_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Standup"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/standup_update/": {
             "get": {
                 "operationId": "api_standup_update_list",
@@ -2165,6 +2380,7 @@
                     }
                 }
             }
+<<<<<<< HEAD
         },
         "/api/team/{id}/members/": {
             "get": {
@@ -2433,6 +2649,8 @@
                     }
                 }
             }
+=======
+>>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
         }
     },
     "components": {
@@ -3380,6 +3598,20 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "leave_type": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LeaveTypeEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     }
                 }
             },
@@ -3581,6 +3813,41 @@
                     "updated_at"
                 ]
             },
+            "OrganizationModule": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "is_enabled": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "module": {
+                        "type": "integer"
+                    },
+                    "organization": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "id",
+                    "module",
+                    "organization",
+                    "updated_at"
+                ]
+            },
             "OwnerEmployee": {
                 "type": "object",
                 "properties": {
@@ -3670,6 +3937,20 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "leave_type": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LeaveTypeEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     }
                 }
             },
@@ -3790,9 +4071,19 @@
                         "type": "string",
                         "maxLength": 128
                     },
+                    "time": {
+                        "type": "string",
+                        "format": "time"
+                    },
                     "created_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
                     },
                     "team": {
                         "type": "integer"
@@ -3802,7 +4093,9 @@
                     "created_at",
                     "id",
                     "name",
-                    "team"
+                    "team",
+                    "time",
+                    "updated_at"
                 ]
             },
             "StandupUpdate": {
