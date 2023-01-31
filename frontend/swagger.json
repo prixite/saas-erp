@@ -1968,6 +1968,41 @@
                 }
             }
         },
+        "/api/standup/{id}/members/": {
+            "get": {
+                "operationId": "api_standup_members_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Standup"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/standup_update/": {
             "get": {
                 "operationId": "api_standup_update_list",
@@ -2098,41 +2133,6 @@
                 ],
                 "responses": {
                     "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Team"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/team/{id}/members/": {
-            "get": {
-                "operationId": "api_team_members_retrieve",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3103,6 +3103,20 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "leave_type": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LeaveTypeEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     }
                 }
             },
@@ -3393,6 +3407,20 @@
                     "hr_comment": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "leave_type": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LeaveTypeEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     }
                 }
             },
@@ -3513,9 +3541,19 @@
                         "type": "string",
                         "maxLength": 128
                     },
+                    "time": {
+                        "type": "string",
+                        "format": "time"
+                    },
                     "created_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
                     },
                     "team": {
                         "type": "integer"
@@ -3525,7 +3563,9 @@
                     "created_at",
                     "id",
                     "name",
-                    "team"
+                    "team",
+                    "time",
+                    "updated_at"
                 ]
             },
             "StandupUpdate": {

@@ -425,6 +425,12 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
+    apiStandupMembersRetrieve: build.query<
+      ApiStandupMembersRetrieveApiResponse,
+      ApiStandupMembersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/standup/${queryArg.id}/members/` }),
+    }),
     apiStandupUpdateList: build.query<
       ApiStandupUpdateListApiResponse,
       ApiStandupUpdateListApiArg
@@ -453,12 +459,6 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
         body: queryArg.team,
       }),
-    }),
-    apiTeamMembersRetrieve: build.query<
-      ApiTeamMembersRetrieveApiResponse,
-      ApiTeamMembersRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
     }),
   }),
   overrideExisting: false,
@@ -657,6 +657,10 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
+export type ApiStandupMembersRetrieveApiResponse = /** status 200  */ Standup;
+export type ApiStandupMembersRetrieveApiArg = {
+  id: number;
+};
 export type ApiStandupUpdateListApiResponse =
   /** status 200  */ StandupUpdate[];
 export type ApiStandupUpdateListApiArg = void;
@@ -670,10 +674,6 @@ export type ApiTeamListApiArg = void;
 export type ApiTeamCreateApiResponse = /** status 201  */ Team;
 export type ApiTeamCreateApiArg = {
   team: Team;
-};
-export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
-export type ApiTeamMembersRetrieveApiArg = {
-  id: number;
 };
 export type AssetType = {
   id: number;
@@ -889,10 +889,12 @@ export type Leave = {
 export type LeaveUpdate = {
   status?: Status913Enum;
   hr_comment?: string | null;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
 };
 export type PatchedLeaveUpdate = {
   status?: Status913Enum;
   hr_comment?: string | null;
+  leave_type?: (LeaveTypeEnum | BlankEnum | NullEnum) | null;
 };
 export type Login = {
   email: string;
@@ -986,7 +988,9 @@ export type Role = {
 export type Standup = {
   id: number;
   name: string;
+  time: string;
   created_at: string;
+  updated_at: string;
   team: number;
 };
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
@@ -1064,9 +1068,9 @@ export const {
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
+  useApiStandupMembersRetrieveQuery,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
   useApiTeamListQuery,
   useApiTeamCreateMutation,
-  useApiTeamMembersRetrieveQuery,
 } = injectedRtkApi;
