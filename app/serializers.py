@@ -679,6 +679,13 @@ class StandupSerializer(serializers.ModelSerializer):
         model = models.Standup
         exclude = ("organization",)
 
+    def validate(self, data):
+        user = self.context.get("request").user
+        team = data.get("team")
+        if team.organization != user.organization:
+            raise NotFound(detail="Team not found")
+        return data
+
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
     time = serializers.SerializerMethodField()

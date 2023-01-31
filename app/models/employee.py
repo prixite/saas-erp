@@ -83,7 +83,7 @@ class Team(models.Model):
     part of multiple teams.
     """
 
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     members = models.ManyToManyField("Employee")
     created_at = models.DateTimeField(auto_now_add=True)
