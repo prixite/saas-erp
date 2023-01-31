@@ -11,10 +11,10 @@ import "@src/components/shared/popUps/deleteModal/deleteModal.scss";
 interface Props {
   open: boolean;
   handleClose: () => void;
-  handleEmployeeDelete: () => void;
+  handleObjDelete: () => void;
 }
 
-const DeleteModal = ({ open, handleClose, handleEmployeeDelete }: Props) => {
+const DeleteModal = ({ open, handleClose, handleObjDelete }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const { wantToDelete, yes, no } = constantData.Modals;
 
@@ -37,7 +37,7 @@ const DeleteModal = ({ open, handleClose, handleEmployeeDelete }: Props) => {
               {no}
             </Button>
             <Button
-              onClick={handleEmployeeDelete}
+              onClick={handleObjDelete}
               className="submitBtn"
               sx={{ ml: "12px !important" }}
             >

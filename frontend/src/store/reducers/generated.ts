@@ -344,6 +344,55 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiOrganizationList: build.query<
+      ApiOrganizationListApiResponse,
+      ApiOrganizationListApiArg
+    >({
+      query: () => ({ url: `/api/organization/` }),
+    }),
+    apiOrganizationModuleList: build.query<
+      ApiOrganizationModuleListApiResponse,
+      ApiOrganizationModuleListApiArg
+    >({
+      query: () => ({ url: `/api/organization-module/` }),
+    }),
+    apiOrganizationModuleCreate: build.mutation<
+      ApiOrganizationModuleCreateApiResponse,
+      ApiOrganizationModuleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/`,
+        method: "POST",
+        body: queryArg.organizationModule,
+      }),
+    }),
+    apiOrganizationModuleRetrieve: build.query<
+      ApiOrganizationModuleRetrieveApiResponse,
+      ApiOrganizationModuleRetrieveApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+      }),
+    }),
+    apiOrganizationModuleUpdate: build.mutation<
+      ApiOrganizationModuleUpdateApiResponse,
+      ApiOrganizationModuleUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.organizationModule,
+      }),
+    }),
+    apiOrganizationModuleDestroy: build.mutation<
+      ApiOrganizationModuleDestroyApiResponse,
+      ApiOrganizationModuleDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
       ApiOwnerOnboardCreateApiArg
@@ -619,6 +668,31 @@ export type ApiModuleUpdateApiArg = {
 };
 export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
+  id: number;
+};
+export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
+export type ApiOrganizationListApiArg = void;
+export type ApiOrganizationModuleListApiResponse =
+  /** status 200  */ OrganizationModule[];
+export type ApiOrganizationModuleListApiArg = void;
+export type ApiOrganizationModuleCreateApiResponse =
+  /** status 201  */ OrganizationModule;
+export type ApiOrganizationModuleCreateApiArg = {
+  organizationModule: OrganizationModule;
+};
+export type ApiOrganizationModuleRetrieveApiResponse =
+  /** status 200  */ OrganizationModule;
+export type ApiOrganizationModuleRetrieveApiArg = {
+  id: number;
+};
+export type ApiOrganizationModuleUpdateApiResponse =
+  /** status 200  */ OrganizationModule;
+export type ApiOrganizationModuleUpdateApiArg = {
+  id: number;
+  organizationModule: OrganizationModule;
+};
+export type ApiOrganizationModuleDestroyApiResponse = unknown;
+export type ApiOrganizationModuleDestroyApiArg = {
   id: number;
 };
 export type ApiOwnerOnboardCreateApiResponse =
@@ -947,6 +1021,14 @@ export type Organization = {
   created_at: string;
   updated_at: string;
 };
+export type OrganizationModule = {
+  id: number;
+  is_enabled?: boolean;
+  created_at: string;
+  updated_at: string;
+  module: number;
+  organization: number;
+};
 export type OwnerEmployee = {
   date_of_joining: string;
   nic: string;
@@ -1058,6 +1140,12 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiOrganizationListQuery,
+  useApiOrganizationModuleListQuery,
+  useApiOrganizationModuleCreateMutation,
+  useApiOrganizationModuleRetrieveQuery,
+  useApiOrganizationModuleUpdateMutation,
+  useApiOrganizationModuleDestroyMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,

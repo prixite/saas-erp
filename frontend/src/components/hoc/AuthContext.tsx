@@ -1,8 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useApiMeRetrieveQuery } from "@src/store/api";
+import { User } from "@src/helpers/interfaces/employees-modal";
+import { useGetUserQuery } from "@src/store/reducers/employees-api";
 
 export interface AuhtContextInterface {
   isAuthenticated: boolean;
+  userData: User | undefined;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -13,7 +15,7 @@ type Props = {
 };
 
 const AuthProvider = ({ children }: Props) => {
-  const { isFetching, isSuccess } = useApiMeRetrieveQuery();
+  const { isFetching, isSuccess, data: userData } = useGetUserQuery();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,9 @@ const AuthProvider = ({ children }: Props) => {
   if (isFetching) return <p>Loading</p>;
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, userData }}
+    >
       {children}
     </AuthContext.Provider>
   );
