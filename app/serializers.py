@@ -698,4 +698,57 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
             if instance.employee.department
             else None,
         }
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["default_role"] = instance.default_role.name
+        return data
+
+
+class UserModuleRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserModuleRole
+        fields = (
+            "id",
+            "module",
+            "role",
+        )
+
+    def validate(self, data):
+        module = data["module"]
+        user = data["user"]
+        role = data["role"]
+        request = self.context["request"]
+        modules = models.Module.objects.filter(
+            id__in={x.id for x in request.user.organization_modules}
+        )
+        if module not in modules:
+            raise serializers.ValidationError("Invalid Module selected")
+        users = models.User.objects.filter(organization=request.user.organization)
+        if user not in users:
+            raise serializers.ValidationError("Invlid User selected")
+        roles = models.Role.objects.filter(organization=request.user.organization)
+        if role not in roles:
+            raise serializers.ValidationError("Invlid role selected")
+
+        return data
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = instance.module.name
+        data["role"] = instance.role.name
         return data

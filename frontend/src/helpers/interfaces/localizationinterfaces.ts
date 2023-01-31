@@ -403,3 +403,12 @@ export interface LocalizationInterface {
   Leaves: leavesData;
   Standup: standupData;
 }
+
+export interface UserInterface {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number?: string | null;
+  default_role?: number | null;
+}

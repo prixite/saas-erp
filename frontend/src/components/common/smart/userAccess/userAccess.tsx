@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
@@ -33,11 +33,14 @@ import {
   useDeleteEmployeeMutation,
   useGetUserQuery,
 } from "@src/store/reducers/employees-api";
-import { useApiUsersListQuery } from "@src/store/api";
+import { useApiUsersAccessListQuery } from "@src/store/api";
 import "@src/components/common/smart/users/users.scss";
 
-function User() {
-  const { data: rows = [], isLoading } = useApiUsersListQuery();
+function UserAccess() {
+  const [paramValue, setParamValue] = useState<number>(0);
+  const { data: rows = [], isLoading } = useApiUsersAccessListQuery({
+    id: paramValue,
+  });
   const constantData: LocalizationInterface = localizedData();
   const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [userData, setUserData] = useState<UserInterface[]>([]);
@@ -53,6 +56,13 @@ function User() {
   const [rowCellId, setRowCellId] = useState<number>(0);
   const [action, setAction] = useState("add");
   const [openModal, setOpenModal] = useState(false);
+  const param = useParams();
+
+  useEffect(() => {
+    if (param && param.userId) {
+      setParamValue(parseInt(param.userId));
+    }
+  }, [paramValue]);
 
   const handleModalOpen = () => {
     setOpenModal(true);
@@ -63,81 +73,21 @@ function User() {
 
   const columns: GridColDef[] = [
     {
-      field: "name",
-      headerName: "Name",
+      field: "module",
+      headerName: "Module",
       sortable: false,
       width: 300,
       renderCell: (cellValues) => {
-        return (
-          <div
-            style={{
-              marginLeft: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-            }}
-          >
-            <img
-              style={{
-                height: "32px",
-                width: "32px",
-                left: "241px",
-                top: "154px",
-                marginRight: "8px",
-                borderRadius: "50%",
-              }}
-              src={`${cellValues.row.image}`}
-              alt="profile pic"
-            />
-            <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
-          </div>
-        );
+        return <p style={{ marginLeft: "20px" }}>{cellValues.row.module}</p>;
       },
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "role",
+      headerName: "Role",
       sortable: false,
       width: 300,
       renderCell: (cellValues) => {
-        return <p style={{ marginLeft: "20px" }}>{cellValues.row.email}</p>;
-      },
-    },
-    {
-      field: "contact_Number",
-      headerName: "Contact Number",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px" }}>{cellValues.row.contact_number}</p>
-        );
-      },
-    },
-    {
-      field: "default_role",
-      headerName: "Default Role",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px" }}>{cellValues.row.default_role}</p>
-        );
-      },
-    },
-    {
-      field: "access",
-      headerName: "Access",
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <p
-            onClick={() => navigate(`/users/${cellValues.row.id}/access`)}
-            style={{ marginLeft: "20px" }}
-          >
-            View
-          </p>
-        );
+        return <p style={{ marginLeft: "20px" }}>{cellValues.row.role}</p>;
       },
     },
   ];
@@ -159,7 +109,7 @@ function User() {
         className="top-bar-cls"
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Typography className="title-cls">{"User Module"}</Typography>
+        <Typography className="title-cls">{"User Access"}</Typography>
       </Box>
       {!dataLoading ? (
         <>
@@ -278,4 +228,4 @@ function User() {
     </Box>
   );
 }
-export default User;
+export default UserAccess;

@@ -12,6 +12,7 @@ import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Standup from "@src/components/common/smart/standup/standup";
 import Users from "@src/components/common/smart/users/users";
+import UserAccess from "@src/components/common/smart/userAccess/userAccess";
 import ProtectedRoute from "@src/components/hoc/ProtectedRoute";
 import Layout from "@src/components/shared/layout";
 import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
@@ -47,7 +48,10 @@ const AppRoutes = () => {
             )}
             <Route path="profile/" element={<ProfilePage />} />
             {allFlags.show_users_module && (
-              <Route path="users/" element={<Users />} />
+              <>
+                <Route path="users/" element={<Users />} />
+                <Route path="users/:userId/access/" element={<UserAccess />} />
+              </>
             )}
             {allFlags.show_accounts_module && (
               <Route path="accounts/" element={<Accounts />} />

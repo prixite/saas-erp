@@ -183,4 +183,21 @@ urlpatterns = [
         api.TeamViewSet.as_view({"get": "list", "post": "create"}),
     ),
     path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "retrieve"})),
+    path(
+        "users/<int:pk>/access/",
+        api.UserModuleRoleViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "users/access/<int:pk>/",
+        api.UserModuleRoleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
+    path("module_filter/", api.ModuleFilterViewSet.as_view({"get": "list"})),
+    path("users/", api.UserViewSet.as_view({"get": "list"})),
+    path("role_filter/", api.RoleFilterViewSet.as_view({"get": "list"})),
 ]

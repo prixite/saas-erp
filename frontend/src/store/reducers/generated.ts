@@ -344,6 +344,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiModuleFilterList: build.query<
+      ApiModuleFilterListApiResponse,
+      ApiModuleFilterListApiArg
+    >({
+      query: () => ({ url: `/api/module_filter/` }),
+    }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
       ApiOwnerOnboardCreateApiArg
@@ -403,6 +409,12 @@ const injectedRtkApi = api.injectEndpoints({
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
+    apiRoleFilterList: build.query<
+      ApiRoleFilterListApiResponse,
+      ApiRoleFilterListApiArg
+    >({
+      query: () => ({ url: `/api/role_filter/` }),
+    }),
     apiSlackAttendanceCreate: build.mutation<
       ApiSlackAttendanceCreateApiResponse,
       ApiSlackAttendanceCreateApiArg
@@ -459,6 +471,50 @@ const injectedRtkApi = api.injectEndpoints({
       ApiTeamMembersRetrieveApiArg
     >({
       query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
+    }),
+    apiUsersList: build.query<ApiUsersListApiResponse, ApiUsersListApiArg>({
+      query: () => ({ url: `/api/users/` }),
+    }),
+    apiUsersAccessList: build.query<
+      ApiUsersAccessListApiResponse,
+      ApiUsersAccessListApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/users/${queryArg.id}/access/` }),
+    }),
+    apiUsersAccessCreate: build.mutation<
+      ApiUsersAccessCreateApiResponse,
+      ApiUsersAccessCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/${queryArg.id}/access/`,
+        method: "POST",
+        body: queryArg.userModuleRole,
+      }),
+    }),
+    apiUsersAccessRetrieve: build.query<
+      ApiUsersAccessRetrieveApiResponse,
+      ApiUsersAccessRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/users/access/${queryArg.id}/` }),
+    }),
+    apiUsersAccessUpdate: build.mutation<
+      ApiUsersAccessUpdateApiResponse,
+      ApiUsersAccessUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/access/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.userModuleRole,
+      }),
+    }),
+    apiUsersAccessDestroy: build.mutation<
+      ApiUsersAccessDestroyApiResponse,
+      ApiUsersAccessDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/access/${queryArg.id}/`,
+        method: "DELETE",
+      }),
     }),
   }),
   overrideExisting: false,
@@ -621,6 +677,8 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+export type ApiModuleFilterListApiResponse = /** status 200  */ Module[];
+export type ApiModuleFilterListApiArg = void;
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -649,6 +707,8 @@ export type ApiProgramsCreateApiArg = {
 };
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
+export type ApiRoleFilterListApiResponse = /** status 200  */ Role[];
+export type ApiRoleFilterListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
 export type ApiStandupListApiResponse = /** status 200  */ Standup[];
@@ -673,6 +733,31 @@ export type ApiTeamCreateApiArg = {
 };
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
+  id: number;
+};
+export type ApiUsersListApiResponse = /** status 200  */ User[];
+export type ApiUsersListApiArg = void;
+export type ApiUsersAccessListApiResponse = /** status 200  */ UserModuleRole[];
+export type ApiUsersAccessListApiArg = {
+  id: number;
+};
+export type ApiUsersAccessCreateApiResponse = /** status 201  */ UserModuleRole;
+export type ApiUsersAccessCreateApiArg = {
+  id: number;
+  userModuleRole: UserModuleRole;
+};
+export type ApiUsersAccessRetrieveApiResponse =
+  /** status 200  */ UserModuleRole;
+export type ApiUsersAccessRetrieveApiArg = {
+  id: number;
+};
+export type ApiUsersAccessUpdateApiResponse = /** status 200  */ UserModuleRole;
+export type ApiUsersAccessUpdateApiArg = {
+  id: number;
+  userModuleRole: UserModuleRole;
+};
+export type ApiUsersAccessDestroyApiResponse = unknown;
+export type ApiUsersAccessDestroyApiArg = {
   id: number;
 };
 export type AssetType = {
@@ -1010,6 +1095,19 @@ export type Team = {
   updated_at: string;
   members: number[];
 };
+export type User = {
+  id: number;
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number?: string | null;
+  default_role?: number | null;
+};
+export type UserModuleRole = {
+  module: number;
+  role: number;
+};
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
@@ -1054,6 +1152,7 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiModuleFilterListQuery,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1061,6 +1160,7 @@ export const {
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
+  useApiRoleFilterListQuery,
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
@@ -1069,4 +1169,10 @@ export const {
   useApiTeamListQuery,
   useApiTeamCreateMutation,
   useApiTeamMembersRetrieveQuery,
+  useApiUsersListQuery,
+  useApiUsersAccessListQuery,
+  useApiUsersAccessCreateMutation,
+  useApiUsersAccessRetrieveQuery,
+  useApiUsersAccessUpdateMutation,
+  useApiUsersAccessDestroyMutation,
 } = injectedRtkApi;
