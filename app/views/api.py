@@ -588,6 +588,12 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def retrieve(self, request, pk=None):
+        standup = self.get_object()
+        members = standup.team.members.all()
+        serializer = serializers.EmployeeListSerializer(members, many=True)
+        return Response(serializer.data)
+
 
 class StandupUpdateViewSet(
     mixins.PrivateMixinAPI, ModelViewSet, mixins.OrganizationMixin
@@ -606,9 +612,3 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
-
-    def retrieve(self, request, pk=None):
-        team = self.get_object()
-        members = team.members.all()
-        serializer = serializers.EmployeeSerializer(members, many=True)
-        return Response(serializer.data)

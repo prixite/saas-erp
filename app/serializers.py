@@ -545,7 +545,7 @@ class LeaveSerializer(serializers.ModelSerializer):
 class LeaveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Leave
-        fields = ("status", "hr_comment")
+        fields = ("status", "hr_comment", "leave_type")
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -638,7 +638,7 @@ class TeamSerializer(serializers.ModelSerializer):
         members = data.get("members")
         for member in members:
             if member.organization != user.organization:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Employee not found")
         return data
 
 
@@ -665,19 +665,23 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
         if permission == models.Role.Permission.MEMBER:
             if not user.employee == employee:
                 if employee in team_members and user.employee in team_members:
-                    raise PermissionDenied(detail="Forbidden")
+                    raise PermissionDenied(
+                        detail="You are not authorized to add standup updates for your team member."  # noqa
+                    )
                 else:
-                    raise NotFound(detail="Not Found")
+                    raise NotFound(detail="Employee not found")
 
             if employee not in team_members:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Standup not found")
 
         else:
             if employee.organization == user.organization == standup.organization:
                 if employee not in team_members:
-                    raise serializers.ValidationError({"detail": "Invalid request"})
+                    raise serializers.ValidationError(
+                        {"detail": "Employee does not belong to this standup"}
+                    )
             else:
-                raise NotFound(detail="Not Found")
+                raise NotFound(detail="Detail not found")
         return data
 
     def get_time(self, obj):

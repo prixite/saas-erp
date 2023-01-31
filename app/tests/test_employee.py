@@ -430,10 +430,15 @@ class StandupTestCase(BaseTestCase):
             "name": "Standup",
             "team": self.team1.id,
             "organization": self.organization.id,
-            "created_at": "2023-01-12T01:52:00+05:00",
+            "time": "01:52:00+05:00",
         }
         response = self.client.post("/api/standup/", data=standup_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_standup_get_members(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/standup/{self.standup.id}/members/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class StandupUpdateTestCase(BaseTestCase):
@@ -458,11 +463,6 @@ class StandupUpdateTestCase(BaseTestCase):
 
 
 class TeamTestCase(BaseTestCase):
-    def test_team_get_members(self):
-        self.client.force_login(self.owner)
-        response = self.client.get(f"/api/team/{self.team.id}/members/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
     def test_team_post(self):
         self.client.force_login(self.owner)
         team_data = {

@@ -174,6 +174,7 @@ urlpatterns = [
         ),
     ),
     path("standup/", api.StandupViewSet.as_view({"get": "list", "post": "create"})),
+    path("standup/<int:pk>/members/", api.StandupViewSet.as_view({"get": "retrieve"})),
     path(
         "standup_update/",
         api.StandupUpdateViewSet.as_view({"get": "list", "post": "create"}),
@@ -182,5 +183,4 @@ urlpatterns = [
         "team/",
         api.TeamViewSet.as_view({"get": "list", "post": "create"}),
     ),
-    path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "retrieve"})),
 ]
