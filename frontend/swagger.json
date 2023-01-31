@@ -1595,15 +1595,9 @@
                 }
             }
         },
-<<<<<<< HEAD
-        "/api/organization_modules/": {
-            "get": {
-                "operationId": "api_organization_modules_list",
-=======
         "/api/organization/": {
             "get": {
                 "operationId": "api_organization_list",
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                 "tags": [
                     "api"
                 ],
@@ -1619,11 +1613,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-<<<<<<< HEAD
-                                        "$ref": "#/components/schemas/Module"
-=======
                                         "$ref": "#/components/schemas/Organization"
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                                     }
                                 }
                             }
@@ -1633,15 +1623,9 @@
                 }
             }
         },
-<<<<<<< HEAD
-        "/api/organization_roles/": {
-            "get": {
-                "operationId": "api_organization_roles_list",
-=======
         "/api/organization-module/": {
             "get": {
                 "operationId": "api_organization_module_list",
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                 "tags": [
                     "api"
                 ],
@@ -1657,11 +1641,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-<<<<<<< HEAD
-                                        "$ref": "#/components/schemas/Role"
-=======
                                         "$ref": "#/components/schemas/OrganizationModule"
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
                                     }
                                 }
                             }
@@ -1669,8 +1649,6 @@
                         "description": ""
                     }
                 }
-<<<<<<< HEAD
-=======
             },
             "post": {
                 "operationId": "api_organization_module_create",
@@ -1828,7 +1806,62 @@
                         "description": "No response body"
                     }
                 }
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
+            }
+        },
+        "/api/organization_modules/": {
+            "get": {
+                "operationId": "api_organization_modules_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Module"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/organization_roles/": {
+            "get": {
+                "operationId": "api_organization_roles_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
             }
         },
         "/api/owner/onboard/": {
@@ -2380,7 +2413,6 @@
                     }
                 }
             }
-<<<<<<< HEAD
         },
         "/api/team/{id}/members/": {
             "get": {
@@ -2649,8 +2681,6 @@
                     }
                 }
             }
-=======
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
         }
     },
     "components": {

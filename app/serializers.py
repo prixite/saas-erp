@@ -734,6 +734,7 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
             if instance.employee.department
             else None,
         }
+        return data
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -751,7 +752,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["default_role"] = instance.default_role.name
+        if instance.default_role:
+            data["default_role"] = instance.default_role.name
         return data
 
 

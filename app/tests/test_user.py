@@ -40,19 +40,19 @@ class UserTestCase(BaseTestCase):
 class ModuleFilterTestCase(BaseTestCase):
     def test_get_module_filter_data(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/module_filter/")
+        response = self.client.get("/api/organization_modules/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class RoleFilterTestCase(BaseTestCase):
     def test_get_role_filter_data(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/role_filter/")
+        response = self.client.get("/api/organization_roles/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class UserFilterTestCase(BaseTestCase):
     def test_get_user_filter_data(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/user_filter/")
+        response = self.client.get("/api/users/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)

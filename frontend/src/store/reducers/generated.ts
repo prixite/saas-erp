@@ -344,19 +344,6 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-<<<<<<< HEAD
-    apiOrganizationModulesList: build.query<
-      ApiOrganizationModulesListApiResponse,
-      ApiOrganizationModulesListApiArg
-    >({
-      query: () => ({ url: `/api/organization_modules/` }),
-    }),
-    apiOrganizationRolesList: build.query<
-      ApiOrganizationRolesListApiResponse,
-      ApiOrganizationRolesListApiArg
-    >({
-      query: () => ({ url: `/api/organization_roles/` }),
-=======
     apiOrganizationList: build.query<
       ApiOrganizationListApiResponse,
       ApiOrganizationListApiArg
@@ -405,7 +392,18 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/organization-module/${queryArg.id}/`,
         method: "DELETE",
       }),
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
+    }),
+    apiOrganizationModulesList: build.query<
+      ApiOrganizationModulesListApiResponse,
+      ApiOrganizationModulesListApiArg
+    >({
+      query: () => ({ url: `/api/organization_modules/` }),
+    }),
+    apiOrganizationRolesList: build.query<
+      ApiOrganizationRolesListApiResponse,
+      ApiOrganizationRolesListApiArg
+    >({
+      query: () => ({ url: `/api/organization_roles/` }),
     }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
@@ -523,7 +521,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.team,
       }),
     }),
-<<<<<<< HEAD
     apiTeamMembersRetrieve: build.query<
       ApiTeamMembersRetrieveApiResponse,
       ApiTeamMembersRetrieveApiArg
@@ -574,8 +571,6 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-=======
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
   }),
   overrideExisting: false,
 });
@@ -737,12 +732,6 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
-<<<<<<< HEAD
-export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
-export type ApiOrganizationModulesListApiArg = void;
-export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
-export type ApiOrganizationRolesListApiArg = void;
-=======
 export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
 export type ApiOrganizationListApiArg = void;
 export type ApiOrganizationModuleListApiResponse =
@@ -768,7 +757,10 @@ export type ApiOrganizationModuleDestroyApiResponse = unknown;
 export type ApiOrganizationModuleDestroyApiArg = {
   id: number;
 };
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
+export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
+export type ApiOrganizationModulesListApiArg = void;
+export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
+export type ApiOrganizationRolesListApiArg = void;
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -823,7 +815,6 @@ export type ApiTeamCreateApiResponse = /** status 201  */ Team;
 export type ApiTeamCreateApiArg = {
   team: Team;
 };
-<<<<<<< HEAD
 export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
 export type ApiTeamMembersRetrieveApiArg = {
   id: number;
@@ -853,8 +844,6 @@ export type ApiUsersAccessDestroyApiResponse = unknown;
 export type ApiUsersAccessDestroyApiArg = {
   id: number;
 };
-=======
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
 export type AssetType = {
   id: number;
   name: string;
@@ -1120,15 +1109,6 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
-export type PermissionEnum = "c" | "b" | "a";
-export type Role = {
-  id: number;
-  name: string;
-  permission?: PermissionEnum;
-  is_default?: boolean;
-  created_at: string;
-  updated_at: string;
-};
 export type Organization = {
   id: number;
   name: string;
@@ -1143,6 +1123,15 @@ export type OrganizationModule = {
   updated_at: string;
   module: number;
   organization: number;
+};
+export type PermissionEnum = "c" | "b" | "a";
+export type Role = {
+  id: number;
+  name: string;
+  permission?: PermissionEnum;
+  is_default?: boolean;
+  created_at: string;
+  updated_at: string;
 };
 export type OwnerEmployee = {
   date_of_joining: string;
@@ -1260,17 +1249,14 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
-<<<<<<< HEAD
-  useApiOrganizationModulesListQuery,
-  useApiOrganizationRolesListQuery,
-=======
   useApiOrganizationListQuery,
   useApiOrganizationModuleListQuery,
   useApiOrganizationModuleCreateMutation,
   useApiOrganizationModuleRetrieveQuery,
   useApiOrganizationModuleUpdateMutation,
   useApiOrganizationModuleDestroyMutation,
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
+  useApiOrganizationModulesListQuery,
+  useApiOrganizationRolesListQuery,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1286,7 +1272,6 @@ export const {
   useApiStandupUpdateCreateMutation,
   useApiTeamListQuery,
   useApiTeamCreateMutation,
-<<<<<<< HEAD
   useApiTeamMembersRetrieveQuery,
   useApiUsersListQuery,
   useApiUsersAccessListQuery,
@@ -1294,6 +1279,4 @@ export const {
   useApiUsersAccessRetrieveQuery,
   useApiUsersAccessUpdateMutation,
   useApiUsersAccessDestroyMutation,
-=======
->>>>>>> f83d19a379e30c7ec1b1ad3b420a655ad88ceccf
 } = injectedRtkApi;
