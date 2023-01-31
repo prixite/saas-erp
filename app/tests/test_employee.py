@@ -457,10 +457,7 @@ class StandupUpdateTestCase(BaseTestCase):
             "work_to_do": "Will work on saas erp",
             "blockers": "Requirements are unclear",
         }
-        import pdb
-
         response = self.client.post("/api/standup_update/", data=standup_update_data)
-        pdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
