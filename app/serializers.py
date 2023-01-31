@@ -728,19 +728,23 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
             "role",
         )
 
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context["user_id"]
+        return super().create(validated_data)
+
     def validate(self, data):
         module = data["module"]
-        user = data["user"]
         role = data["role"]
         request = self.context["request"]
         modules = models.Module.objects.filter(
             id__in={x.id for x in request.user.organization_modules}
         )
+        if request.method == "POST":
+            user = get_object_or_404(models.User, id=self.context.get("user_id"))
+            if models.UserModuleRole.objects.filter(module=module, user=user).exists():
+                raise serializers.ValidationError("This user module already exists.")
         if module not in modules:
             raise serializers.ValidationError("Invalid Module selected")
-        users = models.User.objects.filter(organization=request.user.organization)
-        if user not in users:
-            raise serializers.ValidationError("Invlid User selected")
         roles = models.Role.objects.filter(organization=request.user.organization)
         if role not in roles:
             raise serializers.ValidationError("Invlid role selected")
@@ -749,6 +753,6 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["module"] = instance.module.name
-        data["role"] = instance.role.name
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["role"] = {"id": instance.role.id, "name": instance.role.name}
         return data

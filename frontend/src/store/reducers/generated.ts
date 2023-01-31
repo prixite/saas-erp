@@ -344,11 +344,17 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    apiModuleFilterList: build.query<
-      ApiModuleFilterListApiResponse,
-      ApiModuleFilterListApiArg
+    apiOrganizationModulesList: build.query<
+      ApiOrganizationModulesListApiResponse,
+      ApiOrganizationModulesListApiArg
     >({
-      query: () => ({ url: `/api/module_filter/` }),
+      query: () => ({ url: `/api/organization_modules/` }),
+    }),
+    apiOrganizationRolesList: build.query<
+      ApiOrganizationRolesListApiResponse,
+      ApiOrganizationRolesListApiArg
+    >({
+      query: () => ({ url: `/api/organization_roles/` }),
     }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
@@ -408,12 +414,6 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
-    }),
-    apiRoleFilterList: build.query<
-      ApiRoleFilterListApiResponse,
-      ApiRoleFilterListApiArg
-    >({
-      query: () => ({ url: `/api/role_filter/` }),
     }),
     apiSlackAttendanceCreate: build.mutation<
       ApiSlackAttendanceCreateApiResponse,
@@ -677,8 +677,10 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
-export type ApiModuleFilterListApiResponse = /** status 200  */ Module[];
-export type ApiModuleFilterListApiArg = void;
+export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
+export type ApiOrganizationModulesListApiArg = void;
+export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
+export type ApiOrganizationRolesListApiArg = void;
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -707,8 +709,6 @@ export type ApiProgramsCreateApiArg = {
 };
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
-export type ApiRoleFilterListApiResponse = /** status 200  */ Role[];
-export type ApiRoleFilterListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
 export type ApiSlackAttendanceCreateApiArg = void;
 export type ApiStandupListApiResponse = /** status 200  */ Standup[];
@@ -1023,6 +1023,15 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
+export type PermissionEnum = "c" | "b" | "a";
+export type Role = {
+  id: number;
+  name: string;
+  permission?: PermissionEnum;
+  is_default?: boolean;
+  created_at: string;
+  updated_at: string;
+};
 export type Organization = {
   id: number;
   name: string;
@@ -1056,15 +1065,6 @@ export type PasswordResetConfirm = {
 export type Program = {
   id: number;
   name: string;
-  created_at: string;
-  updated_at: string;
-};
-export type PermissionEnum = "c" | "b" | "a";
-export type Role = {
-  id: number;
-  name: string;
-  permission?: PermissionEnum;
-  is_default?: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -1105,6 +1105,7 @@ export type User = {
   default_role?: number | null;
 };
 export type UserModuleRole = {
+  id: number;
   module: number;
   role: number;
 };
@@ -1152,7 +1153,8 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
-  useApiModuleFilterListQuery,
+  useApiOrganizationModulesListQuery,
+  useApiOrganizationRolesListQuery,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1160,7 +1162,6 @@ export const {
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiRoleListQuery,
-  useApiRoleFilterListQuery,
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,

@@ -412,3 +412,8 @@ export interface UserInterface {
   contact_number?: string | null;
   default_role?: number | null;
 }
+
+export interface UserModuleRoleInterface {
+  module: { id: number; name: string };
+  role: { id: number; name: string };
+}

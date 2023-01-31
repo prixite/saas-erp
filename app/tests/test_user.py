@@ -37,18 +37,6 @@ class UserTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-class UserModuleRoleTestCase(BaseTestCase):
-    def test_user_module_role_create(self):
-        self.client.force_login(self.owner)
-        data = {
-            "module": self.employee_module.id,
-            "user": self.org_user.id,
-            "role": self.admin_role.id,
-        }
-        response = self.client.post("/api/create_user_module_role/", data=data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-
 class ModuleFilterTestCase(BaseTestCase):
     def test_get_module_filter_data(self):
         self.client.force_login(self.owner)

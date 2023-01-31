@@ -1,65 +1,22 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
-import moment from "moment";
+import { Box, Typography } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
-import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
-import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
-import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
-import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
-import { Employee } from "@src/helpers/interfaces/employees-modal";
-import {
-  LocalizationInterface,
-  UserInterface,
-} from "@src/helpers/interfaces/localizationinterfaces";
-import { localizedData } from "@src/helpers/utils/language";
-import { toastAPIError } from "@src/helpers/utils/utils";
-import {
-  useGetEmployeesQuery,
-  useGetFlagsQuery,
-  useDeleteEmployeeMutation,
-  useGetUserQuery,
-} from "@src/store/reducers/employees-api";
+import { UserInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { useApiUsersListQuery } from "@src/store/api";
+import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/users/users.scss";
 
 function User() {
   const { data: rows = [], isLoading } = useApiUsersListQuery();
-  const constantData: LocalizationInterface = localizedData();
-  const { notFound, employeeDeleteSuccess } = constantData.Employee;
   const [userData, setUserData] = useState<UserInterface[]>([]);
-  const { data: userInfo } = useGetUserQuery();
   const [pageSize, setPageSize] = useState<number>(10);
-  const [deleteEmployee] = useDeleteEmployeeMutation();
   const { data: Flags = [] } = useGetFlagsQuery();
   const allFlags = Object.assign({}, ...Flags);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [dataLoading, setIsDataLoading] = useState(true);
-  const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const [rowCellId, setRowCellId] = useState<number>(0);
-  const [action, setAction] = useState("add");
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleModalOpen = () => {
-    setOpenModal(true);
-  };
-  const handleModalClose = () => {
-    setOpenModal(false);
-  };
 
   const columns: GridColDef[] = [
     {
@@ -172,6 +129,7 @@ function User() {
                 rows={[...userData]}
                 columns={columns}
                 disableColumnFilter
+                disableSelectionOnClick
                 disableColumnMenu
                 disableColumnSelector
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -269,12 +227,6 @@ function User() {
           <RowSkeletonCard pathString="user" />
         </>
       )}
-      <EmployeeModal
-        empId={rowCellId}
-        action={action}
-        open={openModal}
-        handleClose={handleModalClose}
-      />
     </Box>
   );
 }

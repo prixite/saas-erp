@@ -1595,9 +1595,9 @@
                 }
             }
         },
-        "/api/module_filter/": {
+        "/api/organization_modules/": {
             "get": {
-                "operationId": "api_module_filter_list",
+                "operationId": "api_organization_modules_list",
                 "tags": [
                     "api"
                 ],
@@ -1614,6 +1614,34 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/Module"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/organization_roles/": {
+            "get": {
+                "operationId": "api_organization_roles_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
                                     }
                                 }
                             }
@@ -1881,34 +1909,6 @@
         "/api/role/": {
             "get": {
                 "operationId": "api_role_list",
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Role"
-                                    }
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/role_filter/": {
-            "get": {
-                "operationId": "api_role_filter_list",
                 "tags": [
                     "api"
                 ],
@@ -3959,6 +3959,10 @@
             "UserModuleRole": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "module": {
                         "type": "integer"
                     },
@@ -3967,6 +3971,7 @@
                     }
                 },
                 "required": [
+                    "id",
                     "module",
                     "role"
                 ]

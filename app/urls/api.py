@@ -197,7 +197,7 @@ urlpatterns = [
             }
         ),
     ),
-    path("module_filter/", api.ModuleFilterViewSet.as_view({"get": "list"})),
+    path("organization_modules/", api.ModuleFilterViewSet.as_view({"get": "list"})),
     path("users/", api.UserViewSet.as_view({"get": "list"})),
-    path("role_filter/", api.RoleFilterViewSet.as_view({"get": "list"})),
+    path("organization_roles/", api.RoleFilterViewSet.as_view({"get": "list"})),
 ]
