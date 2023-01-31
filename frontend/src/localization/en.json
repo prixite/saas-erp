@@ -287,7 +287,11 @@
     "StandupNameRequired":"Standup name is required!",
     "Frontend":"Frontend",
     "Backend":"Backend",
-    "Marketing":"Marketing"
+    "Marketing":"Marketing",
+    "Time": "Time",
+    "Joined":"Joined",
+    "Missed":"Missed",
+    "TimeRequired":"Time is required!"
 
   }
 }

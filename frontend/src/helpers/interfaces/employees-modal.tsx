@@ -157,6 +157,13 @@ export interface standupTypes {
   created_at: string;
   team: string;
 }
+export interface teamTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  members: number[];
+}
 export interface Benefits {
   id: number;
   name: string;
@@ -171,7 +178,7 @@ export interface EmployeeLeaves {
 export interface EmployeeLeavesParameters {
   hr_comment: string;
   status: string;
-  type: string;
+  leave_type: string;
 }
 export interface empLeaves {
   id: number;

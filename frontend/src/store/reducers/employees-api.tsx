@@ -15,6 +15,7 @@ import {
   empLeaves,
   EmployeeLeavesParameters,
   standupTypes,
+  teamTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -27,7 +28,7 @@ export const employeesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Employee", "Owner", "Leaves"],
+  tagTypes: ["Employee", "Owner", "Leaves", "Standup"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -118,7 +119,13 @@ export const employeesApi = createApi({
     }),
     getLeaves: builder.query<empLeaves[], void>({
       query: () => "/leave/",
-      providesTags: ["Leaves"],
+      providesTags: (result = []) => [
+        ...result.map(({ id }) => ({
+          type: "Leaves" as const,
+          id: `Leaves-${id}`,
+        })),
+        "Leaves",
+      ],
     }),
     updateLeaveParameters: builder.mutation<
       void,
@@ -131,10 +138,41 @@ export const employeesApi = createApi({
           body: updatedObj,
         };
       },
-      invalidatesTags: ["Leaves"],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Leaves", id: `Leaves-${id}` },
+      ],
     }),
     getStandup: builder.query<standupTypes[], void>({
       query: () => "/standup/",
+    }),
+    getTeams: builder.query<teamTypes[], void>({
+      query: () => "/team/",
+    }),
+    createStandup: builder.mutation({
+      query: ({ standupObject }) => {
+        return {
+          url: "/standup/",
+          method: "POST",
+          body: standupObject,
+        };
+      },
+    }),
+    getStandupUpdates: builder.query<teamTypes[], void>({
+      query: () => "/standup_update/",
+      providesTags: ["Standup"],
+    }),
+    getTeamMembers: builder.query<EmployeeData, { id: number }>({
+      query: ({ id }) => `/team/${id}/members/`,
+    }),
+    addStandup: builder.mutation({
+      query: ({ standupObject }) => {
+        return {
+          url: "/standup_update/",
+          method: "POST",
+          body: standupObject,
+        };
+      },
+      invalidatesTags: ["Standup"],
     }),
   }),
 });
@@ -160,4 +198,9 @@ export const {
   useGetLeavesQuery,
   useUpdateLeaveParametersMutation,
   useGetStandupQuery,
+  useGetTeamsQuery,
+  useCreateStandupMutation,
+  useGetStandupUpdatesQuery,
+  useGetTeamMembersQuery,
+  useAddStandupMutation,
 } = employeesApi;

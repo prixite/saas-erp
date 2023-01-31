@@ -90,7 +90,7 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
   const getLeaveObject = () => {
     return {
       status: formik.values.leave_status,
-      type: formik.values.leave_type,
+      leave_type: formik.values.leave_type,
       hr_comment: formik.values.hr_comments,
     };
   };
