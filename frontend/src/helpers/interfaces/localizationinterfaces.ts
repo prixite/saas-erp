@@ -405,6 +405,19 @@ export interface LocalizationInterface {
   Standup: standupData;
 }
 
+export interface UserInterface {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number?: string | null;
+  default_role?: number | null;
+}
+
+export interface UserModuleRoleInterface {
+  module: { id: number; name: string };
+  role: { id: number; name: string };
+}
 export interface OrganizationInterface {
   id: number;
   name: string;

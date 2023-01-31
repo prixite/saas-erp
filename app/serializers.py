@@ -735,3 +735,62 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
             else None,
         }
         return data
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.default_role:
+            data["default_role"] = instance.default_role.name
+        return data
+
+
+class UserModuleRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserModuleRole
+        fields = (
+            "id",
+            "module",
+            "role",
+        )
+
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context["user_id"]
+        return super().create(validated_data)
+
+    def validate(self, data):
+        module = data["module"]
+        role = data["role"]
+        request = self.context["request"]
+        modules = models.Module.objects.filter(
+            id__in={x.id for x in request.user.organization_modules}
+        )
+        if request.method == "POST":
+            user = get_object_or_404(models.User, id=self.context.get("user_id"))
+            if models.UserModuleRole.objects.filter(module=module, user=user).exists():
+                raise serializers.ValidationError("This user module already exists.")
+        if module not in modules:
+            raise serializers.ValidationError("Invalid Module selected")
+        roles = models.Role.objects.filter(organization=request.user.organization)
+        if role not in roles:
+            raise serializers.ValidationError("Invlid role selected")
+
+        return data
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["role"] = {"id": instance.role.id, "name": instance.role.name}
+        return data

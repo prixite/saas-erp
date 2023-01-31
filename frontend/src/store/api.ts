@@ -1,8 +1,23 @@
 import { rtk } from "@src/store/reducers/generated";
 
 const enhancedRtkApi = rtk.enhanceEndpoints({
-  addTagTypes: ["Module", "OrganizationModule"],
+  addTagTypes: ["Module", "UserModule", "OrganizationModule"],
   endpoints: {
+    apiUsersAccessList: {
+      providesTags: ["UserModule"],
+    },
+    apiUsersAccessRetrieve: {
+      providesTags: ["UserModule"],
+    },
+    apiUsersAccessCreate: {
+      invalidatesTags: ["UserModule"],
+    },
+    apiUsersAccessUpdate: {
+      invalidatesTags: ["UserModule"],
+    },
+    apiUsersAccessDestroy: {
+      invalidatesTags: ["UserModule"],
+    },
     apiModuleList: {
       providesTags: ["Module"],
     },

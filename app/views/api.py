@@ -641,3 +641,59 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def retrieve(self, request, pk=None):
+        team = self.get_object()
+        members = team.members.all()
+        serializer = serializers.EmployeeSerializer(members, many=True)
+        return Response(serializer.data)
+
+
+class ModuleFilterViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.ModuleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.Module.objects.filter(
+            id__in={x.id for x in self.request.user.organization_modules}
+        )
+
+
+class RoleFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.RoleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.Role.objects.filter(organization=self.request.user.organization)
+
+
+class UserViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.UserSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.User.objects.filter(organization=self.request.user.organization)
+
+
+class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+    serializer_class = serializers.UserModuleRoleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.UserModuleRole.objects.filter(
+            user__organization=self.request.user.organization
+        )
+
+    def list(self, request, *args, **kwargs):
+        user = get_object_or_404(models.User, id=kwargs.get("pk"))
+        modules = models.UserModuleRole.objects.filter(user=user)
+        serializer = serializers.UserModuleRoleSerializer(modules, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        context.update({"user_id": self.kwargs.get("pk")})
+        return context
