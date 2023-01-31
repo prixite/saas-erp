@@ -12,6 +12,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { useFormik } from "formik";
+import moment from "moment";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
@@ -30,10 +31,10 @@ import {
 interface Props {
   open: boolean;
   handleClose: () => void;
-  checkState: boolean;
+  checkCreateState: boolean;
 }
 
-const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
+const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [loading, setLoading] = useState(false);
   const { data: teamsData } = useGetTeamsQuery();
@@ -54,12 +55,12 @@ const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
     initialValues: {
       team: "",
       name: "",
-      created_at: "",
+      time: "",
     },
     validationSchema: yup.object({
       team: yup.string().required(TeamRequired),
       name: yup.string().required(StandupNameRequired),
-      created_at: yup.string().required(TimeRequired),
+      time: yup.string().required(TimeRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -67,10 +68,10 @@ const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
     },
   });
   useEffect(() => {
-    if (!checkState) {
+    if (!checkCreateState) {
       formik.resetForm();
     }
-  }, [checkState]);
+  }, [checkCreateState]);
   const handleCreateStandup = async () => {
     setLoading(true);
     const standupObj = getCreateStandupObject();
@@ -94,7 +95,7 @@ const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
     return {
       team: formik.values.team,
       name: formik.values.name,
-      created_at: formik.values.created_at,
+      time: moment(formik.values.time).format("HH:mm:ss"),
     };
   };
   return (
@@ -166,9 +167,9 @@ const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
               <TimePicker
                 className="text-field-cls"
                 label={Time}
-                value={formik.values.created_at}
+                value={formik.values.time}
                 onChange={(newValue) => {
-                  formik.setFieldValue("created_at", newValue);
+                  formik.setFieldValue("time", newValue);
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -186,7 +187,7 @@ const CreateStandupModal = ({ open, handleClose, checkState }: Props) => {
                 )}
               />
               <Typography className="errorText">
-                {formik.touched.created_at && formik.errors.created_at}
+                {formik.touched.time && formik.errors.time}
               </Typography>
             </LocalizationProvider>
           </Box>

@@ -32,6 +32,7 @@ function Standup() {
   const { data: userData } = useGetUserQuery();
   const constantData: LocalizationInterface = localizedData();
   const [checkState, setCheckState] = useState(false);
+  const [checkCreateState, setCheckCreateState] = useState(false);
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -202,7 +203,7 @@ function Standup() {
     setOpenModal(false);
   };
   const handleCreateModalClose = () => {
-    setCheckState(false);
+    setCheckCreateState(false);
     setOpenCreateModal(false);
   };
   useEffect(() => {
@@ -291,7 +292,7 @@ function Standup() {
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
                 onClick={() => {
-                  setCheckState(true);
+                  setCheckCreateState(true);
                   setOpenCreateModal(true);
                 }}
               >
@@ -443,7 +444,7 @@ function Standup() {
       />
       <CreateStandupModal
         open={openCreateModal}
-        checkState={checkState}
+        checkCreateState={checkCreateState}
         handleClose={handleCreateModalClose}
       />
     </Box>

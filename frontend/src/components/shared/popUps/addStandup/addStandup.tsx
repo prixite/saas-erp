@@ -190,7 +190,7 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
                         <MenuItem
                           key={member?.id}
                           value={member?.id}
-                        >{`${member?.user?.first_name} ${member?.user?.last_name}`}</MenuItem>
+                        >{`${member?.first_name} ${member?.last_name}`}</MenuItem>
                       );
                     })
                   ) : (

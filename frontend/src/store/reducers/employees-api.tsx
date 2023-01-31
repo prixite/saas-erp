@@ -16,6 +16,8 @@ import {
   EmployeeLeavesParameters,
   standupTypes,
   teamTypes,
+  TeamMembers,
+  standupUpdatesTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -28,7 +30,7 @@ export const employeesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Employee", "Owner", "Leaves", "Standup"],
+  tagTypes: ["Employee", "Owner", "Leaves", "Standup", "CreateStandup"],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -144,6 +146,7 @@ export const employeesApi = createApi({
     }),
     getStandup: builder.query<standupTypes[], void>({
       query: () => "/standup/",
+      providesTags: ["CreateStandup"],
     }),
     getTeams: builder.query<teamTypes[], void>({
       query: () => "/team/",
@@ -156,13 +159,14 @@ export const employeesApi = createApi({
           body: standupObject,
         };
       },
+      invalidatesTags: ["CreateStandup"],
     }),
-    getStandupUpdates: builder.query<teamTypes[], void>({
+    getStandupUpdates: builder.query<standupUpdatesTypes[], void>({
       query: () => "/standup_update/",
       providesTags: ["Standup"],
     }),
-    getTeamMembers: builder.query<EmployeeData, { id: number }>({
-      query: ({ id }) => `/team/${id}/members/`,
+    getTeamMembers: builder.query<TeamMembers[], { id: number }>({
+      query: ({ id }) => `/standup/${id}/members/`,
     }),
     addStandup: builder.mutation({
       query: ({ standupObject }) => {

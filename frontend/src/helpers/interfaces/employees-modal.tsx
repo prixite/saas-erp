@@ -82,6 +82,15 @@ export interface Doc {
   type: string;
   document_url: string;
 }
+export interface TeamMembers {
+  id: number;
+  image: string;
+  contact_number: string;
+  date_of_joining: string;
+  first_name: string;
+  last_name: string;
+  org_id: string;
+}
 export interface EmployeeDoc {
   type: string;
   docs: Doc[];
@@ -163,6 +172,19 @@ export interface teamTypes {
   created_at: string;
   updated_at: string;
   members: number[];
+}
+export interface standupUpdatesTypes {
+  id: number;
+  time: string;
+  date: string;
+  status: string;
+  work_done_yesterday: string;
+  work_to_do: string;
+  blockers: string;
+  standup: number;
+  employee: number;
+  created_at: string;
+  updated_at: string;
 }
 export interface Benefits {
   id: number;
