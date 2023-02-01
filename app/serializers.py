@@ -622,6 +622,38 @@ class OwnerOnBoardingSerializer(serializers.ModelSerializer):
         return value
 
 
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Organization
+        fields = "__all__"
+
+
+class OrganizationModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrganizationModule
+        fields = "__all__"
+
+    def validate(self, attrs):
+        if self.context.get("request").method == "POST" and (
+            models.OrganizationModule.objects.filter(
+                module=attrs.get("module"), organization=attrs.get("organization")
+            ).exists()
+        ):
+            raise serializers.ValidationError(
+                "This module already exists in this organization."
+            )
+        return super().validate(attrs)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["organization"] = {
+            "id": instance.organization.id,
+            "name": instance.organization.name,
+        }
+        return data
+
+
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Module
@@ -646,6 +678,13 @@ class StandupSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Standup
         exclude = ("organization",)
+
+    def validate(self, data):
+        user = self.context.get("request").user
+        team = data.get("team")
+        if team.organization != user.organization:
+            raise NotFound(detail="Team not found")
+        return data
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
@@ -702,4 +741,63 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
             if instance.employee.department
             else None,
         }
+        return data
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "image",
+            "contact_number",
+            "default_role",
+        ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.default_role:
+            data["default_role"] = instance.default_role.name
+        return data
+
+
+class UserModuleRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserModuleRole
+        fields = (
+            "id",
+            "module",
+            "role",
+        )
+
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context["user_id"]
+        return super().create(validated_data)
+
+    def validate(self, data):
+        module = data["module"]
+        role = data["role"]
+        request = self.context["request"]
+        modules = models.Module.objects.filter(
+            id__in={x.id for x in request.user.organization_modules}
+        )
+        if request.method == "POST":
+            user = get_object_or_404(models.User, id=self.context.get("user_id"))
+            if models.UserModuleRole.objects.filter(module=module, user=user).exists():
+                raise serializers.ValidationError("This user module already exists.")
+        if module not in modules:
+            raise serializers.ValidationError("Invalid Module selected")
+        roles = models.Role.objects.filter(organization=request.user.organization)
+        if role not in roles:
+            raise serializers.ValidationError("Invlid role selected")
+
+        return data
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["module"] = {"id": instance.module.id, "name": instance.module.name}
+        data["role"] = {"id": instance.role.id, "name": instance.role.name}
         return data

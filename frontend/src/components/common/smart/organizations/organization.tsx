@@ -1,22 +1,34 @@
 import { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+  InputAdornment,
+  TextField,
+  Button,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
-import NotfoundIcon from "@src/assets/svgs/notfound.svg";
+import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
+import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
+import searchBox from "@src/assets/svgs/searchBox.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import { UserInterface } from "@src/helpers/interfaces/localizationinterfaces";
-import { useApiUsersListQuery } from "@src/store/api";
-import { useGetFlagsQuery } from "@src/store/reducers/employees-api";
-import "@src/components/common/smart/users/users.scss";
+import {
+  LocalizationInterface,
+  OrganizationInterface,
+} from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
+import { useApiOrganizationListQuery } from "@src/store/api";
+import "@src/components/common/smart/organizations/organization.scss";
 
-function User() {
-  const { data: rows = [], isLoading } = useApiUsersListQuery();
-  const [userData, setUserData] = useState<UserInterface[]>([]);
-  const [pageSize, setPageSize] = useState<number>(10);
-  const { data: Flags = [] } = useGetFlagsQuery();
-  const allFlags = Object.assign({}, ...Flags);
+function Organization() {
+  const { data: rows = [], isLoading } = useApiOrganizationListQuery();
+  const constantData: LocalizationInterface = localizedData();
+  const { filterButton } = constantData.Buttons;
+
   const [dataLoading, setIsDataLoading] = useState(true);
-  const navigate = useNavigate();
+  const [organizationsData, setOrganizationsData] = useState<
+    OrganizationInterface[]
+  >([]);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const columns: GridColDef[] = [
     {
@@ -26,73 +38,21 @@ function User() {
       width: 300,
       renderCell: (cellValues) => {
         return (
-          <div
-            style={{
-              marginLeft: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-            }}
-          >
-            <img
-              style={{
-                height: "32px",
-                width: "32px",
-                left: "241px",
-                top: "154px",
-                marginRight: "8px",
-                borderRadius: "50%",
-              }}
-              src={`${cellValues.row.image}`}
-              alt="profile pic"
-            />
-            <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
-          </div>
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues?.row?.name}
+          </p>
         );
       },
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "address",
+      headerName: "Address",
       sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return <p style={{ marginLeft: "20px" }}>{cellValues.row.email}</p>;
-      },
-    },
-    {
-      field: "contact_Number",
-      headerName: "Contact Number",
-      sortable: false,
-      width: 300,
+      width: 200,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px" }}>{cellValues.row.contact_number}</p>
-        );
-      },
-    },
-    {
-      field: "default_role",
-      headerName: "Default Role",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <p style={{ marginLeft: "20px" }}>{cellValues.row.default_role}</p>
-        );
-      },
-    },
-    {
-      field: "access",
-      headerName: "Access",
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <p
-            onClick={() => navigate(`/users/${cellValues.row.id}/access`)}
-            style={{ marginLeft: "20px" }}
-          >
-            View
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues?.row?.address}
           </p>
         );
       },
@@ -102,31 +62,91 @@ function User() {
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setUserData(rows);
+        setOrganizationsData(rows);
       } else {
-        setUserData([]);
+        setOrganizationsData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
 
   return (
-    <Box className="user-section">
+    <Box className="organizationDataGridTable-section">
       <Box
         className="top-bar-cls"
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Typography className="title-cls">{"User Module"}</Typography>
+        <Typography className="title-cls">{"Organizations"}</Typography>
+        <Box
+          className="filter-section"
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Box className="text-cls">
+            <TextField
+              className="searchbox"
+              id="search-headbox"
+              variant="outlined"
+              placeholder="Search organizations here"
+              sx={{
+                "& label.Mui-focused": {
+                  color: "#999999",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "#E7E7E7",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#E7E7E7",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#999999",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#999999",
+                  },
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img
+                      className="profile-pic"
+                      src={searchBox}
+                      alt="profile pic"
+                    />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <Box className="filter-btn-cls">
+            <Button
+              className="filter-btn"
+              id="filter-btn-id"
+              variant="outlined"
+              startIcon={
+                <img
+                  className="profile-pic"
+                  src={FilterIcon}
+                  alt="profile pic"
+                />
+              }
+            >
+              {" "}
+              <p>{filterButton}</p>
+            </Button>
+          </Box>
+        </Box>
       </Box>
       {!dataLoading ? (
         <>
-          {userData?.length ? (
-            <div className="user-main">
+          {organizationsData.length ? (
+            <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...userData]}
+                rows={[...organizationsData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick
@@ -174,7 +194,6 @@ function User() {
                   "& .MuiDataGrid-virtualScrollerRenderZone": {
                     "& .MuiDataGrid-row": {
                       backgroundColor: "white",
-                      cursor: "pointer",
                     },
                   },
                   "& .MuiDataGrid-cell:focus, .MuiDataGrid-cell:focus-within": {
@@ -210,7 +229,7 @@ function User() {
                       outline: "none",
                     },
                   "& .MuiTablePagination-root:last-child": {
-                    display: allFlags.show_pagination_module ? "block" : "none",
+                    display: "block",
                   },
                 }}
               />
@@ -218,16 +237,18 @@ function User() {
           ) : (
             <Box className="error-img">
               <img src={NotfoundIcon} alt="notfound" />
-              <Typography className="error-msg">{"No user found!"}</Typography>
+              <Typography className="error-msg">
+                {"No organizations found!"}
+              </Typography>
             </Box>
           )}
         </>
       ) : (
         <>
-          <RowSkeletonCard pathString="user" />
+          <RowSkeletonCard pathString="organizations" />
         </>
       )}
     </Box>
   );
 }
-export default User;
+export default Organization;

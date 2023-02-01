@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("app", "0051_employee_is_deleted_user_is_deleted_alter_user_email"),
+        ("app", "0053_merge_20230131_1745"),
     ]
 
     operations = [

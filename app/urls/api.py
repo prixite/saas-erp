@@ -155,6 +155,10 @@ urlpatterns = [
         api.OwnerOnboardingAPIView.as_view(),
     ),
     path(
+        "organization/",
+        api.OrganizationViewSet.as_view({"get": "list"}),
+    ),
+    path(
         "module/",
         api.ModuleViewSet.as_view(
             {
@@ -173,6 +177,25 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "organization-module/",
+        api.OrganizationModuleViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "organization-module/<int:pk>/",
+        api.OrganizationModuleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
     path("standup/", api.StandupViewSet.as_view({"get": "list", "post": "create"})),
     path("standup/<int:pk>/members/", api.StandupViewSet.as_view({"get": "retrieve"})),
     path(
@@ -183,4 +206,22 @@ urlpatterns = [
         "team/",
         api.TeamViewSet.as_view({"get": "list", "post": "create"}),
     ),
+    path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "retrieve"})),
+    path(
+        "users/<int:pk>/access/",
+        api.UserModuleRoleViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "users/access/<int:pk>/",
+        api.UserModuleRoleViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
+    path("organization_modules/", api.ModuleFilterViewSet.as_view({"get": "list"})),
+    path("users/", api.UserViewSet.as_view({"get": "list"})),
+    path("organization_roles/", api.RoleFilterViewSet.as_view({"get": "list"})),
 ]

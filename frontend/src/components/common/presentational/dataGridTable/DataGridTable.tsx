@@ -377,7 +377,7 @@ function DataGridTable() {
       />
       <DeleteModal
         open={openDeleteModal}
-        handleEmployeeDelete={handleEmployeeDelete}
+        handleObjDelete={handleEmployeeDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>
