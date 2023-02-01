@@ -321,7 +321,7 @@ function UserAccess() {
       />
       <DeleteModal
         open={openDeleteModal}
-        handleEmployeeDelete={handleModuleDelete}
+        handleObjDelete={handleModuleDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>

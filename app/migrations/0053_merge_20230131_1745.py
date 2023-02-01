@@ -7,7 +7,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("app", "0052_alter_module_name"),
-        ("app", "0052_standup_time_standup_updated_at_and_more"),
     ]
 
     operations = []
