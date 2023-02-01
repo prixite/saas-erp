@@ -228,17 +228,19 @@ const Sidebar = (props) => {
           )}
           <ListItemButton
             onClick={() => {
-              navigate("standup/");
+              navigate("standups/");
             }}
             className="list-items-btn"
           >
             <ListItemIcon className="list-item-icon">
               <img
                 className="icon-img"
-                src={currentPath === "/standup/" ? standupRedIcon : standupIcon}
+                src={
+                  currentPath === "/standups/" ? standupRedIcon : standupIcon
+                }
               />
             </ListItemIcon>
-            <ListItemText primary="Standup" />
+            <ListItemText primary="Standups" />
           </ListItemButton>
 
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">

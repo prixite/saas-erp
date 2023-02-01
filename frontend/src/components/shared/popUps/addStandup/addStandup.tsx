@@ -107,6 +107,9 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
       formik.resetForm();
     }
   }, [checkState]);
+  useEffect(() => {
+    formik.setFieldValue("employee_name", "");
+  }, [formik.values.standup_selection]);
   const getAddStandupObject = () => {
     return {
       standup: formik.values.standup_selection,

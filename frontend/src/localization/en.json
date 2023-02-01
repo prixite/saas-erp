@@ -258,7 +258,7 @@
     "Denied":"Denied"
   },
   "Standup":{
-    "standup": "Standup",
+    "standup": "Standups",
     "createStandup": "Create Standup",
     "addStandup": "Add Standup",
     "StandupSelection":"Standup Selection",
