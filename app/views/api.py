@@ -558,6 +558,7 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
         if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
             employee.leave_count += total_leave.days
         leave.updated_by = updated_by
+        leave.leave_type = request.data.get("type")
         employee.save()
         leave.save()
         response = super().update(request, *args, **kwargs)
