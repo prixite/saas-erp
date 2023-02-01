@@ -246,7 +246,18 @@ urlpatterns = [
     ),
     path(
         "attendance/",
-        api.AttendanceViewSet.as_view(),
+        api.AttendanceViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "attendance/<int:pk>/",
+        api.AttendanceViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
     ),
     path(
         "leave/",
