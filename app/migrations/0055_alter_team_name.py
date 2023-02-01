@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("app", "0053_merge_20230131_1745"),
+        ("app", "0054_standup_time_standup_updated_at_and_more"),
     ]
 
     operations = [
