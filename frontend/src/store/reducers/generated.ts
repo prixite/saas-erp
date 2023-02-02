@@ -742,6 +742,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.module,
       }),
     }),
+    apiModulePartialUpdate: build.mutation<
+      ApiModulePartialUpdateApiResponse,
+      ApiModulePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/module/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedModule,
+      }),
+    }),
     apiModuleDestroy: build.mutation<
       ApiModuleDestroyApiResponse,
       ApiModuleDestroyApiArg
@@ -756,6 +766,16 @@ const injectedRtkApi = api.injectEndpoints({
       ApiOrganizationListApiArg
     >({
       query: () => ({ url: `/api/organization/` }),
+    }),
+    apiOrganizationCreate: build.mutation<
+      ApiOrganizationCreateApiResponse,
+      ApiOrganizationCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/`,
+        method: "POST",
+        body: queryArg.organization,
+      }),
     }),
     apiOrganizationModuleList: build.query<
       ApiOrganizationModuleListApiResponse,
@@ -791,12 +811,57 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.organizationModule,
       }),
     }),
+    apiOrganizationModulePartialUpdate: build.mutation<
+      ApiOrganizationModulePartialUpdateApiResponse,
+      ApiOrganizationModulePartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization-module/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedOrganizationModule,
+      }),
+    }),
     apiOrganizationModuleDestroy: build.mutation<
       ApiOrganizationModuleDestroyApiResponse,
       ApiOrganizationModuleDestroyApiArg
     >({
       query: (queryArg) => ({
         url: `/api/organization-module/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
+    apiOrganizationRetrieve: build.query<
+      ApiOrganizationRetrieveApiResponse,
+      ApiOrganizationRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/organization/${queryArg.id}/` }),
+    }),
+    apiOrganizationUpdate: build.mutation<
+      ApiOrganizationUpdateApiResponse,
+      ApiOrganizationUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.organization,
+      }),
+    }),
+    apiOrganizationPartialUpdate: build.mutation<
+      ApiOrganizationPartialUpdateApiResponse,
+      ApiOrganizationPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedOrganization,
+      }),
+    }),
+    apiOrganizationDestroy: build.mutation<
+      ApiOrganizationDestroyApiResponse,
+      ApiOrganizationDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
@@ -811,6 +876,51 @@ const injectedRtkApi = api.injectEndpoints({
       ApiOrganizationRolesListApiArg
     >({
       query: () => ({ url: `/api/organization_roles/` }),
+    }),
+    apiOrganizationRolesCreate: build.mutation<
+      ApiOrganizationRolesCreateApiResponse,
+      ApiOrganizationRolesCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization_roles/`,
+        method: "POST",
+        body: queryArg.role,
+      }),
+    }),
+    apiOrganizationRolesRetrieve: build.query<
+      ApiOrganizationRolesRetrieveApiResponse,
+      ApiOrganizationRolesRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/organization_roles/${queryArg.id}/` }),
+    }),
+    apiOrganizationRolesUpdate: build.mutation<
+      ApiOrganizationRolesUpdateApiResponse,
+      ApiOrganizationRolesUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization_roles/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.role,
+      }),
+    }),
+    apiOrganizationRolesPartialUpdate: build.mutation<
+      ApiOrganizationRolesPartialUpdateApiResponse,
+      ApiOrganizationRolesPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization_roles/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedRole,
+      }),
+    }),
+    apiOrganizationRolesDestroy: build.mutation<
+      ApiOrganizationRolesDestroyApiResponse,
+      ApiOrganizationRolesDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization_roles/${queryArg.id}/`,
+        method: "DELETE",
+      }),
     }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
@@ -1495,12 +1605,21 @@ export type ApiModuleUpdateApiArg = {
   id: number;
   module: Module;
 };
+export type ApiModulePartialUpdateApiResponse = /** status 200  */ Module;
+export type ApiModulePartialUpdateApiArg = {
+  id: number;
+  patchedModule: PatchedModule;
+};
 export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
 export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
 export type ApiOrganizationListApiArg = void;
+export type ApiOrganizationCreateApiResponse = /** status 201  */ Organization;
+export type ApiOrganizationCreateApiArg = {
+  organization: Organization;
+};
 export type ApiOrganizationModuleListApiResponse =
   /** status 200  */ OrganizationModule[];
 export type ApiOrganizationModuleListApiArg = void;
@@ -1520,14 +1639,63 @@ export type ApiOrganizationModuleUpdateApiArg = {
   id: number;
   organizationModule: OrganizationModule;
 };
+export type ApiOrganizationModulePartialUpdateApiResponse =
+  /** status 200  */ OrganizationModule;
+export type ApiOrganizationModulePartialUpdateApiArg = {
+  id: number;
+  patchedOrganizationModule: PatchedOrganizationModule;
+};
 export type ApiOrganizationModuleDestroyApiResponse = unknown;
 export type ApiOrganizationModuleDestroyApiArg = {
+  id: number;
+};
+export type ApiOrganizationRetrieveApiResponse =
+  /** status 200  */ Organization;
+export type ApiOrganizationRetrieveApiArg = {
+  id: number;
+};
+export type ApiOrganizationUpdateApiResponse = /** status 200  */ Organization;
+export type ApiOrganizationUpdateApiArg = {
+  id: number;
+  organization: Organization;
+};
+export type ApiOrganizationPartialUpdateApiResponse =
+  /** status 200  */ Organization;
+export type ApiOrganizationPartialUpdateApiArg = {
+  id: number;
+  patchedOrganization: PatchedOrganization;
+};
+export type ApiOrganizationDestroyApiResponse = unknown;
+export type ApiOrganizationDestroyApiArg = {
   id: number;
 };
 export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
 export type ApiOrganizationModulesListApiArg = void;
 export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
 export type ApiOrganizationRolesListApiArg = void;
+export type ApiOrganizationRolesCreateApiResponse = /** status 201  */ Role;
+export type ApiOrganizationRolesCreateApiArg = {
+  role: Role;
+};
+export type ApiOrganizationRolesRetrieveApiResponse = /** status 200  */ Role;
+export type ApiOrganizationRolesRetrieveApiArg = {
+  id: number;
+};
+export type ApiOrganizationRolesUpdateApiResponse = /** status 200  */ Role;
+export type ApiOrganizationRolesUpdateApiArg = {
+  id: number;
+  role: Role;
+};
+export type ApiOrganizationRolesPartialUpdateApiResponse =
+  /** status 200  */ Role;
+export type ApiOrganizationRolesPartialUpdateApiArg = {
+  id: number;
+  patchedRole: PatchedRole;
+};
+export type ApiOrganizationRolesDestroyApiResponse = unknown;
+export type ApiOrganizationRolesDestroyApiArg = {
+  id: number;
+};
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -2050,6 +2218,14 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
+export type PatchedModule = {
+  id?: number;
+  slug?: SlugEnum;
+  name?: string;
+  is_enabled?: boolean;
+  created_at?: string;
+  updated_at?: string;
+};
 export type Organization = {
   id: number;
   name: string;
@@ -2065,6 +2241,21 @@ export type OrganizationModule = {
   module: number;
   organization: number;
 };
+export type PatchedOrganizationModule = {
+  id?: number;
+  is_enabled?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  module?: number;
+  organization?: number;
+};
+export type PatchedOrganization = {
+  id?: number;
+  name?: string;
+  address?: string;
+  created_at?: string;
+  updated_at?: string;
+};
 export type PermissionEnum = "c" | "b" | "a";
 export type Role = {
   id: number;
@@ -2073,6 +2264,14 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
+};
+export type PatchedRole = {
+  id?: number;
+  name?: string;
+  permission?: PermissionEnum;
+  is_default?: boolean;
+  created_at?: string;
+  updated_at?: string;
 };
 export type OwnerEmployee = {
   date_of_joining: string;
@@ -2269,15 +2468,27 @@ export const {
   useApiModuleCreateMutation,
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
+  useApiModulePartialUpdateMutation,
   useApiModuleDestroyMutation,
   useApiOrganizationListQuery,
+  useApiOrganizationCreateMutation,
   useApiOrganizationModuleListQuery,
   useApiOrganizationModuleCreateMutation,
   useApiOrganizationModuleRetrieveQuery,
   useApiOrganizationModuleUpdateMutation,
+  useApiOrganizationModulePartialUpdateMutation,
   useApiOrganizationModuleDestroyMutation,
+  useApiOrganizationRetrieveQuery,
+  useApiOrganizationUpdateMutation,
+  useApiOrganizationPartialUpdateMutation,
+  useApiOrganizationDestroyMutation,
   useApiOrganizationModulesListQuery,
   useApiOrganizationRolesListQuery,
+  useApiOrganizationRolesCreateMutation,
+  useApiOrganizationRolesRetrieveQuery,
+  useApiOrganizationRolesUpdateMutation,
+  useApiOrganizationRolesPartialUpdateMutation,
+  useApiOrganizationRolesDestroyMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,

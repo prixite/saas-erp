@@ -289,7 +289,18 @@ urlpatterns = [
     ),
     path(
         "organization/",
-        api.OrganizationViewSet.as_view({"get": "list"}),
+        api.OrganizationViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "organization/<int:pk>/",
+        api.OrganizationViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
     ),
     path(
         "module/",
@@ -306,6 +317,7 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
+                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -325,6 +337,7 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
+                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -389,5 +402,19 @@ urlpatterns = [
     ),
     path("organization_modules/", api.ModuleFilterViewSet.as_view({"get": "list"})),
     path("users/", api.UserViewSet.as_view({"get": "list"})),
-    path("organization_roles/", api.RoleFilterViewSet.as_view({"get": "list"})),
+    path(
+        "organization_roles/",
+        api.RoleFilterViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "organization_roles/<int:pk>/",
+        api.RoleFilterViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+    ),
 ]
