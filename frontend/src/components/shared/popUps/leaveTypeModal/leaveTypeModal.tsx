@@ -15,6 +15,7 @@ import crossIcon from "@src/assets/svgs/cross.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import { timeOut } from "@src/helpers/constants/constants";
 import "@src/components/shared/popUps/leaveTypeModal/leaveTypeModal.scss";
+import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { toastAPIError } from "@src/helpers/utils/utils";
@@ -22,12 +23,11 @@ import { useUpdateLeaveParametersMutation } from "@src/store/reducers/employees-
 
 interface Props {
   open: boolean;
-  checkState: boolean;
   handleClose: () => void;
-  empId: number;
+  empData: empLeaves | undefined;
 }
 
-const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
+const LeaveModal = ({ open, handleClose, empData }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [loading, setLoading] = useState(false);
   const [updateLeaveParameters] = useUpdateLeaveParametersMutation();
@@ -68,23 +68,28 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
       handleUpdateLeave();
     },
   });
+  const resetForm = () => {
+    handleClose();
+    formik.resetForm();
+  };
   const handleUpdateLeave = async () => {
     setLoading(true);
     const updatedObj = getLeaveObject();
-    await updateLeaveParameters({ id: empId, updatedObj: updatedObj })
+    await updateLeaveParameters({ id: empData?.id, updatedObj: updatedObj })
       .unwrap()
       .then(async () => {
         toast.success("Leave successfully updated.", {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        formik.resetForm();
-        handleClose();
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
         toastAPIError("Something went wrong.", error.status, error.data);
+      })
+      .finally(() => {
+        resetForm();
       });
   };
   const getLeaveObject = () => {
@@ -95,13 +100,16 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
     };
   };
   useEffect(() => {
-    if (!checkState) {
-      formik.resetForm();
+    if (empData) {
+      formik.setFieldValue("leave_status", empData?.status);
+      formik.setFieldValue("leave_type", empData?.leave_type);
+      formik.setFieldValue("hr_comments", empData?.hr_comment);
     }
-  }, [checkState]);
+  }, [empData, open]);
+
   return (
     <>
-      <Dialog open={open} onClose={handleClose} className="LeaveModal">
+      <Dialog open={open} onClose={resetForm} className="LeaveModal">
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
@@ -110,7 +118,7 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
                 {Leavesubheading}
               </Typography>
             </Box>
-            <Box className="cross-icon-box" onClick={handleClose}>
+            <Box className="cross-icon-box" onClick={resetForm}>
               <img src={crossIcon} className="cross-btn" />
             </Box>
           </Box>
@@ -126,7 +134,7 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
               name="leave_type"
               label={leaveTypeLabel}
               onChange={formik.handleChange}
-              value={formik.values.leave_type}
+              value={formik.values.leave_type || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               <MenuItem className="menu-item-cls" value="casual leave">
@@ -153,7 +161,7 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
               label={leaveStatusLabel}
               name="leave_status"
               onChange={formik.handleChange}
-              value={formik.values.leave_status}
+              value={formik.values.leave_status || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               <MenuItem className="menu-item-cls" value="pending">
@@ -190,7 +198,7 @@ const LeaveModal = ({ open, handleClose, empId, checkState }: Props) => {
           </Box>
         </DialogContent>
         <DialogActions className="LeaveModal__Actions">
-          <Button className="resetBtn" onClick={handleClose}>
+          <Button className="resetBtn" onClick={resetForm}>
             {cancelBtn}
           </Button>
           <LoadingButton
