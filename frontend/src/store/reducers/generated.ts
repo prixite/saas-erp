@@ -1070,6 +1070,7 @@ export type Login = {
   password: string;
 };
 export type Me = {
+  id: number;
   first_name?: string;
   last_name?: string;
   email: string;
@@ -1079,6 +1080,7 @@ export type Me = {
   headline?: string | null;
   contact_number?: string | null;
   allowed_modules: string;
+  emp_id?: number;
 };
 export type MeUpdateNotification = {
   bill_update_email?: boolean;

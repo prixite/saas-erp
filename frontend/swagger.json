@@ -3664,6 +3664,10 @@
             "Me": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "first_name": {
                         "type": "string",
                         "maxLength": 150
@@ -3705,11 +3709,15 @@
                     "allowed_modules": {
                         "type": "string",
                         "readOnly": true
+                    },
+                    "emp_id": {
+                        "type": "integer"
                     }
                 },
                 "required": [
                     "allowed_modules",
-                    "email"
+                    "email",
+                    "id"
                 ]
             },
             "MeUpdate": {

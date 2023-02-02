@@ -418,12 +418,16 @@ class MeSerializer(serializers.ModelSerializer):
         source="organization.name",
         default="",
     )
-
+    emp_id = serializers.IntegerField(
+        source="employee.id",
+        default=None,
+    )
     allowed_modules = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
         fields = [
+            "id",
             "first_name",
             "last_name",
             "email",
@@ -433,6 +437,7 @@ class MeSerializer(serializers.ModelSerializer):
             "headline",
             "contact_number",
             "allowed_modules",
+            "emp_id",
         ]
 
     def get_allowed_modules(self, data):

@@ -12,6 +12,7 @@ class MeTestCase(BaseTestCase):
         self.assertEqual(
             list(response.json().keys()),
             [
+                "id",
                 "first_name",
                 "last_name",
                 "email",
@@ -21,5 +22,6 @@ class MeTestCase(BaseTestCase):
                 "headline",
                 "contact_number",
                 "allowed_modules",
+                "emp_id",
             ],
         )
