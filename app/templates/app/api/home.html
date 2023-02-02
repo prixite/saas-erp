@@ -15,6 +15,11 @@
     />
 
     <title>Sass ERP</title>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'app/assets/logo.svg' %}"
+    />
     {% render_bundle 'main' 'css' %}
   </head>
   <body data-flags="{% block data_flags %}{% endblock %}">
