@@ -316,6 +316,15 @@ class CompensationTypeApiView(
     queryset = models.CompensationType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError:
+            response_data = {
+                "detail": "Can not delete this module as this is used by protected objects"  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CompensationScheduleApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -324,11 +333,33 @@ class CompensationScheduleApiView(
     queryset = models.CompensationSchedule.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError:
+            response_data = {
+                "detail": "Can not delete this module as this is used by protected objects."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object.currency
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete thi object as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -515,7 +546,7 @@ class SlackApiView(APIView):
         )
 
 
-class AttendanceViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
@@ -585,6 +616,15 @@ class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
     serializer_class = serializers.OrganizationSerializer
     queryset = models.Organization.objects.all()
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError:
+            response_data = {
+                "detail": "Can not delete this object as this is used by protected objects"  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
@@ -602,13 +642,9 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         try:
             return super().destroy(request, *args, **kwargs)
-        except ProtectedError as protected_error:
-            protected_elements = [
-                protected_object.organization
-                for protected_object in protected_error.protected_objects
-            ]
+        except ProtectedError:
             response_data = {
-                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+                "detail": "Can not delete this module as this is used by protected objects"  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 

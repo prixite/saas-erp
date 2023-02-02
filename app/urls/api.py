@@ -36,7 +36,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -69,7 +68,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -84,7 +82,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -99,7 +96,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -114,7 +110,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -129,7 +124,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -144,7 +138,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -159,7 +152,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -174,7 +166,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -189,7 +180,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -204,7 +194,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -219,7 +208,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -246,18 +234,7 @@ urlpatterns = [
     ),
     path(
         "attendance/",
-        api.AttendanceViewSet.as_view({"get": "list", "post": "create"}),
-    ),
-    path(
-        "attendance/<int:pk>/",
-        api.AttendanceViewSet.as_view(
-            {
-                "get": "retrieve",
-                "put": "update",
-                "patch": "partial_update",
-                "delete": "destroy",
-            }
-        ),
+        api.AttendanceViewSet.as_view(),
     ),
     path(
         "leave/",
@@ -297,7 +274,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -317,7 +293,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -337,7 +312,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -349,7 +323,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -365,7 +338,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -380,7 +352,6 @@ urlpatterns = [
             {
                 "get": "retrieve",
                 "put": "update",
-                "patch": "partial_update",
                 "delete": "destroy",
             }
         ),
@@ -402,19 +373,5 @@ urlpatterns = [
     ),
     path("organization_modules/", api.ModuleFilterViewSet.as_view({"get": "list"})),
     path("users/", api.UserViewSet.as_view({"get": "list"})),
-    path(
-        "organization_roles/",
-        api.RoleFilterViewSet.as_view({"get": "list", "post": "create"}),
-    ),
-    path(
-        "organization_roles/<int:pk>/",
-        api.RoleFilterViewSet.as_view(
-            {
-                "get": "retrieve",
-                "put": "update",
-                "patch": "partial_update",
-                "delete": "destroy",
-            }
-        ),
-    ),
+    path("organization_roles/", api.RoleFilterViewSet.as_view({"get": "list"})),
 ]

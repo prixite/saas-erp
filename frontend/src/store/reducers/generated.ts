@@ -33,16 +33,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.assetType,
       }),
     }),
-    apiAssetTypePartialUpdate: build.mutation<
-      ApiAssetTypePartialUpdateApiResponse,
-      ApiAssetTypePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/asset_type/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedAssetType,
-      }),
-    }),
     apiAssetTypeDestroy: build.mutation<
       ApiAssetTypeDestroyApiResponse,
       ApiAssetTypeDestroyApiArg
@@ -57,51 +47,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiAttendanceListApiArg
     >({
       query: () => ({ url: `/api/attendance/` }),
-    }),
-    apiAttendanceCreate: build.mutation<
-      ApiAttendanceCreateApiResponse,
-      ApiAttendanceCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/attendance/`,
-        method: "POST",
-        body: queryArg.attendance,
-      }),
-    }),
-    apiAttendanceRetrieve: build.query<
-      ApiAttendanceRetrieveApiResponse,
-      ApiAttendanceRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/attendance/${queryArg.id}/` }),
-    }),
-    apiAttendanceUpdate: build.mutation<
-      ApiAttendanceUpdateApiResponse,
-      ApiAttendanceUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/attendance/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.attendance,
-      }),
-    }),
-    apiAttendancePartialUpdate: build.mutation<
-      ApiAttendancePartialUpdateApiResponse,
-      ApiAttendancePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/attendance/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedAttendance,
-      }),
-    }),
-    apiAttendanceDestroy: build.mutation<
-      ApiAttendanceDestroyApiResponse,
-      ApiAttendanceDestroyApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/attendance/${queryArg.id}/`,
-        method: "DELETE",
-      }),
     }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
@@ -133,16 +78,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/benefits/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.benefit,
-      }),
-    }),
-    apiBenefitsPartialUpdate: build.mutation<
-      ApiBenefitsPartialUpdateApiResponse,
-      ApiBenefitsPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/benefits/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedBenefit,
       }),
     }),
     apiBenefitsDestroy: build.mutation<
@@ -196,16 +131,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.company,
       }),
     }),
-    apiCompaniesPartialUpdate: build.mutation<
-      ApiCompaniesPartialUpdateApiResponse,
-      ApiCompaniesPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/companies/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedCompany,
-      }),
-    }),
     apiCompaniesDestroy: build.mutation<
       ApiCompaniesDestroyApiResponse,
       ApiCompaniesDestroyApiArg
@@ -249,16 +174,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.compensationSchedule,
       }),
     }),
-    apiCompensationSchedulePartialUpdate: build.mutation<
-      ApiCompensationSchedulePartialUpdateApiResponse,
-      ApiCompensationSchedulePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/compensation_schedule/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedCompensationSchedule,
-      }),
-    }),
     apiCompensationScheduleDestroy: build.mutation<
       ApiCompensationScheduleDestroyApiResponse,
       ApiCompensationScheduleDestroyApiArg
@@ -298,16 +213,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/compensation_type/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.compensationType,
-      }),
-    }),
-    apiCompensationTypePartialUpdate: build.mutation<
-      ApiCompensationTypePartialUpdateApiResponse,
-      ApiCompensationTypePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/compensation_type/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedCompensationType,
       }),
     }),
     apiCompensationTypeDestroy: build.mutation<
@@ -351,16 +256,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.currency,
       }),
     }),
-    apiCurrencyPartialUpdate: build.mutation<
-      ApiCurrencyPartialUpdateApiResponse,
-      ApiCurrencyPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/currency/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedCurrency,
-      }),
-    }),
     apiCurrencyDestroy: build.mutation<
       ApiCurrencyDestroyApiResponse,
       ApiCurrencyDestroyApiArg
@@ -400,16 +295,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/department/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.department,
-      }),
-    }),
-    apiDepartmentPartialUpdate: build.mutation<
-      ApiDepartmentPartialUpdateApiResponse,
-      ApiDepartmentPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/department/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedDepartment,
       }),
     }),
     apiDepartmentDestroy: build.mutation<
@@ -453,16 +338,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.documentType,
       }),
     }),
-    apiDocumentTypePartialUpdate: build.mutation<
-      ApiDocumentTypePartialUpdateApiResponse,
-      ApiDocumentTypePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/document_type/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedDocumentType,
-      }),
-    }),
     apiDocumentTypeDestroy: build.mutation<
       ApiDocumentTypeDestroyApiResponse,
       ApiDocumentTypeDestroyApiArg
@@ -504,16 +379,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.employeementType,
       }),
     }),
-    apiEmployeementTypePartialUpdate: build.mutation<
-      ApiEmployeementTypePartialUpdateApiResponse,
-      ApiEmployeementTypePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/employeement_type/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedEmployeementType,
-      }),
-    }),
     apiEmployeementTypeDestroy: build.mutation<
       ApiEmployeementTypeDestroyApiResponse,
       ApiEmployeementTypeDestroyApiArg
@@ -553,16 +418,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/employees/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.employeeUpdate,
-      }),
-    }),
-    apiEmployeesPartialUpdate: build.mutation<
-      ApiEmployeesPartialUpdateApiResponse,
-      ApiEmployeesPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/employees/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedEmployee,
       }),
     }),
     apiEmployeesDestroy: build.mutation<
@@ -646,16 +501,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/institues/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.institue,
-      }),
-    }),
-    apiInstituesPartialUpdate: build.mutation<
-      ApiInstituesPartialUpdateApiResponse,
-      ApiInstituesPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/institues/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedInstitue,
       }),
     }),
     apiInstituesDestroy: build.mutation<
@@ -742,16 +587,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.module,
       }),
     }),
-    apiModulePartialUpdate: build.mutation<
-      ApiModulePartialUpdateApiResponse,
-      ApiModulePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/module/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedModule,
-      }),
-    }),
     apiModuleDestroy: build.mutation<
       ApiModuleDestroyApiResponse,
       ApiModuleDestroyApiArg
@@ -811,16 +646,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.organizationModule,
       }),
     }),
-    apiOrganizationModulePartialUpdate: build.mutation<
-      ApiOrganizationModulePartialUpdateApiResponse,
-      ApiOrganizationModulePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization-module/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedOrganizationModule,
-      }),
-    }),
     apiOrganizationModuleDestroy: build.mutation<
       ApiOrganizationModuleDestroyApiResponse,
       ApiOrganizationModuleDestroyApiArg
@@ -846,16 +671,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.organization,
       }),
     }),
-    apiOrganizationPartialUpdate: build.mutation<
-      ApiOrganizationPartialUpdateApiResponse,
-      ApiOrganizationPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedOrganization,
-      }),
-    }),
     apiOrganizationDestroy: build.mutation<
       ApiOrganizationDestroyApiResponse,
       ApiOrganizationDestroyApiArg
@@ -876,51 +691,6 @@ const injectedRtkApi = api.injectEndpoints({
       ApiOrganizationRolesListApiArg
     >({
       query: () => ({ url: `/api/organization_roles/` }),
-    }),
-    apiOrganizationRolesCreate: build.mutation<
-      ApiOrganizationRolesCreateApiResponse,
-      ApiOrganizationRolesCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization_roles/`,
-        method: "POST",
-        body: queryArg.role,
-      }),
-    }),
-    apiOrganizationRolesRetrieve: build.query<
-      ApiOrganizationRolesRetrieveApiResponse,
-      ApiOrganizationRolesRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/organization_roles/${queryArg.id}/` }),
-    }),
-    apiOrganizationRolesUpdate: build.mutation<
-      ApiOrganizationRolesUpdateApiResponse,
-      ApiOrganizationRolesUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization_roles/${queryArg.id}/`,
-        method: "PUT",
-        body: queryArg.role,
-      }),
-    }),
-    apiOrganizationRolesPartialUpdate: build.mutation<
-      ApiOrganizationRolesPartialUpdateApiResponse,
-      ApiOrganizationRolesPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization_roles/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedRole,
-      }),
-    }),
-    apiOrganizationRolesDestroy: build.mutation<
-      ApiOrganizationRolesDestroyApiResponse,
-      ApiOrganizationRolesDestroyApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/organization_roles/${queryArg.id}/`,
-        method: "DELETE",
-      }),
     }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
@@ -994,16 +764,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.program,
       }),
     }),
-    apiProgramsPartialUpdate: build.mutation<
-      ApiProgramsPartialUpdateApiResponse,
-      ApiProgramsPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/programs/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedProgram,
-      }),
-    }),
     apiProgramsDestroy: build.mutation<
       ApiProgramsDestroyApiResponse,
       ApiProgramsDestroyApiArg
@@ -1054,16 +814,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
-    apiStandupPartialUpdate: build.mutation<
-      ApiStandupPartialUpdateApiResponse,
-      ApiStandupPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/standup/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedStandup,
-      }),
-    }),
     apiStandupDestroy: build.mutation<
       ApiStandupDestroyApiResponse,
       ApiStandupDestroyApiArg
@@ -1111,16 +861,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standupUpdate,
       }),
     }),
-    apiStandupUpdatePartialUpdate: build.mutation<
-      ApiStandupUpdatePartialUpdateApiResponse,
-      ApiStandupUpdatePartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/standup_update/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedStandupUpdate,
-      }),
-    }),
     apiStandupUpdateDestroy: build.mutation<
       ApiStandupUpdateDestroyApiResponse,
       ApiStandupUpdateDestroyApiArg
@@ -1157,16 +897,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/team/${queryArg.id}/`,
         method: "PUT",
         body: queryArg.team,
-      }),
-    }),
-    apiTeamPartialUpdate: build.mutation<
-      ApiTeamPartialUpdateApiResponse,
-      ApiTeamPartialUpdateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/team/${queryArg.id}/`,
-        method: "PATCH",
-        body: queryArg.patchedTeam,
       }),
     }),
     apiTeamDestroy: build.mutation<
@@ -1247,40 +977,12 @@ export type ApiAssetTypeUpdateApiArg = {
   id: number;
   assetType: AssetType;
 };
-export type ApiAssetTypePartialUpdateApiResponse = /** status 200  */ AssetType;
-export type ApiAssetTypePartialUpdateApiArg = {
-  id: number;
-  patchedAssetType: PatchedAssetType;
-};
 export type ApiAssetTypeDestroyApiResponse = unknown;
 export type ApiAssetTypeDestroyApiArg = {
   id: number;
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
-export type ApiAttendanceCreateApiResponse = /** status 201  */ Attendance;
-export type ApiAttendanceCreateApiArg = {
-  attendance: Attendance;
-};
-export type ApiAttendanceRetrieveApiResponse = /** status 200  */ Attendance;
-export type ApiAttendanceRetrieveApiArg = {
-  id: number;
-};
-export type ApiAttendanceUpdateApiResponse = /** status 200  */ Attendance;
-export type ApiAttendanceUpdateApiArg = {
-  id: number;
-  attendance: Attendance;
-};
-export type ApiAttendancePartialUpdateApiResponse =
-  /** status 200  */ Attendance;
-export type ApiAttendancePartialUpdateApiArg = {
-  id: number;
-  patchedAttendance: PatchedAttendance;
-};
-export type ApiAttendanceDestroyApiResponse = unknown;
-export type ApiAttendanceDestroyApiArg = {
-  id: number;
-};
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1295,11 +997,6 @@ export type ApiBenefitsUpdateApiResponse = /** status 200  */ Benefit;
 export type ApiBenefitsUpdateApiArg = {
   id: number;
   benefit: Benefit;
-};
-export type ApiBenefitsPartialUpdateApiResponse = /** status 200  */ Benefit;
-export type ApiBenefitsPartialUpdateApiArg = {
-  id: number;
-  patchedBenefit: PatchedBenefit;
 };
 export type ApiBenefitsDestroyApiResponse = unknown;
 export type ApiBenefitsDestroyApiArg = {
@@ -1325,11 +1022,6 @@ export type ApiCompaniesUpdateApiArg = {
   id: number;
   company: Company;
 };
-export type ApiCompaniesPartialUpdateApiResponse = /** status 200  */ Company;
-export type ApiCompaniesPartialUpdateApiArg = {
-  id: number;
-  patchedCompany: PatchedCompany;
-};
 export type ApiCompaniesDestroyApiResponse = unknown;
 export type ApiCompaniesDestroyApiArg = {
   id: number;
@@ -1352,12 +1044,6 @@ export type ApiCompensationScheduleUpdateApiResponse =
 export type ApiCompensationScheduleUpdateApiArg = {
   id: number;
   compensationSchedule: CompensationSchedule;
-};
-export type ApiCompensationSchedulePartialUpdateApiResponse =
-  /** status 200  */ CompensationSchedule;
-export type ApiCompensationSchedulePartialUpdateApiArg = {
-  id: number;
-  patchedCompensationSchedule: PatchedCompensationSchedule;
 };
 export type ApiCompensationScheduleDestroyApiResponse = unknown;
 export type ApiCompensationScheduleDestroyApiArg = {
@@ -1382,12 +1068,6 @@ export type ApiCompensationTypeUpdateApiArg = {
   id: number;
   compensationType: CompensationType;
 };
-export type ApiCompensationTypePartialUpdateApiResponse =
-  /** status 200  */ CompensationType;
-export type ApiCompensationTypePartialUpdateApiArg = {
-  id: number;
-  patchedCompensationType: PatchedCompensationType;
-};
 export type ApiCompensationTypeDestroyApiResponse = unknown;
 export type ApiCompensationTypeDestroyApiArg = {
   id: number;
@@ -1406,11 +1086,6 @@ export type ApiCurrencyUpdateApiResponse = /** status 200  */ Currency;
 export type ApiCurrencyUpdateApiArg = {
   id: number;
   currency: Currency;
-};
-export type ApiCurrencyPartialUpdateApiResponse = /** status 200  */ Currency;
-export type ApiCurrencyPartialUpdateApiArg = {
-  id: number;
-  patchedCurrency: PatchedCurrency;
 };
 export type ApiCurrencyDestroyApiResponse = unknown;
 export type ApiCurrencyDestroyApiArg = {
@@ -1431,12 +1106,6 @@ export type ApiDepartmentUpdateApiArg = {
   id: number;
   department: Department;
 };
-export type ApiDepartmentPartialUpdateApiResponse =
-  /** status 200  */ Department;
-export type ApiDepartmentPartialUpdateApiArg = {
-  id: number;
-  patchedDepartment: PatchedDepartment;
-};
 export type ApiDepartmentDestroyApiResponse = unknown;
 export type ApiDepartmentDestroyApiArg = {
   id: number;
@@ -1456,12 +1125,6 @@ export type ApiDocumentTypeUpdateApiResponse = /** status 200  */ DocumentType;
 export type ApiDocumentTypeUpdateApiArg = {
   id: number;
   documentType: DocumentType;
-};
-export type ApiDocumentTypePartialUpdateApiResponse =
-  /** status 200  */ DocumentType;
-export type ApiDocumentTypePartialUpdateApiArg = {
-  id: number;
-  patchedDocumentType: PatchedDocumentType;
 };
 export type ApiDocumentTypeDestroyApiResponse = unknown;
 export type ApiDocumentTypeDestroyApiArg = {
@@ -1486,12 +1149,6 @@ export type ApiEmployeementTypeUpdateApiArg = {
   id: number;
   employeementType: EmployeementType;
 };
-export type ApiEmployeementTypePartialUpdateApiResponse =
-  /** status 200  */ EmployeementType;
-export type ApiEmployeementTypePartialUpdateApiArg = {
-  id: number;
-  patchedEmployeementType: PatchedEmployeementType;
-};
 export type ApiEmployeementTypeDestroyApiResponse = unknown;
 export type ApiEmployeementTypeDestroyApiArg = {
   id: number;
@@ -1510,11 +1167,6 @@ export type ApiEmployeesUpdateApiResponse = /** status 200  */ EmployeeUpdate;
 export type ApiEmployeesUpdateApiArg = {
   id: number;
   employeeUpdate: EmployeeUpdate;
-};
-export type ApiEmployeesPartialUpdateApiResponse = /** status 200  */ Employee;
-export type ApiEmployeesPartialUpdateApiArg = {
-  id: number;
-  patchedEmployee: PatchedEmployee;
 };
 export type ApiEmployeesDestroyApiResponse = unknown;
 export type ApiEmployeesDestroyApiArg = {
@@ -1559,11 +1211,6 @@ export type ApiInstituesUpdateApiArg = {
   id: number;
   institue: Institue;
 };
-export type ApiInstituesPartialUpdateApiResponse = /** status 200  */ Institue;
-export type ApiInstituesPartialUpdateApiArg = {
-  id: number;
-  patchedInstitue: PatchedInstitue;
-};
 export type ApiInstituesDestroyApiResponse = unknown;
 export type ApiInstituesDestroyApiArg = {
   id: number;
@@ -1605,11 +1252,6 @@ export type ApiModuleUpdateApiArg = {
   id: number;
   module: Module;
 };
-export type ApiModulePartialUpdateApiResponse = /** status 200  */ Module;
-export type ApiModulePartialUpdateApiArg = {
-  id: number;
-  patchedModule: PatchedModule;
-};
 export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
@@ -1639,12 +1281,6 @@ export type ApiOrganizationModuleUpdateApiArg = {
   id: number;
   organizationModule: OrganizationModule;
 };
-export type ApiOrganizationModulePartialUpdateApiResponse =
-  /** status 200  */ OrganizationModule;
-export type ApiOrganizationModulePartialUpdateApiArg = {
-  id: number;
-  patchedOrganizationModule: PatchedOrganizationModule;
-};
 export type ApiOrganizationModuleDestroyApiResponse = unknown;
 export type ApiOrganizationModuleDestroyApiArg = {
   id: number;
@@ -1659,12 +1295,6 @@ export type ApiOrganizationUpdateApiArg = {
   id: number;
   organization: Organization;
 };
-export type ApiOrganizationPartialUpdateApiResponse =
-  /** status 200  */ Organization;
-export type ApiOrganizationPartialUpdateApiArg = {
-  id: number;
-  patchedOrganization: PatchedOrganization;
-};
 export type ApiOrganizationDestroyApiResponse = unknown;
 export type ApiOrganizationDestroyApiArg = {
   id: number;
@@ -1673,29 +1303,6 @@ export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
 export type ApiOrganizationModulesListApiArg = void;
 export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
 export type ApiOrganizationRolesListApiArg = void;
-export type ApiOrganizationRolesCreateApiResponse = /** status 201  */ Role;
-export type ApiOrganizationRolesCreateApiArg = {
-  role: Role;
-};
-export type ApiOrganizationRolesRetrieveApiResponse = /** status 200  */ Role;
-export type ApiOrganizationRolesRetrieveApiArg = {
-  id: number;
-};
-export type ApiOrganizationRolesUpdateApiResponse = /** status 200  */ Role;
-export type ApiOrganizationRolesUpdateApiArg = {
-  id: number;
-  role: Role;
-};
-export type ApiOrganizationRolesPartialUpdateApiResponse =
-  /** status 200  */ Role;
-export type ApiOrganizationRolesPartialUpdateApiArg = {
-  id: number;
-  patchedRole: PatchedRole;
-};
-export type ApiOrganizationRolesDestroyApiResponse = unknown;
-export type ApiOrganizationRolesDestroyApiArg = {
-  id: number;
-};
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -1731,11 +1338,6 @@ export type ApiProgramsUpdateApiArg = {
   id: number;
   program: Program;
 };
-export type ApiProgramsPartialUpdateApiResponse = /** status 200  */ Program;
-export type ApiProgramsPartialUpdateApiArg = {
-  id: number;
-  patchedProgram: PatchedProgram;
-};
 export type ApiProgramsDestroyApiResponse = unknown;
 export type ApiProgramsDestroyApiArg = {
   id: number;
@@ -1758,11 +1360,6 @@ export type ApiStandupUpdateApiResponse = /** status 200  */ Standup;
 export type ApiStandupUpdateApiArg = {
   id: number;
   standup: Standup;
-};
-export type ApiStandupPartialUpdateApiResponse = /** status 200  */ Standup;
-export type ApiStandupPartialUpdateApiArg = {
-  id: number;
-  patchedStandup: PatchedStandup;
 };
 export type ApiStandupDestroyApiResponse = unknown;
 export type ApiStandupDestroyApiArg = {
@@ -1791,12 +1388,6 @@ export type ApiStandupUpdateUpdateApiArg = {
   id: number;
   standupUpdate: StandupUpdate;
 };
-export type ApiStandupUpdatePartialUpdateApiResponse =
-  /** status 200  */ StandupUpdate;
-export type ApiStandupUpdatePartialUpdateApiArg = {
-  id: number;
-  patchedStandupUpdate: PatchedStandupUpdate;
-};
 export type ApiStandupUpdateDestroyApiResponse = unknown;
 export type ApiStandupUpdateDestroyApiArg = {
   id: number;
@@ -1815,11 +1406,6 @@ export type ApiTeamUpdateApiResponse = /** status 200  */ Team;
 export type ApiTeamUpdateApiArg = {
   id: number;
   team: Team;
-};
-export type ApiTeamPartialUpdateApiResponse = /** status 200  */ Team;
-export type ApiTeamPartialUpdateApiArg = {
-  id: number;
-  patchedTeam: PatchedTeam;
 };
 export type ApiTeamDestroyApiResponse = unknown;
 export type ApiTeamDestroyApiArg = {
@@ -1863,23 +1449,9 @@ export type AssetType = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedAssetType = {
-  id?: number;
-  name?: string;
-  attributes?: {
-    [key: string]: any;
-  };
-  created_at?: string;
-  updated_at?: string;
-};
 export type Attendance = {
   employee: number;
   time_in: string;
-  time_out?: string | null;
-};
-export type PatchedAttendance = {
-  employee?: number;
-  time_in?: string;
   time_out?: string | null;
 };
 export type Benefit = {
@@ -1887,12 +1459,6 @@ export type Benefit = {
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type PatchedBenefit = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
 };
 export type UserPassword = {
   password: string;
@@ -1909,13 +1475,6 @@ export type Company = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedCompany = {
-  id?: number;
-  name?: string;
-  image?: string | null;
-  created_at?: string;
-  updated_at?: string;
-};
 export type CompensationSchedule = {
   id: number;
   name: string;
@@ -1923,14 +1482,6 @@ export type CompensationSchedule = {
   is_monthly?: boolean;
   created_at: string;
   updated_at: string;
-};
-export type PatchedCompensationSchedule = {
-  id?: number;
-  name?: string;
-  is_weekly?: boolean;
-  is_monthly?: boolean;
-  created_at?: string;
-  updated_at?: string;
 };
 export type CompensationType = {
   id: number;
@@ -1941,15 +1492,6 @@ export type CompensationType = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedCompensationType = {
-  id?: number;
-  name?: string;
-  is_hourly?: boolean;
-  is_monthly?: boolean;
-  is_milestone?: boolean;
-  created_at?: string;
-  updated_at?: string;
-};
 export type Currency = {
   id: number;
   code: string;
@@ -1957,24 +1499,11 @@ export type Currency = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedCurrency = {
-  id?: number;
-  code?: string;
-  symbol?: string;
-  created_at?: string;
-  updated_at?: string;
-};
 export type Department = {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type PatchedDepartment = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
 };
 export type DocumentType = {
   id: number;
@@ -1982,23 +1511,11 @@ export type DocumentType = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedDocumentType = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
-};
 export type EmployeementType = {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-};
-export type PatchedEmployeementType = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
 };
 export type EmployeeList = {
   id: number;
@@ -2092,29 +1609,6 @@ export type EmployeeUpdate = {
   type?: number | null;
   benefits?: number[];
 };
-export type PatchedEmployee = {
-  id?: number;
-  user?: EmployeeUser;
-  degrees?: Degree[];
-  assets?: Asset[];
-  experience?: Experirence[];
-  org_id?: string;
-  managing?: number[];
-  total_experience?: string;
-  nic?: string;
-  date_of_joining?: string;
-  emergency_contact_number?: string;
-  designation?: string;
-  salary?: number | null;
-  leave_count?: number;
-  user_allowed?: boolean;
-  created_at?: string;
-  updated_at?: string;
-  department?: number | null;
-  manager?: number | null;
-  type?: number | null;
-  benefits?: number[];
-};
 export type Compensation = {
   id: number;
   current_salary: number;
@@ -2138,13 +1632,6 @@ export type Institue = {
   image?: string | null;
   created_at: string;
   updated_at: string;
-};
-export type PatchedInstitue = {
-  id?: number;
-  name?: string;
-  image?: string | null;
-  created_at?: string;
-  updated_at?: string;
 };
 export type LeaveTypeEnum = "sick leave" | "annual leave" | "casual leave";
 export type BlankEnum = "";
@@ -2218,14 +1705,6 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedModule = {
-  id?: number;
-  slug?: SlugEnum;
-  name?: string;
-  is_enabled?: boolean;
-  created_at?: string;
-  updated_at?: string;
-};
 export type Organization = {
   id: number;
   name: string;
@@ -2241,21 +1720,6 @@ export type OrganizationModule = {
   module: number;
   organization: number;
 };
-export type PatchedOrganizationModule = {
-  id?: number;
-  is_enabled?: boolean;
-  created_at?: string;
-  updated_at?: string;
-  module?: number;
-  organization?: number;
-};
-export type PatchedOrganization = {
-  id?: number;
-  name?: string;
-  address?: string;
-  created_at?: string;
-  updated_at?: string;
-};
 export type PermissionEnum = "c" | "b" | "a";
 export type Role = {
   id: number;
@@ -2264,14 +1728,6 @@ export type Role = {
   is_default?: boolean;
   created_at: string;
   updated_at: string;
-};
-export type PatchedRole = {
-  id?: number;
-  name?: string;
-  permission?: PermissionEnum;
-  is_default?: boolean;
-  created_at?: string;
-  updated_at?: string;
 };
 export type OwnerEmployee = {
   date_of_joining: string;
@@ -2302,12 +1758,6 @@ export type Program = {
   created_at: string;
   updated_at: string;
 };
-export type PatchedProgram = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
-};
 export type Standup = {
   id: number;
   name: string;
@@ -2315,14 +1765,6 @@ export type Standup = {
   created_at: string;
   updated_at: string;
   team: number;
-};
-export type PatchedStandup = {
-  id?: number;
-  name?: string;
-  time?: string;
-  created_at?: string;
-  updated_at?: string;
-  team?: number;
 };
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
 export type StandupUpdate = {
@@ -2338,32 +1780,12 @@ export type StandupUpdate = {
   standup: number;
   employee: number;
 };
-export type PatchedStandupUpdate = {
-  id?: number;
-  time?: string;
-  date?: string;
-  status?: StandupUpdateStatusEnum;
-  work_done_yesterday?: string | null;
-  work_to_do?: string | null;
-  blockers?: string | null;
-  created_at?: string;
-  updated_at?: string;
-  standup?: number;
-  employee?: number;
-};
 export type Team = {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
   members: number[];
-};
-export type PatchedTeam = {
-  id?: number;
-  name?: string;
-  created_at?: string;
-  updated_at?: string;
-  members?: number[];
 };
 export type User = {
   id: number;
@@ -2384,68 +1806,53 @@ export const {
   useApiAssetTypeCreateMutation,
   useApiAssetTypeRetrieveQuery,
   useApiAssetTypeUpdateMutation,
-  useApiAssetTypePartialUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
-  useApiAttendanceCreateMutation,
-  useApiAttendanceRetrieveQuery,
-  useApiAttendanceUpdateMutation,
-  useApiAttendancePartialUpdateMutation,
-  useApiAttendanceDestroyMutation,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,
   useApiBenefitsUpdateMutation,
-  useApiBenefitsPartialUpdateMutation,
   useApiBenefitsDestroyMutation,
   useApiChangePasswordPartialUpdateMutation,
   useApiCompaniesListQuery,
   useApiCompaniesCreateMutation,
   useApiCompaniesRetrieveQuery,
   useApiCompaniesUpdateMutation,
-  useApiCompaniesPartialUpdateMutation,
   useApiCompaniesDestroyMutation,
   useApiCompensationScheduleListQuery,
   useApiCompensationScheduleCreateMutation,
   useApiCompensationScheduleRetrieveQuery,
   useApiCompensationScheduleUpdateMutation,
-  useApiCompensationSchedulePartialUpdateMutation,
   useApiCompensationScheduleDestroyMutation,
   useApiCompensationTypeListQuery,
   useApiCompensationTypeCreateMutation,
   useApiCompensationTypeRetrieveQuery,
   useApiCompensationTypeUpdateMutation,
-  useApiCompensationTypePartialUpdateMutation,
   useApiCompensationTypeDestroyMutation,
   useApiCurrencyListQuery,
   useApiCurrencyCreateMutation,
   useApiCurrencyRetrieveQuery,
   useApiCurrencyUpdateMutation,
-  useApiCurrencyPartialUpdateMutation,
   useApiCurrencyDestroyMutation,
   useApiDepartmentListQuery,
   useApiDepartmentCreateMutation,
   useApiDepartmentRetrieveQuery,
   useApiDepartmentUpdateMutation,
-  useApiDepartmentPartialUpdateMutation,
   useApiDepartmentDestroyMutation,
   useApiDocumentTypeListQuery,
   useApiDocumentTypeCreateMutation,
   useApiDocumentTypeRetrieveQuery,
   useApiDocumentTypeUpdateMutation,
-  useApiDocumentTypePartialUpdateMutation,
   useApiDocumentTypeDestroyMutation,
   useApiEmployeementTypeListQuery,
   useApiEmployeementTypeCreateMutation,
   useApiEmployeementTypeRetrieveQuery,
   useApiEmployeementTypeUpdateMutation,
-  useApiEmployeementTypePartialUpdateMutation,
   useApiEmployeementTypeDestroyMutation,
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
   useApiEmployeesUpdateMutation,
-  useApiEmployeesPartialUpdateMutation,
   useApiEmployeesDestroyMutation,
   useApiEmployeesCompensationRetrieveQuery,
   useApiEmployeesCompensationCreateMutation,
@@ -2456,7 +1863,6 @@ export const {
   useApiInstituesCreateMutation,
   useApiInstituesRetrieveQuery,
   useApiInstituesUpdateMutation,
-  useApiInstituesPartialUpdateMutation,
   useApiInstituesDestroyMutation,
   useApiLeaveListQuery,
   useApiLeavePartialUpdateMutation,
@@ -2468,7 +1874,6 @@ export const {
   useApiModuleCreateMutation,
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
-  useApiModulePartialUpdateMutation,
   useApiModuleDestroyMutation,
   useApiOrganizationListQuery,
   useApiOrganizationCreateMutation,
@@ -2476,19 +1881,12 @@ export const {
   useApiOrganizationModuleCreateMutation,
   useApiOrganizationModuleRetrieveQuery,
   useApiOrganizationModuleUpdateMutation,
-  useApiOrganizationModulePartialUpdateMutation,
   useApiOrganizationModuleDestroyMutation,
   useApiOrganizationRetrieveQuery,
   useApiOrganizationUpdateMutation,
-  useApiOrganizationPartialUpdateMutation,
   useApiOrganizationDestroyMutation,
   useApiOrganizationModulesListQuery,
   useApiOrganizationRolesListQuery,
-  useApiOrganizationRolesCreateMutation,
-  useApiOrganizationRolesRetrieveQuery,
-  useApiOrganizationRolesUpdateMutation,
-  useApiOrganizationRolesPartialUpdateMutation,
-  useApiOrganizationRolesDestroyMutation,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -2497,7 +1895,6 @@ export const {
   useApiProgramsCreateMutation,
   useApiProgramsRetrieveQuery,
   useApiProgramsUpdateMutation,
-  useApiProgramsPartialUpdateMutation,
   useApiProgramsDestroyMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
@@ -2505,20 +1902,17 @@ export const {
   useApiStandupCreateMutation,
   useApiStandupRetrieveQuery,
   useApiStandupUpdateMutation,
-  useApiStandupPartialUpdateMutation,
   useApiStandupDestroyMutation,
   useApiStandupMembersRetrieveQuery,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
   useApiStandupUpdateRetrieveQuery,
   useApiStandupUpdateUpdateMutation,
-  useApiStandupUpdatePartialUpdateMutation,
   useApiStandupUpdateDestroyMutation,
   useApiTeamListQuery,
   useApiTeamCreateMutation,
   useApiTeamRetrieveQuery,
   useApiTeamUpdateMutation,
-  useApiTeamPartialUpdateMutation,
   useApiTeamDestroyMutation,
   useApiTeamMembersRetrieveQuery,
   useApiUsersListQuery,

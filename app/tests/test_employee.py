@@ -222,7 +222,6 @@ class BenefitsTestCase(BaseTestCase):
     def test_benefits_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/benefits/")
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_benefit_post(self):
@@ -232,12 +231,29 @@ class BenefitsTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_benefit_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/benefits/{self.benefit.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_benefit_put(self):
+        self.client.force_login(self.owner)
+        benefit_data = {"name": "Sick leaves"}
+        response = self.client.put(
+            f"/api/benefits/{self.benefit.id}/", data=benefit_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_benefit_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/benefits/{self.benefit.id}/")
+        self.assertEqual(response.status_code, 204)
+
 
 class CompanyTestCase(BaseTestCase):
     def test_companies_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/companies/")
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_company_post(self):
@@ -246,6 +262,24 @@ class CompanyTestCase(BaseTestCase):
         response = self.client.post("/api/companies/", data=company_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_companies_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/companies/{self.company.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_companies_put(self):
+        self.client.force_login(self.owner)
+        company_data = {"name": "Confiz"}
+        response = self.client.put(
+            f"/api/companies/{self.company.id}/", data=company_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_companies_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/companies/{self.company.id}/")
+        self.assertEqual(response.status_code, 204)
 
 
 class CompensationTypeTestCase(BaseTestCase):
@@ -267,6 +301,29 @@ class CompensationTypeTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_compensation_types_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(
+            f"/api/compensation_type/{self.compensation_type.id}/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_compensation_types_put(self):
+        self.client.force_login(self.owner)
+        compensation_type_data = {"name": "Monthly", "is_monthly": True}
+        response = self.client.put(
+            f"/api/compensation_type/{self.compensation_type.id}/",
+            data=compensation_type_data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_companensation_types_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(
+            f"/api/compensation_type/{self.compensation_type.id}/"
+        )
+        self.assertEqual(response.status_code, 400)
+
 
 class CompensationScheduleTestCase(BaseTestCase):
     def test_compensation_schedules_get(self):
@@ -287,6 +344,29 @@ class CompensationScheduleTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_compensation_schedules_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(
+            f"/api/compensation_schedule/{self.compensation_schedule.id}/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_compensation_schedules_put(self):
+        self.client.force_login(self.owner)
+        compensation_scedule_data = {"name": "Monthly", "is_monthly": True}
+        response = self.client.put(
+            f"/api/compensation_schedule/{self.compensation_schedule.id}/",
+            data=compensation_scedule_data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_companensation_schedules_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(
+            f"/api/compensation_schedule/{self.compensation_schedule.id}/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
 class CurrencyTestCase(BaseTestCase):
     def test_currencies_get(self):
@@ -301,6 +381,24 @@ class CurrencyTestCase(BaseTestCase):
         response = self.client.post("/api/currency/", data=currency_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_currency_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/currency/{self.currency.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_currency_put(self):
+        self.client.force_login(self.owner)
+        currency_data = {"code": "PKR", "symbol": "R"}
+        response = self.client.put(
+            f"/api/currency/{self.currency.id}/", data=currency_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_currency_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/currency/{self.currency.id}/")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class DepartmentTestCase(BaseTestCase):
@@ -317,6 +415,24 @@ class DepartmentTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_department_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/department/{self.department.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_department_put(self):
+        self.client.force_login(self.owner)
+        department_data = {"name": "Backend"}
+        response = self.client.put(
+            f"/api/department/{self.department.id}/", data=department_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_department_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/department/{self.department.id}/")
+        self.assertEqual(response.status_code, 204)
+
 
 class DocumentTypeTestCase(BaseTestCase):
     def test_document_types_get(self):
@@ -331,6 +447,24 @@ class DocumentTypeTestCase(BaseTestCase):
         response = self.client.post("/api/document_type/", data=document_type_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_document_type_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/document_type/{self.document_type.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_document_type_put(self):
+        self.client.force_login(self.owner)
+        document_type_data = {"name": "CV"}
+        response = self.client.put(
+            f"/api/document_type/{self.document_type.id}/", data=document_type_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_document_type_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/document_type/{self.document_type.id}/")
+        self.assertEqual(response.status_code, 204)
 
 
 class EmployeementTypeTestCase(BaseTestCase):
@@ -349,6 +483,27 @@ class EmployeementTypeTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_employeement_type_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/employeement_type/{self.employment_type.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_employeement_type_put(self):
+        self.client.force_login(self.owner)
+        employment_type_data = {"name": "Part Time"}
+        response = self.client.put(
+            f"/api/employeement_type/{self.employment_type.id}/",
+            data=employment_type_data,
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_employeement_type_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(
+            f"/api/employeement_type/{self.employment_type.id}/"
+        )
+        self.assertEqual(response.status_code, 204)
+
 
 class InstitueTestCase(BaseTestCase):
     def test_institue_get(self):
@@ -363,6 +518,24 @@ class InstitueTestCase(BaseTestCase):
         response = self.client.post("/api/institues/", data=institue_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_institutes_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/institues/{self.institute.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_institutes_put(self):
+        self.client.force_login(self.owner)
+        institute_data = {"name": "FAST"}
+        response = self.client.put(
+            f"/api/institues/{self.institute.id}/", data=institute_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_institutes_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/institues/{self.institute.id}/")
+        self.assertEqual(response.status_code, 204)
 
 
 class ProgamTestCase(BaseTestCase):
@@ -379,6 +552,24 @@ class ProgamTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_program_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/programs/{self.program.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_program_put(self):
+        self.client.force_login(self.owner)
+        program_data = {"name": "Masters"}
+        response = self.client.put(
+            f"/api/programs/{self.program.id}/", data=program_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_program_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/programs/{self.program.id}/")
+        self.assertEqual(response.status_code, 204)
+
 
 class AssetTypeTestCase(BaseTestCase):
     def asset_types_get(self):
@@ -393,6 +584,28 @@ class AssetTypeTestCase(BaseTestCase):
         response = self.client.post("/api/asset_type/", data=asset_Type_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def asset_types_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/asset_type/{self.asset_type.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def asset_types_put(self):
+        self.client.force_login(self.owner)
+        asset_type_data = {
+            "name": "Mouse",
+            "organization": self.organization,
+            "attributes": {},
+        }
+        response = self.client.put(
+            f"/api/asset_type/{self.asset_type.id}/", data=asset_type_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def asset_types_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/asset_type/{self.asset_type.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class RoleTestCase(BaseTestCase):
@@ -439,9 +652,31 @@ class StandupTestCase(BaseTestCase):
         response = self.client.get(f"/api/standup/{self.standup.id}/members/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_standup_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/standup/{self.standup.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standup_put(self):
+        self.client.force_login(self.owner)
+        standup_data = {
+            "name": "Standup-Team-1",
+            "team": self.team1.id,
+            "time": "01:52:00+05:00",
+        }
+        response = self.client.put(
+            f"/api/standup/{self.standup.id}/", data=standup_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standup_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/standup/{self.standup.id}/")
+        self.assertEqual(response.status_code, 204)
+
 
 class StandupUpdateTestCase(BaseTestCase):
-    def test_standup_get(self):
+    def test_standupUpdate_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/standup_update/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -460,6 +695,29 @@ class StandupUpdateTestCase(BaseTestCase):
         response = self.client.post("/api/standup_update/", data=standup_update_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_standupUpdate_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/standup_update/{self.standup_update.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standupUpdate_put(self):
+        self.client.force_login(self.owner)
+        standup_update_data = {
+            "standup": self.standup.id,
+            "organization": self.organization.id,
+            "employee": self.employee.id,
+            "status": "leave",
+        }
+        response = self.client.put(
+            f"/api/standup_update/{self.standup_update.id}/", data=standup_update_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_standupUpdate_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/standup_update/{self.standup_update.id}/")
+        self.assertEqual(response.status_code, 204)
+
 
 class TeamTestCase(BaseTestCase):
     def test_team_post(self):
@@ -476,3 +734,23 @@ class TeamTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/team/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_team_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/team/{self.team.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_team_put(self):
+        self.client.force_login(self.owner)
+        team_data = {
+            "name": "Standup-team-2",
+            "organization": self.organization.id,
+            "members": [self.employee.id],
+        }
+        response = self.client.put(f"/api/team/{self.team.id}/", data=team_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_team_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/team/{self.team.id}/")
+        self.assertEqual(response.status_code, 204)

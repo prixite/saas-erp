@@ -16,6 +16,9 @@ class BaseTestCase(TestCase):
         self.organization = factories.OrganizationFactory(
             name="Test Organization", address="USA"
         )
+        self.organization1 = factories.OrganizationFactory(
+            name="Test Organization1", address="USA"
+        )
         self.owner_role = factories.RoleFactory(
             name="Test Organization Owner",
             permission=models.Role.Permission.OWNER,
@@ -90,6 +93,9 @@ class BaseTestCase(TestCase):
         self.asset_type = factories.AssetTypeFactory(
             name="Laptop", organization=self.organization, attributes={}
         )
+        self.benefit = factories.BenefitFactory(
+            name="Medical Allowance", organization=self.organization
+        )
         self.compensation_type = factories.CompensationTypeFactory(
             name="Hourly",
             is_hourly=True,
@@ -138,4 +144,11 @@ class BaseTestCase(TestCase):
             team=self.team,
             organization=self.organization,
             time="11:15:00+05:00",
+        )
+
+        self.standup_update = factories.StandupUpdateFactory(
+            standup=self.standup,
+            organization=self.organization,
+            employee=self.employee,
+            status="leave",
         )
