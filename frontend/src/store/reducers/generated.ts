@@ -798,12 +798,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
-    apiStandupRetrieve: build.query<
-      ApiStandupRetrieveApiResponse,
-      ApiStandupRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/standup/${queryArg.id}/` }),
-    }),
     apiStandupUpdate: build.mutation<
       ApiStandupUpdateApiResponse,
       ApiStandupUpdateApiArg
@@ -907,12 +901,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/team/${queryArg.id}/`,
         method: "DELETE",
       }),
-    }),
-    apiTeamMembersRetrieve: build.query<
-      ApiTeamMembersRetrieveApiResponse,
-      ApiTeamMembersRetrieveApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
     }),
     apiUsersList: build.query<ApiUsersListApiResponse, ApiUsersListApiArg>({
       query: () => ({ url: `/api/users/` }),
@@ -1352,10 +1340,6 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
-export type ApiStandupRetrieveApiResponse = /** status 200  */ Standup;
-export type ApiStandupRetrieveApiArg = {
-  id: number;
-};
 export type ApiStandupUpdateApiResponse = /** status 200  */ Standup;
 export type ApiStandupUpdateApiArg = {
   id: number;
@@ -1409,10 +1393,6 @@ export type ApiTeamUpdateApiArg = {
 };
 export type ApiTeamDestroyApiResponse = unknown;
 export type ApiTeamDestroyApiArg = {
-  id: number;
-};
-export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
-export type ApiTeamMembersRetrieveApiArg = {
   id: number;
 };
 export type ApiUsersListApiResponse = /** status 200  */ User[];
@@ -1900,7 +1880,6 @@ export const {
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
-  useApiStandupRetrieveQuery,
   useApiStandupUpdateMutation,
   useApiStandupDestroyMutation,
   useApiStandupMembersRetrieveQuery,
@@ -1914,7 +1893,6 @@ export const {
   useApiTeamRetrieveQuery,
   useApiTeamUpdateMutation,
   useApiTeamDestroyMutation,
-  useApiTeamMembersRetrieveQuery,
   useApiUsersListQuery,
   useApiUsersAccessListQuery,
   useApiUsersAccessCreateMutation,

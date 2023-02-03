@@ -652,11 +652,6 @@ class StandupTestCase(BaseTestCase):
         response = self.client.get(f"/api/standup/{self.standup.id}/members/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_standup_detail(self):
-        self.client.force_login(self.owner)
-        response = self.client.get(f"/api/standup/{self.standup.id}/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
     def test_standup_put(self):
         self.client.force_login(self.owner)
         standup_data = {

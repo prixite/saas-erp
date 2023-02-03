@@ -3649,39 +3649,6 @@
             }
         },
         "/api/standup/{id}/": {
-            "get": {
-                "operationId": "api_standup_retrieve",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Standup"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            },
             "put": {
                 "operationId": "api_standup_update",
                 "parameters": [
@@ -4163,41 +4130,6 @@
                 "responses": {
                     "204": {
                         "description": "No response body"
-                    }
-                }
-            }
-        },
-        "/api/team/{id}/members/": {
-            "get": {
-                "operationId": "api_team_members_retrieve",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
-                "tags": [
-                    "api"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Team"
-                                }
-                            }
-                        },
-                        "description": ""
                     }
                 }
             }

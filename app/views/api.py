@@ -709,12 +709,6 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    def retrieve(self, request, pk=None):
-        team = self.get_object()
-        members = team.members.all()
-        serializer = serializers.EmployeeSerializer(members, many=True)
-        return Response(serializer.data)
-
 
 class ModuleFilterViewSet(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin

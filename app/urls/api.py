@@ -321,7 +321,6 @@ urlpatterns = [
         "standup/<int:pk>/",
         api.StandupViewSet.as_view(
             {
-                "get": "retrieve",
                 "put": "update",
                 "delete": "destroy",
             }
@@ -356,7 +355,6 @@ urlpatterns = [
             }
         ),
     ),
-    path("team/<int:pk>/members/", api.TeamViewSet.as_view({"get": "retrieve"})),
     path(
         "users/<int:pk>/access/",
         api.UserModuleRoleViewSet.as_view({"get": "list", "post": "create"}),
