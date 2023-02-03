@@ -5,9 +5,11 @@ import {
   Typography,
   InputAdornment,
   TextField,
+  Tooltip,
   Button,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import searchBox from "@src/assets/svgs/searchBox.svg";
@@ -18,14 +20,15 @@ import { employeeConstants } from "@src/helpers/constants/constants";
 import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { truncateString } from "@src/helpers/utils/utils";
 import {
-  useGetStandupQuery,
+  useGetStandupUpdatesQuery,
   useGetUserQuery,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/standup/standup.scss";
 
 function Standup() {
-  const { data: rows = [], isLoading } = useGetStandupQuery();
+  const { data: rows = [], isLoading } = useGetStandupUpdatesQuery();
   const { data: userData } = useGetUserQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
@@ -38,19 +41,6 @@ function Standup() {
   const [pageSize, setPageSize] = useState<number>(10);
 
   const columns: GridColDef[] = [
-    {
-      field: "id",
-      headerName: "ID",
-      sortable: false,
-      width: 200,
-      renderCell: (cellValues) => {
-        return (
-          <p className="para" style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.id}
-          </p>
-        );
-      },
-    },
     {
       field: "name",
       headerName: "Name",
@@ -67,21 +57,141 @@ function Standup() {
               textTransform: "capitalize",
             }}
           >
-            <p>{cellValues?.row?.name}</p>
+            <img
+              style={{
+                height: "32px",
+                width: "32px",
+                left: "241px",
+                top: "154px",
+                marginRight: "8px",
+                borderRadius: "50%",
+              }}
+              src={`${cellValues.row?.employee?.image}`}
+              alt="profile pic"
+            />
+            <p>{cellValues?.row?.employee?.name}</p>
           </div>
         );
       },
     },
     {
-      field: "Team",
-      headerName: "Team",
+      field: "Department",
+      headerName: "Department",
       sortable: false,
       width: 200,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.team}
+            {cellValues?.row?.employee?.department}
           </p>
+        );
+      },
+    },
+    {
+      field: "Date",
+      headerName: "Date",
+      sortable: false,
+      width: 250,
+      renderCell: (cellValues) => {
+        return (
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.created_at).format("ll")}
+          </p>
+        );
+      },
+    },
+    {
+      field: "Time",
+      headerName: "Time",
+      sortable: false,
+      width: 250,
+      renderCell: (cellValues) => {
+        return <p style={{ marginLeft: "20px" }}>{cellValues?.row?.time}</p>;
+      },
+    },
+    {
+      field: "Status",
+      headerName: "Status",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Box
+            sx={{
+              color:
+                cellValues?.row?.status === "joined"
+                  ? "green"
+                  : cellValues?.row?.status === "missed"
+                  ? "red"
+                  : "grey",
+              width: "91px",
+              height: "28px",
+              borderRadius: "16px",
+              border: "1px solid",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textTransform: "capitalize",
+              background:
+                cellValues?.row?.status === "joined"
+                  ? " #E9FFE6;"
+                  : cellValues?.row?.status === "missed"
+                  ? "#FFF1F1"
+                  : "#FFF1F1",
+              fontSize: "12px",
+              fontWeight: "400",
+            }}
+          >
+            {cellValues?.row?.status}
+          </Box>
+        );
+      },
+    },
+    {
+      field: "Work done yesterday",
+      headerName: "Work done yesterday",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Tooltip title={cellValues?.row?.work_done_yesterday}>
+            <p style={{ marginLeft: "21px" }}>
+              {" "}
+              {truncateString(cellValues?.row?.work_done_yesterday, 40)}
+            </p>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "Work to do",
+      headerName: "Work to do",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Tooltip title={cellValues?.row?.work_to_do}>
+            <p style={{ marginLeft: "21px" }}>
+              {" "}
+              {truncateString(cellValues?.row?.work_to_do, 40)}
+            </p>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      field: "Blockers",
+      headerName: "Blockers",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <Tooltip title={cellValues?.row?.blockers}>
+            <p style={{ marginLeft: "21px" }}>
+              {" "}
+              {truncateString(cellValues?.row?.blockers, 40)}
+            </p>
+          </Tooltip>
         );
       },
     },
@@ -177,7 +287,9 @@ function Standup() {
                 className="create-btn"
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
-                onClick={() => setOpenCreateModal(true)}
+                onClick={() => {
+                  setOpenCreateModal(true);
+                }}
               >
                 {" "}
                 <Typography>{createStandup}</Typography>
@@ -195,7 +307,9 @@ function Standup() {
                 className="add-btn"
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
               >
                 {" "}
                 <Typography>{addStandup}</Typography>
@@ -245,7 +359,7 @@ function Standup() {
                     },
                   },
                   "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                    width: "101px",
+                    width: "130px",
                     height: "18px",
                     fontFamily: "Lato",
                     fontStyle: "normal",

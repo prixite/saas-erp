@@ -232,7 +232,7 @@ const Sidebar = (props) => {
           userData?.allowed_modules.member_modules.includes("employees") ? (
             <ListItemButton
               onClick={() => {
-                navigate("standup/");
+                navigate("standups/");
               }}
               className="list-items-btn"
             >
@@ -240,11 +240,11 @@ const Sidebar = (props) => {
                 <img
                   className="icon-img"
                   src={
-                    currentPath === "/standup/" ? standupRedIcon : standupIcon
+                    currentPath === "/standups/" ? standupRedIcon : standupIcon
                   }
                 />
               </ListItemIcon>
-              <ListItemText primary="Standup" />
+              <ListItemText primary="Standups" />
             </ListItemButton>
           ) : (
             ""

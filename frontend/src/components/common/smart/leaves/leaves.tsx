@@ -28,13 +28,12 @@ function Leaves() {
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [checkState, setCheckState] = useState(false);
   const { notFound } = constantData.Employee;
   const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [rowCellId, setRowCellId] = useState<number>(0);
+  const [rowData, setRowData] = useState();
 
   const columns: GridColDef[] = [
     {
@@ -214,7 +213,7 @@ function Leaves() {
               fontSize: "12px",
               fontWeight: "400",
             }}
-            onClick={(event) => handleModalOpen(event, cellValues?.row?.id)}
+            onClick={(event) => handleModalOpen(event, cellValues?.row)}
           >
             {Actions}
           </Box>
@@ -223,16 +222,14 @@ function Leaves() {
     },
   ];
   const handleModalClose = () => {
-    setCheckState(false);
     setOpenModal(false);
   };
   const handleModalOpen = (
     event: React.MouseEvent<HTMLElement>,
-    cellId: number
+    row: empLeaves
   ) => {
     event.stopPropagation();
-    setRowCellId(cellId);
-    setCheckState(true);
+    setRowData(row);
     setOpenModal(true);
   };
 
@@ -430,8 +427,7 @@ function Leaves() {
       <LeaveModal
         open={openModal}
         handleClose={handleModalClose}
-        empId={rowCellId}
-        checkState={checkState}
+        empData={rowData}
       />
     </Box>
   );

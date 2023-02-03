@@ -58,11 +58,18 @@
             input {
               border: 1px solid transparent;
             }
+
+            .Mui-disabled {
+              color: lightgray !important;
+            }
             .textfield_label {
               color: black;
               font-weight: 400;
               font-size: 16px;
               letter-spacing: -0.011em;
+              .MuiFormLabel-asterisk {
+                color: #6c6c6c !important;
+              }
             }
             .menu-item-cls {
               font-size: 14px;

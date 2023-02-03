@@ -2,7 +2,7 @@
   .MuiDialog-paper {
     padding: 24px 24px 0px 24px;
     width: 404px;
-    height: 400px;
+    height: 480px;
     align-items: center;
     box-shadow: unset;
     border-radius: 12px;
@@ -43,6 +43,7 @@
     flex-direction: column;
     width: 100%;
     .fields-cls {
+      height: 84px !important;
       .text-field-cls {
         .MuiOutlinedInput-notchedOutline {
           border: 1px solid #d4d6db;
@@ -58,6 +59,9 @@
           font-weight: 400;
           font-size: 16px;
           letter-spacing: -0.011em;
+          .MuiFormLabel-asterisk {
+            color: #6c6c6c !important;
+          }
         }
         .menu-item-cls {
           font-size: 14px;
@@ -72,6 +76,7 @@
       }
       .MuiTextField-root {
         margin-bottom: 0px !important;
+        margin-top: 16px !important;
       }
     }
     .salary-range-box {

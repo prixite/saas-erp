@@ -82,6 +82,15 @@ export interface Doc {
   type: string;
   document_url: string;
 }
+export interface TeamMembers {
+  id: number;
+  image: string;
+  contact_number: string;
+  date_of_joining: string;
+  first_name: string;
+  last_name: string;
+  org_id: string;
+}
 export interface EmployeeDoc {
   type: string;
   docs: Doc[];
@@ -96,6 +105,7 @@ export interface User {
   image: string;
   email: string;
   first_name: string;
+  emp_id: number;
   headline: string;
   is_superuser: boolean;
   last_name: string;
@@ -157,6 +167,26 @@ export interface standupTypes {
   created_at: string;
   team: string;
 }
+export interface teamTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  members: number[];
+}
+export interface standupUpdatesTypes {
+  id: number;
+  time: string;
+  date: string;
+  status: string;
+  work_done_yesterday: string;
+  work_to_do: string;
+  blockers: string;
+  standup: number;
+  employee: number;
+  created_at: string;
+  updated_at: string;
+}
 export interface Benefits {
   id: number;
   name: string;
@@ -171,7 +201,7 @@ export interface EmployeeLeaves {
 export interface EmployeeLeavesParameters {
   hr_comment: string;
   status: string;
-  type: string;
+  leave_type: string;
 }
 export interface empLeaves {
   id: number;

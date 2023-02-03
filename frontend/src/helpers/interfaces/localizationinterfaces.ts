@@ -360,6 +360,7 @@ export interface standupData {
   EmployeeName: string;
   Status: string;
   Date: string;
+  Time: string;
   WorkDoneYesterday: string;
   TodayPlan: string;
   Blockers: string;
@@ -383,6 +384,9 @@ export interface standupData {
   Frontend: string;
   Backend: string;
   Marketing: string;
+  Joined: string;
+  Missed: string;
+  TimeRequired: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
