@@ -105,6 +105,7 @@ export interface User {
   image: string;
   email: string;
   first_name: string;
+  emp_id: number;
   headline: string;
   is_superuser: boolean;
   last_name: string;

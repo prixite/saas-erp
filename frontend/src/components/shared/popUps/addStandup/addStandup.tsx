@@ -18,8 +18,8 @@ import "@src/components/shared/popUps/addStandup/addStandup.scss";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { toastAPIError } from "@src/helpers/utils/utils";
-
 import {
+  useGetUserQuery,
   useGetStandupQuery,
   useGetTeamMembersQuery,
   useAddStandupMutation,
@@ -28,11 +28,11 @@ import {
 interface Props {
   open: boolean;
   handleClose: () => void;
-  checkState: boolean;
 }
 
-const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
+const AddStandupModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
+  const { data: userData } = useGetUserQuery();
   const {
     AddStandupHeading,
     AddStandupSubheading,
@@ -73,11 +73,18 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
       handleAddStandup();
     },
   });
+  const resetForm = () => {
+    handleClose();
+    formik.resetForm();
+  };
   const { data: teamMembersData } = useGetTeamMembersQuery(
     {
       id: parseInt(formik.values.standup_selection),
     },
     { skip: !parseInt(formik.values.standup_selection) }
+  );
+  const selectedMember = teamMembersData?.find(
+    (x) => x?.id === userData?.emp_id
   );
   const [addStandup] = useAddStandupMutation();
   const [loading, setLoading] = useState(false);
@@ -102,11 +109,7 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
-  useEffect(() => {
-    if (!checkState) {
-      formik.resetForm();
-    }
-  }, [checkState]);
+
   useEffect(() => {
     formik.setFieldValue("employee_name", "");
   }, [formik.values.standup_selection]);
@@ -122,7 +125,7 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
   };
   return (
     <>
-      <Dialog open={open} onClose={handleClose} className="addStandupModal">
+      <Dialog open={open} onClose={resetForm} className="addStandupModal">
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
@@ -133,7 +136,7 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
                 {AddStandupSubheading}
               </Typography>
             </Box>
-            <Box className="cross-icon-box" onClick={handleClose}>
+            <Box className="cross-icon-box" onClick={resetForm}>
               <img src={crossIcon} className="cross-btn" />
             </Box>
           </Box>
@@ -187,17 +190,28 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
                   onChange={formik.handleChange}
                   InputLabelProps={{ className: "textfield_label" }}
                 >
-                  {teamMembersData?.length ? (
-                    teamMembersData?.map((member) => {
-                      return (
-                        <MenuItem
-                          key={member?.id}
-                          value={member?.id}
-                        >{`${member?.first_name} ${member?.last_name}`}</MenuItem>
-                      );
-                    })
+                  {userData?.allowed_modules.admin_modules.includes(
+                    "employees"
+                  ) ||
+                  userData?.allowed_modules.owner_modules.includes(
+                    "employees"
+                  ) ? (
+                    teamMembersData?.length ? (
+                      teamMembersData?.map((member) => {
+                        return (
+                          <MenuItem
+                            key={member?.id}
+                            value={member?.id}
+                          >{`${member?.first_name} ${member?.last_name}`}</MenuItem>
+                        );
+                      })
+                    ) : (
+                      <Box></Box>
+                    )
                   ) : (
-                    <Box></Box>
+                    <MenuItem
+                      value={selectedMember?.id}
+                    >{`${selectedMember?.first_name} ${selectedMember?.last_name}`}</MenuItem>
                   )}
                 </TextField>
                 <Typography className="errorText">
@@ -310,7 +324,7 @@ const AddStandupModal = ({ open, handleClose, checkState }: Props) => {
           </Grid>
         </DialogContent>
         <DialogActions className="addStandupModal__Actions">
-          <Button className="resetBtn" onClick={handleClose}>
+          <Button className="resetBtn" onClick={resetForm}>
             {cancelBtn}
           </Button>
           <LoadingButton

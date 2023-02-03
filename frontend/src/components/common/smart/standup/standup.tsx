@@ -31,8 +31,6 @@ function Standup() {
   const { data: rows = [], isLoading } = useGetStandupUpdatesQuery();
   const { data: userData } = useGetUserQuery();
   const constantData: LocalizationInterface = localizedData();
-  const [checkState, setCheckState] = useState(false);
-  const [checkCreateState, setCheckCreateState] = useState(false);
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -199,11 +197,9 @@ function Standup() {
     },
   ];
   const handleModalClose = () => {
-    setCheckState(false);
     setOpenModal(false);
   };
   const handleCreateModalClose = () => {
-    setCheckCreateState(false);
     setOpenCreateModal(false);
   };
   useEffect(() => {
@@ -292,7 +288,6 @@ function Standup() {
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
                 onClick={() => {
-                  setCheckCreateState(true);
                   setOpenCreateModal(true);
                 }}
               >
@@ -313,7 +308,6 @@ function Standup() {
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
                 onClick={() => {
-                  setCheckState(true);
                   setOpenModal(true);
                 }}
               >
@@ -437,14 +431,9 @@ function Standup() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
-      <AddStandupModal
-        open={openModal}
-        handleClose={handleModalClose}
-        checkState={checkState}
-      />
+      <AddStandupModal open={openModal} handleClose={handleModalClose} />
       <CreateStandupModal
         open={openCreateModal}
-        checkCreateState={checkCreateState}
         handleClose={handleCreateModalClose}
       />
     </Box>

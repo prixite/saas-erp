@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -31,10 +31,9 @@ import {
 interface Props {
   open: boolean;
   handleClose: () => void;
-  checkCreateState: boolean;
 }
 
-const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
+const CreateStandupModal = ({ open, handleClose }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [loading, setLoading] = useState(false);
   const { data: teamsData } = useGetTeamsQuery();
@@ -67,11 +66,10 @@ const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
       handleCreateStandup();
     },
   });
-  useEffect(() => {
-    if (!checkCreateState) {
-      formik.resetForm();
-    }
-  }, [checkCreateState]);
+  const resetForm = () => {
+    handleClose();
+    formik.resetForm();
+  };
   const handleCreateStandup = async () => {
     setLoading(true);
     const standupObj = getCreateStandupObject();
@@ -100,7 +98,7 @@ const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
   };
   return (
     <>
-      <Dialog open={open} onClose={handleClose} className="createStandupModal">
+      <Dialog open={open} onClose={resetForm} className="createStandupModal">
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
@@ -111,7 +109,7 @@ const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
                 {CreateStandupSubheading}
               </Typography>
             </Box>
-            <Box className="cross-icon-box" onClick={handleClose}>
+            <Box className="cross-icon-box" onClick={resetForm}>
               <img src={crossIcon} className="cross-btn" />
             </Box>
           </Box>
@@ -193,7 +191,7 @@ const CreateStandupModal = ({ open, handleClose, checkCreateState }: Props) => {
           </Box>
         </DialogContent>
         <DialogActions className="createStandupModal__Actions">
-          <Button className="resetBtn" onClick={handleClose}>
+          <Button className="resetBtn" onClick={resetForm}>
             {cancelBtn}
           </Button>
           <LoadingButton
