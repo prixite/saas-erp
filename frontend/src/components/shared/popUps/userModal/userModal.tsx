@@ -15,14 +15,17 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
-import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
+import UploadIcon from "@src/assets/svgs/uploadimg.svg";
+import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
 import { timeOut } from "@src/helpers/constants/constants";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 import {
   LocalizationInterface,
   S3Interface,
   UserInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 import {
   emailRegX,
   nameRegex,
@@ -35,10 +38,7 @@ import {
   useApiUsersRetrieveQuery,
   useApiRoleListQuery,
 } from "@src/store/api";
-import { localizedData } from "@src/helpers/utils/language";
 import "@src/components/shared/popUps/userModal/userModal.scss";
-import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
-import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 
 interface Props {
   userId?: number;
