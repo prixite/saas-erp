@@ -639,11 +639,12 @@ class OrganizationModuleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate(self, attrs):
-        if self.context.get("request").method == "POST" and (
-            models.OrganizationModule.objects.filter(
-                module=attrs.get("module"), organization=attrs.get("organization")
-            ).exists()
-        ):
+        qs = models.OrganizationModule.objects.all()
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+        if qs.filter(
+            module=attrs.get("module"), organization=attrs.get("organization")
+        ).exists():
             raise serializers.ValidationError(
                 "This module already exists in this organization."
             )
@@ -762,10 +763,25 @@ class UserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
+    def validate_email(self, value):
+        users = models.User.all_objects.all()
+        if self.instance:
+            users = users.exclude(id=self.instance.id)
+        if users.filter(email=value).exists():
+            raise serializers.ValidationError("user with this email already exists.")
+        return value
+
+    def create(self, validated_data):
+        validated_data["username"] = validated_data.get("email")
+        return super().create(validated_data)
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if instance.default_role:
-            data["default_role"] = instance.default_role.name
+            data["default_role"] = {
+                "id": instance.default_role.id,
+                "name": instance.default_role.name,
+            }
         return data
 
 
@@ -789,10 +805,12 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
         modules = models.Module.objects.filter(
             id__in={x.id for x in request.user.organization_modules}
         )
-        if request.method == "POST":
-            user = get_object_or_404(models.User, id=self.context.get("user_id"))
-            if models.UserModuleRole.objects.filter(module=module, user=user).exists():
-                raise serializers.ValidationError("This user module already exists.")
+        user = get_object_or_404(models.User, id=self.context.get("user_id"))
+        qs = models.UserModuleRole.objects.all()
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+        if qs.filter(module=module, user=user).exists():
+            raise serializers.ValidationError("This user module already exists.")
         if module not in modules:
             raise serializers.ValidationError("Invalid Module selected")
         roles = models.Role.objects.filter(organization=request.user.organization)

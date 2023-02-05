@@ -187,14 +187,10 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
 
     @transaction.atomic
     def destroy(self, request, *args, **kwargs):
-        if models.Employee.objects.get(id=kwargs.get("pk")).user == self.request.user:
-            return Response(
-                {"detail": "Can not delete self employee"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         instance = self.get_object()
-        user = get_object_or_404(models.User, employee=instance)
-        user.soft_delete()
+        if not instance.user == self.request.user:
+            user = get_object_or_404(models.User, employee=instance)
+            user.soft_delete()
         instance.soft_delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -662,20 +658,28 @@ class ModuleFilterViewSet(
         )
 
 
-class RoleFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
-    serializer_class = serializers.RoleSerializer
-    module = models.Module.ModuleType.USER
-
-    def get_queryset(self):
-        return models.Role.objects.filter(organization=self.request.user.organization)
-
-
 class UserViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.UserSerializer
     module = models.Module.ModuleType.USER
 
     def get_queryset(self):
         return models.User.objects.filter(organization=self.request.user.organization)
+
+    @transaction.atomic
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance == self.request.user:
+            return Response(
+                {"detail": "Can not delete self user"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            emp = models.Employee.objects.get(user=instance)
+            emp.soft_delete()
+        except models.Employee.DoesNotExist:
+            pass
+        instance.soft_delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
