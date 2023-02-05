@@ -46,12 +46,24 @@ class BaseTestCase(TestCase):
         self.user_module = factories.ModuleFactory(
             name="user", slug=models.Module.ModuleType.USER, is_enabled=True
         )
+        self.leave_module = factories.ModuleFactory(
+            name="leave", slug=models.Module.ModuleType.LEAVE, is_enabled=True
+        )
+        self.standup_module = factories.ModuleFactory(
+            name="standup", slug=models.Module.ModuleType.STANDUP, is_enabled=True
+        )
 
         self.employee_org_module = factories.OrganizationModuleFactory(
             module=self.employee_module, organization=self.organization, is_enabled=True
         )
         self.user_org_module = factories.OrganizationModuleFactory(
             module=self.user_module, organization=self.organization, is_enabled=True
+        )
+        self.leave_org_module = factories.OrganizationModuleFactory(
+            module=self.leave_module, organization=self.organization, is_enabled=True
+        )
+        self.standup_org_module = factories.OrganizationModuleFactory(
+            module=self.standup_module, organization=self.organization, is_enabled=True
         )
         self.org_user = factories.UserFactory(
             username="user@example.com",
