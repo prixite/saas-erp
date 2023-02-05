@@ -208,8 +208,8 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("leave") ||
+          userData?.allowed_modules.owner_modules.includes("leave") ? (
             <ListItemButton
               onClick={() => {
                 navigate("leaves/");
@@ -227,9 +227,9 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ||
-          userData?.allowed_modules.member_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ||
+          userData?.allowed_modules.member_modules.includes("standup") ? (
             <ListItemButton
               onClick={() => {
                 navigate("standups/");

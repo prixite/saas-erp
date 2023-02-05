@@ -542,7 +542,7 @@ class MeUpdateNotificationViewSet(UpdateAPIView):
 class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.LEAVE
 
     def get_serializer_class(self):
         if self.action == "partial_update":
@@ -616,7 +616,7 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.StandupSerializer
     queryset = models.Standup.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
 
     def retrieve(self, request, pk=None):
         standup = self.get_object()
@@ -630,7 +630,7 @@ class StandupUpdateViewSet(
 ):
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
