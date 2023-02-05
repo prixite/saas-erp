@@ -1102,7 +1102,9 @@ export type SlugEnum =
   | "user"
   | "employees"
   | "inventory"
-  | "settings";
+  | "settings"
+  | "leave"
+  | "standup";
 export type Module = {
   id: number;
   slug: SlugEnum;
