@@ -19,13 +19,13 @@ import submitIcon from "@src/assets/svgs/Frame.svg";
 import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
 import { timeOut } from "@src/helpers/constants/constants";
-import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 import {
   LocalizationInterface,
   S3Interface,
   UserInterface,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
 import {
   emailRegX,
   nameRegex,
