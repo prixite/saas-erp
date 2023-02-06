@@ -316,6 +316,23 @@ class CompensationTypeApiView(
     queryset = models.CompensationType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CompensationScheduleApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -324,11 +341,45 @@ class CompensationScheduleApiView(
     queryset = models.CompensationSchedule.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete thi object as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -585,6 +636,23 @@ class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
     serializer_class = serializers.OrganizationSerializer
     queryset = models.Organization.objects.all()
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this object as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
@@ -594,7 +662,6 @@ class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
 
 class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
-
     allow_superuser = True
     serializer_class = serializers.ModuleSerializer
     queryset = models.Module.objects.all()
@@ -604,12 +671,16 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
             return super().destroy(request, *args, **kwargs)
         except ProtectedError as protected_error:
             protected_elements = [
-                protected_object.organization
+                protected_object
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
                 "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
             }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -618,7 +689,7 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    def retrieve(self, request, pk=None):
+    def get_team_members(self, request, *args, **kwargs):
         standup = self.get_object()
         members = standup.team.members.all()
         serializer = serializers.EmployeeListSerializer(members, many=True)
@@ -642,12 +713,6 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
-
-    def retrieve(self, request, pk=None):
-        team = self.get_object()
-        members = team.members.all()
-        serializer = serializers.EmployeeSerializer(members, many=True)
-        return Response(serializer.data)
 
 
 class ModuleFilterViewSet(

@@ -17,6 +17,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.assetType,
       }),
     }),
+    apiAssetTypeRetrieve: build.query<
+      ApiAssetTypeRetrieveApiResponse,
+      ApiAssetTypeRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/asset_type/${queryArg.id}/` }),
+    }),
+    apiAssetTypeUpdate: build.mutation<
+      ApiAssetTypeUpdateApiResponse,
+      ApiAssetTypeUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/asset_type/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.assetType,
+      }),
+    }),
+    apiAssetTypeDestroy: build.mutation<
+      ApiAssetTypeDestroyApiResponse,
+      ApiAssetTypeDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/asset_type/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiAttendanceList: build.query<
       ApiAttendanceListApiResponse,
       ApiAttendanceListApiArg
@@ -37,6 +62,31 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/benefits/`,
         method: "POST",
         body: queryArg.benefit,
+      }),
+    }),
+    apiBenefitsRetrieve: build.query<
+      ApiBenefitsRetrieveApiResponse,
+      ApiBenefitsRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/benefits/${queryArg.id}/` }),
+    }),
+    apiBenefitsUpdate: build.mutation<
+      ApiBenefitsUpdateApiResponse,
+      ApiBenefitsUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/benefits/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.benefit,
+      }),
+    }),
+    apiBenefitsDestroy: build.mutation<
+      ApiBenefitsDestroyApiResponse,
+      ApiBenefitsDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/benefits/${queryArg.id}/`,
+        method: "DELETE",
       }),
     }),
     apiChangePasswordPartialUpdate: build.mutation<
@@ -65,6 +115,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.company,
       }),
     }),
+    apiCompaniesRetrieve: build.query<
+      ApiCompaniesRetrieveApiResponse,
+      ApiCompaniesRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/companies/${queryArg.id}/` }),
+    }),
+    apiCompaniesUpdate: build.mutation<
+      ApiCompaniesUpdateApiResponse,
+      ApiCompaniesUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/companies/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.company,
+      }),
+    }),
+    apiCompaniesDestroy: build.mutation<
+      ApiCompaniesDestroyApiResponse,
+      ApiCompaniesDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/companies/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiCompensationScheduleList: build.query<
       ApiCompensationScheduleListApiResponse,
       ApiCompensationScheduleListApiArg
@@ -79,6 +154,33 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/compensation_schedule/`,
         method: "POST",
         body: queryArg.compensationSchedule,
+      }),
+    }),
+    apiCompensationScheduleRetrieve: build.query<
+      ApiCompensationScheduleRetrieveApiResponse,
+      ApiCompensationScheduleRetrieveApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/compensation_schedule/${queryArg.id}/`,
+      }),
+    }),
+    apiCompensationScheduleUpdate: build.mutation<
+      ApiCompensationScheduleUpdateApiResponse,
+      ApiCompensationScheduleUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/compensation_schedule/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.compensationSchedule,
+      }),
+    }),
+    apiCompensationScheduleDestroy: build.mutation<
+      ApiCompensationScheduleDestroyApiResponse,
+      ApiCompensationScheduleDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/compensation_schedule/${queryArg.id}/`,
+        method: "DELETE",
       }),
     }),
     apiCompensationTypeList: build.query<
@@ -97,6 +199,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.compensationType,
       }),
     }),
+    apiCompensationTypeRetrieve: build.query<
+      ApiCompensationTypeRetrieveApiResponse,
+      ApiCompensationTypeRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/compensation_type/${queryArg.id}/` }),
+    }),
+    apiCompensationTypeUpdate: build.mutation<
+      ApiCompensationTypeUpdateApiResponse,
+      ApiCompensationTypeUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/compensation_type/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.compensationType,
+      }),
+    }),
+    apiCompensationTypeDestroy: build.mutation<
+      ApiCompensationTypeDestroyApiResponse,
+      ApiCompensationTypeDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/compensation_type/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiCurrencyList: build.query<
       ApiCurrencyListApiResponse,
       ApiCurrencyListApiArg
@@ -111,6 +238,31 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/currency/`,
         method: "POST",
         body: queryArg.currency,
+      }),
+    }),
+    apiCurrencyRetrieve: build.query<
+      ApiCurrencyRetrieveApiResponse,
+      ApiCurrencyRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/currency/${queryArg.id}/` }),
+    }),
+    apiCurrencyUpdate: build.mutation<
+      ApiCurrencyUpdateApiResponse,
+      ApiCurrencyUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/currency/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.currency,
+      }),
+    }),
+    apiCurrencyDestroy: build.mutation<
+      ApiCurrencyDestroyApiResponse,
+      ApiCurrencyDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/currency/${queryArg.id}/`,
+        method: "DELETE",
       }),
     }),
     apiDepartmentList: build.query<
@@ -129,6 +281,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.department,
       }),
     }),
+    apiDepartmentRetrieve: build.query<
+      ApiDepartmentRetrieveApiResponse,
+      ApiDepartmentRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/department/${queryArg.id}/` }),
+    }),
+    apiDepartmentUpdate: build.mutation<
+      ApiDepartmentUpdateApiResponse,
+      ApiDepartmentUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/department/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.department,
+      }),
+    }),
+    apiDepartmentDestroy: build.mutation<
+      ApiDepartmentDestroyApiResponse,
+      ApiDepartmentDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/department/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiDocumentTypeList: build.query<
       ApiDocumentTypeListApiResponse,
       ApiDocumentTypeListApiArg
@@ -145,6 +322,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.documentType,
       }),
     }),
+    apiDocumentTypeRetrieve: build.query<
+      ApiDocumentTypeRetrieveApiResponse,
+      ApiDocumentTypeRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/document_type/${queryArg.id}/` }),
+    }),
+    apiDocumentTypeUpdate: build.mutation<
+      ApiDocumentTypeUpdateApiResponse,
+      ApiDocumentTypeUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/document_type/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.documentType,
+      }),
+    }),
+    apiDocumentTypeDestroy: build.mutation<
+      ApiDocumentTypeDestroyApiResponse,
+      ApiDocumentTypeDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/document_type/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiEmployeementTypeList: build.query<
       ApiEmployeementTypeListApiResponse,
       ApiEmployeementTypeListApiArg
@@ -159,6 +361,31 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/employeement_type/`,
         method: "POST",
         body: queryArg.employeementType,
+      }),
+    }),
+    apiEmployeementTypeRetrieve: build.query<
+      ApiEmployeementTypeRetrieveApiResponse,
+      ApiEmployeementTypeRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/employeement_type/${queryArg.id}/` }),
+    }),
+    apiEmployeementTypeUpdate: build.mutation<
+      ApiEmployeementTypeUpdateApiResponse,
+      ApiEmployeementTypeUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/employeement_type/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.employeementType,
+      }),
+    }),
+    apiEmployeementTypeDestroy: build.mutation<
+      ApiEmployeementTypeDestroyApiResponse,
+      ApiEmployeementTypeDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/employeement_type/${queryArg.id}/`,
+        method: "DELETE",
       }),
     }),
     apiEmployeesList: build.query<
@@ -260,6 +487,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.institue,
       }),
     }),
+    apiInstituesRetrieve: build.query<
+      ApiInstituesRetrieveApiResponse,
+      ApiInstituesRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/institues/${queryArg.id}/` }),
+    }),
+    apiInstituesUpdate: build.mutation<
+      ApiInstituesUpdateApiResponse,
+      ApiInstituesUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/institues/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.institue,
+      }),
+    }),
+    apiInstituesDestroy: build.mutation<
+      ApiInstituesDestroyApiResponse,
+      ApiInstituesDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/institues/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiLeaveList: build.query<ApiLeaveListApiResponse, ApiLeaveListApiArg>({
       query: () => ({ url: `/api/leave/` }),
     }),
@@ -350,6 +602,16 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/organization/` }),
     }),
+    apiOrganizationCreate: build.mutation<
+      ApiOrganizationCreateApiResponse,
+      ApiOrganizationCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/`,
+        method: "POST",
+        body: queryArg.organization,
+      }),
+    }),
     apiOrganizationModuleList: build.query<
       ApiOrganizationModuleListApiResponse,
       ApiOrganizationModuleListApiArg
@@ -390,6 +652,31 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/organization-module/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
+    apiOrganizationRetrieve: build.query<
+      ApiOrganizationRetrieveApiResponse,
+      ApiOrganizationRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/organization/${queryArg.id}/` }),
+    }),
+    apiOrganizationUpdate: build.mutation<
+      ApiOrganizationUpdateApiResponse,
+      ApiOrganizationUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.organization,
+      }),
+    }),
+    apiOrganizationDestroy: build.mutation<
+      ApiOrganizationDestroyApiResponse,
+      ApiOrganizationDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/organization/${queryArg.id}/`,
         method: "DELETE",
       }),
     }),
@@ -461,6 +748,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.program,
       }),
     }),
+    apiProgramsRetrieve: build.query<
+      ApiProgramsRetrieveApiResponse,
+      ApiProgramsRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/programs/${queryArg.id}/` }),
+    }),
+    apiProgramsUpdate: build.mutation<
+      ApiProgramsUpdateApiResponse,
+      ApiProgramsUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/programs/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.program,
+      }),
+    }),
+    apiProgramsDestroy: build.mutation<
+      ApiProgramsDestroyApiResponse,
+      ApiProgramsDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/programs/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiRoleList: build.query<ApiRoleListApiResponse, ApiRoleListApiArg>({
       query: () => ({ url: `/api/role/` }),
     }),
@@ -486,6 +798,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
+    apiStandupRetrieve: build.query<
+      ApiStandupRetrieveApiResponse,
+      ApiStandupRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/standup/${queryArg.id}/` }),
+    }),
+    apiStandupUpdate: build.mutation<
+      ApiStandupUpdateApiResponse,
+      ApiStandupUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.standup,
+      }),
+    }),
+    apiStandupDestroy: build.mutation<
+      ApiStandupDestroyApiResponse,
+      ApiStandupDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiStandupMembersRetrieve: build.query<
       ApiStandupMembersRetrieveApiResponse,
       ApiStandupMembersRetrieveApiArg
@@ -508,6 +845,31 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standupUpdate,
       }),
     }),
+    apiStandupUpdateRetrieve: build.query<
+      ApiStandupUpdateRetrieveApiResponse,
+      ApiStandupUpdateRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/standup_update/${queryArg.id}/` }),
+    }),
+    apiStandupUpdateUpdate: build.mutation<
+      ApiStandupUpdateUpdateApiResponse,
+      ApiStandupUpdateUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup_update/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.standupUpdate,
+      }),
+    }),
+    apiStandupUpdateDestroy: build.mutation<
+      ApiStandupUpdateDestroyApiResponse,
+      ApiStandupUpdateDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/standup_update/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiTeamList: build.query<ApiTeamListApiResponse, ApiTeamListApiArg>({
       query: () => ({ url: `/api/team/` }),
     }),
@@ -521,11 +883,30 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.team,
       }),
     }),
-    apiTeamMembersRetrieve: build.query<
-      ApiTeamMembersRetrieveApiResponse,
-      ApiTeamMembersRetrieveApiArg
+    apiTeamRetrieve: build.query<
+      ApiTeamRetrieveApiResponse,
+      ApiTeamRetrieveApiArg
     >({
-      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/members/` }),
+      query: (queryArg) => ({ url: `/api/team/${queryArg.id}/` }),
+    }),
+    apiTeamUpdate: build.mutation<
+      ApiTeamUpdateApiResponse,
+      ApiTeamUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/team/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.team,
+      }),
+    }),
+    apiTeamDestroy: build.mutation<
+      ApiTeamDestroyApiResponse,
+      ApiTeamDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/team/${queryArg.id}/`,
+        method: "DELETE",
+      }),
     }),
     apiUsersList: build.query<ApiUsersListApiResponse, ApiUsersListApiArg>({
       query: () => ({ url: `/api/users/` }),
@@ -581,6 +962,19 @@ export type ApiAssetTypeCreateApiResponse = /** status 201  */ AssetType;
 export type ApiAssetTypeCreateApiArg = {
   assetType: AssetType;
 };
+export type ApiAssetTypeRetrieveApiResponse = /** status 200  */ AssetType;
+export type ApiAssetTypeRetrieveApiArg = {
+  id: number;
+};
+export type ApiAssetTypeUpdateApiResponse = /** status 200  */ AssetType;
+export type ApiAssetTypeUpdateApiArg = {
+  id: number;
+  assetType: AssetType;
+};
+export type ApiAssetTypeDestroyApiResponse = unknown;
+export type ApiAssetTypeDestroyApiArg = {
+  id: number;
+};
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
@@ -588,6 +982,19 @@ export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
 export type ApiBenefitsCreateApiArg = {
   benefit: Benefit;
+};
+export type ApiBenefitsRetrieveApiResponse = /** status 200  */ Benefit;
+export type ApiBenefitsRetrieveApiArg = {
+  id: number;
+};
+export type ApiBenefitsUpdateApiResponse = /** status 200  */ Benefit;
+export type ApiBenefitsUpdateApiArg = {
+  id: number;
+  benefit: Benefit;
+};
+export type ApiBenefitsDestroyApiResponse = unknown;
+export type ApiBenefitsDestroyApiArg = {
+  id: number;
 };
 export type ApiChangePasswordPartialUpdateApiResponse =
   /** status 200  */ UserPassword;
@@ -600,6 +1007,19 @@ export type ApiCompaniesCreateApiResponse = /** status 201  */ Company;
 export type ApiCompaniesCreateApiArg = {
   company: Company;
 };
+export type ApiCompaniesRetrieveApiResponse = /** status 200  */ Company;
+export type ApiCompaniesRetrieveApiArg = {
+  id: number;
+};
+export type ApiCompaniesUpdateApiResponse = /** status 200  */ Company;
+export type ApiCompaniesUpdateApiArg = {
+  id: number;
+  company: Company;
+};
+export type ApiCompaniesDestroyApiResponse = unknown;
+export type ApiCompaniesDestroyApiArg = {
+  id: number;
+};
 export type ApiCompensationScheduleListApiResponse =
   /** status 200  */ CompensationSchedule[];
 export type ApiCompensationScheduleListApiArg = void;
@@ -607,6 +1027,21 @@ export type ApiCompensationScheduleCreateApiResponse =
   /** status 201  */ CompensationSchedule;
 export type ApiCompensationScheduleCreateApiArg = {
   compensationSchedule: CompensationSchedule;
+};
+export type ApiCompensationScheduleRetrieveApiResponse =
+  /** status 200  */ CompensationSchedule;
+export type ApiCompensationScheduleRetrieveApiArg = {
+  id: number;
+};
+export type ApiCompensationScheduleUpdateApiResponse =
+  /** status 200  */ CompensationSchedule;
+export type ApiCompensationScheduleUpdateApiArg = {
+  id: number;
+  compensationSchedule: CompensationSchedule;
+};
+export type ApiCompensationScheduleDestroyApiResponse = unknown;
+export type ApiCompensationScheduleDestroyApiArg = {
+  id: number;
 };
 export type ApiCompensationTypeListApiResponse =
   /** status 200  */ CompensationType[];
@@ -616,11 +1051,39 @@ export type ApiCompensationTypeCreateApiResponse =
 export type ApiCompensationTypeCreateApiArg = {
   compensationType: CompensationType;
 };
+export type ApiCompensationTypeRetrieveApiResponse =
+  /** status 200  */ CompensationType;
+export type ApiCompensationTypeRetrieveApiArg = {
+  id: number;
+};
+export type ApiCompensationTypeUpdateApiResponse =
+  /** status 200  */ CompensationType;
+export type ApiCompensationTypeUpdateApiArg = {
+  id: number;
+  compensationType: CompensationType;
+};
+export type ApiCompensationTypeDestroyApiResponse = unknown;
+export type ApiCompensationTypeDestroyApiArg = {
+  id: number;
+};
 export type ApiCurrencyListApiResponse = /** status 200  */ Currency[];
 export type ApiCurrencyListApiArg = void;
 export type ApiCurrencyCreateApiResponse = /** status 201  */ Currency;
 export type ApiCurrencyCreateApiArg = {
   currency: Currency;
+};
+export type ApiCurrencyRetrieveApiResponse = /** status 200  */ Currency;
+export type ApiCurrencyRetrieveApiArg = {
+  id: number;
+};
+export type ApiCurrencyUpdateApiResponse = /** status 200  */ Currency;
+export type ApiCurrencyUpdateApiArg = {
+  id: number;
+  currency: Currency;
+};
+export type ApiCurrencyDestroyApiResponse = unknown;
+export type ApiCurrencyDestroyApiArg = {
+  id: number;
 };
 export type ApiDepartmentListApiResponse = /** status 200  */ Department[];
 export type ApiDepartmentListApiArg = void;
@@ -628,11 +1091,38 @@ export type ApiDepartmentCreateApiResponse = /** status 201  */ Department;
 export type ApiDepartmentCreateApiArg = {
   department: Department;
 };
+export type ApiDepartmentRetrieveApiResponse = /** status 200  */ Department;
+export type ApiDepartmentRetrieveApiArg = {
+  id: number;
+};
+export type ApiDepartmentUpdateApiResponse = /** status 200  */ Department;
+export type ApiDepartmentUpdateApiArg = {
+  id: number;
+  department: Department;
+};
+export type ApiDepartmentDestroyApiResponse = unknown;
+export type ApiDepartmentDestroyApiArg = {
+  id: number;
+};
 export type ApiDocumentTypeListApiResponse = /** status 200  */ DocumentType[];
 export type ApiDocumentTypeListApiArg = void;
 export type ApiDocumentTypeCreateApiResponse = /** status 201  */ DocumentType;
 export type ApiDocumentTypeCreateApiArg = {
   documentType: DocumentType;
+};
+export type ApiDocumentTypeRetrieveApiResponse =
+  /** status 200  */ DocumentType;
+export type ApiDocumentTypeRetrieveApiArg = {
+  id: number;
+};
+export type ApiDocumentTypeUpdateApiResponse = /** status 200  */ DocumentType;
+export type ApiDocumentTypeUpdateApiArg = {
+  id: number;
+  documentType: DocumentType;
+};
+export type ApiDocumentTypeDestroyApiResponse = unknown;
+export type ApiDocumentTypeDestroyApiArg = {
+  id: number;
 };
 export type ApiEmployeementTypeListApiResponse =
   /** status 200  */ EmployeementType[];
@@ -641,6 +1131,21 @@ export type ApiEmployeementTypeCreateApiResponse =
   /** status 201  */ EmployeementType;
 export type ApiEmployeementTypeCreateApiArg = {
   employeementType: EmployeementType;
+};
+export type ApiEmployeementTypeRetrieveApiResponse =
+  /** status 200  */ EmployeementType;
+export type ApiEmployeementTypeRetrieveApiArg = {
+  id: number;
+};
+export type ApiEmployeementTypeUpdateApiResponse =
+  /** status 200  */ EmployeementType;
+export type ApiEmployeementTypeUpdateApiArg = {
+  id: number;
+  employeementType: EmployeementType;
+};
+export type ApiEmployeementTypeDestroyApiResponse = unknown;
+export type ApiEmployeementTypeDestroyApiArg = {
+  id: number;
 };
 export type ApiEmployeesListApiResponse = /** status 200  */ EmployeeList[];
 export type ApiEmployeesListApiArg = void;
@@ -691,6 +1196,19 @@ export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
 export type ApiInstituesCreateApiArg = {
   institue: Institue;
 };
+export type ApiInstituesRetrieveApiResponse = /** status 200  */ Institue;
+export type ApiInstituesRetrieveApiArg = {
+  id: number;
+};
+export type ApiInstituesUpdateApiResponse = /** status 200  */ Institue;
+export type ApiInstituesUpdateApiArg = {
+  id: number;
+  institue: Institue;
+};
+export type ApiInstituesDestroyApiResponse = unknown;
+export type ApiInstituesDestroyApiArg = {
+  id: number;
+};
 export type ApiLeaveListApiResponse = /** status 200  */ Leave[];
 export type ApiLeaveListApiArg = void;
 export type ApiLeavePartialUpdateApiResponse = /** status 200  */ LeaveUpdate;
@@ -734,6 +1252,10 @@ export type ApiModuleDestroyApiArg = {
 };
 export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
 export type ApiOrganizationListApiArg = void;
+export type ApiOrganizationCreateApiResponse = /** status 201  */ Organization;
+export type ApiOrganizationCreateApiArg = {
+  organization: Organization;
+};
 export type ApiOrganizationModuleListApiResponse =
   /** status 200  */ OrganizationModule[];
 export type ApiOrganizationModuleListApiArg = void;
@@ -755,6 +1277,20 @@ export type ApiOrganizationModuleUpdateApiArg = {
 };
 export type ApiOrganizationModuleDestroyApiResponse = unknown;
 export type ApiOrganizationModuleDestroyApiArg = {
+  id: number;
+};
+export type ApiOrganizationRetrieveApiResponse =
+  /** status 200  */ Organization;
+export type ApiOrganizationRetrieveApiArg = {
+  id: number;
+};
+export type ApiOrganizationUpdateApiResponse = /** status 200  */ Organization;
+export type ApiOrganizationUpdateApiArg = {
+  id: number;
+  organization: Organization;
+};
+export type ApiOrganizationDestroyApiResponse = unknown;
+export type ApiOrganizationDestroyApiArg = {
   id: number;
 };
 export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
@@ -787,6 +1323,19 @@ export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
 export type ApiProgramsCreateApiArg = {
   program: Program;
 };
+export type ApiProgramsRetrieveApiResponse = /** status 200  */ Program;
+export type ApiProgramsRetrieveApiArg = {
+  id: number;
+};
+export type ApiProgramsUpdateApiResponse = /** status 200  */ Program;
+export type ApiProgramsUpdateApiArg = {
+  id: number;
+  program: Program;
+};
+export type ApiProgramsDestroyApiResponse = unknown;
+export type ApiProgramsDestroyApiArg = {
+  id: number;
+};
 export type ApiRoleListApiResponse = /** status 200  */ Role[];
 export type ApiRoleListApiArg = void;
 export type ApiSlackAttendanceCreateApiResponse = unknown;
@@ -796,6 +1345,19 @@ export type ApiStandupListApiArg = void;
 export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
+};
+export type ApiStandupRetrieveApiResponse = /** status 200  */ Standup;
+export type ApiStandupRetrieveApiArg = {
+  id: number;
+};
+export type ApiStandupUpdateApiResponse = /** status 200  */ Standup;
+export type ApiStandupUpdateApiArg = {
+  id: number;
+  standup: Standup;
+};
+export type ApiStandupDestroyApiResponse = unknown;
+export type ApiStandupDestroyApiArg = {
+  id: number;
 };
 export type ApiStandupMembersRetrieveApiResponse = /** status 200  */ Standup;
 export type ApiStandupMembersRetrieveApiArg = {
@@ -809,14 +1371,38 @@ export type ApiStandupUpdateCreateApiResponse =
 export type ApiStandupUpdateCreateApiArg = {
   standupUpdate: StandupUpdate;
 };
+export type ApiStandupUpdateRetrieveApiResponse =
+  /** status 200  */ StandupUpdate;
+export type ApiStandupUpdateRetrieveApiArg = {
+  id: number;
+};
+export type ApiStandupUpdateUpdateApiResponse =
+  /** status 200  */ StandupUpdate;
+export type ApiStandupUpdateUpdateApiArg = {
+  id: number;
+  standupUpdate: StandupUpdate;
+};
+export type ApiStandupUpdateDestroyApiResponse = unknown;
+export type ApiStandupUpdateDestroyApiArg = {
+  id: number;
+};
 export type ApiTeamListApiResponse = /** status 200  */ Team[];
 export type ApiTeamListApiArg = void;
 export type ApiTeamCreateApiResponse = /** status 201  */ Team;
 export type ApiTeamCreateApiArg = {
   team: Team;
 };
-export type ApiTeamMembersRetrieveApiResponse = /** status 200  */ Team;
-export type ApiTeamMembersRetrieveApiArg = {
+export type ApiTeamRetrieveApiResponse = /** status 200  */ Team;
+export type ApiTeamRetrieveApiArg = {
+  id: number;
+};
+export type ApiTeamUpdateApiResponse = /** status 200  */ Team;
+export type ApiTeamUpdateApiArg = {
+  id: number;
+  team: Team;
+};
+export type ApiTeamDestroyApiResponse = unknown;
+export type ApiTeamDestroyApiArg = {
   id: number;
 };
 export type ApiUsersListApiResponse = /** status 200  */ User[];
@@ -1210,24 +1796,51 @@ export type UserModuleRole = {
 export const {
   useApiAssetTypeListQuery,
   useApiAssetTypeCreateMutation,
+  useApiAssetTypeRetrieveQuery,
+  useApiAssetTypeUpdateMutation,
+  useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
+  useApiBenefitsRetrieveQuery,
+  useApiBenefitsUpdateMutation,
+  useApiBenefitsDestroyMutation,
   useApiChangePasswordPartialUpdateMutation,
   useApiCompaniesListQuery,
   useApiCompaniesCreateMutation,
+  useApiCompaniesRetrieveQuery,
+  useApiCompaniesUpdateMutation,
+  useApiCompaniesDestroyMutation,
   useApiCompensationScheduleListQuery,
   useApiCompensationScheduleCreateMutation,
+  useApiCompensationScheduleRetrieveQuery,
+  useApiCompensationScheduleUpdateMutation,
+  useApiCompensationScheduleDestroyMutation,
   useApiCompensationTypeListQuery,
   useApiCompensationTypeCreateMutation,
+  useApiCompensationTypeRetrieveQuery,
+  useApiCompensationTypeUpdateMutation,
+  useApiCompensationTypeDestroyMutation,
   useApiCurrencyListQuery,
   useApiCurrencyCreateMutation,
+  useApiCurrencyRetrieveQuery,
+  useApiCurrencyUpdateMutation,
+  useApiCurrencyDestroyMutation,
   useApiDepartmentListQuery,
   useApiDepartmentCreateMutation,
+  useApiDepartmentRetrieveQuery,
+  useApiDepartmentUpdateMutation,
+  useApiDepartmentDestroyMutation,
   useApiDocumentTypeListQuery,
   useApiDocumentTypeCreateMutation,
+  useApiDocumentTypeRetrieveQuery,
+  useApiDocumentTypeUpdateMutation,
+  useApiDocumentTypeDestroyMutation,
   useApiEmployeementTypeListQuery,
   useApiEmployeementTypeCreateMutation,
+  useApiEmployeementTypeRetrieveQuery,
+  useApiEmployeementTypeUpdateMutation,
+  useApiEmployeementTypeDestroyMutation,
   useApiEmployeesListQuery,
   useApiEmployeesCreateMutation,
   useApiEmployeesRetrieveQuery,
@@ -1240,6 +1853,9 @@ export const {
   useApiFlagsRetrieveQuery,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
+  useApiInstituesRetrieveQuery,
+  useApiInstituesUpdateMutation,
+  useApiInstituesDestroyMutation,
   useApiLeaveListQuery,
   useApiLeavePartialUpdateMutation,
   useApiLoginCreateMutation,
@@ -1252,11 +1868,15 @@ export const {
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
   useApiOrganizationListQuery,
+  useApiOrganizationCreateMutation,
   useApiOrganizationModuleListQuery,
   useApiOrganizationModuleCreateMutation,
   useApiOrganizationModuleRetrieveQuery,
   useApiOrganizationModuleUpdateMutation,
   useApiOrganizationModuleDestroyMutation,
+  useApiOrganizationRetrieveQuery,
+  useApiOrganizationUpdateMutation,
+  useApiOrganizationDestroyMutation,
   useApiOrganizationModulesListQuery,
   useApiOrganizationRolesListQuery,
   useApiOwnerOnboardCreateMutation,
@@ -1265,16 +1885,27 @@ export const {
   useApiPasswordResetConfirmCreateMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
+  useApiProgramsRetrieveQuery,
+  useApiProgramsUpdateMutation,
+  useApiProgramsDestroyMutation,
   useApiRoleListQuery,
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
+  useApiStandupRetrieveQuery,
+  useApiStandupUpdateMutation,
+  useApiStandupDestroyMutation,
   useApiStandupMembersRetrieveQuery,
   useApiStandupUpdateListQuery,
   useApiStandupUpdateCreateMutation,
+  useApiStandupUpdateRetrieveQuery,
+  useApiStandupUpdateUpdateMutation,
+  useApiStandupUpdateDestroyMutation,
   useApiTeamListQuery,
   useApiTeamCreateMutation,
-  useApiTeamMembersRetrieveQuery,
+  useApiTeamRetrieveQuery,
+  useApiTeamUpdateMutation,
+  useApiTeamDestroyMutation,
   useApiUsersListQuery,
   useApiUsersAccessListQuery,
   useApiUsersAccessCreateMutation,
