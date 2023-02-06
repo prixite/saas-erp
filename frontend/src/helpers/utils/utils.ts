@@ -37,7 +37,7 @@ function iterateDeepObj(obj: unknown) {
   return obj;
 }
 export const truncateString = (str: string, n: number) => {
-  if (str.length > 10) {
+  if (str?.length > 10) {
     return str.substring(0, n) + "...";
   } else {
     return str;

@@ -124,3 +124,13 @@ class TeamFactory(factory.django.DjangoModelFactory):
 class StandupFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Standup
+
+
+class StandupUpdateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.StandupUpdate
+
+
+class BenefitFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Benefit

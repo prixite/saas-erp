@@ -1,4 +1,5 @@
 import { FormikErrors } from "formik";
+import { SlugEnum } from "@src/store/api";
 export interface btnsInterface {
   createButton: string;
   filterButton: string;
@@ -119,6 +120,11 @@ export interface modalsInterface {
   dragToAdjust: string;
   saveChanges: string;
   canLogin: string;
+  leaveTypeLabel: string;
+  leaveStatusLabel: string;
+  leaveHrCommentsLabel: string;
+  cancelBtn: string;
+  saveBtn: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -333,6 +339,54 @@ export interface leavesData {
   ViewAllLeaves: string;
   ClockError: string;
   LeavesManagement: string;
+  Leave: string;
+  Leavesubheading: string;
+  LeaveTypeRequired: string;
+  LeaveStatusRequired: string;
+  LeaveHRCommentsRequired: string;
+  Actions: string;
+  CasualLeave: string;
+  SickLeave: string;
+  AnnualLeave: string;
+  Pending: string;
+  Approved: string;
+  Denied: string;
+}
+export interface standupData {
+  standup: string;
+  createStandup: string;
+  addStandup: string;
+  StandupSelection: string;
+  EmployeeName: string;
+  Status: string;
+  Date: string;
+  Time: string;
+  WorkDoneYesterday: string;
+  TodayPlan: string;
+  Blockers: string;
+  AddStandupHeading: string;
+  AddStandupSubheading: string;
+  FullTime: string;
+  PartTime: string;
+  StandupSelectionRequired: string;
+  EmployeeNameRequired: string;
+  StatusRequired: string;
+  DateRequired: string;
+  WorkDoneYesterdayRequired: string;
+  TodayPlanRequired: string;
+  BlockersRequired: string;
+  CreateStandupHeading: string;
+  CreateStandupSubheading: string;
+  Team: string;
+  StandupName: string;
+  TeamRequired: string;
+  StandupNameRequired: string;
+  Frontend: string;
+  Backend: string;
+  Marketing: string;
+  Joined: string;
+  Missed: string;
+  TimeRequired: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
@@ -352,4 +406,38 @@ export interface LocalizationInterface {
   BreadCrumbs: breadcrumbsInterface;
   AuthPages: AuthPages;
   Leaves: leavesData;
+  Standup: standupData;
 }
+
+export interface UserInterface {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  image?: string;
+  contact_number?: string | null;
+  default_role?: number | null;
+}
+
+export interface UserModuleRoleInterface {
+  module: { id: number; name: string };
+  role: { id: number; name: string };
+}
+export interface OrganizationInterface {
+  id: number;
+  name: string;
+  address: string;
+}
+
+export type OrganizationModuleInterface = {
+  id: number;
+  is_enabled?: boolean;
+  module: { id: number; name: string };
+  organization: { id: number; name: string };
+};
+
+export type ModuleInterface = {
+  id: number;
+  slug: SlugEnum;
+  name: string;
+  is_enabled?: boolean;
+};

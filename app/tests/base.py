@@ -16,6 +16,9 @@ class BaseTestCase(TestCase):
         self.organization = factories.OrganizationFactory(
             name="Test Organization", address="USA"
         )
+        self.organization1 = factories.OrganizationFactory(
+            name="Test Organization1", address="USA"
+        )
         self.owner_role = factories.RoleFactory(
             name="Test Organization Owner",
             permission=models.Role.Permission.OWNER,
@@ -43,8 +46,15 @@ class BaseTestCase(TestCase):
         self.employee_module = factories.ModuleFactory(
             name="Employee", slug=models.Module.ModuleType.EMPLOYEES, is_enabled=True
         )
+        self.user_module = factories.ModuleFactory(
+            name="user", slug=models.Module.ModuleType.USER, is_enabled=True
+        )
+
         self.employee_org_module = factories.OrganizationModuleFactory(
             module=self.employee_module, organization=self.organization, is_enabled=True
+        )
+        self.user_org_module = factories.OrganizationModuleFactory(
+            module=self.user_module, organization=self.organization, is_enabled=True
         )
         self.org_user = factories.UserFactory(
             username="user@example.com",
@@ -82,6 +92,9 @@ class BaseTestCase(TestCase):
         )
         self.asset_type = factories.AssetTypeFactory(
             name="Laptop", organization=self.organization, attributes={}
+        )
+        self.benefit = factories.BenefitFactory(
+            name="Medical Allowance", organization=self.organization
         )
         self.compensation_type = factories.CompensationTypeFactory(
             name="Hourly",
@@ -124,9 +137,18 @@ class BaseTestCase(TestCase):
 
         self.team1 = factories.TeamFactory(name="Team1", organization=self.organization)
 
+        self.team.members.add(self.employee.id)
+
         self.standup = factories.StandupFactory(
             name="Standup-1",
             team=self.team,
             organization=self.organization,
-            created_at="2023-01-12T11:15:00+05:00",
+            time="11:15:00+05:00",
+        )
+
+        self.standup_update = factories.StandupUpdateFactory(
+            standup=self.standup,
+            organization=self.organization,
+            employee=self.employee,
+            status="leave",
         )

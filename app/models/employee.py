@@ -2,8 +2,10 @@ from django.db import models
 
 from project.settings import AUTH_USER_MODEL
 
+from .soft_delete import ActiveEmployeeModel, SoftDeleteModel
 
-class Employee(models.Model):
+
+class Employee(SoftDeleteModel):
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     nic = models.CharField(max_length=25, unique=True)
     date_of_joining = models.DateField()
@@ -38,7 +40,7 @@ class Employee(models.Model):
         ordering = ["id"]
 
 
-class Document(models.Model):
+class Document(ActiveEmployeeModel):
     """
     The documents will be uploaded to cloud storage. We will only store URL of
     the document in this model.
@@ -81,7 +83,7 @@ class Team(models.Model):
     part of multiple teams.
     """
 
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     members = models.ManyToManyField("Employee")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -95,13 +97,15 @@ class Standup(models.Model):
     team = models.OneToOneField("Team", on_delete=models.CASCADE, unique=True)
     name = models.CharField(max_length=128, unique="True")
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
-    created_at = models.DateTimeField()
+    time = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.team.name
+        return self.name
 
 
-class StandupUpdate(models.Model):
+class StandupUpdate(ActiveEmployeeModel):
     class StatusType(models.TextChoices):
         MISSED = "missed", "Missed"
         JOINED = "joined", "Joined"
@@ -118,7 +122,7 @@ class StandupUpdate(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Degree(models.Model):
+class Degree(ActiveEmployeeModel):
     """
     The educational degrees of an employee.
     """
@@ -231,7 +235,7 @@ class Company(models.Model):
         return self.name
 
 
-class Experience(models.Model):
+class Experience(ActiveEmployeeModel):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="experience"
     )

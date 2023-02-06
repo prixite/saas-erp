@@ -5,13 +5,13 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.db.models.deletion import ProtectedError
 from django.middleware import csrf
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import smart_bytes, smart_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import TemplateView
 from rest_framework import generics, status
-from rest_framework.decorators import action
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
@@ -185,19 +185,18 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
             return serializers.EmployeeUpdateSerializer
         return self.serializer_class
 
+    @transaction.atomic
     def destroy(self, request, *args, **kwargs):
         if models.Employee.objects.get(id=kwargs.get("pk")).user == self.request.user:
             return Response(
                 {"detail": "Can not delete self employee"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        return super().destroy(request, *args, **kwargs)
-
-    @transaction.atomic
-    def perform_destroy(self, instance):
+        instance = self.get_object()
         user = get_object_or_404(models.User, employee=instance)
-        user.delete()
-        return super().perform_destroy(instance)
+        user.soft_delete()
+        instance.soft_delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CompensationViewSet(mixins.PrivateApiMixin, ModelViewSet):
@@ -317,6 +316,23 @@ class CompensationTypeApiView(
     queryset = models.CompensationType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CompensationScheduleApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -325,11 +341,45 @@ class CompensationScheduleApiView(
     queryset = models.CompensationSchedule.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete thi object as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -422,7 +472,7 @@ class SlackApiView(APIView):
                         elif get_detail[0] == "help":
                             return Response(
                                 data={
-                                    "text": "Hi there :wave: here are some ideas of what you can do:\n*Time In*\n  `/erp timein | used for time in.`\n\n*Time Out*\n  `/erp timeout | used for time out.` \n\n*leave*\n  `/erp leave | Used for leave submittion.`",  # noqa
+                                    "text": "Here are some ideas for you: :wave: :\n*Time In*\n  `/erp timein | Use this command to mark attendance time in.`\n\n*Time Out*\n  `/erp timeout | Use this command to mark attendance time out.` \n\n*leave*\n  `/erp leave/From_Date/To_Date/Reason | Use this command to submit a leave request.`",  # noqa
                                 },
                                 status=status.HTTP_200_OK,
                             )
@@ -559,6 +609,7 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
         if request.data["status"] == models.Leave.LeaveStatus.APPROVED:
             employee.leave_count += total_leave.days
         leave.updated_by = updated_by
+        leave.leave_type = request.data.get("type")
         employee.save()
         leave.save()
         response = super().update(request, *args, **kwargs)
@@ -579,10 +630,58 @@ class OwnerOnboardingAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
 
 
-class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
+    allow_superuser = True
+    serializer_class = serializers.OrganizationSerializer
+    queryset = models.Organization.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this object as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+
+    allow_superuser = True
+    serializer_class = serializers.OrganizationModuleSerializer
+    queryset = models.OrganizationModule.objects.all()
+
+
+class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+    allow_superuser = True
     serializer_class = serializers.ModuleSerializer
     queryset = models.Module.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -590,13 +689,24 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_team_members(self, request, *args, **kwargs):
+        standup = self.get_object()
+        members = standup.team.members.all()
+        serializer = serializers.EmployeeListSerializer(members, many=True)
+        return Response(serializer.data)
+
 
 class StandupUpdateViewSet(
-    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+    mixins.PrivateMixinAPI, ModelViewSet, mixins.OrganizationMixin
 ):
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -604,9 +714,52 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    @action(detail=True, methods=["get"], url_path="members", url_name="members")
-    def team_members(self, request, *args, **kwargs):
-        team = self.get_object()
-        members = team.members.all()
-        serializer = serializers.EmployeeSerializer(members, many=True)
-        return Response(serializer.data)
+
+class ModuleFilterViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.ModuleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.Module.objects.filter(
+            id__in={x.id for x in self.request.user.organization_modules}
+        )
+
+
+class RoleFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.RoleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.Role.objects.filter(organization=self.request.user.organization)
+
+
+class UserViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+    serializer_class = serializers.UserSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.User.objects.filter(organization=self.request.user.organization)
+
+
+class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
+    serializer_class = serializers.UserModuleRoleSerializer
+    module = models.Module.ModuleType.USER
+
+    def get_queryset(self):
+        return models.UserModuleRole.objects.filter(
+            user__organization=self.request.user.organization
+        )
+
+    def list(self, request, *args, **kwargs):
+        user = get_object_or_404(models.User, id=kwargs.get("pk"))
+        modules = models.UserModuleRole.objects.filter(user=user)
+        serializer = serializers.UserModuleRoleSerializer(modules, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        context.update({"user_id": self.kwargs.get("pk")})
+        return context

@@ -4,9 +4,10 @@ from project.settings import AUTH_USER_MODEL
 
 from .core import Organization
 from .employee import Employee
+from .soft_delete import ActiveEmployeeModel
 
 
-class Attendance(models.Model):
+class Attendance(ActiveEmployeeModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     time_in = models.DateTimeField(auto_now_add=True)
     time_out = models.DateTimeField(null=True, blank=True)
@@ -15,7 +16,7 @@ class Attendance(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Leave(models.Model):
+class Leave(ActiveEmployeeModel):
     class LeaveStatus(models.TextChoices):
         PENDING = "pending", "Pending"
         APPROVED = "approved", "Approved"
