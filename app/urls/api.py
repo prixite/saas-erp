@@ -320,13 +320,13 @@ urlpatterns = [
     path(
         "standup/<int:pk>/",
         api.StandupViewSet.as_view(
-            {
-                "put": "update",
-                "delete": "destroy",
-            }
+            {"put": "update", "delete": "destroy", "get": "retrieve"}
         ),
     ),
-    path("standup/<int:pk>/members/", api.StandupViewSet.as_view({"get": "retrieve"})),
+    path(
+        "standup/<int:pk>/members/",
+        api.StandupViewSet.as_view({"get": "get_team_members"}),
+    ),
     path(
         "standup_update/",
         api.StandupUpdateViewSet.as_view({"get": "list", "post": "create"}),

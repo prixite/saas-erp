@@ -798,6 +798,12 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.standup,
       }),
     }),
+    apiStandupRetrieve: build.query<
+      ApiStandupRetrieveApiResponse,
+      ApiStandupRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/standup/${queryArg.id}/` }),
+    }),
     apiStandupUpdate: build.mutation<
       ApiStandupUpdateApiResponse,
       ApiStandupUpdateApiArg
@@ -1340,6 +1346,10 @@ export type ApiStandupCreateApiResponse = /** status 201  */ Standup;
 export type ApiStandupCreateApiArg = {
   standup: Standup;
 };
+export type ApiStandupRetrieveApiResponse = /** status 200  */ Standup;
+export type ApiStandupRetrieveApiArg = {
+  id: number;
+};
 export type ApiStandupUpdateApiResponse = /** status 200  */ Standup;
 export type ApiStandupUpdateApiArg = {
   id: number;
@@ -1880,6 +1890,7 @@ export const {
   useApiSlackAttendanceCreateMutation,
   useApiStandupListQuery,
   useApiStandupCreateMutation,
+  useApiStandupRetrieveQuery,
   useApiStandupUpdateMutation,
   useApiStandupDestroyMutation,
   useApiStandupMembersRetrieveQuery,

@@ -325,7 +325,7 @@ class CompensationTypeApiView(
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete this module as this is used by {protected_elements}."  # noqa
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -349,7 +349,7 @@ class CompensationScheduleApiView(
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete this module as this is used by {protected_elements}."  # noqa
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -371,7 +371,7 @@ class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete thi object as this is used by {protected_elements}."  # noqa
+                "detail": f"Can not delete thi object as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -642,7 +642,7 @@ class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete this object as this is used by {protected_elements}."  # noqa
+                "detail": f"Can not delete this object as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -671,7 +671,7 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
                 for protected_object in protected_error.protected_objects
             ]
             response_data = {
-                "detail": f"Can not delete this module as this is used by {protected_elements}."  # noqa
+                "detail": f"Can not delete this module as this is used by {protected_elements[0]}."  # noqa
             }
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -684,7 +684,7 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
-    def retrieve(self, request, pk=None):
+    def get_team_members(self, request, *args, **kwargs):
         standup = self.get_object()
         members = standup.team.members.all()
         serializer = serializers.EmployeeListSerializer(members, many=True)

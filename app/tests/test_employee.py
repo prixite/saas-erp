@@ -223,6 +223,16 @@ class BenefitsTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/benefits/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_benefit_post(self):
         self.client.force_login(self.owner)
@@ -230,11 +240,21 @@ class BenefitsTestCase(BaseTestCase):
         response = self.client.post("/api/benefits/", data=benefit_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Benefit.objects.filter(**benefit_data).exists())
 
     def test_benefit_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/benefits/{self.benefit.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_benefit_put(self):
         self.client.force_login(self.owner)
@@ -255,6 +275,17 @@ class CompanyTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/companies/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "image",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_company_post(self):
         self.client.force_login(self.owner)
@@ -262,11 +293,22 @@ class CompanyTestCase(BaseTestCase):
         response = self.client.post("/api/companies/", data=company_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Company.objects.filter(**company_data).exists())
 
     def test_companies_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/companies/{self.company.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "image",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_companies_put(self):
         self.client.force_login(self.owner)
@@ -288,6 +330,19 @@ class CompensationTypeTestCase(BaseTestCase):
         response = self.client.get("/api/compensation_type/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "is_hourly",
+                "is_monthly",
+                "is_milestone",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_compensation_type_post(self):
         self.client.force_login(self.owner)
@@ -300,6 +355,9 @@ class CompensationTypeTestCase(BaseTestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.CompensationType.objects.filter(**compensation_type_data).exists()
+        )
 
     def test_compensation_types_detail(self):
         self.client.force_login(self.owner)
@@ -307,6 +365,18 @@ class CompensationTypeTestCase(BaseTestCase):
             f"/api/compensation_type/{self.compensation_type.id}/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "is_hourly",
+                "is_monthly",
+                "is_milestone",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_compensation_types_put(self):
         self.client.force_login(self.owner)
@@ -331,6 +401,18 @@ class CompensationScheduleTestCase(BaseTestCase):
         response = self.client.get("/api/compensation_schedule/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "is_weekly",
+                "is_monthly",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_compensation_schedule_post(self):
         self.client.force_login(self.owner)
@@ -343,6 +425,11 @@ class CompensationScheduleTestCase(BaseTestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.CompensationSchedule.objects.filter(
+                **compensation_schedule_data
+            ).exists()
+        )
 
     def test_compensation_schedules_detail(self):
         self.client.force_login(self.owner)
@@ -350,6 +437,17 @@ class CompensationScheduleTestCase(BaseTestCase):
             f"/api/compensation_schedule/{self.compensation_schedule.id}/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "is_weekly",
+                "is_monthly",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_compensation_schedules_put(self):
         self.client.force_login(self.owner)
@@ -374,6 +472,17 @@ class CurrencyTestCase(BaseTestCase):
         response = self.client.get("/api/currency/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "code",
+                "symbol",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_currency_post(self):
         self.client.force_login(self.owner)
@@ -381,11 +490,22 @@ class CurrencyTestCase(BaseTestCase):
         response = self.client.post("/api/currency/", data=currency_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Currency.objects.filter(**currency_data).exists())
 
     def test_currency_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/currency/{self.currency.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "code",
+                "symbol",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_currency_put(self):
         self.client.force_login(self.owner)
@@ -407,6 +527,16 @@ class DepartmentTestCase(BaseTestCase):
         response = self.client.get("/api/department/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_department_post(self):
         self.client.force_login(self.owner)
@@ -419,6 +549,15 @@ class DepartmentTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/department/{self.department.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_department_put(self):
         self.client.force_login(self.owner)
@@ -440,6 +579,16 @@ class DocumentTypeTestCase(BaseTestCase):
         response = self.client.get("/api/document_type/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_document_type_post(self):
         self.client.force_login(self.owner)
@@ -447,11 +596,23 @@ class DocumentTypeTestCase(BaseTestCase):
         response = self.client.post("/api/document_type/", data=document_type_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.DocumentType.objects.filter(**document_type_data).exists()
+        )
 
     def test_document_type_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/document_type/{self.document_type.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_document_type_put(self):
         self.client.force_login(self.owner)
@@ -473,6 +634,16 @@ class EmployeementTypeTestCase(BaseTestCase):
         response = self.client.get("/api/employeement_type/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_employeement_type_post(self):
         self.client.force_login(self.owner)
@@ -482,11 +653,23 @@ class EmployeementTypeTestCase(BaseTestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.EmploymentType.objects.filter(**employeement_type_data).exists()
+        )
 
     def test_employeement_type_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/employeement_type/{self.employment_type.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_employeement_type_put(self):
         self.client.force_login(self.owner)
@@ -511,6 +694,17 @@ class InstitueTestCase(BaseTestCase):
         response = self.client.get("/api/institues/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "image",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_institues_post(self):
         self.client.force_login(self.owner)
@@ -518,11 +712,22 @@ class InstitueTestCase(BaseTestCase):
         response = self.client.post("/api/institues/", data=institue_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Institute.objects.filter(**institue_data).exists())
 
     def test_institutes_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/institues/{self.institute.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "image",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_institutes_put(self):
         self.client.force_login(self.owner)
@@ -544,6 +749,16 @@ class ProgamTestCase(BaseTestCase):
         response = self.client.get("/api/programs/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_program_post(self):
         self.client.force_login(self.owner)
@@ -551,11 +766,21 @@ class ProgamTestCase(BaseTestCase):
         response = self.client.post("/api/programs/", data=program_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Program.objects.filter(**program_data).exists())
 
     def test_program_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/programs/{self.program.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "name",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def test_program_put(self):
         self.client.force_login(self.owner)
@@ -577,6 +802,19 @@ class AssetTypeTestCase(BaseTestCase):
         response = self.client.get("/api/asset_type/")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "attributes",
+                "first_name",
+                "last_name",
+                "contact_number",
+                "date_of_joining",
+                "image",
+            ],
+        )
 
     def asset_type_post(self):
         self.client.force_login(self.owner)
@@ -584,11 +822,21 @@ class AssetTypeTestCase(BaseTestCase):
         response = self.client.post("/api/asset_type/", data=asset_Type_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # self.assertTrue(models.AssetType.objects.filter(**asset_Type_data).exists())
 
     def asset_types_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/asset_type/{self.asset_type.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            [
+                "id",
+                "attributes",
+                "created_at",
+                "updated_at",
+            ],
+        )
 
     def asset_types_put(self):
         self.client.force_login(self.owner)
@@ -636,6 +884,11 @@ class StandupTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/standup/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            ["id", "name", "time", "created_at", "updated_at", "team"],
+        )
 
     def test_standup_post(self):
         self.client.force_login(self.owner)
@@ -646,11 +899,33 @@ class StandupTestCase(BaseTestCase):
         }
         response = self.client.post("/api/standup/", data=standup_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(models.Standup.objects.filter(**standup_data).exists())
+
+    def test_standup_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/standup/{self.standup.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json().keys()),
+            ["id", "name", "time", "created_at", "updated_at", "team"],
+        )
 
     def test_standup_get_members(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/standup/{self.standup.id}/members/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(response.json()[0].keys()),
+            [
+                "id",
+                "org_id",
+                "first_name",
+                "last_name",
+                "contact_number",
+                "date_of_joining",
+                "image",
+            ],
+        )
 
     def test_standup_put(self):
         self.client.force_login(self.owner)
@@ -675,6 +950,25 @@ class StandupUpdateTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.get("/api/standup_update/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            sorted(list(response.json()[0].keys())),
+            sorted(
+                [
+                    "id",
+                    "time",
+                    "date",
+                    "standup",
+                    "employee",
+                    "status",
+                    "work_done_yesterday",
+                    "work_to_do",
+                    "blockers",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
 
     def test_standupUpdate_post(self):
         self.client.force_login(self.owner)
@@ -689,11 +983,32 @@ class StandupUpdateTestCase(BaseTestCase):
         }
         response = self.client.post("/api/standup_update/", data=standup_update_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.StandupUpdate.objects.filter(**standup_update_data).exists()
+        )
 
     def test_standupUpdate_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/standup_update/{self.standup_update.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            sorted(list(response.json().keys())),
+            sorted(
+                [
+                    "id",
+                    "time",
+                    "date",
+                    "standup",
+                    "employee",
+                    "status",
+                    "work_done_yesterday",
+                    "work_to_do",
+                    "blockers",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
 
     def test_standupUpdate_put(self):
         self.client.force_login(self.owner)
@@ -724,16 +1039,42 @@ class TeamTestCase(BaseTestCase):
         }
         response = self.client.post("/api/team/", data=team_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIsNotNone(models.Team.objects.get(name="Test Team"))
 
     def test_team_get(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/team/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 2)
+        self.assertEqual(
+            sorted(list(response.json()[0].keys())),
+            sorted(
+                [
+                    "id",
+                    "name",
+                    "members",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
 
     def test_team_detail(self):
         self.client.force_login(self.owner)
         response = self.client.get(f"/api/team/{self.team.id}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            sorted(list(response.json().keys())),
+            sorted(
+                [
+                    "id",
+                    "name",
+                    "members",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
 
     def test_team_put(self):
         self.client.force_login(self.owner)
