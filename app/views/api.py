@@ -331,6 +331,7 @@ class CompensationTypeApiView(
 
         except Exception as e:
             response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CompensationScheduleApiView(
@@ -355,6 +356,7 @@ class CompensationScheduleApiView(
 
         except Exception as e:
             response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -377,6 +379,7 @@ class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
 
         except Exception as e:
             response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -648,6 +651,7 @@ class OrganizationViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
         except Exception as e:
             response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class OrganizationModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
@@ -677,6 +681,7 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 
         except Exception as e:
             response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
