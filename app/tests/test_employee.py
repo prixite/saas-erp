@@ -1039,7 +1039,7 @@ class TeamTestCase(BaseTestCase):
         }
         response = self.client.post("/api/team/", data=team_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIsNotNone(models.Team.objects.get(name="Test Team"))
+        self.assertTrue(models.Team.objects.filter(name=team_data["name"]).exists())
 
     def test_team_get(self):
         self.client.force_login(self.owner)
