@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Employee from "@src/components/common/presentational/employee/employee";
 import ForgotPassword from "@src/components/common/presentational/forgotPassword/forgotPassword";
 import Login from "@src/components/common/presentational/login/Login";
 import ResetPassword from "@src/components/common/presentational/resetPassword/resetPassword";
@@ -7,6 +6,7 @@ import Signup from "@src/components/common/presentational/signup/Signup";
 import Accounts from "@src/components/common/smart/accounts/accounts";
 import AdminSettings from "@src/components/common/smart/adminSettings/adminSettings";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
+import Employee from "@src/components/common/smart/employee/employee";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
 import Leaves from "@src/components/common/smart/leaves/leaves";
 import Modules from "@src/components/common/smart/modules/modules";

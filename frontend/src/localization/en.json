@@ -291,7 +291,8 @@
     "Time": "Time",
     "Joined":"Joined",
     "Missed":"Missed",
-    "TimeRequired":"Time is required!"
+    "TimeRequired":"Time is required!",
+    "Leave":"Leave"
 
   }
 }
