@@ -45,9 +45,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
     StandupSelectionRequired,
     EmployeeNameRequired,
     StatusRequired,
-    WorkDoneYesterdayRequired,
-    TodayPlanRequired,
-    BlockersRequired,
     Joined,
     Missed,
     Leave,
@@ -65,9 +62,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
       standup_selection: yup.string().required(StandupSelectionRequired),
       employee_name: yup.string().required(EmployeeNameRequired),
       status: yup.string().required(StatusRequired),
-      work_done_yesterday: yup.string().required(WorkDoneYesterdayRequired),
-      today_plan: yup.string().required(TodayPlanRequired),
-      blockers: yup.string().required(BlockersRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -261,7 +255,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={WorkDoneYesterday}
                   value={formik.values.work_done_yesterday}
@@ -285,7 +278,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={TodayPlan}
                   value={formik.values.today_plan}
@@ -310,7 +302,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={Blockers}
                   value={formik.values.blockers}
