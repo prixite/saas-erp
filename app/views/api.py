@@ -691,6 +691,15 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
         serializer = serializers.EmployeeListSerializer(members, many=True)
         return Response(serializer.data)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.default_role.permission == models.Role.Permission.MEMBER:
+            employee = self.request.user.employee
+            teams = models.Team.objects.filter(members=employee.id)
+            return self.queryset.filter(team__in=teams)
+        return queryset
+
 
 class StandupUpdateViewSet(
     mixins.PrivateMixinAPI, ModelViewSet, mixins.OrganizationMixin
@@ -703,6 +712,16 @@ class StandupUpdateViewSet(
         context = super().get_serializer_context()
         context.update({"request": self.request})
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        if user.default_role.permission == models.Role.Permission.MEMBER:
+            employee = self.request.user.employee
+            teams = models.Team.objects.filter(members=employee.id)
+            standups = models.Standup.objects.filter(team__in=teams)
+            return self.queryset.filter(standup__in=standups)
+        return queryset
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
