@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 export const capitalizeFirstLowercaseRest = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -42,6 +43,19 @@ export const truncateString = (str: string, n: number) => {
   } else {
     return str;
   }
+};
+export const useDebounce = (value: string, delay: number): string => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 };
 export const toastAPIError = (
   message: string,

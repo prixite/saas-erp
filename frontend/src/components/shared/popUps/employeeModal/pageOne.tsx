@@ -483,7 +483,7 @@ const PageOne = ({ formik, action }: Props) => {
               multiple
               className="text-field-cls"
               options={assets}
-              getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.name}
               defaultValue={[assets[0]]}
               filterSelectedOptions
               renderInput={(params) => (

@@ -47,11 +47,11 @@ export const benefitsOptions = [
   },
 ];
 export const assets = [
-  { title: "Laptop" },
-  { title: "Mouse" },
-  { title: "Handsfree" },
-  { title: "Led" },
-  { title: "Bag" },
+  { name: "Laptop" },
+  { name: "Mouse" },
+  { name: "Handsfree" },
+  { name: "Led" },
+  { name: "Bag" },
 ];
 export const degreeOptions = [
   {

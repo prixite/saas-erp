@@ -50,6 +50,7 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
     BlockersRequired,
     Joined,
     Missed,
+    Leave,
   } = constantData.Standup;
   const formik = useFormik({
     initialValues: {
@@ -209,9 +210,9 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                       <Box></Box>
                     )
                   ) : (
-                    <MenuItem
-                      value={selectedMember?.id}
-                    >{`${selectedMember?.first_name} ${selectedMember?.last_name}`}</MenuItem>
+                    <MenuItem value={selectedMember?.id}>{`${
+                      selectedMember?.first_name || ""
+                    } ${selectedMember?.last_name || ""}`}</MenuItem>
                   )}
                 </TextField>
                 <Typography className="errorText">
@@ -240,6 +241,9 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                   </MenuItem>
                   <MenuItem className="menu-item-cls" value="missed">
                     {Missed}
+                  </MenuItem>
+                  <MenuItem className="menu-item-cls" value="leave">
+                    {Leave}
                   </MenuItem>
                 </TextField>
                 <Typography className="errorText">

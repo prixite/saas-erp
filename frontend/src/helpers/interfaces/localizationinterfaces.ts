@@ -387,6 +387,7 @@ export interface standupData {
   Joined: string;
   Missed: string;
   TimeRequired: string;
+  Leave: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

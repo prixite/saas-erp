@@ -8,7 +8,7 @@ import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/notfound.svg";
 import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
-import HeadBar from "@src/components/common/smart/dashboard/headbar/HeadBar";
+import HeadBar from "@src/components/common/presentational/headbar/headBar";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
@@ -16,7 +16,7 @@ import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import { Employee } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { toastAPIError } from "@src/helpers/utils/utils";
+import { toastAPIError, useDebounce } from "@src/helpers/utils/utils";
 import {
   useGetEmployeesQuery,
   useGetFlagsQuery,
@@ -24,20 +24,6 @@ import {
   useGetUserQuery,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
-
-const useDebounce = (value: string, delay: number): string => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-};
 
 function DataGridTable() {
   const { data: rows = [], isLoading } = useGetEmployeesQuery();

@@ -18,6 +18,7 @@ import {
   teamTypes,
   TeamMembers,
   standupUpdatesTypes,
+  AssetsTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -178,6 +179,9 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Standup"],
     }),
+    getAssetsTypes: builder.query<AssetsTypes[], void>({
+      query: () => "/asset_type/",
+    }),
   }),
 });
 
@@ -207,4 +211,5 @@ export const {
   useGetStandupUpdatesQuery,
   useGetTeamMembersQuery,
   useAddStandupMutation,
+  useGetAssetsTypesQuery,
 } = employeesApi;

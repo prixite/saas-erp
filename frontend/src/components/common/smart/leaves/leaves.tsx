@@ -19,7 +19,7 @@ import { employeeConstants } from "@src/helpers/constants/constants";
 import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString } from "@src/helpers/utils/utils";
+import { truncateString, useDebounce } from "@src/helpers/utils/utils";
 import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
@@ -27,10 +27,12 @@ function Leaves() {
   const { data: rows = [], isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
+  const [query, setQuery] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const { notFound } = constantData.Employee;
   const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
+  const debouncedSearchTerm = useDebounce(query, 500);
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [rowData, setRowData] = useState();
@@ -243,6 +245,23 @@ function Leaves() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setLeavesData(
+        rows.filter((userData: empLeaves) => {
+          return userData?.employee?.name
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setLeavesData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
+  const handleInput = (e: { target: { value: string } }) => {
+    setQuery(e.target.value);
+  };
   return (
     <Box className="leavesDataGridTable-section">
       <Box
@@ -259,6 +278,7 @@ function Leaves() {
               className="searchbox"
               id="search-headbox"
               variant="outlined"
+              onChange={handleInput}
               placeholder="Search Employee here"
               sx={{
                 "& label.Mui-focused": {

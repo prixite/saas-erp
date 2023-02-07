@@ -1,8 +1,8 @@
 import "./headbar.scss";
 import { InputAdornment, TextField } from "@mui/material";
 import searchBox from "@src/assets/svgs/searchBox.svg";
-import CreateButton from "@src/components/common/smart/dashboard/headbar/createButton/CreateButton";
-import FilterButton from "@src/components/common/smart/dashboard/headbar/filterButton/FilterButton";
+import CreateButton from "@src/components/common/presentational/headbar/createButton/CreateButton";
+import FilterButton from "@src/components/common/presentational/headbar/filterButton/FilterButton";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import {
