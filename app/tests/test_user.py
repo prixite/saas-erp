@@ -44,13 +44,6 @@ class ModuleFilterTestCase(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-class RoleFilterTestCase(BaseTestCase):
-    def test_get_role_filter_data(self):
-        self.client.force_login(self.owner)
-        response = self.client.get("/api/organization_roles/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-
 class UserFilterTestCase(BaseTestCase):
     def test_get_user_filter_data(self):
         self.client.force_login(self.owner)

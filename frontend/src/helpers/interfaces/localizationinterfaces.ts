@@ -410,12 +410,12 @@ export interface LocalizationInterface {
 }
 
 export interface UserInterface {
-  first_name?: string;
-  last_name?: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  image?: string;
-  contact_number?: string | null;
-  default_role?: number | null;
+  image: string;
+  contact_number: string | null;
+  default_role: { id: number; name: string };
 }
 
 export interface UserModuleRoleInterface {
@@ -428,16 +428,16 @@ export interface OrganizationInterface {
   address: string;
 }
 
-export type OrganizationModuleInterface = {
+export interface OrganizationModuleInterface {
   id: number;
   is_enabled?: boolean;
   module: { id: number; name: string };
   organization: { id: number; name: string };
-};
+}
 
-export type ModuleInterface = {
+export interface ModuleInterface {
   id: number;
   slug: SlugEnum;
   name: string;
   is_enabled?: boolean;
-};
+}

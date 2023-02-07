@@ -370,6 +370,20 @@ urlpatterns = [
         ),
     ),
     path("organization_modules/", api.ModuleFilterViewSet.as_view({"get": "list"})),
-    path("users/", api.UserViewSet.as_view({"get": "list"})),
-    path("organization_roles/", api.RoleFilterViewSet.as_view({"get": "list"})),
+    path(
+        "users/",
+        api.UserViewSet.as_view(
+            {"get": "list", "post": "create"},
+        ),
+    ),
+    path(
+        "users/<int:pk>/",
+        api.UserViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "delete": "destroy",
+            }
+        ),
+    ),
 ]
