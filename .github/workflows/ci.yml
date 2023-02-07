@@ -2,9 +2,9 @@ name: ci
 
 on:
   pull_request:
-    branches:
-      - "master"
   workflow_call:
+  push:
+    branches: [master]
 
 jobs:
   build:

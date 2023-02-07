@@ -4713,14 +4713,10 @@
                     },
                     "max_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "expected_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "updated_at": {
@@ -5022,14 +5018,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -5184,14 +5176,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
