@@ -279,8 +279,8 @@ function Standup() {
               <p>{filterButton}</p>
             </Button>
           </Box>
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ? (
             <Box className="create-standup-btn">
               <Button
                 variant="outlined"
@@ -298,9 +298,9 @@ function Standup() {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ||
-          userData?.allowed_modules.member_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ||
+          userData?.allowed_modules.member_modules.includes("standup") ? (
             <Box className="add-standup-btn">
               <Button
                 variant="outlined"

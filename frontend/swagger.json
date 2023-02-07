@@ -5824,7 +5824,9 @@
                     "user",
                     "employees",
                     "inventory",
-                    "settings"
+                    "settings",
+                    "leave",
+                    "standup"
                 ],
                 "type": "string"
             },

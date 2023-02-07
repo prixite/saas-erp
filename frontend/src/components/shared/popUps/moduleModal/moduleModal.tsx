@@ -127,6 +127,8 @@ const ModuleModal = ({ moduleId, action, open, handleClose }: Props) => {
     { name: "Employees", value: "employees" },
     { name: "Inventory", value: "inventory" },
     { name: "Settings", value: "settings" },
+    { name: "Leave", value: "leave" },
+    { name: "Standup", value: "standup" },
   ];
 
   useEffect(() => {
