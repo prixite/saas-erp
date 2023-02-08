@@ -13,19 +13,19 @@ import {
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
 import crossIcon from "@src/assets/svgs/cross.svg";
-import UploadIcon from "@src/assets/svgs/uploadimg.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
+import UploadIcon from "@src/assets/svgs/uploadimg.svg";
+import PreviewImage from "@src/components/common/presentational/previewImage/previewImage";
 import { timeOut } from "@src/helpers/constants/constants";
-import { localizedData } from "@src/helpers/utils/language";
-import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
-import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   CompanyInterface,
   LocalizationInterface,
   S3Interface,
 } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
+import { uploadImageToS3 } from "@src/helpers/utils/uploadImage";
+import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   useApiCompaniesCreateMutation,
   useApiCompaniesUpdateMutation,
