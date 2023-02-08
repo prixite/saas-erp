@@ -53,7 +53,7 @@ class BaseTestCase(TestCase):
             name="leave", slug=models.Module.ModuleType.LEAVE, is_enabled=True
         )
         self.standup_module = factories.ModuleFactory(
-            name="standup", slug=models.Module.ModuleType.STANDUP, is_enabled=True
+            name="Standup", slug=models.Module.ModuleType.STANDUP, is_enabled=True
         )
 
         self.employee_org_module = factories.OrganizationModuleFactory(

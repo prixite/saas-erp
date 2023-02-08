@@ -703,11 +703,11 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user = self.context.get("request").user
+        module = self.context.get("module")
         employee = data.get("employee")
         standup = data.get("standup")
         team_members = standup.team.members.all()
-        permission = user.default_role.permission
-        if permission == models.Role.Permission.MEMBER:
+        if module in [x.slug for x in user.member_modules]:
             if not user.employee == employee:
                 if employee in team_members and user.employee in team_members:
                     raise PermissionDenied(

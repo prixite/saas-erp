@@ -692,13 +692,10 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
         return Response(serializer.data)
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        user = self.request.user
-        if user.default_role.permission == models.Role.Permission.MEMBER:
-            employee = self.request.user.employee
-            teams = models.Team.objects.filter(members=employee.id)
-            return self.queryset.filter(team__in=teams)
-        return queryset
+        if self.module in [x.slug for x in self.request.user.member_modules]:
+            teams = self.request.user.employee.teams.all()
+            return super().get_queryset().filter(team__in=teams)
+        return super().get_queryset()
 
 
 class StandupUpdateViewSet(
@@ -711,23 +708,21 @@ class StandupUpdateViewSet(
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context.update({"request": self.request})
+        context.update({"module": self.module})
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        user = self.request.user
-        if user.default_role.permission == models.Role.Permission.MEMBER:
-            employee = self.request.user.employee
-            teams = models.Team.objects.filter(members=employee.id)
+        if self.module in [x.slug for x in self.request.user.member_modules]:
+            teams = self.request.user.employee.teams.all()
             standups = models.Standup.objects.filter(team__in=teams)
-            return self.queryset.filter(standup__in=standups)
-        return queryset
+            return super().get_queryset().filter(standup__in=standups)
+        return super().get_queryset()
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
 
 
 class ModuleFilterViewSet(
