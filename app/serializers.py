@@ -183,7 +183,7 @@ class CompensationTypeSerializer(serializers.ModelSerializer):
             name=name, organization=organization
         ).exists():
             raise serializers.ValidationError(
-                "Compensation type this name already exists."
+                "Compensation type with this name already exists."
             )
 
         return data
