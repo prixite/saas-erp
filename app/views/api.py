@@ -305,6 +305,11 @@ class BenefitApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Benefit.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class DepartmentApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.DepartmentSerializer
@@ -337,6 +342,11 @@ class CompensationTypeApiView(
     queryset = models.CompensationType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
     def destroy(self, request, *args, **kwargs):
         try:
             return super().destroy(request, *args, **kwargs)
@@ -362,6 +372,11 @@ class CompensationScheduleApiView(
     queryset = models.CompensationSchedule.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
     def destroy(self, request, *args, **kwargs):
         try:
             return super().destroy(request, *args, **kwargs)
@@ -384,6 +399,11 @@ class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
     def destroy(self, request, *args, **kwargs):
         try:
@@ -408,6 +428,11 @@ class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.Organization
     queryset = models.AssetType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class DocumentTypeApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -415,6 +440,11 @@ class DocumentTypeApiView(
     serializer_class = serializers.DocumentTypeSerializer
     queryset = models.DocumentType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class RoleApiView(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
@@ -710,6 +740,11 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Standup.objects.all()
     module = models.Module.ModuleType.STANDUP
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
     def get_team_members(self, request, *args, **kwargs):
         standup = self.get_object()
         members = standup.team.members.all()
@@ -734,6 +769,11 @@ class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class ModuleFilterViewSet(
