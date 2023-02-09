@@ -5,6 +5,7 @@ import ResetPassword from "@src/components/common/presentational/resetPassword/r
 import Signup from "@src/components/common/presentational/signup/Signup";
 import Accounts from "@src/components/common/smart/accounts/accounts";
 import AdminSettings from "@src/components/common/smart/adminSettings/adminSettings";
+import Attendance from "@src/components/common/smart/attendance/attendance";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import Employee from "@src/components/common/smart/employee/employee";
 import EmployeeSection from "@src/components/common/smart/employeeSection/EmployeeSection";
@@ -15,6 +16,7 @@ import Organization from "@src/components/common/smart/organizations/organizatio
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Standup from "@src/components/common/smart/standup/standup";
+import Teams from "@src/components/common/smart/teams/teams";
 import UserAccess from "@src/components/common/smart/userAccess/userAccess";
 import Users from "@src/components/common/smart/users/users";
 import AdminRoute from "@src/components/hoc/AdminRoute";
@@ -66,6 +68,8 @@ const AppRoutes = () => {
             )}
             <Route path="leaves/" element={<Leaves />} />
             <Route path="standups/" element={<Standup />} />
+            <Route path="teams/" element={<Teams />} />
+            <Route path="attendance/" element={<Attendance />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
           <Route

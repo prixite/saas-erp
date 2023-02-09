@@ -389,6 +389,15 @@ export interface standupData {
   TimeRequired: string;
   Leave: string;
 }
+export interface AttendanceData {
+  attendance: string;
+}
+export interface TeamsData {
+  teams: string;
+  AddTeam: string;
+  CreateTeam: string;
+  CreateTeamSubheading: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -408,6 +417,8 @@ export interface LocalizationInterface {
   AuthPages: AuthPages;
   Leaves: leavesData;
   Standup: standupData;
+  Attendance: AttendanceData;
+  Teams: TeamsData;
 }
 
 export interface UserInterface {
