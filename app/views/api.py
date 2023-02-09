@@ -272,17 +272,32 @@ class InstitueApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     queryset = models.Institute.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class ProgramApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.ProgramSerializer
     queryset = models.Program.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CompanySerializer
     queryset = models.Company.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class BenefitApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -296,6 +311,11 @@ class DepartmentApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.Organizatio
     queryset = models.Department.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class EmployeementTypeApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -303,6 +323,11 @@ class EmployeementTypeApiView(
     serializer_class = serializers.EmployeementTypeSerializer
     queryset = models.EmploymentType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class CompensationTypeApiView(

@@ -540,9 +540,8 @@ class DepartmentTestCase(BaseTestCase):
 
     def test_department_post(self):
         self.client.force_login(self.owner)
-        department_data = {"name": "Frontend"}
+        department_data = {"name": "QA"}
         response = self.client.post("/api/department/", data=department_data)
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_department_detail(self):

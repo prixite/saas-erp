@@ -79,11 +79,29 @@ class CompanySerializer(serializers.ModelSerializer):
         model = models.Company
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Company.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Company with this name already exists.")
+
+        return data
+
 
 class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Program
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Program.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Program with this name already exists.")
+
+        return data
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -91,17 +109,56 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model = models.Department
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Department.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Department with this name already exists."
+            )
+
+        return data
+
 
 class EmployeementTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.EmploymentType
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.EmploymentType.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Employment Type with this name already exists."
+            )
+
+        return data
+
 
 class InstitueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Institute
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Institute.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Institute with this name already exists."
+            )
+
+        return data
 
 
 class CompensationTypeSerializer(serializers.ModelSerializer):
@@ -703,11 +760,11 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user = self.context.get("request").user
+        module = self.context.get("module")
         employee = data.get("employee")
         standup = data.get("standup")
         team_members = standup.team.members.all()
-        permission = user.default_role.permission
-        if permission == models.Role.Permission.MEMBER:
+        if module in [x.slug for x in user.member_modules]:
             if not user.employee == employee:
                 if employee in team_members and user.employee in team_members:
                     raise PermissionDenied(
