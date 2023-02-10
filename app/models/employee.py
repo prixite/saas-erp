@@ -85,7 +85,7 @@ class Team(models.Model):
 
     name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
-    members = models.ManyToManyField("Employee")
+    members = models.ManyToManyField("Employee", related_name="teams")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
