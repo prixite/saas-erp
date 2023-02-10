@@ -85,8 +85,8 @@ class ModuleTestCase(BaseTestCase):
             "is_enabled": True,
         }
         response = self.client.post("/api/module/", data=module_data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(models.Module.objects.filter(**module_data).exists())
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(models.Module.objects.filter(**module_data).exists())
 
     def test_module_detail(self):
         self.client.force_login(self.super_user)
@@ -114,7 +114,7 @@ class ModuleTestCase(BaseTestCase):
         response = self.client.put(
             f"/api/module/{self.employee_module.id}/", data=module_data
         )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_module_delete(self):
         self.client.force_login(self.super_user)

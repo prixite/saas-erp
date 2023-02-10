@@ -83,7 +83,7 @@ class Team(models.Model):
     part of multiple teams.
     """
 
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.PROTECT)
     members = models.ManyToManyField("Employee")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -95,7 +95,7 @@ class Team(models.Model):
 
 class Standup(models.Model):
     team = models.OneToOneField("Team", on_delete=models.CASCADE, unique=True)
-    name = models.CharField(max_length=128, unique="True")
+    name = models.CharField(max_length=128)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)

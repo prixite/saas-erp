@@ -100,7 +100,7 @@ class BaseTestCase(TestCase):
             name="UET", organization=self.organization
         )
         self.document_type = factories.DocumentTypeFactory(
-            name="Contracts", organization=self.organization
+            name="Contract", organization=self.organization
         )
         self.asset_type = factories.AssetTypeFactory(
             name="Laptop", organization=self.organization, attributes={}
