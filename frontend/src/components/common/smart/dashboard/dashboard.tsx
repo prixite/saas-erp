@@ -10,8 +10,10 @@ const Dashboard = () => {
   const { dashboardHeading } = constantData.Dashboard;
   const { data: userData } = useGetUserQuery();
   return (
-    <Box sx={{ mt: "25px" }}>
-      <Typography variant="h1">{dashboardHeading}</Typography>
+    <Box sx={{ mt: "17px" }}>
+      <Typography sx={{ fontSize: "20px", fontWeight: "700" }}>
+        {dashboardHeading}
+      </Typography>
       <AttendanceSummary />
       <Grid
         container

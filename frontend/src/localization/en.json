@@ -4,7 +4,7 @@
     "filterButton": "Filter"
   },
   "Employee": {
-    "employeeHeading": "Employee’s Module",
+    "employeeHeading": "Employees",
     "employeeBenefitsHeading": "Salary & Increment History",
     "currentSalary": "Current Salary",
     "compensationType": "Compensation Type",
