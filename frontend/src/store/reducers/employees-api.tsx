@@ -19,6 +19,7 @@ import {
   TeamMembers,
   standupUpdatesTypes,
   AssetsTypes,
+  AttendanceTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -182,6 +183,9 @@ export const employeesApi = createApi({
     getAssetsTypes: builder.query<AssetsTypes[], void>({
       query: () => "/asset_type/",
     }),
+    getAttendacne: builder.query<AttendanceTypes[], void>({
+      query: () => "/attendance/",
+    }),
   }),
 });
 
@@ -212,4 +216,5 @@ export const {
   useGetTeamMembersQuery,
   useAddStandupMutation,
   useGetAssetsTypesQuery,
+  useGetAttendacneQuery,
 } = employeesApi;

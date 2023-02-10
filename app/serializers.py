@@ -500,7 +500,19 @@ class WaffleSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
-        fields = ["employee", "time_in", "time_out"]
+        fields = ["id", "employee", "time_in", "time_out"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
+        return data
 
 
 class MeUpdateSerializer(serializers.ModelSerializer):

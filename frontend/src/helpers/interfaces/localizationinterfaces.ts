@@ -393,10 +393,14 @@ export interface AttendanceData {
   attendance: string;
 }
 export interface TeamsData {
-  teams: string;
+  Teams: string;
   AddTeam: string;
   CreateTeam: string;
   CreateTeamSubheading: string;
+  NameRequired: string;
+  MemberRequired: string;
+  Name: string;
+  AddTeamMember: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

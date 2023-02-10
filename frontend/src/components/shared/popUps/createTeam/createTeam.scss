@@ -2,7 +2,6 @@
   .MuiDialog-paper {
     padding: 24px 24px 0px 24px;
     width: 404px;
-    height: 400px;
     align-items: center;
     box-shadow: unset;
     border-radius: 12px;
@@ -42,6 +41,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: auto;
     .fields-cls {
       height: 84px !important;
       .text-field-cls {

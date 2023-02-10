@@ -97,6 +97,7 @@ export interface AssetsTypes {
   created_at: string;
   updated_at: string;
 }
+
 export interface EmployeeDoc {
   type: string;
   docs: Doc[];
@@ -185,6 +186,11 @@ export interface EmployeeLeaves {
   name: string;
   image: string;
   department: string;
+}
+export interface AttendanceTypes {
+  employee: EmployeeLeaves;
+  time_in: string;
+  time_out: string;
 }
 export interface standupUpdatesTypes {
   id: number;

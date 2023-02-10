@@ -5,7 +5,6 @@ import {
   InputAdornment,
   TextField,
   Button,
-  Tooltip,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
@@ -14,15 +13,15 @@ import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import searchBox from "@src/assets/svgs/searchBox.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import { employeeConstants } from "@src/helpers/constants/constants";
-import { standupUpdatesTypes } from "@src/helpers/interfaces/employees-modal";
+import { AttendanceTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString, useDebounce } from "@src/helpers/utils/utils";
-import { useGetStandupUpdatesQuery } from "@src/store/reducers/employees-api";
+import { useDebounce } from "@src/helpers/utils/utils";
+import { useGetAttendacneQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/attendance/attendance.scss";
 
 function Attendance() {
-  const { data: rows = [], isLoading } = useGetStandupUpdatesQuery();
+  const { data: rows = [], isLoading } = useGetAttendacneQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -30,10 +29,23 @@ function Attendance() {
   const debouncedSearchTerm = useDebounce(query, 500);
   const { attendance } = constantData.Attendance;
   const { filterButton } = constantData.Buttons;
-  const [standupData, setStandupData] = useState<standupUpdatesTypes[]>([]);
+  const [attendanceData, setAttendanceData] = useState<AttendanceTypes[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const columns: GridColDef[] = [
+    {
+      field: "id",
+      headerName: "ID",
+      sortable: false,
+      width: 200,
+      renderCell: (cellValues) => {
+        return (
+          <p className="para" style={{ marginLeft: "20px" }}>
+            {cellValues?.row?.employee?.id}
+          </p>
+        );
+      },
+    },
     {
       field: "name",
       headerName: "Name",
@@ -74,7 +86,7 @@ function Attendance() {
       width: 200,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+          <p className="para" style={{ marginLeft: "20px" }}>
             {cellValues?.row?.employee?.department}
           </p>
         );
@@ -88,7 +100,7 @@ function Attendance() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.created_at).format("ll")}
+            {moment(cellValues?.row?.time_in).format("ll")}
           </p>
         );
       },
@@ -100,12 +112,9 @@ function Attendance() {
       width: 300,
       renderCell: (cellValues) => {
         return (
-          <Tooltip title={cellValues?.row?.work_to_do}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.work_to_do, 40)}
-            </p>
-          </Tooltip>
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.time_in).format("LT")}
+          </p>
         );
       },
     },
@@ -116,12 +125,9 @@ function Attendance() {
       width: 300,
       renderCell: (cellValues) => {
         return (
-          <Tooltip title={cellValues?.row?.blockers}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.blockers, 40)}
-            </p>
-          </Tooltip>
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.time_out).format("LT")}
+          </p>
         );
       },
     },
@@ -129,17 +135,17 @@ function Attendance() {
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setStandupData(rows);
+        setAttendanceData(rows);
       } else {
-        setStandupData([]);
+        setAttendanceData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
-      setStandupData(
-        rows.filter((userData: standupUpdatesTypes) => {
+      setAttendanceData(
+        rows.filter((userData: AttendanceTypes) => {
           return userData?.employee?.name
             .trim()
             .toLowerCase()
@@ -147,7 +153,7 @@ function Attendance() {
         })
       );
     } else {
-      setStandupData(rows);
+      setAttendanceData(rows);
     }
   }, [debouncedSearchTerm, rows]);
   const handleInput = (e: { target: { value: string } }) => {
@@ -226,13 +232,13 @@ function Attendance() {
       </Box>
       {!dataLoading ? (
         <>
-          {standupData?.length ? (
+          {attendanceData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...standupData]}
+                rows={[...attendanceData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick
