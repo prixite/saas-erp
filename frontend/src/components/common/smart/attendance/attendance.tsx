@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  InputAdornment,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
-import searchBox from "@src/assets/svgs/searchBox.svg";
+import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { AttendanceTypes } from "@src/helpers/interfaces/employees-modal";
@@ -156,9 +150,6 @@ function Attendance() {
       setAttendanceData(rows);
     }
   }, [debouncedSearchTerm, rows]);
-  const handleInput = (e: { target: { value: string } }) => {
-    setQuery(e.target.value);
-  };
 
   return (
     <Box className="attendanceDataGridTable-section">
@@ -171,46 +162,7 @@ function Attendance() {
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box className="text-cls">
-            <TextField
-              className="searchbox"
-              id="search-headbox"
-              variant="outlined"
-              onChange={handleInput}
-              placeholder="Search Employee here"
-              sx={{
-                "& label.Mui-focused": {
-                  color: "#999999",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "#E7E7E7",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#E7E7E7",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#999999",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#999999",
-                  },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
-                    <img
-                      className="profile-pic"
-                      src={searchBox}
-                      alt="profile pic"
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
+          <Input setSearchText={setQuery} />
           <Box className="filter-btn-cls">
             <Button
               className="filter-btn"
