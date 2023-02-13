@@ -1,48 +1,31 @@
 import { useState, useEffect } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
-import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
+import { Box, Typography, Button } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
-import EditIcon from "@src/assets/svgs/Edit.svg";
-import NotfoundIcon from "@src/assets/svgs/notfound.svg";
-import ShowIcon from "@src/assets/svgs/ShowIcon.svg";
-import HeadBar from "@src/components/common/presentational/headbar/headBar";
+import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
+import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
+import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
-import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
-import { Employee } from "@src/helpers/interfaces/employees-modal";
+import { employeeConstants } from "@src/helpers/constants/constants";
+import { AttendanceTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { toastAPIError, useDebounce } from "@src/helpers/utils/utils";
-import {
-  useGetEmployeesQuery,
-  useGetFlagsQuery,
-  useDeleteEmployeeMutation,
-  useGetUserQuery,
-} from "@src/store/reducers/employees-api";
-import "@src/components/common/presentational/dataGridTable/dataGridTable.scss";
+import { useDebounce } from "@src/helpers/utils/utils";
+import { useGetAttendacneQuery } from "@src/store/reducers/employees-api";
+import "@src/components/common/smart/attendance/attendance.scss";
 
-function DataGridTable() {
-  const { data: rows = [], isLoading } = useGetEmployeesQuery();
+function Attendance() {
+  const { data: rows = [], isLoading } = useGetAttendacneQuery();
   const constantData: LocalizationInterface = localizedData();
-  const { notFound, employeeDeleteSuccess } = constantData.Employee;
-  const [userData, setUserData] = useState<Employee[]>([]);
-  const { data: userInfo } = useGetUserQuery();
-  const [pageSize, setPageSize] = useState<number>(10);
-  const [deleteEmployee] = useDeleteEmployeeMutation();
-  const { data: Flags = [] } = useGetFlagsQuery();
-  const allFlags = Object.assign({}, ...Flags);
-  const [openModal, setOpenModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
-  const [rowCellId, setRowCellId] = useState<number>(0);
+  const { notFound } = constantData.Employee;
   const debouncedSearchTerm = useDebounce(query, 500);
-  const [action, setAction] = useState("add");
+  const { attendance } = constantData.Attendance;
+  const { filterButton } = constantData.Buttons;
+  const [attendanceData, setAttendanceData] = useState<AttendanceTypes[]>([]);
+  const [pageSize, setPageSize] = useState<number>(10);
+
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -52,7 +35,7 @@ function DataGridTable() {
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.org_id}
+            {cellValues?.row?.employee?.id}
           </p>
         );
       },
@@ -61,7 +44,7 @@ function DataGridTable() {
       field: "name",
       headerName: "Name",
       sortable: false,
-      width: 400,
+      width: 300,
       renderCell: (cellValues) => {
         return (
           <div
@@ -70,6 +53,7 @@ function DataGridTable() {
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
+              textTransform: "capitalize",
             }}
           >
             <img
@@ -81,179 +65,135 @@ function DataGridTable() {
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row.image}`}
+              src={`${cellValues.row?.employee?.image}`}
               alt="profile pic"
             />
-            <p>{`${cellValues.row.first_name} ${cellValues.row.last_name}`}</p>
+            <p>{cellValues?.row?.employee?.name}</p>
           </div>
         );
       },
     },
-
     {
-      field: "contact_Number",
-      headerName: "Contact Number",
+      field: "Department",
+      headerName: "Department",
       sortable: false,
-      width: 350,
+      width: 200,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.contact_number}
+          <p className="para" style={{ marginLeft: "20px" }}>
+            {cellValues?.row?.employee?.department}
           </p>
         );
       },
     },
     {
-      field: "joining_Date",
-      headerName: "Joining Date",
+      field: "Date",
+      headerName: "Date",
       sortable: false,
-      width: 350,
+      width: 250,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.date_of_joining).format("ll")}
+            {moment(cellValues?.row?.time_in).format("ll")}
           </p>
         );
       },
     },
     {
-      field: "actions",
-      headerName: "Actions",
-      width: 350,
+      field: "Check In",
+      headerName: "Check In",
+      sortable: false,
+      width: 300,
       renderCell: (cellValues) => {
         return (
-          <Box
-            className="renderCell-joiningDate"
-            style={{ marginLeft: "10px" }}
-          >
-            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
-            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
-              <IconButton
-                onClick={(event) =>
-                  handleEditModalOpen(event, cellValues?.row?.id)
-                }
-                aria-label="edit"
-                id="edit-btn-id"
-                className="edit-btn"
-              >
-                <img className="profile-pic" src={EditIcon} alt="profile pic" />
-              </IconButton>
-            ) : (
-              ""
-            )}
-            <IconButton
-              aria-label="Show"
-              id="show-btn-id"
-              className="delete-btn"
-            >
-              <img className="profile-pic" src={ShowIcon} alt="profile pic" />
-            </IconButton>
-            {userInfo?.allowed_modules.admin_modules.includes("employees") ||
-            userInfo?.allowed_modules.owner_modules.includes("employees") ? (
-              <IconButton
-                onClick={(event) =>
-                  handleDeleteModalOpen(event, cellValues?.row?.id)
-                }
-                aria-label="delete"
-                id="delete-btn-id"
-                className="delete-btn"
-              >
-                <img
-                  className="profile-pic"
-                  src={DeleteIcon}
-                  alt="profile pic"
-                />
-              </IconButton>
-            ) : (
-              ""
-            )}
-          </Box>
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.time_in).format("LT")}
+          </p>
+        );
+      },
+    },
+    {
+      field: "Check Out",
+      headerName: "Check Out",
+      sortable: false,
+      width: 300,
+      renderCell: (cellValues) => {
+        return (
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.time_out).format("LT")}
+          </p>
         );
       },
     },
   ];
-
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setUserData(rows);
+        setAttendanceData(rows);
       } else {
-        setUserData([]);
+        setAttendanceData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
-      setUserData(
-        rows.filter((userData: Employee) => {
-          return `${userData?.first_name} ${userData?.last_name}`
+      setAttendanceData(
+        rows.filter((userData: AttendanceTypes) => {
+          return userData?.employee?.name
             .trim()
             .toLowerCase()
             .includes(debouncedSearchTerm.trim().toLowerCase());
         })
       );
     } else {
-      setUserData(rows);
+      setAttendanceData(rows);
     }
   }, [debouncedSearchTerm, rows]);
-  const handleModalClose = () => {
-    setOpenModal(false);
-  };
 
-  const handleDeleteModalClose = () => {
-    setOpenDeleteModal(false);
-  };
-  const handleOnCellClick = (params: GridCellParams) => {
-    navigate(`/employees/${params.row.id}`);
-  };
-  const handleEditModalOpen = (
-    event: React.MouseEvent<HTMLElement>,
-    cellId: number
-  ) => {
-    event.stopPropagation();
-    setAction("edit");
-    setRowCellId(cellId);
-    setOpenModal(true);
-  };
-  const handleDeleteModalOpen = (
-    event: React.MouseEvent<HTMLElement>,
-    cellId: number
-  ) => {
-    event.stopPropagation();
-    setRowCellId(cellId);
-    setOpenDeleteModal(true);
-  };
-  const handleEmployeeDelete = async () => {
-    await deleteEmployee({
-      id: rowCellId,
-    })
-      .unwrap()
-      .then(async () => {
-        toast.success(employeeDeleteSuccess, {
-          autoClose: timeOut,
-          pauseOnHover: false,
-        });
-        handleDeleteModalClose();
-      })
-      .catch((error) => {
-        toastAPIError("Something went wrong.", error.status, error.data);
-      });
-  };
   return (
-    <Box className="dataGridTable-section">
-      <HeadBar setSearchText={setQuery} />
+    <Box className="attendanceDataGridTable-section">
+      <Box
+        className="top-bar-cls"
+        sx={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Typography className="title-cls">{attendance}</Typography>
+        <Box
+          className="filter-section"
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Input setSearchText={setQuery} />
+          <Box className="filter-btn-cls">
+            <Button
+              className="filter-btn"
+              id="filter-btn-id"
+              variant="outlined"
+              startIcon={
+                <img
+                  className="profile-pic"
+                  src={FilterIcon}
+                  alt="profile pic"
+                />
+              }
+            >
+              {" "}
+              <p>{filterButton}</p>
+            </Button>
+          </Box>
+        </Box>
+      </Box>
       {!dataLoading ? (
         <>
-          {userData?.length ? (
+          {attendanceData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...userData]}
+                rows={[...attendanceData]}
                 columns={columns}
                 disableColumnFilter
+                disableSelectionOnClick
                 disableColumnMenu
                 disableColumnSelector
                 onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -261,7 +201,6 @@ function DataGridTable() {
                 rowsPerPageOptions={[10, 13]}
                 pagination
                 density="standard"
-                onCellClick={handleOnCellClick}
                 loading={isLoading}
                 sx={{
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
@@ -282,7 +221,7 @@ function DataGridTable() {
                     },
                   },
                   "& .css-1jbbcbn-MuiDataGrid-columnHeaderTitle": {
-                    width: "101px",
+                    width: "130px",
                     height: "18px",
                     fontFamily: "Lato",
                     fontStyle: "normal",
@@ -299,7 +238,6 @@ function DataGridTable() {
                   "& .MuiDataGrid-virtualScrollerRenderZone": {
                     "& .MuiDataGrid-row": {
                       backgroundColor: "white",
-                      cursor: "pointer",
                     },
                   },
                   "& .MuiDataGrid-cell:focus, .MuiDataGrid-cell:focus-within": {
@@ -335,7 +273,7 @@ function DataGridTable() {
                       outline: "none",
                     },
                   "& .MuiTablePagination-root:last-child": {
-                    display: allFlags.show_pagination_module ? "block" : "none",
+                    display: "block",
                   },
                 }}
               />
@@ -355,18 +293,7 @@ function DataGridTable() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
-      <EmployeeModal
-        empId={rowCellId}
-        action={action}
-        open={openModal}
-        handleClose={handleModalClose}
-      />
-      <DeleteModal
-        open={openDeleteModal}
-        handleObjDelete={handleEmployeeDelete}
-        handleClose={handleDeleteModalClose}
-      />
     </Box>
   );
 }
-export default DataGridTable;
+export default Attendance;

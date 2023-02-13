@@ -186,10 +186,10 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                   InputLabelProps={{ className: "textfield_label" }}
                 >
                   {userData?.allowed_modules.admin_modules.includes(
-                    "employees"
+                    "standup"
                   ) ||
                   userData?.allowed_modules.owner_modules.includes(
-                    "employees"
+                    "standup"
                   ) ? (
                     teamMembersData?.length ? (
                       teamMembersData?.map((member) => {

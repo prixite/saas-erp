@@ -1,90 +1,68 @@
 import { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Typography, Tooltip, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import AddStandupModal from "@src/components/shared/popUps/addStandup/addStandup";
-import CreateStandupModal from "@src/components/shared/popUps/createStandup/createStandup";
+import CreateTeamModal from "@src/components/shared/popUps/createTeam/createTeam";
 import { employeeConstants } from "@src/helpers/constants/constants";
-import { standupUpdatesTypes } from "@src/helpers/interfaces/employees-modal";
+import { teamTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString, useDebounce } from "@src/helpers/utils/utils";
+import { useDebounce } from "@src/helpers/utils/utils";
 import {
-  useGetStandupUpdatesQuery,
   useGetUserQuery,
+  useGetTeamsQuery,
 } from "@src/store/reducers/employees-api";
-import "@src/components/common/smart/standup/standup.scss";
+import "@src/components/common/smart/teams/teams.scss";
 
-function Standup() {
-  const { data: rows = [], isLoading } = useGetStandupUpdatesQuery();
+function Teams() {
+  const { data: rows = [], isLoading } = useGetTeamsQuery();
   const { data: userData } = useGetUserQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [query, setQuery] = useState("");
-  const [openCreateModal, setOpenCreateModal] = useState(false);
   const { notFound } = constantData.Employee;
   const debouncedSearchTerm = useDebounce(query, 500);
-  const { standup, createStandup, addStandup } = constantData.Standup;
+  const { Teams, AddTeam } = constantData.Teams;
   const { filterButton } = constantData.Buttons;
-  const [standupData, setStandupData] = useState<standupUpdatesTypes[]>([]);
+  const [teamsData, setTeamsData] = useState<teamTypes[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const columns: GridColDef[] = [
     {
-      field: "name",
-      headerName: "Name",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <div
-            style={{
-              marginLeft: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              textTransform: "capitalize",
-            }}
-          >
-            <img
-              style={{
-                height: "32px",
-                width: "32px",
-                left: "241px",
-                top: "154px",
-                marginRight: "8px",
-                borderRadius: "50%",
-              }}
-              src={`${cellValues.row?.employee?.image}`}
-              alt="profile pic"
-            />
-            <p>{cellValues?.row?.employee?.name}</p>
-          </div>
-        );
-      },
-    },
-    {
-      field: "Department",
-      headerName: "Department",
+      field: "id",
+      headerName: "ID",
       sortable: false,
       width: 200,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.employee?.department}
+          <p className="para" style={{ marginLeft: "20px" }}>
+            {cellValues?.row?.id}
           </p>
         );
       },
     },
     {
-      field: "Date",
-      headerName: "Date",
+      field: "name",
+      headerName: "Name",
+      sortable: false,
+      width: 200,
+      renderCell: (cellValues) => {
+        return (
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues?.row?.name}
+          </p>
+        );
+      },
+    },
+    {
+      field: "created_at",
+      headerName: "Created At",
       sortable: false,
       width: 250,
       renderCell: (cellValues) => {
@@ -96,97 +74,15 @@ function Standup() {
       },
     },
     {
-      field: "Time",
-      headerName: "Time",
+      field: "updated_at",
+      headerName: "Updated At",
       sortable: false,
       width: 250,
       renderCell: (cellValues) => {
-        return <p style={{ marginLeft: "20px" }}>{cellValues?.row?.time}</p>;
-      },
-    },
-    {
-      field: "Status",
-      headerName: "Status",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
         return (
-          <Box
-            sx={{
-              color:
-                cellValues?.row?.status === "joined"
-                  ? "green"
-                  : cellValues?.row?.status === "missed"
-                  ? "red"
-                  : "blue",
-              width: "91px",
-              height: "28px",
-              borderRadius: "16px",
-              border: "1px solid",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textTransform: "capitalize",
-              background:
-                cellValues?.row?.status === "joined"
-                  ? " #E9FFE6;"
-                  : cellValues?.row?.status === "missed"
-                  ? "#FFF1F1"
-                  : "#E3F2FD",
-              fontSize: "12px",
-              fontWeight: "400",
-            }}
-          >
-            {cellValues?.row?.status}
-          </Box>
-        );
-      },
-    },
-    {
-      field: "Work done yesterday",
-      headerName: "Work done yesterday",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <Tooltip title={cellValues?.row?.work_done_yesterday}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.work_done_yesterday, 40)}
-            </p>
-          </Tooltip>
-        );
-      },
-    },
-    {
-      field: "Work to do",
-      headerName: "Work to do",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <Tooltip title={cellValues?.row?.work_to_do}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.work_to_do, 40)}
-            </p>
-          </Tooltip>
-        );
-      },
-    },
-    {
-      field: "Blockers",
-      headerName: "Blockers",
-      sortable: false,
-      width: 300,
-      renderCell: (cellValues) => {
-        return (
-          <Tooltip title={cellValues?.row?.blockers}>
-            <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.blockers, 40)}
-            </p>
-          </Tooltip>
+          <p style={{ marginLeft: "20px" }}>
+            {moment(cellValues?.row?.updated_at).format("ll")}
+          </p>
         );
       },
     },
@@ -194,40 +90,38 @@ function Standup() {
   const handleModalClose = () => {
     setOpenModal(false);
   };
-  const handleCreateModalClose = () => {
-    setOpenCreateModal(false);
-  };
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setStandupData(rows);
+        setTeamsData(rows);
       } else {
-        setStandupData([]);
+        setTeamsData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
-      setStandupData(
-        rows.filter((userData: standupUpdatesTypes) => {
-          return userData?.employee?.name
+      setTeamsData(
+        rows.filter((team: teamTypes) => {
+          return team?.name
             .trim()
             .toLowerCase()
             .includes(debouncedSearchTerm.trim().toLowerCase());
         })
       );
     } else {
-      setStandupData(rows);
+      setTeamsData(rows);
     }
   }, [debouncedSearchTerm, rows]);
+
   return (
-    <Box className="standupDataGridTable-section">
+    <Box className="teamsDataGridTable-section">
       <Box
         className="top-bar-cls"
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Typography className="title-cls">{standup}</Typography>
+        <Typography className="title-cls">{Teams}</Typography>
         <Box
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
@@ -250,28 +144,8 @@ function Standup() {
               <p>{filterButton}</p>
             </Button>
           </Box>
-          {userData?.allowed_modules.admin_modules.includes("standup") ||
-          userData?.allowed_modules.owner_modules.includes("standup") ? (
-            <Box className="create-standup-btn">
-              <Button
-                variant="outlined"
-                className="create-btn"
-                style={{ borderRadius: "12px" }}
-                startIcon={<AddIcon />}
-                onClick={() => {
-                  setOpenCreateModal(true);
-                }}
-              >
-                {" "}
-                <Typography>{createStandup}</Typography>
-              </Button>
-            </Box>
-          ) : (
-            ""
-          )}
-          {userData?.allowed_modules.admin_modules.includes("standup") ||
-          userData?.allowed_modules.owner_modules.includes("standup") ||
-          userData?.allowed_modules.member_modules.includes("standup") ? (
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
             <Box className="add-standup-btn">
               <Button
                 variant="outlined"
@@ -283,7 +157,7 @@ function Standup() {
                 }}
               >
                 {" "}
-                <Typography>{addStandup}</Typography>
+                <Typography>{AddTeam}</Typography>
               </Button>
             </Box>
           ) : (
@@ -293,13 +167,13 @@ function Standup() {
       </Box>
       {!dataLoading ? (
         <>
-          {standupData?.length ? (
+          {teamsData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...standupData]}
+                rows={[...teamsData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick
@@ -402,12 +276,8 @@ function Standup() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
-      <AddStandupModal open={openModal} handleClose={handleModalClose} />
-      <CreateStandupModal
-        open={openCreateModal}
-        handleClose={handleCreateModalClose}
-      />
+      <CreateTeamModal open={openModal} handleClose={handleModalClose} />
     </Box>
   );
 }
-export default Standup;
+export default Teams;

@@ -294,5 +294,19 @@
     "TimeRequired":"Time is required!",
     "Leave":"Leave"
 
+  },
+  "Attendance":{
+    "attendance":"Attendance"
+  },
+  "Teams": {
+    "teams": "Teams",
+    "AddTeam":"Add Team",
+    "CreateTeam":"Create Team",
+    "CreateTeamSubheading":"You can create a team here.",
+    "NameRequired":"Name is required!",
+    "MemberRequired":"Team member is required!",
+    "Name":"Name",
+    "AddTeamMember":"Add Team Member"
   }
+
 }

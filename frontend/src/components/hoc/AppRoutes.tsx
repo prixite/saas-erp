@@ -6,6 +6,7 @@ import ResetPassword from "@src/components/common/presentational/resetPassword/r
 import Signup from "@src/components/common/presentational/signup/Signup";
 import Accounts from "@src/components/common/smart/accounts/accounts";
 import AdminSettings from "@src/components/common/smart/adminSettings/adminSettings";
+import Attendance from "@src/components/common/smart/attendance/attendance";
 import Company from "@src/components/common/smart/company/company";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import Department from "@src/components/common/smart/department/department";
@@ -22,6 +23,7 @@ import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Program from "@src/components/common/smart/program/program";
 import Settings from "@src/components/common/smart/settings/settings";
 import Standup from "@src/components/common/smart/standup/standup";
+import Teams from "@src/components/common/smart/teams/teams";
 import UserAccess from "@src/components/common/smart/userAccess/userAccess";
 import Users from "@src/components/common/smart/users/users";
 import {
@@ -91,6 +93,8 @@ const AppRoutes = () => {
                   <Route path="payroll/" element={<Payroll />} />
                 )}
                 <Route path="leaves/" element={<Leaves />} />
+                <Route path="teams/" element={<Teams />} />
+                <Route path="attendance/" element={<Attendance />} />
                 <Route path="standups/" element={<Standup />} />
                 <Route path="settings/department" element={<Department />} />
                 <Route
