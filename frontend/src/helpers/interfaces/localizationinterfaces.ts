@@ -457,3 +457,20 @@ export interface ModuleInterface {
   name: string;
   is_enabled?: boolean;
 }
+export interface DepartmentInterface {
+  name: string;
+}
+export interface EmployementTypeInterface {
+  name: string;
+}
+export interface ProgramInterface {
+  name: string;
+}
+export interface InstitueInterface {
+  name: string;
+  image: string;
+}
+export interface CompanyInterface {
+  name: string;
+  image: string;
+}

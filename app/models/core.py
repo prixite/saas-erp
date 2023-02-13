@@ -200,7 +200,7 @@ class Module(models.Model):
         LEAVE = "leave", "Leave"
         STANDUP = "standup", "Standup"
 
-    slug = models.SlugField(choices=ModuleType.choices)
+    slug = models.SlugField(choices=ModuleType.choices, unique=True)
     name = models.CharField(max_length=64, unique=True)
     is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

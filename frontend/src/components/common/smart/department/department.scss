@@ -1,10 +1,19 @@
-.standupDataGridTable-section {
+.departmentDataGridTable-section {
   .dataGridTable-main {
     width: 100%;
     background-color: white;
     margin-top: 25px;
     overflow-x: auto;
     overflow-y: auto;
+    .view-btn {
+      text-transform: none;
+      border-radius: 12px;
+      width: 70px;
+      height: 34px;
+      background: #ff2f2f;
+      border-radius: 12px;
+      color: white;
+    }
     .dataGrid {
       .MuiDataGrid-columnHeaders {
         background-color: rgba(207, 207, 207, 0.2);
@@ -63,12 +72,25 @@
     }
   }
   .top-bar-cls {
-    margin-top: 17px;
+    margin-top: 15px;
     .title-cls {
       font-size: 20px;
       font-weight: 700;
     }
     .filter-section {
+      .text-cls {
+        margin-right: 15px;
+        border: 1px solid white;
+        .MuiInputBase-root {
+          padding: 11px 16px 11px 16px;
+          border-radius: 12px;
+          height: 44px;
+          background: #ffffff;
+          box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+          border-radius: 12px;
+          border: 1px solid #ffffff;
+        }
+      }
       .filter-btn-cls {
         .filter-btn {
           text-transform: none;
@@ -81,29 +103,15 @@
           padding: 12.5px 16px 12.5px 19.33px;
         }
       }
-      .create-standup-btn {
+      .create-btn {
         margin-left: 15px;
-        .create-btn {
-          text-transform: none;
-          border-radius: 12px;
-          width: 169px;
-          height: 44px;
-          background: #ff2f2f;
-          border-radius: 12px;
-          color: white;
-        }
-      }
-      .add-standup-btn {
-        margin-left: 15px;
-        .add-btn {
-          text-transform: none;
-          border-radius: 12px;
-          width: 149px;
-          height: 44px;
-          background: #ff2f2f;
-          border-radius: 12px;
-          color: white;
-        }
+        text-transform: none;
+        border-radius: 12px;
+        width: 108px;
+        height: 44px;
+        background: #ff2f2f;
+        border-radius: 12px;
+        color: white;
       }
     }
   }

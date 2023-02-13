@@ -295,40 +295,26 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
+          <ListItemButton
+            onClick={() => {
+              navigate("settings/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon sx={{ ml: "8px" }}>
+              <img
+                src={
+                  currentPath === "/settings/" ? settingIconRed : settingIcon
+                }
+              />
+            </ListItemIcon>
+          </ListItemButton>
+
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
             <ListItemIcon sx={{ ml: "8px" }}>
               {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}
             </ListItemIcon>
           </ListItemButton>
-          {allFlags.show_setting_module ? (
-            <ListItemButton className="drawer-setting-btn">
-              <ListItemIcon sx={{ ml: "8px" }}>
-                <img src={settingIcon} />
-              </ListItemIcon>
-            </ListItemButton>
-          ) : (
-            ""
-          )}
-          {userData?.is_superuser ? (
-            <ListItemButton
-              onClick={() => {
-                navigate("settings/");
-              }}
-              className="list-items-btn"
-            >
-              <ListItemIcon className="list-item-icon">
-                <img
-                  className="icon-img"
-                  src={
-                    currentPath === "/settings/" ? settingIconRed : settingIcon
-                  }
-                />
-              </ListItemIcon>
-              <ListItemText primary="Setting" />
-            </ListItemButton>
-          ) : (
-            ""
-          )}
         </List>
       </Drawer>
     </Box>
