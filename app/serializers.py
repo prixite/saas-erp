@@ -812,6 +812,22 @@ class TeamSerializer(serializers.ModelSerializer):
                 raise NotFound(detail="Employee not found")
         return data
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        members = instance.members.all()
+        members_representation = [
+            {
+                "id": member.id,
+                "name": member.user.get_full_name(),
+                "image": member.user.image,
+                "department": member.department.name if member.department else None,
+            }
+            for member in members
+        ]
+        data["members"] = members_representation
+        data["organization"] = instance.organization.name
+        return data
+
 
 class StandupSerializer(serializers.ModelSerializer):
     class Meta:
