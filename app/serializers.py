@@ -825,7 +825,6 @@ class TeamSerializer(serializers.ModelSerializer):
             for member in members
         ]
         data["members"] = members_representation
-        data["organization"] = instance.organization.name
         return data
 
 

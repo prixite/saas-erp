@@ -1053,7 +1053,6 @@ class TeamTestCase(BaseTestCase):
                     "members",
                     "created_at",
                     "updated_at",
-                    "organization",
                 ]
             ),
         )
@@ -1071,7 +1070,6 @@ class TeamTestCase(BaseTestCase):
                     "members",
                     "created_at",
                     "updated_at",
-                    "organization",
                 ]
             ),
         )
