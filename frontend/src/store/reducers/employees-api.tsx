@@ -18,6 +18,8 @@ import {
   teamTypes,
   TeamMembers,
   standupUpdatesTypes,
+  AssetsTypes,
+  AttendanceTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -30,7 +32,14 @@ export const employeesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Employee", "Owner", "Leaves", "Standup", "CreateStandup"],
+  tagTypes: [
+    "Employee",
+    "Owner",
+    "Leaves",
+    "Standup",
+    "CreateStandup",
+    "Teams",
+  ],
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees/",
@@ -150,6 +159,7 @@ export const employeesApi = createApi({
     }),
     getTeams: builder.query<teamTypes[], void>({
       query: () => "/team/",
+      providesTags: ["Teams"],
     }),
     createStandup: builder.mutation({
       query: ({ standupObject }) => {
@@ -177,6 +187,22 @@ export const employeesApi = createApi({
         };
       },
       invalidatesTags: ["Standup"],
+    }),
+    getAssetsTypes: builder.query<AssetsTypes[], void>({
+      query: () => "/asset_type/",
+    }),
+    getAttendacne: builder.query<AttendanceTypes[], void>({
+      query: () => "/attendance/",
+    }),
+    createTeam: builder.mutation({
+      query: ({ teamObject }) => {
+        return {
+          url: "/team/",
+          method: "POST",
+          body: teamObject,
+        };
+      },
+      invalidatesTags: ["Teams"],
     }),
   }),
 });
@@ -207,4 +233,7 @@ export const {
   useGetStandupUpdatesQuery,
   useGetTeamMembersQuery,
   useAddStandupMutation,
+  useGetAssetsTypesQuery,
+  useGetAttendacneQuery,
+  useCreateTeamMutation,
 } = employeesApi;

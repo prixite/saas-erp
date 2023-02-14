@@ -187,6 +187,8 @@ class Module(models.Model):
     - Inventory
     - Settings
     - User
+    - Leave
+    - Standup
     """
 
     class ModuleType(models.TextChoices):
@@ -195,8 +197,11 @@ class Module(models.Model):
         EMPLOYEES = "employees", "Employees"
         INVENTORY = "inventory", "Inventory"
         SETTINGS = "settings", "Settings"
+        LEAVE = "leave", "Leave"
+        STANDUP = "standup", "Standup"
+        AVAILABILITY_MESSAGES = "availability_messages", "Availability_Messages"
 
-    slug = models.SlugField(choices=ModuleType.choices)
+    slug = models.SlugField(choices=ModuleType.choices, unique=True)
     name = models.CharField(max_length=64, unique=True)
     is_enabled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

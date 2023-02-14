@@ -73,11 +73,29 @@ class BenefitSerializer(serializers.ModelSerializer):
         model = models.Benefit
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Benefit.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Benefit with this name already exists.")
+
+        return data
+
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Company
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Company.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Company with this name already exists.")
+
+        return data
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -85,11 +103,33 @@ class ProgramSerializer(serializers.ModelSerializer):
         model = models.Program
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Program.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Program with this name already exists.")
+
+        return data
+
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Department
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Department.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Department with this name already exists."
+            )
+
+        return data
 
 
 class EmployeementTypeSerializer(serializers.ModelSerializer):
@@ -97,11 +137,37 @@ class EmployeementTypeSerializer(serializers.ModelSerializer):
         model = models.EmploymentType
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.EmploymentType.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Employment Type with this name already exists."
+            )
+
+        return data
+
 
 class InstitueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Institute
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.Institute.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Institute with this name already exists."
+            )
+
+        return data
 
 
 class CompensationTypeSerializer(serializers.ModelSerializer):
@@ -109,11 +175,37 @@ class CompensationTypeSerializer(serializers.ModelSerializer):
         model = models.CompensationType
         exclude = ("organization",)
 
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.CompensationType.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Compensation type with this name already exists."
+            )
+
+        return data
+
 
 class CompensationScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CompensationSchedule
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.CompensationSchedule.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Compensation schedule with this name already exists."
+            )
+
+        return data
 
 
 class CurrencySerializer(serializers.ModelSerializer):
@@ -121,11 +213,35 @@ class CurrencySerializer(serializers.ModelSerializer):
         model = models.Currency
         exclude = ("organization",)
 
+    def validate(self, data):
+        code = data.get("code")
+        organization = self.context.get("organization")
+
+        if models.Currency.objects.filter(
+            code=code, organization=organization
+        ).exists():
+            raise serializers.ValidationError("Currency with this code already exists.")
+
+        return data
+
 
 class DocumentTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.DocumentType
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.DocumentType.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Document type with this name already exists."
+            )
+
+        return data
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -138,6 +254,19 @@ class AssetTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AssetType
         exclude = ("organization",)
+
+    def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+
+        if models.AssetType.objects.filter(
+            name=name, organization=organization
+        ).exists():
+            raise serializers.ValidationError(
+                "Asset type with this name already exists."
+            )
+
+        return data
 
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -331,7 +460,15 @@ class EmployeeUpdateSerializer(EmployeeSerializer):
 
     class Meta:
         model = models.Employee
-        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+        exclude = (
+            "nic",
+            "date_of_joining",
+            "slack_id",
+            "organization",
+            "weekly_available_hours",
+            "monthly_available_hours",
+            "availability_last_msg",
+        )
 
     @transaction.atomic
     def update(self, instance, validated_data):
@@ -500,7 +637,19 @@ class WaffleSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
-        fields = ["employee", "time_in", "time_out"]
+        fields = ["id", "employee", "time_in", "time_out"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["employee"] = {
+            "id": instance.employee.id,
+            "name": instance.employee.user.get_full_name(),
+            "image": instance.employee.user.image,
+            "department": instance.employee.department.name
+            if instance.employee.department
+            else None,
+        }
+        return data
 
 
 class MeUpdateSerializer(serializers.ModelSerializer):
@@ -639,11 +788,12 @@ class OrganizationModuleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate(self, attrs):
-        if self.context.get("request").method == "POST" and (
-            models.OrganizationModule.objects.filter(
-                module=attrs.get("module"), organization=attrs.get("organization")
-            ).exists()
-        ):
+        qs = models.OrganizationModule.objects.all()
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+        if qs.filter(
+            module=attrs.get("module"), organization=attrs.get("organization")
+        ).exists():
             raise serializers.ValidationError(
                 "This module already exists in this organization."
             )
@@ -671,11 +821,30 @@ class TeamSerializer(serializers.ModelSerializer):
         exclude = ("organization",)
 
     def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+        if models.Team.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Team with this name already exists.")
         user = self.context.get("request").user
         members = data.get("members")
         for member in members:
             if member.organization != user.organization:
                 raise NotFound(detail="Employee not found")
+        return data
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        members = instance.members.all()
+        members_representation = [
+            {
+                "id": member.id,
+                "name": member.user.get_full_name(),
+                "image": member.user.image,
+                "department": member.department.name if member.department else None,
+            }
+            for member in members
+        ]
+        data["members"] = members_representation
         return data
 
 
@@ -685,6 +854,10 @@ class StandupSerializer(serializers.ModelSerializer):
         exclude = ("organization",)
 
     def validate(self, data):
+        name = data.get("name")
+        organization = self.context.get("organization")
+        if models.Standup.objects.filter(name=name, organization=organization).exists():
+            raise serializers.ValidationError("Standup with this name already exists.")
         user = self.context.get("request").user
         team = data.get("team")
         if team.organization != user.organization:
@@ -702,11 +875,11 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         user = self.context.get("request").user
+        module = self.context.get("module")
         employee = data.get("employee")
         standup = data.get("standup")
         team_members = standup.team.members.all()
-        permission = user.default_role.permission
-        if permission == models.Role.Permission.MEMBER:
+        if module in [x.slug for x in user.member_modules]:
             if not user.employee == employee:
                 if employee in team_members and user.employee in team_members:
                     raise PermissionDenied(
@@ -762,10 +935,25 @@ class UserSerializer(serializers.ModelSerializer):
             "default_role",
         ]
 
+    def validate_email(self, value):
+        users = models.User.all_objects.all()
+        if self.instance:
+            users = users.exclude(id=self.instance.id)
+        if users.filter(email=value).exists():
+            raise serializers.ValidationError("user with this email already exists.")
+        return value
+
+    def create(self, validated_data):
+        validated_data["username"] = validated_data.get("email")
+        return super().create(validated_data)
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if instance.default_role:
-            data["default_role"] = instance.default_role.name
+            data["default_role"] = {
+                "id": instance.default_role.id,
+                "name": instance.default_role.name,
+            }
         return data
 
 
@@ -789,10 +977,12 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
         modules = models.Module.objects.filter(
             id__in={x.id for x in request.user.organization_modules}
         )
-        if request.method == "POST":
-            user = get_object_or_404(models.User, id=self.context.get("user_id"))
-            if models.UserModuleRole.objects.filter(module=module, user=user).exists():
-                raise serializers.ValidationError("This user module already exists.")
+        user = get_object_or_404(models.User, id=self.context.get("user_id"))
+        qs = models.UserModuleRole.objects.all()
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+        if qs.filter(module=module, user=user).exists():
+            raise serializers.ValidationError("This user module already exists.")
         if module not in modules:
             raise serializers.ValidationError("Invalid Module selected")
         roles = models.Role.objects.filter(organization=request.user.organization)

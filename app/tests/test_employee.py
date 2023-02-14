@@ -78,6 +78,11 @@ class EmployeeTestCase(BaseTestCase):
                 "salary",
                 "leave_count",
                 "user_allowed",
+                "availability_start_time",
+                "availability_end_time",
+                "weekly_available_hours",
+                "monthly_available_hours",
+                "availability_last_msg",
                 "created_at",
                 "updated_at",
                 "department",
@@ -451,7 +456,7 @@ class CompensationScheduleTestCase(BaseTestCase):
 
     def test_compensation_schedules_put(self):
         self.client.force_login(self.owner)
-        compensation_scedule_data = {"name": "Monthly", "is_monthly": True}
+        compensation_scedule_data = {"name": "Monthly Schedule", "is_monthly": True}
         response = self.client.put(
             f"/api/compensation_schedule/{self.compensation_schedule.id}/",
             data=compensation_scedule_data,
@@ -486,7 +491,7 @@ class CurrencyTestCase(BaseTestCase):
 
     def test_currency_post(self):
         self.client.force_login(self.owner)
-        currency_data = {"code": "USD", "symbol": "$"}
+        currency_data = {"code": "PKR", "symbol": "R"}
         response = self.client.post("/api/currency/", data=currency_data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -509,11 +514,11 @@ class CurrencyTestCase(BaseTestCase):
 
     def test_currency_put(self):
         self.client.force_login(self.owner)
-        currency_data = {"code": "PKR", "symbol": "R"}
+        currency_data = {"code": "USD", "symbol": "$"}
         response = self.client.put(
             f"/api/currency/{self.currency.id}/", data=currency_data
         )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_currency_delete(self):
         self.client.force_login(self.owner)
@@ -540,9 +545,8 @@ class DepartmentTestCase(BaseTestCase):
 
     def test_department_post(self):
         self.client.force_login(self.owner)
-        department_data = {"name": "Frontend"}
+        department_data = {"name": "QA"}
         response = self.client.post("/api/department/", data=department_data)
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_department_detail(self):
@@ -594,7 +598,6 @@ class DocumentTypeTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         document_type_data = {"name": "Contracts"}
         response = self.client.post("/api/document_type/", data=document_type_data)
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(
             models.DocumentType.objects.filter(**document_type_data).exists()

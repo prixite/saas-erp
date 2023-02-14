@@ -48,6 +48,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/attendance/` }),
     }),
+    apiAvailabilityCreate: build.mutation<
+      ApiAvailabilityCreateApiResponse,
+      ApiAvailabilityCreateApiArg
+    >({
+      query: () => ({ url: `/api/availability/`, method: "POST" }),
+    }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
       ApiBenefitsListApiArg
@@ -686,12 +692,6 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/organization_modules/` }),
     }),
-    apiOrganizationRolesList: build.query<
-      ApiOrganizationRolesListApiResponse,
-      ApiOrganizationRolesListApiArg
-    >({
-      query: () => ({ url: `/api/organization_roles/` }),
-    }),
     apiOwnerOnboardCreate: build.mutation<
       ApiOwnerOnboardCreateApiResponse,
       ApiOwnerOnboardCreateApiArg
@@ -911,6 +911,41 @@ const injectedRtkApi = api.injectEndpoints({
     apiUsersList: build.query<ApiUsersListApiResponse, ApiUsersListApiArg>({
       query: () => ({ url: `/api/users/` }),
     }),
+    apiUsersCreate: build.mutation<
+      ApiUsersCreateApiResponse,
+      ApiUsersCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/`,
+        method: "POST",
+        body: queryArg.user,
+      }),
+    }),
+    apiUsersRetrieve: build.query<
+      ApiUsersRetrieveApiResponse,
+      ApiUsersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/users/${queryArg.id}/` }),
+    }),
+    apiUsersUpdate: build.mutation<
+      ApiUsersUpdateApiResponse,
+      ApiUsersUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/${queryArg.id}/`,
+        method: "PUT",
+        body: queryArg.user,
+      }),
+    }),
+    apiUsersDestroy: build.mutation<
+      ApiUsersDestroyApiResponse,
+      ApiUsersDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/users/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiUsersAccessList: build.query<
       ApiUsersAccessListApiResponse,
       ApiUsersAccessListApiArg
@@ -977,6 +1012,8 @@ export type ApiAssetTypeDestroyApiArg = {
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
+export type ApiAvailabilityCreateApiResponse = unknown;
+export type ApiAvailabilityCreateApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1295,8 +1332,6 @@ export type ApiOrganizationDestroyApiArg = {
 };
 export type ApiOrganizationModulesListApiResponse = /** status 200  */ Module[];
 export type ApiOrganizationModulesListApiArg = void;
-export type ApiOrganizationRolesListApiResponse = /** status 200  */ Role[];
-export type ApiOrganizationRolesListApiArg = void;
 export type ApiOwnerOnboardCreateApiResponse =
   /** status 201  */ OwnerOnBoarding;
 export type ApiOwnerOnboardCreateApiArg = {
@@ -1407,6 +1442,23 @@ export type ApiTeamDestroyApiArg = {
 };
 export type ApiUsersListApiResponse = /** status 200  */ User[];
 export type ApiUsersListApiArg = void;
+export type ApiUsersCreateApiResponse = /** status 201  */ User;
+export type ApiUsersCreateApiArg = {
+  user: User;
+};
+export type ApiUsersRetrieveApiResponse = /** status 200  */ User;
+export type ApiUsersRetrieveApiArg = {
+  id: number;
+};
+export type ApiUsersUpdateApiResponse = /** status 200  */ User;
+export type ApiUsersUpdateApiArg = {
+  id: number;
+  user: User;
+};
+export type ApiUsersDestroyApiResponse = unknown;
+export type ApiUsersDestroyApiArg = {
+  id: number;
+};
 export type ApiUsersAccessListApiResponse = /** status 200  */ UserModuleRole[];
 export type ApiUsersAccessListApiArg = {
   id: number;
@@ -1440,6 +1492,7 @@ export type AssetType = {
   updated_at: string;
 };
 export type Attendance = {
+  id: number;
   employee: number;
   time_in: string;
   time_out?: string | null;
@@ -1561,6 +1614,11 @@ export type Employee = {
   salary?: number | null;
   leave_count?: number;
   user_allowed?: boolean;
+  availability_start_time?: string | null;
+  availability_end_time?: string | null;
+  weekly_available_hours?: number | null;
+  monthly_available_hours?: number | null;
+  availability_last_msg?: string | null;
   created_at: string;
   updated_at: string;
   department?: number | null;
@@ -1592,6 +1650,8 @@ export type EmployeeUpdate = {
   salary?: number | null;
   leave_count?: number;
   user_allowed?: boolean;
+  availability_start_time?: string | null;
+  availability_end_time?: string | null;
   created_at: string;
   updated_at: string;
   department?: number | null;
@@ -1688,7 +1748,10 @@ export type SlugEnum =
   | "user"
   | "employees"
   | "inventory"
-  | "settings";
+  | "settings"
+  | "leave"
+  | "standup"
+  | "availability_messages";
 export type Module = {
   id: number;
   slug: SlugEnum;
@@ -1711,15 +1774,6 @@ export type OrganizationModule = {
   updated_at: string;
   module: number;
   organization: number;
-};
-export type PermissionEnum = "c" | "b" | "a";
-export type Role = {
-  id: number;
-  name: string;
-  permission?: PermissionEnum;
-  is_default?: boolean;
-  created_at: string;
-  updated_at: string;
 };
 export type OwnerEmployee = {
   date_of_joining: string;
@@ -1747,6 +1801,15 @@ export type PasswordResetConfirm = {
 export type Program = {
   id: number;
   name: string;
+  created_at: string;
+  updated_at: string;
+};
+export type PermissionEnum = "c" | "b" | "a";
+export type Role = {
+  id: number;
+  name: string;
+  permission?: PermissionEnum;
+  is_default?: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -1800,6 +1863,7 @@ export const {
   useApiAssetTypeUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
+  useApiAvailabilityCreateMutation,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,
@@ -1878,7 +1942,6 @@ export const {
   useApiOrganizationUpdateMutation,
   useApiOrganizationDestroyMutation,
   useApiOrganizationModulesListQuery,
-  useApiOrganizationRolesListQuery,
   useApiOwnerOnboardCreateMutation,
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
@@ -1907,6 +1970,10 @@ export const {
   useApiTeamUpdateMutation,
   useApiTeamDestroyMutation,
   useApiUsersListQuery,
+  useApiUsersCreateMutation,
+  useApiUsersRetrieveQuery,
+  useApiUsersUpdateMutation,
+  useApiUsersDestroyMutation,
   useApiUsersAccessListQuery,
   useApiUsersAccessCreateMutation,
   useApiUsersAccessRetrieveQuery,

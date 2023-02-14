@@ -1,0 +1,65 @@
+.dataGridTable-section {
+  .dataGridTable-main {
+    width: 100%;
+    background-color: white;
+    overflow-x: auto;
+    overflow-y: auto;
+    margin-top: 25px;
+    .dataGrid {
+      .MuiDataGrid-columnHeaders {
+        background-color: rgba(207, 207, 207, 0.2);
+        border-radius: 12px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: -0.011em;
+        border-bottom: none;
+        color: #6c6c6c;
+        &:focus {
+          outline: white;
+        }
+        .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
+          display: none;
+        }
+      }
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: -0.011em;
+      color: #000000;
+      border: white;
+
+      .renderCell-joiningDate {
+        margin-right: auto;
+        .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+          &:hover {
+            background-color: #cfcfcf;
+          }
+        }
+      }
+    }
+  }
+  .error-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+
+    color: #000000;
+    .error-msg {
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+    }
+    img {
+      width: 220px;
+      height: 220px;
+    }
+  }
+}

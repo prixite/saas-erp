@@ -18,6 +18,8 @@ import vectorIcon from "@src/assets/svgs/24px.svg";
 import vectorIconRed from "@src/assets/svgs/24pxred.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
 import userIconRed from "@src/assets/svgs/3 Userred.svg";
+import attendanceIcon from "@src/assets/svgs/attendanceicon.svg";
+import attendanceRedIcon from "@src/assets/svgs/attendancered.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
 import workIconRed from "@src/assets/svgs/bagred.svg";
 import categoryIcon from "@src/assets/svgs/Category.svg";
@@ -29,6 +31,8 @@ import settingIconRed from "@src/assets/svgs/settingRed.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
 import standupIcon from "@src/assets/svgs/standupicon.svg";
 import standupRedIcon from "@src/assets/svgs/standupredicon.svg";
+import teamsIcon from "@src/assets/svgs/teamicon.svg";
+import teamsRedIcon from "@src/assets/svgs/teamred.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
 import bagIconRed from "@src/assets/svgs/workred.svg";
 import {
@@ -208,8 +212,8 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("leave") ||
+          userData?.allowed_modules.owner_modules.includes("leave") ? (
             <ListItemButton
               onClick={() => {
                 navigate("leaves/");
@@ -227,9 +231,9 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ||
-          userData?.allowed_modules.member_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ||
+          userData?.allowed_modules.member_modules.includes("standup") ? (
             <ListItemButton
               onClick={() => {
                 navigate("standups/");
@@ -249,25 +253,11 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-
-          <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
-            <ListItemIcon sx={{ ml: "8px" }}>
-              {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}
-            </ListItemIcon>
-          </ListItemButton>
-          {allFlags.show_setting_module ? (
-            <ListItemButton className="drawer-setting-btn">
-              <ListItemIcon sx={{ ml: "8px" }}>
-                <img src={settingIcon} />
-              </ListItemIcon>
-            </ListItemButton>
-          ) : (
-            ""
-          )}
-          {userData?.is_superuser ? (
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
             <ListItemButton
               onClick={() => {
-                navigate("settings/");
+                navigate("attendance/");
               }}
               className="list-items-btn"
             >
@@ -275,15 +265,56 @@ const Sidebar = (props) => {
                 <img
                   className="icon-img"
                   src={
-                    currentPath === "/settings/" ? settingIconRed : settingIcon
+                    currentPath === "/attendance/"
+                      ? attendanceRedIcon
+                      : attendanceIcon
                   }
                 />
               </ListItemIcon>
-              <ListItemText primary="Setting" />
+              <ListItemText primary="Attendance" />
             </ListItemButton>
           ) : (
             ""
           )}
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
+            <ListItemButton
+              onClick={() => {
+                navigate("teams/");
+              }}
+              className="list-items-btn"
+            >
+              <ListItemIcon className="list-item-icon">
+                <img
+                  className="icon-img"
+                  src={currentPath === "/teams/" ? teamsRedIcon : teamsIcon}
+                />
+              </ListItemIcon>
+              <ListItemText primary="Teams" />
+            </ListItemButton>
+          ) : (
+            ""
+          )}
+          <ListItemButton
+            onClick={() => {
+              navigate("settings/");
+            }}
+            className="list-items-btn"
+          >
+            <ListItemIcon sx={{ ml: "8px" }}>
+              <img
+                src={
+                  currentPath === "/settings/" ? settingIconRed : settingIcon
+                }
+              />
+            </ListItemIcon>
+          </ListItemButton>
+
+          <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
+            <ListItemIcon sx={{ ml: "8px" }}>
+              {open ? <img src={CloseBtn} /> : <img src={OpenBtn} />}
+            </ListItemIcon>
+          </ListItemButton>
         </List>
       </Drawer>
     </Box>

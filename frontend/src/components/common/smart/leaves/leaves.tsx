@@ -1,25 +1,18 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  InputAdornment,
-  TextField,
-  Button,
-  Tooltip,
-} from "@mui/material";
+import { Box, Typography, Button, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
-import searchBox from "@src/assets/svgs/searchBox.svg";
 import LeavesCountBar from "@src/components/common/presentational/leavesCountBar/leavesCountBar";
+import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import LeaveModal from "@src/components/shared/popUps/leaveTypeModal/leaveTypeModal";
 import { employeeConstants } from "@src/helpers/constants/constants";
 import { empLeaves } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString } from "@src/helpers/utils/utils";
+import { truncateString, useDebounce } from "@src/helpers/utils/utils";
 import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
@@ -27,10 +20,12 @@ function Leaves() {
   const { data: rows = [], isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
+  const [query, setQuery] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const { notFound } = constantData.Employee;
   const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
+  const debouncedSearchTerm = useDebounce(query, 500);
   const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [rowData, setRowData] = useState();
@@ -243,6 +238,20 @@ function Leaves() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setLeavesData(
+        rows.filter((userData: empLeaves) => {
+          return userData?.employee?.name
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setLeavesData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
   return (
     <Box className="leavesDataGridTable-section">
       <Box
@@ -254,45 +263,7 @@ function Leaves() {
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box className="text-cls">
-            <TextField
-              className="searchbox"
-              id="search-headbox"
-              variant="outlined"
-              placeholder="Search Employee here"
-              sx={{
-                "& label.Mui-focused": {
-                  color: "#999999",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "#E7E7E7",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#E7E7E7",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#999999",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#999999",
-                  },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
-                    <img
-                      className="profile-pic"
-                      src={searchBox}
-                      alt="profile pic"
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
+          <Input setSearchText={setQuery} />
           <Box className="filter-btn-cls">
             <Button
               className="filter-btn"

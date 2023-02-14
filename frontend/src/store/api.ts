@@ -1,7 +1,17 @@
 import { rtk } from "@src/store/reducers/generated";
 
 const enhancedRtkApi = rtk.enhanceEndpoints({
-  addTagTypes: ["Module", "UserModule", "OrganizationModule"],
+  addTagTypes: [
+    "Module",
+    "UserModule",
+    "OrganizationModule",
+    "User",
+    "Comapany",
+    "EmploymentType",
+    "Department",
+    "Program",
+    "Institute",
+  ],
   endpoints: {
     apiUsersAccessList: {
       providesTags: ["UserModule"],
@@ -47,6 +57,96 @@ const enhancedRtkApi = rtk.enhanceEndpoints({
     },
     apiOrganizationModuleDestroy: {
       invalidatesTags: ["OrganizationModule"],
+    },
+    apiUsersList: {
+      providesTags: ["User"],
+    },
+    apiUsersRetrieve: {
+      providesTags: ["User"],
+    },
+    apiUsersCreate: {
+      invalidatesTags: ["User"],
+    },
+    apiUsersUpdate: {
+      invalidatesTags: ["User"],
+    },
+    apiUsersDestroy: {
+      invalidatesTags: ["User"],
+    },
+    apiCompaniesList: {
+      providesTags: ["Comapany"],
+    },
+    apiCompaniesRetrieve: {
+      providesTags: ["Comapany"],
+    },
+    apiCompaniesCreate: {
+      invalidatesTags: ["Comapany"],
+    },
+    apiCompaniesUpdate: {
+      invalidatesTags: ["Comapany"],
+    },
+    apiCompaniesDestroy: {
+      invalidatesTags: ["Comapany"],
+    },
+    apiEmployeementTypeList: {
+      providesTags: ["EmploymentType"],
+    },
+    apiEmployeementTypeRetrieve: {
+      providesTags: ["EmploymentType"],
+    },
+    apiEmployeementTypeCreate: {
+      invalidatesTags: ["EmploymentType"],
+    },
+    apiEmployeementTypeUpdate: {
+      invalidatesTags: ["EmploymentType"],
+    },
+    apiEmployeementTypeDestroy: {
+      invalidatesTags: ["EmploymentType"],
+    },
+    apiDepartmentList: {
+      providesTags: ["Department"],
+    },
+    apiDepartmentRetrieve: {
+      providesTags: ["Department"],
+    },
+    apiDepartmentCreate: {
+      invalidatesTags: ["Department"],
+    },
+    apiDepartmentUpdate: {
+      invalidatesTags: ["Department"],
+    },
+    apiDepartmentDestroy: {
+      invalidatesTags: ["Department"],
+    },
+    apiProgramsList: {
+      providesTags: ["Program"],
+    },
+    apiProgramsRetrieve: {
+      providesTags: ["Program"],
+    },
+    apiProgramsCreate: {
+      invalidatesTags: ["Program"],
+    },
+    apiProgramsUpdate: {
+      invalidatesTags: ["Program"],
+    },
+    apiProgramsDestroy: {
+      invalidatesTags: ["Program"],
+    },
+    apiInstituesList: {
+      providesTags: ["Institute"],
+    },
+    apiInstituesRetrieve: {
+      providesTags: ["Institute"],
+    },
+    apiInstituesCreate: {
+      invalidatesTags: ["Institute"],
+    },
+    apiInstituesUpdate: {
+      invalidatesTags: ["Institute"],
+    },
+    apiInstituesDestroy: {
+      invalidatesTags: ["Institute"],
     },
   },
 });

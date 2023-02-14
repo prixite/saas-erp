@@ -1,5 +1,7 @@
+import json
 from datetime import datetime
 
+import requests
 import slack
 from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
@@ -187,14 +189,10 @@ class EmployeeViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
 
     @transaction.atomic
     def destroy(self, request, *args, **kwargs):
-        if models.Employee.objects.get(id=kwargs.get("pk")).user == self.request.user:
-            return Response(
-                {"detail": "Can not delete self employee"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         instance = self.get_object()
-        user = get_object_or_404(models.User, employee=instance)
-        user.soft_delete()
+        if not instance.user == self.request.user:
+            user = get_object_or_404(models.User, employee=instance)
+            user.soft_delete()
         instance.soft_delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -276,11 +274,21 @@ class InstitueApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     queryset = models.Institute.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class ProgramApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.ProgramSerializer
     queryset = models.Program.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -288,17 +296,32 @@ class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
     queryset = models.Company.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class BenefitApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.BenefitSerializer
     queryset = models.Benefit.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class DepartmentApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.DepartmentSerializer
     queryset = models.Department.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class EmployeementTypeApiView(
@@ -308,6 +331,11 @@ class EmployeementTypeApiView(
     queryset = models.EmploymentType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class CompensationTypeApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -315,6 +343,11 @@ class CompensationTypeApiView(
     serializer_class = serializers.CompensationTypeSerializer
     queryset = models.CompensationType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
     def destroy(self, request, *args, **kwargs):
         try:
@@ -341,6 +374,11 @@ class CompensationScheduleApiView(
     queryset = models.CompensationSchedule.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
     def destroy(self, request, *args, **kwargs):
         try:
             return super().destroy(request, *args, **kwargs)
@@ -363,6 +401,11 @@ class CurrencyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
     serializer_class = serializers.CurrencySerializer
     queryset = models.Currency.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
     def destroy(self, request, *args, **kwargs):
         try:
@@ -387,6 +430,11 @@ class AssetTypeApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.Organization
     queryset = models.AssetType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
+
 
 class DocumentTypeApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -394,6 +442,11 @@ class DocumentTypeApiView(
     serializer_class = serializers.DocumentTypeSerializer
     queryset = models.DocumentType.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class RoleApiView(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
@@ -593,7 +646,7 @@ class MeUpdateNotificationViewSet(UpdateAPIView):
 class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.LEAVE
 
     def get_serializer_class(self):
         if self.action == "partial_update":
@@ -687,7 +740,12 @@ class ModuleViewSet(mixins.PrivateApiMixin, ModelViewSet):
 class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.StandupSerializer
     queryset = models.Standup.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
     def get_team_members(self, request, *args, **kwargs):
         standup = self.get_object()
@@ -695,24 +753,43 @@ class StandupViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
         serializer = serializers.EmployeeListSerializer(members, many=True)
         return Response(serializer.data)
 
+    def get_queryset(self):
+        if self.module in [x.slug for x in self.request.user.member_modules]:
+            teams = self.request.user.employee.teams.all()
+            return super().get_queryset().filter(team__in=teams)
+        return super().get_queryset()
+
 
 class StandupUpdateViewSet(
     mixins.PrivateMixinAPI, ModelViewSet, mixins.OrganizationMixin
 ):
     serializer_class = serializers.StandupUpdateSerializer
     queryset = models.StandupUpdate.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context.update({"request": self.request})
+        context.update({"module": self.module})
         return context
+
+    def get_queryset(self):
+        if self.module in [x.slug for x in self.request.user.member_modules]:
+            teams = self.request.user.employee.teams.all()
+            standups = models.Standup.objects.filter(team__in=teams)
+            return super().get_queryset().filter(standup__in=standups)
+        return super().get_queryset()
 
 
 class TeamViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.TeamSerializer
     queryset = models.Team.objects.all()
-    module = models.Module.ModuleType.EMPLOYEES
+    module = models.Module.ModuleType.STANDUP
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"organization": self.request.user.organization})
+        return context
 
 
 class ModuleFilterViewSet(
@@ -727,20 +804,28 @@ class ModuleFilterViewSet(
         )
 
 
-class RoleFilterViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
-    serializer_class = serializers.RoleSerializer
-    module = models.Module.ModuleType.USER
-
-    def get_queryset(self):
-        return models.Role.objects.filter(organization=self.request.user.organization)
-
-
 class UserViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.UserSerializer
     module = models.Module.ModuleType.USER
 
     def get_queryset(self):
         return models.User.objects.filter(organization=self.request.user.organization)
+
+    @transaction.atomic
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance == self.request.user:
+            return Response(
+                {"detail": "Can not delete self user"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            emp = models.Employee.objects.get(user=instance)
+            emp.soft_delete()
+        except models.Employee.DoesNotExist:
+            pass
+        instance.soft_delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
@@ -763,3 +848,53 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         context.update({"request": self.request})
         context.update({"user_id": self.kwargs.get("pk")})
         return context
+
+
+class AvailabilityViewSet(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.data.get("payload"))
+            user_id = data.get("user").get("id")
+            sending_time = datetime.fromtimestamp(
+                int(float(data.get("message").get("ts")))
+            )
+            response_time = datetime.fromtimestamp(
+                int(float(data.get("actions")[0].get("action_ts")))
+            )
+            time_diff = int(round((response_time - sending_time).total_seconds() / 60))
+
+            if time_diff < 10:
+                try:
+                    employee = models.Employee.objects.get(slack_id=user_id)
+                except models.Employee.DoesNotExist:
+                    user = client.users_profile_get(user=user_id)
+                    employee = models.Employee.objects.get(
+                        user__email=user.get("profile").get("email")
+                    )
+                    employee.slack_id = user_id
+                    employee.save()
+
+                employee.weekly_available_hours = (
+                    employee.weekly_available_hours + 1
+                    if employee.weekly_available_hours
+                    else 1
+                )
+                employee.monthly_available_hours = (
+                    employee.monthly_available_hours + 1
+                    if employee.monthly_available_hours
+                    else 1
+                )
+                employee.availability_last_msg = data.get("actions")[0].get("value")
+                employee.save()
+                requests.post(
+                    data.get("response_url"),
+                    json={
+                        "replace_original": "true",
+                        "text": "Thanks for your response.",
+                    },
+                )
+        except Exception as e:
+            print(e)
+        return Response()

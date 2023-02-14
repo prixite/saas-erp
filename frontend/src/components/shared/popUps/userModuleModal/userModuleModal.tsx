@@ -24,7 +24,7 @@ import {
   useApiUsersAccessUpdateMutation,
   useApiUsersAccessRetrieveQuery,
   useApiOrganizationModulesListQuery,
-  useApiOrganizationRolesListQuery,
+  useApiRoleListQuery,
 } from "@src/store/api";
 import "@src/components/shared/popUps/userModuleModal/userModuleModal.scss";
 
@@ -46,7 +46,7 @@ const UserModuleModal = ({
   const [createUserModule] = useApiUsersAccessCreateMutation();
   const [updateUserModule] = useApiUsersAccessUpdateMutation();
   const { data: modules } = useApiOrganizationModulesListQuery();
-  const { data: roles } = useApiOrganizationRolesListQuery();
+  const { data: roles } = useApiRoleListQuery();
   const { data: userModuleData } = useApiUsersAccessRetrieveQuery(
     {
       id: Number(userModuleId || ""),

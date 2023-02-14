@@ -56,7 +56,7 @@ const BreadCrumbs = () => {
             color="text.primary"
           >
             {name === "employees"
-              ? capitalizeFirstLowercaseRest("employee's")
+              ? capitalizeFirstLowercaseRest("employees")
               : parseInt(name)
               ? `${
                   isLoading

@@ -1,26 +1,19 @@
 import { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Box,
-  Typography,
-  InputAdornment,
-  TextField,
-  Tooltip,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Tooltip, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
-import searchBox from "@src/assets/svgs/searchBox.svg";
+import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import AddStandupModal from "@src/components/shared/popUps/addStandup/addStandup";
 import CreateStandupModal from "@src/components/shared/popUps/createStandup/createStandup";
 import { employeeConstants } from "@src/helpers/constants/constants";
-import { empLeaves } from "@src/helpers/interfaces/employees-modal";
+import { standupUpdatesTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { truncateString } from "@src/helpers/utils/utils";
+import { truncateString, useDebounce } from "@src/helpers/utils/utils";
 import {
   useGetStandupUpdatesQuery,
   useGetUserQuery,
@@ -33,11 +26,13 @@ function Standup() {
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [query, setQuery] = useState("");
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const { notFound } = constantData.Employee;
+  const debouncedSearchTerm = useDebounce(query, 500);
   const { standup, createStandup, addStandup } = constantData.Standup;
   const { filterButton } = constantData.Buttons;
-  const [leavesData, setLeavesData] = useState<empLeaves[]>([]);
+  const [standupData, setStandupData] = useState<standupUpdatesTypes[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const columns: GridColDef[] = [
@@ -123,7 +118,7 @@ function Standup() {
                   ? "green"
                   : cellValues?.row?.status === "missed"
                   ? "red"
-                  : "grey",
+                  : "blue",
               width: "91px",
               height: "28px",
               borderRadius: "16px",
@@ -137,7 +132,7 @@ function Standup() {
                   ? " #E9FFE6;"
                   : cellValues?.row?.status === "missed"
                   ? "#FFF1F1"
-                  : "#FFF1F1",
+                  : "#E3F2FD",
               fontSize: "12px",
               fontWeight: "400",
             }}
@@ -205,13 +200,27 @@ function Standup() {
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setLeavesData(rows);
+        setStandupData(rows);
       } else {
-        setLeavesData([]);
+        setStandupData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+  useEffect(() => {
+    if (debouncedSearchTerm.length >= 3) {
+      setStandupData(
+        rows.filter((userData: standupUpdatesTypes) => {
+          return userData?.employee?.name
+            .trim()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.trim().toLowerCase());
+        })
+      );
+    } else {
+      setStandupData(rows);
+    }
+  }, [debouncedSearchTerm, rows]);
   return (
     <Box className="standupDataGridTable-section">
       <Box
@@ -223,45 +232,7 @@ function Standup() {
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box className="text-cls">
-            <TextField
-              className="searchbox"
-              id="search-headbox"
-              variant="outlined"
-              placeholder="Search Employee here"
-              sx={{
-                "& label.Mui-focused": {
-                  color: "#999999",
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "#E7E7E7",
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#E7E7E7",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#999999",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#999999",
-                  },
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* SearchBoxSVG */}
-                    <img
-                      className="profile-pic"
-                      src={searchBox}
-                      alt="profile pic"
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
+          <Input setSearchText={setQuery} />
           <Box className="filter-btn-cls">
             <Button
               className="filter-btn"
@@ -279,8 +250,8 @@ function Standup() {
               <p>{filterButton}</p>
             </Button>
           </Box>
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ? (
             <Box className="create-standup-btn">
               <Button
                 variant="outlined"
@@ -298,9 +269,9 @@ function Standup() {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ||
-          userData?.allowed_modules.member_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ||
+          userData?.allowed_modules.member_modules.includes("standup") ? (
             <Box className="add-standup-btn">
               <Button
                 variant="outlined"
@@ -322,13 +293,13 @@ function Standup() {
       </Box>
       {!dataLoading ? (
         <>
-          {leavesData?.length ? (
+          {standupData?.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...leavesData]}
+                rows={[...standupData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick

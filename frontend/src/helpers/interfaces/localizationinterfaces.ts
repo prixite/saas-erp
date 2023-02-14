@@ -387,6 +387,20 @@ export interface standupData {
   Joined: string;
   Missed: string;
   TimeRequired: string;
+  Leave: string;
+}
+export interface AttendanceData {
+  attendance: string;
+}
+export interface TeamsData {
+  Teams: string;
+  AddTeam: string;
+  CreateTeam: string;
+  CreateTeamSubheading: string;
+  NameRequired: string;
+  MemberRequired: string;
+  Name: string;
+  AddTeamMember: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
@@ -407,15 +421,17 @@ export interface LocalizationInterface {
   AuthPages: AuthPages;
   Leaves: leavesData;
   Standup: standupData;
+  Attendance: AttendanceData;
+  Teams: TeamsData;
 }
 
 export interface UserInterface {
-  first_name?: string;
-  last_name?: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  image?: string;
-  contact_number?: string | null;
-  default_role?: number | null;
+  image: string;
+  contact_number: string | null;
+  default_role: { id: number; name: string };
 }
 
 export interface UserModuleRoleInterface {
@@ -428,16 +444,33 @@ export interface OrganizationInterface {
   address: string;
 }
 
-export type OrganizationModuleInterface = {
+export interface OrganizationModuleInterface {
   id: number;
   is_enabled?: boolean;
   module: { id: number; name: string };
   organization: { id: number; name: string };
-};
+}
 
-export type ModuleInterface = {
+export interface ModuleInterface {
   id: number;
   slug: SlugEnum;
   name: string;
   is_enabled?: boolean;
-};
+}
+export interface DepartmentInterface {
+  name: string;
+}
+export interface EmployementTypeInterface {
+  name: string;
+}
+export interface ProgramInterface {
+  name: string;
+}
+export interface InstitueInterface {
+  name: string;
+  image: string;
+}
+export interface CompanyInterface {
+  name: string;
+  image: string;
+}

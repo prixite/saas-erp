@@ -4,7 +4,7 @@
     "filterButton": "Filter"
   },
   "Employee": {
-    "employeeHeading": "Employee’s Module",
+    "employeeHeading": "Employees",
     "employeeBenefitsHeading": "Salary & Increment History",
     "currentSalary": "Current Salary",
     "compensationType": "Compensation Type",
@@ -291,7 +291,22 @@
     "Time": "Time",
     "Joined":"Joined",
     "Missed":"Missed",
-    "TimeRequired":"Time is required!"
+    "TimeRequired":"Time is required!",
+    "Leave":"Leave"
 
+  },
+  "Attendance":{
+    "attendance":"Attendance"
+  },
+  "Teams": {
+    "Teams": "Teams",
+    "AddTeam":"Add Team",
+    "CreateTeam":"Create Team",
+    "CreateTeamSubheading":"You can create a team here.",
+    "NameRequired":"Name is required!",
+    "MemberRequired":"Team member is required!",
+    "Name":"Name",
+    "AddTeamMember":"Add Team Member"
   }
+
 }

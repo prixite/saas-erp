@@ -45,11 +45,9 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
     StandupSelectionRequired,
     EmployeeNameRequired,
     StatusRequired,
-    WorkDoneYesterdayRequired,
-    TodayPlanRequired,
-    BlockersRequired,
     Joined,
     Missed,
+    Leave,
   } = constantData.Standup;
   const formik = useFormik({
     initialValues: {
@@ -64,9 +62,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
       standup_selection: yup.string().required(StandupSelectionRequired),
       employee_name: yup.string().required(EmployeeNameRequired),
       status: yup.string().required(StatusRequired),
-      work_done_yesterday: yup.string().required(WorkDoneYesterdayRequired),
-      today_plan: yup.string().required(TodayPlanRequired),
-      blockers: yup.string().required(BlockersRequired),
     }),
     validateOnChange: true,
     onSubmit: () => {
@@ -191,10 +186,10 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                   InputLabelProps={{ className: "textfield_label" }}
                 >
                   {userData?.allowed_modules.admin_modules.includes(
-                    "employees"
+                    "standup"
                   ) ||
                   userData?.allowed_modules.owner_modules.includes(
-                    "employees"
+                    "standup"
                   ) ? (
                     teamMembersData?.length ? (
                       teamMembersData?.map((member) => {
@@ -209,9 +204,9 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                       <Box></Box>
                     )
                   ) : (
-                    <MenuItem
-                      value={selectedMember?.id}
-                    >{`${selectedMember?.first_name} ${selectedMember?.last_name}`}</MenuItem>
+                    <MenuItem value={selectedMember?.id}>{`${
+                      selectedMember?.first_name || ""
+                    } ${selectedMember?.last_name || ""}`}</MenuItem>
                   )}
                 </TextField>
                 <Typography className="errorText">
@@ -241,6 +236,9 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                   <MenuItem className="menu-item-cls" value="missed">
                     {Missed}
                   </MenuItem>
+                  <MenuItem className="menu-item-cls" value="leave">
+                    {Leave}
+                  </MenuItem>
                 </TextField>
                 <Typography className="errorText">
                   {formik.touched.status && formik.errors.status}
@@ -257,7 +255,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={WorkDoneYesterday}
                   value={formik.values.work_done_yesterday}
@@ -281,7 +278,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={TodayPlan}
                   value={formik.values.today_plan}
@@ -306,7 +302,6 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 <TextField
                   margin="normal"
                   className="text-field-cls"
-                  required
                   fullWidth
                   label={Blockers}
                   value={formik.values.blockers}

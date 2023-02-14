@@ -24,5 +24,18 @@ services:
     depends_on:
       - db
 
+  availability:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ./.env
+    container_name: erp-availability
+    command: ./docker/scripts/run-availability
+    volumes:
+      - .:/opt/code
+    depends_on:
+      - app
+
 volumes:
   db_data:

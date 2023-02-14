@@ -91,6 +91,13 @@ export interface TeamMembers {
   last_name: string;
   org_id: string;
 }
+export interface AssetsTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface EmployeeDoc {
   type: string;
   docs: Doc[];
@@ -167,12 +174,23 @@ export interface standupTypes {
   created_at: string;
   team: string;
 }
+export interface EmployeeBasic {
+  id: number;
+  name: string;
+  image: string;
+  department: string;
+}
 export interface teamTypes {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-  members: number[];
+  members: EmployeeBasic;
+}
+export interface AttendanceTypes {
+  employee: EmployeeBasic;
+  time_in: string;
+  time_out: string;
 }
 export interface standupUpdatesTypes {
   id: number;
@@ -183,7 +201,7 @@ export interface standupUpdatesTypes {
   work_to_do: string;
   blockers: string;
   standup: number;
-  employee: number;
+  employee: EmployeeBasic;
   created_at: string;
   updated_at: string;
 }
@@ -192,12 +210,7 @@ export interface Benefits {
   name: string;
   created_at: string;
 }
-export interface EmployeeLeaves {
-  id: number;
-  name: string;
-  image: string;
-  department: string;
-}
+
 export interface EmployeeLeavesParameters {
   hr_comment: string;
   status: string;
@@ -207,7 +220,7 @@ export interface empLeaves {
   id: number;
   created_at: string;
   description: string;
-  employee: EmployeeLeaves;
+  employee: EmployeeBasic;
   hr_comment: string;
   status: string;
   updated_at: string;
