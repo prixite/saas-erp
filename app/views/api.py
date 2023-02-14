@@ -26,7 +26,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
-from app.utils import send_email_forget_password, send_leave_email
+from app.utils import create_presigned_url, send_email_forget_password, send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -846,3 +846,11 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         context.update({"request": self.request})
         context.update({"user_id": self.kwargs.get("pk")})
         return context
+
+
+class AwsApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        response = create_presigned_url(
+            settings.AWS_STORAGE_BUCKET_NAME, settings.AWS_SECRET_ACCESS_KEY
+        )
+        return Response(response)

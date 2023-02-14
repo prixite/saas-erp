@@ -48,6 +48,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/attendance/` }),
     }),
+    apiAwsRetrieve: build.query<
+      ApiAwsRetrieveApiResponse,
+      ApiAwsRetrieveApiArg
+    >({
+      query: () => ({ url: `/api/aws/` }),
+    }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
       ApiBenefitsListApiArg
@@ -1006,6 +1012,8 @@ export type ApiAssetTypeDestroyApiArg = {
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
+export type ApiAwsRetrieveApiResponse = unknown;
+export type ApiAwsRetrieveApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1484,6 +1492,7 @@ export type AssetType = {
   updated_at: string;
 };
 export type Attendance = {
+  id: number;
   employee: number;
   time_in: string;
   time_out?: string | null;
@@ -1846,6 +1855,7 @@ export const {
   useApiAssetTypeUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
+  useApiAwsRetrieveQuery,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,

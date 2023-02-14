@@ -1,3 +1,7 @@
+import logging
+
+import boto3
+from botocore.exceptions import ClientError
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -64,3 +68,20 @@ def send_email_forget_password(data):
         )
     except Exception as e:
         return e
+
+
+def create_presigned_url(bucket_name, object_name, expiration=3600):
+    # Generate a presigned URL for the S3 object
+    s3_client = boto3.client("s3")
+    try:
+        response = s3_client.generate_presigned_url(
+            "get_object",
+            Params={"Bucket": bucket_name, "Key": object_name},
+            ExpiresIn=expiration,
+        )
+    except ClientError as e:
+        logging.error(e)
+        return None
+
+    # The response contains the presigned URL
+    return response
