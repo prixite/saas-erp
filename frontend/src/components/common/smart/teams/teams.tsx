@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
@@ -9,7 +9,10 @@ import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import CreateTeamModal from "@src/components/shared/popUps/createTeam/createTeam";
 import { employeeConstants } from "@src/helpers/constants/constants";
-import { teamTypes } from "@src/helpers/interfaces/employees-modal";
+import {
+  teamTypes,
+  EmployeeBasic,
+} from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { useDebounce } from "@src/helpers/utils/utils";
@@ -57,6 +60,81 @@ function Teams() {
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
             {cellValues?.row?.name}
           </p>
+        );
+      },
+    },
+    {
+      field: "members",
+      headerName: "Members",
+      sortable: false,
+      width: 200,
+      renderCell: (cellValues) => {
+        return (
+          <Box style={{ marginLeft: "20px", width: "100%", display: "flex" }}>
+            {cellValues?.row?.members.length <= 5
+              ? cellValues?.row?.members?.map((item: EmployeeBasic) => {
+                  return (
+                    <Tooltip title={item?.name} key={item?.id}>
+                      <Box sx={{ display: "flex" }}>
+                        <img
+                          style={{
+                            height: "32px",
+                            width: "32px",
+                            marginRight: "-10px",
+                            borderRadius: "50%",
+                          }}
+                          src={item?.image}
+                          alt="profile pic"
+                        />
+                      </Box>
+                    </Tooltip>
+                  );
+                })
+              : cellValues?.row?.members
+                  ?.slice(0, 5)
+                  .map((item: EmployeeBasic) => {
+                    return (
+                      <Box sx={{ display: "flex" }} key={item?.id}>
+                        <img
+                          style={{
+                            height: "32px",
+                            width: "32px",
+                            marginRight: "-10px",
+                            borderRadius: "50%",
+                          }}
+                          src={item?.image}
+                          alt="profile pic"
+                        />
+                      </Box>
+                    );
+                  })}
+            {cellValues?.row?.members.length > 5 && (
+              <Tooltip
+                title={cellValues?.row?.members.map((item: EmployeeBasic) => (
+                  <React.Fragment key={item?.id}>
+                    {`${item?.name}, `}
+                  </React.Fragment>
+                ))}
+              >
+                <Box
+                  sx={{
+                    height: "32px",
+                    width: "32px",
+                    marginRight: "-10px",
+                    borderRadius: "50%",
+                    background: "#FFE9E9",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    sx={{ color: "#FF2F2F" }}
+                  >{`+ ${cellValues?.row?.members.length}`}</Typography>
+                </Box>
+              </Tooltip>
+            )}
+          </Box>
         );
       },
     },
