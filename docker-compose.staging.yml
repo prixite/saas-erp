@@ -24,6 +24,19 @@ services:
     depends_on:
       - db
 
+  availability:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ./.env
+    container_name: erp-availability
+    command: ./docker/scripts/run-availability
+    volumes:
+      - shm:/dev/shm
+    depends_on:
+      - app
+
   nginx:
     build:
       context: ./nginx
