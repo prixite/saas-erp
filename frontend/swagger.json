@@ -218,6 +218,25 @@
                 }
             }
         },
+        "/api/availability/": {
+            "post": {
+                "operationId": "api_availability_create",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/benefits/": {
             "get": {
                 "operationId": "api_benefits_list",
@@ -4607,6 +4626,10 @@
             "Attendance": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "employee": {
                         "type": "integer"
                     },
@@ -4623,6 +4646,7 @@
                 },
                 "required": [
                     "employee",
+                    "id",
                     "time_in"
                 ]
             },
@@ -4713,14 +4737,10 @@
                     },
                     "max_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "expected_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "updated_at": {
@@ -5022,17 +5042,35 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
+                    },
+                    "availability_start_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
+                    },
+                    "availability_end_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
+                    },
+                    "weekly_available_hours": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "monthly_available_hours": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "availability_last_msg": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "created_at": {
                         "type": "string",
@@ -5184,17 +5222,23 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
+                    },
+                    "availability_start_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
+                    },
+                    "availability_end_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
                     },
                     "created_at": {
                         "type": "string",
@@ -5955,7 +5999,8 @@
                     "inventory",
                     "settings",
                     "leave",
-                    "standup"
+                    "standup",
+                    "availability_messages"
                 ],
                 "type": "string"
             },

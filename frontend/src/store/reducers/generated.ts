@@ -48,6 +48,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/attendance/` }),
     }),
+    apiAvailabilityCreate: build.mutation<
+      ApiAvailabilityCreateApiResponse,
+      ApiAvailabilityCreateApiArg
+    >({
+      query: () => ({ url: `/api/availability/`, method: "POST" }),
+    }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
       ApiBenefitsListApiArg
@@ -1006,6 +1012,8 @@ export type ApiAssetTypeDestroyApiArg = {
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
+export type ApiAvailabilityCreateApiResponse = unknown;
+export type ApiAvailabilityCreateApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1484,6 +1492,7 @@ export type AssetType = {
   updated_at: string;
 };
 export type Attendance = {
+  id: number;
   employee: number;
   time_in: string;
   time_out?: string | null;
@@ -1605,6 +1614,11 @@ export type Employee = {
   salary?: number | null;
   leave_count?: number;
   user_allowed?: boolean;
+  availability_start_time?: string | null;
+  availability_end_time?: string | null;
+  weekly_available_hours?: number | null;
+  monthly_available_hours?: number | null;
+  availability_last_msg?: string | null;
   created_at: string;
   updated_at: string;
   department?: number | null;
@@ -1636,6 +1650,8 @@ export type EmployeeUpdate = {
   salary?: number | null;
   leave_count?: number;
   user_allowed?: boolean;
+  availability_start_time?: string | null;
+  availability_end_time?: string | null;
   created_at: string;
   updated_at: string;
   department?: number | null;
@@ -1734,7 +1750,8 @@ export type SlugEnum =
   | "inventory"
   | "settings"
   | "leave"
-  | "standup";
+  | "standup"
+  | "availability_messages";
 export type Module = {
   id: number;
   slug: SlugEnum;
@@ -1846,6 +1863,7 @@ export const {
   useApiAssetTypeUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
+  useApiAvailabilityCreateMutation,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,

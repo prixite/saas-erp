@@ -26,6 +26,11 @@ class Employee(SoftDeleteModel):
     slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
     leave_count = models.IntegerField(default=0)
     user_allowed = models.BooleanField(default=False)
+    availability_start_time = models.TimeField(null=True, blank=True)
+    availability_end_time = models.TimeField(null=True, blank=True)
+    weekly_available_hours = models.IntegerField(null=True, blank=True)
+    monthly_available_hours = models.IntegerField(null=True, blank=True)
+    availability_last_msg = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

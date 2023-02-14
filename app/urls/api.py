@@ -386,4 +386,5 @@ urlpatterns = [
             }
         ),
     ),
+    path("availability/", api.AvailabilityViewSet.as_view()),
 ]

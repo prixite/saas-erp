@@ -1,5 +1,7 @@
+import json
 from datetime import datetime
 
+import requests
 import slack
 from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
@@ -846,3 +848,53 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         context.update({"request": self.request})
         context.update({"user_id": self.kwargs.get("pk")})
         return context
+
+
+class AvailabilityViewSet(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.data.get("payload"))
+            user_id = data.get("user").get("id")
+            sending_time = datetime.fromtimestamp(
+                int(float(data.get("message").get("ts")))
+            )
+            response_time = datetime.fromtimestamp(
+                int(float(data.get("actions")[0].get("action_ts")))
+            )
+            time_diff = int(round((response_time - sending_time).total_seconds() / 60))
+
+            if time_diff < 10:
+                try:
+                    employee = models.Employee.objects.get(slack_id=user_id)
+                except models.Employee.DoesNotExist:
+                    user = client.users_profile_get(user=user_id)
+                    employee = models.Employee.objects.get(
+                        user__email=user.get("profile").get("email")
+                    )
+                    employee.slack_id = user_id
+                    employee.save()
+
+                employee.weekly_available_hours = (
+                    employee.weekly_available_hours + 1
+                    if employee.weekly_available_hours
+                    else 1
+                )
+                employee.monthly_available_hours = (
+                    employee.monthly_available_hours + 1
+                    if employee.monthly_available_hours
+                    else 1
+                )
+                employee.availability_last_msg = data.get("actions")[0].get("value")
+                employee.save()
+                requests.post(
+                    data.get("response_url"),
+                    json={
+                        "replace_original": "true",
+                        "text": "Thanks for your response.",
+                    },
+                )
+        except Exception as e:
+            print(e)
+        return Response()

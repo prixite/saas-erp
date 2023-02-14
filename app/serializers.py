@@ -460,7 +460,15 @@ class EmployeeUpdateSerializer(EmployeeSerializer):
 
     class Meta:
         model = models.Employee
-        exclude = ("nic", "date_of_joining", "slack_id", "organization")
+        exclude = (
+            "nic",
+            "date_of_joining",
+            "slack_id",
+            "organization",
+            "weekly_available_hours",
+            "monthly_available_hours",
+            "availability_last_msg",
+        )
 
     @transaction.atomic
     def update(self, instance, validated_data):
