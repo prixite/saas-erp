@@ -174,21 +174,21 @@ export interface standupTypes {
   created_at: string;
   team: string;
 }
-export interface teamTypes {
-  id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-  members: number[];
-}
-export interface EmployeeLeaves {
+export interface EmployeeBasic {
   id: number;
   name: string;
   image: string;
   department: string;
 }
+export interface teamTypes {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  members: EmployeeBasic;
+}
 export interface AttendanceTypes {
-  employee: EmployeeLeaves;
+  employee: EmployeeBasic;
   time_in: string;
   time_out: string;
 }
@@ -201,7 +201,7 @@ export interface standupUpdatesTypes {
   work_to_do: string;
   blockers: string;
   standup: number;
-  employee: EmployeeLeaves;
+  employee: EmployeeBasic;
   created_at: string;
   updated_at: string;
 }
@@ -220,7 +220,7 @@ export interface empLeaves {
   id: number;
   created_at: string;
   description: string;
-  employee: EmployeeLeaves;
+  employee: EmployeeBasic;
   hr_comment: string;
   status: string;
   updated_at: string;
