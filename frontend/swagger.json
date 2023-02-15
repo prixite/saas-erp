@@ -237,6 +237,24 @@
                 }
             }
         },
+        "/api/aws/": {
+            "get": {
+                "operationId": "api_aws_retrieve",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/benefits/": {
             "get": {
                 "operationId": "api_benefits_list",
