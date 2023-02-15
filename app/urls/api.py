@@ -233,6 +233,10 @@ urlpatterns = [
         api.WaffleApiView.as_view(),
     ),
     path(
+        "aws/",
+        api.AwsApiView.as_view(),
+    ),
+    path(
         "attendance/",
         api.AttendanceViewSet.as_view(),
     ),

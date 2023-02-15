@@ -54,6 +54,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/availability/`, method: "POST" }),
     }),
+    apiAwsRetrieve: build.query<
+      ApiAwsRetrieveApiResponse,
+      ApiAwsRetrieveApiArg
+    >({
+      query: () => ({ url: `/api/aws/` }),
+    }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
       ApiBenefitsListApiArg
@@ -1014,6 +1020,8 @@ export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
 export type ApiAvailabilityCreateApiResponse = unknown;
 export type ApiAvailabilityCreateApiArg = void;
+export type ApiAwsRetrieveApiResponse = unknown;
+export type ApiAwsRetrieveApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1864,6 +1872,7 @@ export const {
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
   useApiAvailabilityCreateMutation,
+  useApiAwsRetrieveQuery,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,
