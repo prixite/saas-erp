@@ -866,7 +866,6 @@ class StandupSerializer(serializers.ModelSerializer):
 
 
 class StandupUpdateSerializer(serializers.ModelSerializer):
-    time = serializers.SerializerMethodField()
     date = serializers.SerializerMethodField()
 
     class Meta:
@@ -901,16 +900,13 @@ class StandupUpdateSerializer(serializers.ModelSerializer):
                 raise NotFound(detail="Detail not found")
         return data
 
-    def get_time(self, obj):
-        time = obj.standup.created_at.time().strftime("%H:%M %p")
-        return time
-
     def get_date(self, obj):
         date = obj.standup.created_at.date().strftime("%B %d, %Y")
         return date
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
+        data["standup"] = {"id": instance.standup.id, "name": instance.standup.name}
         data["employee"] = {
             "id": instance.employee.id,
             "name": instance.employee.user.get_full_name(),
