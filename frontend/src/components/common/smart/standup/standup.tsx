@@ -89,9 +89,11 @@ function Standup() {
       width: 250,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.created_at).format("ll")}
-          </p>
+          <Tooltip title={moment(cellValues?.row?.created_at).format("LTS")}>
+            <p style={{ marginLeft: "20px" }}>
+              {moment(cellValues?.row?.created_at).format("ll")}
+            </p>
+          </Tooltip>
         );
       },
     },

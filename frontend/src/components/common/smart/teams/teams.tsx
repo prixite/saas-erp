@@ -83,7 +83,10 @@ function Teams() {
             {cellValues?.row?.members.length <= 5
               ? cellValues?.row?.members?.map((item: EmployeeBasic) => {
                   return (
-                    <Tooltip title={item?.name} key={item?.id}>
+                    <Tooltip
+                      title={`${item?.first_name} ${item?.last_name}`}
+                      key={item?.id}
+                    >
                       <Box sx={{ display: "flex" }}>
                         <img
                           style={{
@@ -121,7 +124,7 @@ function Teams() {
               <Tooltip
                 title={cellValues?.row?.members.map((item: EmployeeBasic) => (
                   <React.Fragment key={item?.id}>
-                    {`${item?.name}, `}
+                    {`${item?.first_name} ${item?.last_name}, `}
                   </React.Fragment>
                 ))}
               >
