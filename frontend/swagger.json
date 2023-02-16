@@ -6083,10 +6083,6 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "time": {
-                        "type": "string",
-                        "readOnly": true
-                    },
                     "date": {
                         "type": "string",
                         "readOnly": true
@@ -6130,7 +6126,6 @@
                     "id",
                     "standup",
                     "status",
-                    "time",
                     "updated_at"
                 ]
             },

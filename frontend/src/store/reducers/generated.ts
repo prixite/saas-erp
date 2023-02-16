@@ -1832,7 +1832,6 @@ export type Standup = {
 export type StandupUpdateStatusEnum = "missed" | "joined" | "leave";
 export type StandupUpdate = {
   id: number;
-  time: string;
   date: string;
   status: StandupUpdateStatusEnum;
   work_done_yesterday?: string | null;
