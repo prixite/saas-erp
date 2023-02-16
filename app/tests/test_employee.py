@@ -959,7 +959,6 @@ class StandupUpdateTestCase(BaseTestCase):
             sorted(
                 [
                     "id",
-                    "time",
                     "date",
                     "standup",
                     "employee",
@@ -999,7 +998,6 @@ class StandupUpdateTestCase(BaseTestCase):
             sorted(
                 [
                     "id",
-                    "time",
                     "date",
                     "standup",
                     "employee",
