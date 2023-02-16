@@ -204,6 +204,28 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Teams"],
     }),
+    deleteTeam: builder.mutation<void, { id: number }>({
+      query: ({ id }) => {
+        return {
+          url: `/team/${id}/`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Teams"],
+    }),
+    updateTeam: builder.mutation({
+      query: ({ teamObject, id }) => {
+        return {
+          url: `/team/${id}/`,
+          method: "PUT",
+          body: teamObject,
+        };
+      },
+      invalidatesTags: ["Teams"],
+    }),
+    getTeamData: builder.query<teamTypes[], { id: number }>({
+      query: ({ id }) => `/team/${id}/`,
+    }),
   }),
 });
 
@@ -236,4 +258,7 @@ export const {
   useGetAssetsTypesQuery,
   useGetAttendacneQuery,
   useCreateTeamMutation,
+  useDeleteTeamMutation,
+  useUpdateTeamMutation,
+  useGetTeamDataQuery,
 } = employeesApi;

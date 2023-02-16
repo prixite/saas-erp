@@ -96,15 +96,6 @@ function Standup() {
       },
     },
     {
-      field: "Time",
-      headerName: "Time",
-      sortable: false,
-      width: 250,
-      renderCell: (cellValues) => {
-        return <p style={{ marginLeft: "20px" }}>{cellValues?.row?.time}</p>;
-      },
-    },
-    {
       field: "Status",
       headerName: "Status",
       sortable: false,
@@ -151,8 +142,7 @@ function Standup() {
         return (
           <Tooltip title={cellValues?.row?.work_done_yesterday}>
             <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.work_done_yesterday, 40)}
+              {truncateString(cellValues?.row?.work_done_yesterday, 25)}
             </p>
           </Tooltip>
         );
@@ -168,7 +158,7 @@ function Standup() {
           <Tooltip title={cellValues?.row?.work_to_do}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues?.row?.work_to_do, 40)}
+              {truncateString(cellValues?.row?.work_to_do, 25)}
             </p>
           </Tooltip>
         );
@@ -184,7 +174,7 @@ function Standup() {
           <Tooltip title={cellValues?.row?.blockers}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues?.row?.blockers, 40)}
+              {truncateString(cellValues?.row?.blockers, 25)}
             </p>
           </Tooltip>
         );

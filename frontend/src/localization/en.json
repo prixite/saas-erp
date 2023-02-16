@@ -189,7 +189,8 @@
     "saveChanges": "Save Changes",
     "canLogin": "Can Login?",
     "cancelBtn": "Cancel",
-    "saveBtn": "Save"
+    "saveBtn": "Save",
+    "updateBtn":"Update"
   },
   "AuthPages": {
     "saas": "SaaS",
@@ -260,7 +261,7 @@
   "Standup":{
     "standup": "Standups",
     "createStandup": "Create Standup",
-    "addStandup": "Add Standup",
+    "addStandup": "Standup Update",
     "StandupSelection":"Standup Selection",
     "EmployeeName": "Employee Name",
     "Status": "Status",
@@ -306,7 +307,10 @@
     "NameRequired":"Name is required!",
     "MemberRequired":"Team member is required!",
     "Name":"Name",
-    "AddTeamMember":"Add Team Member"
+    "AddTeamMember":"Add Team Member",
+    "TeamDeleteSuccess": "Team deleted successfully",
+    "EditTeam":"Edit Team",
+    "EditTeamSubheading":"You can edit a team here."
   }
 
 }

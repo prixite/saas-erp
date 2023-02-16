@@ -125,6 +125,7 @@ export interface modalsInterface {
   leaveHrCommentsLabel: string;
   cancelBtn: string;
   saveBtn: string;
+  updateBtn: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -401,6 +402,9 @@ export interface TeamsData {
   MemberRequired: string;
   Name: string;
   AddTeamMember: string;
+  TeamDeleteSuccess: string;
+  EditTeam: string;
+  EditTeamSubheading: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;

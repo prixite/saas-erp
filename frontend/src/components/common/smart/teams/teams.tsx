@@ -1,37 +1,46 @@
 import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Typography, Button, Tooltip } from "@mui/material";
+import { Box, Typography, Button, Tooltip, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
+import { toast } from "react-toastify";
+import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
+import EditIcon from "@src/assets/svgs/Edit.svg";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import Input from "@src/components/shared/formControls/textInput/textInput";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
 import CreateTeamModal from "@src/components/shared/popUps/createTeam/createTeam";
-import { employeeConstants } from "@src/helpers/constants/constants";
+import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
+import { employeeConstants, timeOut } from "@src/helpers/constants/constants";
 import {
   teamTypes,
   EmployeeBasic,
 } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { useDebounce } from "@src/helpers/utils/utils";
+import { useDebounce, toastAPIError } from "@src/helpers/utils/utils";
 import {
   useGetUserQuery,
   useGetTeamsQuery,
+  useDeleteTeamMutation,
 } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/teams/teams.scss";
 
 function Teams() {
   const { data: rows = [], isLoading } = useGetTeamsQuery();
   const { data: userData } = useGetUserQuery();
+  const [deleteTeam] = useDeleteTeamMutation();
   const constantData: LocalizationInterface = localizedData();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [dataLoading, setIsDataLoading] = useState(true);
+  const [action, setAction] = useState("add");
+  const [rowCellId, setRowCellId] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
   const [query, setQuery] = useState("");
   const { notFound } = constantData.Employee;
   const debouncedSearchTerm = useDebounce(query, 500);
-  const { Teams, AddTeam } = constantData.Teams;
+  const { Teams, AddTeam, TeamDeleteSuccess } = constantData.Teams;
   const { filterButton } = constantData.Buttons;
   const [teamsData, setTeamsData] = useState<teamTypes[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -164,9 +173,80 @@ function Teams() {
         );
       },
     },
+
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 350,
+      renderCell: (cellValues) => {
+        return userData?.allowed_modules.admin_modules.includes("stndup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ? (
+          <Box
+            className="renderCell-joiningDate"
+            style={{ marginLeft: "10px" }}
+          >
+            <IconButton
+              onClick={(event) =>
+                handleEditModalOpen(event, cellValues?.row?.id)
+              }
+              aria-label="edit"
+              id="edit-btn-id"
+              className="edit-btn"
+            >
+              <img className="profile-pic" src={EditIcon} alt="profile pic" />
+            </IconButton>
+            <IconButton
+              onClick={(event) =>
+                handleDeleteModalOpen(event, cellValues?.row?.id)
+              }
+              aria-label="delete"
+              id="delete-btn-id"
+              className="delete-btn"
+            >
+              <img className="profile-pic" src={DeleteIcon} alt="profile pic" />
+            </IconButton>
+          </Box>
+        ) : (
+          ""
+        );
+      },
+    },
   ];
   const handleModalClose = () => {
     setOpenModal(false);
+  };
+  const handleEditModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setAction("edit");
+    setRowCellId(cellId);
+    setOpenModal(true);
+  };
+  const handleDeleteModalOpen = (
+    event: React.MouseEvent<HTMLElement>,
+    cellId: number
+  ) => {
+    event.stopPropagation();
+    setRowCellId(cellId);
+    setOpenDeleteModal(true);
+  };
+  const handleTeamDelete = async () => {
+    await deleteTeam({
+      id: rowCellId,
+    })
+      .unwrap()
+      .then(async () => {
+        toast.success(TeamDeleteSuccess, {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        handleDeleteModalClose();
+      })
+      .catch((error) => {
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
   };
   useEffect(() => {
     if (!isLoading) {
@@ -178,6 +258,9 @@ function Teams() {
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
+  const handleDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
       setTeamsData(
@@ -232,6 +315,7 @@ function Teams() {
                 startIcon={<AddIcon />}
                 onClick={() => {
                   setOpenModal(true);
+                  setAction("add");
                 }}
               >
                 {" "}
@@ -354,7 +438,17 @@ function Teams() {
           <RowSkeletonCard pathString="employees" />
         </>
       )}
-      <CreateTeamModal open={openModal} handleClose={handleModalClose} />
+      <CreateTeamModal
+        teamId={rowCellId}
+        action={action}
+        open={openModal}
+        handleClose={handleModalClose}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        handleObjDelete={handleTeamDelete}
+        handleClose={handleDeleteModalClose}
+      />
     </Box>
   );
 }
