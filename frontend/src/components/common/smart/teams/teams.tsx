@@ -214,6 +214,7 @@ function Teams() {
   ];
   const handleModalClose = () => {
     setOpenModal(false);
+    setAction("add");
   };
   const handleEditModalOpen = (
     event: React.MouseEvent<HTMLElement>,
@@ -314,8 +315,8 @@ function Teams() {
                 style={{ borderRadius: "12px" }}
                 startIcon={<AddIcon />}
                 onClick={() => {
-                  setOpenModal(true);
                   setAction("add");
+                  setOpenModal(true);
                 }}
               >
                 {" "}

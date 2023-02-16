@@ -176,7 +176,8 @@ export interface standupTypes {
 }
 export interface EmployeeBasic {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   image: string;
   department: string;
 }

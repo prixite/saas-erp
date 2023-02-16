@@ -17,7 +17,7 @@ import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import { timeOut } from "@src/helpers/constants/constants";
-import { teamTypes, Employee } from "@src/helpers/interfaces/employees-modal";
+import { teamTypes } from "@src/helpers/interfaces/employees-modal";
 import "@src/components/shared/popUps/createTeam/createTeam.scss";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -42,8 +42,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [loading, setLoading] = useState(false);
-  const { data: rows = [], isLoading } = useGetEmployeesQuery();
-  const [employeeData, setEmployeeData] = useState<Employee[]>([]);
+  const { data: rows = [] } = useGetEmployeesQuery();
   const [createTeam] = useCreateTeamMutation();
   const [updateTeam] = useUpdateTeamMutation();
   const { data: teamData } = useGetTeamDataQuery(
@@ -52,9 +51,7 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
     },
     { skip: !Number(teamId || "") }
   );
-  const { cancelBtn, saveBtn, updateBtn } = constantData.Modals;
-  // console.log("team data are", teamData);
-
+  const { cancelBtn, saveBtn } = constantData.Modals;
   const {
     CreateTeam,
     CreateTeamSubheading,
@@ -84,11 +81,15 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
       }
     },
   });
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData(teamData);
+    }
+  }, [action, teamData]);
   const resetForm = () => {
-    handleClose();
     formik.resetForm();
+    handleClose();
   };
-  // console.log("formik values are", formik.values);
   const handleCreateTeam = async () => {
     setLoading(true);
     const teamObj = getCreateTeamObject();
@@ -99,8 +100,7 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        formik.resetForm();
-        handleClose();
+        resetForm();
         setLoading(false);
       })
       .catch((error) => {
@@ -108,20 +108,7 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
-  useEffect(() => {
-    if (action === "edit") {
-      populateEditableData(teamData);
-    }
-  }, [action, teamData]);
-  useEffect(() => {
-    if (!isLoading) {
-      if (rows.length) {
-        setEmployeeData(rows);
-      } else {
-        setEmployeeData([]);
-      }
-    }
-  }, [rows, isLoading]);
+
   const handleEditTeam = async () => {
     setLoading(true);
     const teamObj = getCreateTeamObject();
@@ -132,8 +119,7 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        formik.resetForm();
-        handleClose();
+        resetForm();
         setLoading(false);
       })
       .catch((error) => {
@@ -141,14 +127,16 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
+
   const populateEditableData = (teamData: teamTypes | undefined) => {
     formik.setValues({
       name: teamData?.name || "",
       members: teamData?.members || [],
     });
   };
+
   const getCreateTeamObject = () => {
-    const extractedIDS = formik.values.members.map((obj) => obj?.id);
+    const extractedIDS = formik.values.members.map((obj: teamTypes) => obj?.id);
     return {
       name: formik.values.name,
       members: extractedIDS,
@@ -192,9 +180,10 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
           <Box className="fields-cls">
             <Autocomplete
               multiple
-              options={employeeData}
+              options={rows}
               value={formik.values.members}
               className="text-field-cls"
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(e, value) =>
                 formik.setFieldValue("members", value || [])
               }
@@ -240,7 +229,7 @@ const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
           >
             {!loading && (
               <span style={{ display: "flex" }}>
-                {action === "edit" ? updateBtn : saveBtn}
+                {saveBtn}
                 <span>
                   {" "}
                   <img className="submit-img" src={submitIcon} alt="submit" />

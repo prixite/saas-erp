@@ -223,8 +223,9 @@ export const employeesApi = createApi({
       },
       invalidatesTags: ["Teams"],
     }),
-    getTeamData: builder.query<teamTypes[], { id: number }>({
+    getTeamData: builder.query<teamTypes, { id: number }>({
       query: ({ id }) => `/team/${id}/`,
+      providesTags: ["Teams"],
     }),
   }),
 });
