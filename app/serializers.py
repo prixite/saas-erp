@@ -77,8 +77,25 @@ class BenefitSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.Benefit.objects.filter(name=name, organization=organization).exists():
-            raise serializers.ValidationError("Benefit with this name already exists.")
+        benefit = self.instance
+
+        if benefit is not None:
+            if (
+                models.Benefit.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Benefit with this name already exists."
+                )
+
+        else:
+            if models.Benefit.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Benefit with this name already exists."
+                )
 
         return data
 
@@ -104,9 +121,6 @@ class CompanySerializer(serializers.ModelSerializer):
                 )
 
         else:
-            company = models.Company.objects.filter(
-                name=name, organization=organization
-            )
             if models.Company.objects.filter(
                 name=name, organization=organization
             ).exists():
@@ -252,12 +266,28 @@ class CompensationTypeSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.CompensationType.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Compensation type with this name already exists."
-            )
+        compensation_type = self.instance
+
+        if compensation_type is not None:
+            if (
+                models.CompensationType.objects.filter(
+                    name=name, organization=organization
+                )
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Compensation type with this name already exists."
+                )
+
+        else:
+
+            if models.CompensationType.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Compensation type with this name already exists."
+                )
 
         return data
 
@@ -271,12 +301,28 @@ class CompensationScheduleSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.CompensationSchedule.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Compensation schedule with this name already exists."
-            )
+        compensation_schedule = self.instance
+
+        if compensation_schedule is not None:
+            if (
+                models.CompensationSchedule.objects.filter(
+                    name=name, organization=organization
+                )
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Compensation schedule with this name already exists."
+                )
+
+        else:
+
+            if models.CompensationSchedule.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Compensation schedule with this name already exists."
+                )
 
         return data
 
@@ -290,10 +336,25 @@ class CurrencySerializer(serializers.ModelSerializer):
         code = data.get("code")
         organization = self.context.get("organization")
 
-        if models.Currency.objects.filter(
-            code=code, organization=organization
-        ).exists():
-            raise serializers.ValidationError("Currency with this code already exists.")
+        currency = self.instance
+
+        if currency is not None:
+            if (
+                models.Currency.objects.filter(code=code, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Currency with this name already exists."
+                )
+
+        else:
+            if models.Currency.objects.filter(
+                code=code, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Currency with this code already exists."
+                )
 
         return data
 
@@ -307,12 +368,25 @@ class DocumentTypeSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.DocumentType.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Document type with this name already exists."
-            )
+        doc_type = self.instance
+
+        if doc_type is not None:
+            if (
+                models.DocumentType.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Document Type with this name already exists."
+                )
+
+        else:
+            if models.DocumentType.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Document type with this name already exists."
+                )
 
         return data
 
@@ -332,12 +406,25 @@ class AssetTypeSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.AssetType.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Asset type with this name already exists."
-            )
+        asset_type = self.instance
+
+        if asset_type is not None:
+            if (
+                models.AssetType.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Asset Type with this name already exists."
+                )
+
+        else:
+            if models.AssetType.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Asset type with this name already exists."
+                )
 
         return data
 
@@ -896,8 +983,20 @@ class TeamSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
-        if models.Team.objects.filter(name=name, organization=organization).exists():
-            raise serializers.ValidationError("Team with this name already exists.")
+        team = self.instance
+
+        if team is not None:
+            if (
+                models.Team.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError("Team with this name already exists.")
+        else:
+            if models.Team.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError("Team with this name already exists.")
         user = self.context.get("request").user
         members = data.get("members")
         for member in members:
@@ -930,8 +1029,25 @@ class StandupSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
-        if models.Standup.objects.filter(name=name, organization=organization).exists():
-            raise serializers.ValidationError("Standup with this name already exists.")
+
+        standup = self.instance
+
+        if standup is not None:
+            if (
+                models.Standup.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Standup with this name already exists."
+                )
+        else:
+            if models.Standup.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Standup with this name already exists."
+                )
         user = self.context.get("request").user
         team = data.get("team")
         if team.organization != user.organization:
