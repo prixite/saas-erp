@@ -91,10 +91,28 @@ class CompanySerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
+        company = self.instance
 
-        if models.Company.objects.filter(name=name, organization=organization).exists():
-            raise serializers.ValidationError("Company with this name already exists.")
+        if company is not None:
+            if (
+                models.Company.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Company with this name already exists."
+                )
 
+        else:
+            company = models.Company.objects.filter(
+                name=name, organization=organization
+            )
+            if models.Company.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Company with this name already exists."
+                )
         return data
 
 
@@ -106,9 +124,25 @@ class ProgramSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
+        program = self.instance
 
-        if models.Program.objects.filter(name=name, organization=organization).exists():
-            raise serializers.ValidationError("Program with this name already exists.")
+        if program is not None:
+            if (
+                models.Program.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Program with this name already exists."
+                )
+
+        else:
+            if models.Program.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Program with this name already exists."
+                )
 
         return data
 
@@ -121,13 +155,25 @@ class DepartmentSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
+        department = self.instance
 
-        if models.Department.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Department with this name already exists."
-            )
+        if department is not None:
+            if (
+                models.Department.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Department with this name already exists."
+                )
+
+        else:
+            if models.Department.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Department with this name already exists."
+                )
 
         return data
 
@@ -140,13 +186,27 @@ class EmployeementTypeSerializer(serializers.ModelSerializer):
     def validate(self, data):
         name = data.get("name")
         organization = self.context.get("organization")
+        e_type = self.instance
 
-        if models.EmploymentType.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Employment Type with this name already exists."
-            )
+        if e_type is not None:
+            if (
+                models.EmploymentType.objects.filter(
+                    name=name, organization=organization
+                )
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Employment Type with this name already exists."
+                )
+
+        else:
+            if models.EmploymentType.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Employment Type with this name already exists."
+                )
 
         return data
 
@@ -160,12 +220,25 @@ class InstitueSerializer(serializers.ModelSerializer):
         name = data.get("name")
         organization = self.context.get("organization")
 
-        if models.Institute.objects.filter(
-            name=name, organization=organization
-        ).exists():
-            raise serializers.ValidationError(
-                "Institute with this name already exists."
-            )
+        institute = self.instance
+
+        if institute is not None:
+            if (
+                models.Institute.objects.filter(name=name, organization=organization)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    "Institute with this name already exists."
+                )
+
+        else:
+            if models.Institute.objects.filter(
+                name=name, organization=organization
+            ).exists():
+                raise serializers.ValidationError(
+                    "Institute with this name already exists."
+                )
 
         return data
 

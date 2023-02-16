@@ -37,6 +37,8 @@ env = environ.Env(
     SLACK_TOKEN=(str, None),
     SLACK_ATTENDACE_CHANNEL=(str, None),
     SLACK_SIGNING_SECRET=(str, None),
+    AWS_STORAGE_BUCKET_NAME=(str, None),
+    AWS_SECRET_ACCESS_KEY=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -61,6 +63,9 @@ SLACK_ATTENDACE_CHANNEL = env("SLACK_ATTENDACE_CHANNEL")
 
 SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 # Application definition
 
 INSTALLED_APPS = [
@@ -156,7 +161,7 @@ AUTH_USER_MODEL = "app.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Asia/Karachi"
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 

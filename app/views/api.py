@@ -28,7 +28,7 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
-from app.utils import send_email_forget_password, send_leave_email
+from app.utils import create_presigned_url, send_email_forget_password, send_leave_email
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -279,6 +279,23 @@ class InstitueApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationM
         context.update({"organization": self.request.user.organization})
         return context
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this institute as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProgramApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.ProgramSerializer
@@ -290,6 +307,23 @@ class ProgramApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
         context.update({"organization": self.request.user.organization})
         return context
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this program as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
     serializer_class = serializers.CompanySerializer
@@ -300,6 +334,23 @@ class CompanyApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMi
         context = super().get_serializer_context()
         context.update({"organization": self.request.user.organization})
         return context
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this company as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BenefitApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
@@ -323,6 +374,23 @@ class DepartmentApiView(mixins.PrivateApiMixin, ModelViewSet, mixins.Organizatio
         context.update({"organization": self.request.user.organization})
         return context
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this department as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class EmployeementTypeApiView(
     mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
@@ -335,6 +403,23 @@ class EmployeementTypeApiView(
         context = super().get_serializer_context()
         context.update({"organization": self.request.user.organization})
         return context
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            return super().destroy(request, *args, **kwargs)
+        except ProtectedError as protected_error:
+            protected_elements = [
+                protected_object
+                for protected_object in protected_error.protected_objects
+            ]
+            response_data = {
+                "detail": f"Can not delete this employment type as this is used by {protected_elements[0]}."  # noqa
+            }
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            response_data = {"detail": f"An error occurred: {e}"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CompensationTypeApiView(
@@ -898,3 +983,11 @@ class AvailabilityViewSet(generics.GenericAPIView):
         except Exception as e:
             print(e)
         return Response()
+
+
+class AwsApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        response = create_presigned_url(
+            settings.AWS_STORAGE_BUCKET_NAME, settings.AWS_SECRET_ACCESS_KEY
+        )
+        return Response({"aws_url": response}, status=status.HTTP_200_OK)
