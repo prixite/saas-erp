@@ -838,7 +838,8 @@ class TeamSerializer(serializers.ModelSerializer):
         members_representation = [
             {
                 "id": member.id,
-                "name": member.user.get_full_name(),
+                "first_name": member.user.first_name,
+                "last_name": member.user.last_name,
                 "image": member.user.image,
                 "department": member.department.name if member.department else None,
             }
