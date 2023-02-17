@@ -193,6 +193,10 @@ export interface AttendanceTypes {
   time_in: string;
   time_out: string;
 }
+export interface standupTypesEmp {
+  id: number;
+  name: string;
+}
 export interface standupUpdatesTypes {
   id: number;
   time: string;
@@ -201,7 +205,7 @@ export interface standupUpdatesTypes {
   work_done_yesterday: string;
   work_to_do: string;
   blockers: string;
-  standup: number;
+  standup: standupTypesEmp;
   employee: EmployeeBasic;
   created_at: string;
   updated_at: string;

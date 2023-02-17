@@ -309,8 +309,8 @@ function Teams() {
               <p>{filterButton}</p>
             </Button>
           </Box>
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ? (
             <Box className="add-standup-btn">
               <Button
                 variant="outlined"

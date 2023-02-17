@@ -70,14 +70,14 @@ function Standup() {
       },
     },
     {
-      field: "Department",
-      headerName: "Department",
+      field: "Standup",
+      headerName: "Standup",
       sortable: false,
       width: 200,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.employee?.department}
+            {cellValues?.row?.standup?.name}
           </p>
         );
       },
