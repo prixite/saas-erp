@@ -392,6 +392,8 @@ export interface standupData {
 }
 export interface AttendanceData {
   attendance: string;
+  CheckingTime: string;
+  ViewAll: string;
 }
 export interface TeamsData {
   Teams: string;
