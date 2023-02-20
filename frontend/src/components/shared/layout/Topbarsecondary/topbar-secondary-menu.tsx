@@ -121,12 +121,12 @@ const TopbarSecondaryMenu = () => {
           <MoreHorizIcon />
           More
         </MenuItem>
-        <MenuItem disableRipple>
-          <LogoutIcon />
-          <a className="logout-link" href="/api/logout">
+        <a className="logout-link" href="/api/logout">
+          <MenuItem disableRipple>
+            <LogoutIcon />
             Logout
-          </a>
-        </MenuItem>
+          </MenuItem>
+        </a>
       </StyledMenu>
     </Box>
   );

@@ -18,19 +18,19 @@ import vectorIcon from "@src/assets/svgs/24px.svg";
 import vectorIconRed from "@src/assets/svgs/24pxred.svg";
 import userIcon from "@src/assets/svgs/3 User.svg";
 import userIconRed from "@src/assets/svgs/3 Userred.svg";
-import attendanceIcon from "@src/assets/svgs/attendanceicon.svg";
-import attendanceRedIcon from "@src/assets/svgs/attendancered.svg";
 import bagIcon from "@src/assets/svgs/Bag.svg";
 import workIconRed from "@src/assets/svgs/bagred.svg";
+import standupIcon from "@src/assets/svgs/Calendar.svg";
+import standupRedIcon from "@src/assets/svgs/Calendarred.svg";
 import categoryIcon from "@src/assets/svgs/Category.svg";
 import categoryIconRed from "@src/assets/svgs/Categoryred.svg";
-import leavesIcon from "@src/assets/svgs/Leave.svg";
-import leavesRedIcon from "@src/assets/svgs/leaveRed.svg";
+import leavesIcon from "@src/assets/svgs/Discovery.svg";
+import leavesRedIcon from "@src/assets/svgs/Discoveryred.svg";
+import attendanceIcon from "@src/assets/svgs/Leave.svg";
+import attendanceRedIcon from "@src/assets/svgs/leaveRed.svg";
 import settingIcon from "@src/assets/svgs/setting.svg";
 import settingIconRed from "@src/assets/svgs/settingRed.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
-import standupIcon from "@src/assets/svgs/standupicon.svg";
-import standupRedIcon from "@src/assets/svgs/standupredicon.svg";
 import teamsIcon from "@src/assets/svgs/teamicon.svg";
 import teamsRedIcon from "@src/assets/svgs/teamred.svg";
 import workIcon from "@src/assets/svgs/Work.svg";
@@ -276,8 +276,8 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
-          {userData?.allowed_modules.admin_modules.includes("employees") ||
-          userData?.allowed_modules.owner_modules.includes("employees") ? (
+          {userData?.allowed_modules.admin_modules.includes("standup") ||
+          userData?.allowed_modules.owner_modules.includes("standup") ? (
             <ListItemButton
               onClick={() => {
                 navigate("teams/");

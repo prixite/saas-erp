@@ -70,14 +70,14 @@ function Standup() {
       },
     },
     {
-      field: "Department",
-      headerName: "Department",
+      field: "Standup",
+      headerName: "Standup",
       sortable: false,
       width: 200,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.employee?.department}
+            {cellValues?.row?.standup?.name}
           </p>
         );
       },
@@ -89,19 +89,12 @@ function Standup() {
       width: 250,
       renderCell: (cellValues) => {
         return (
-          <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.created_at).format("ll")}
-          </p>
+          <Tooltip title={moment(cellValues?.row?.created_at).format("LTS")}>
+            <p style={{ marginLeft: "20px" }}>
+              {moment(cellValues?.row?.created_at).format("ll")}
+            </p>
+          </Tooltip>
         );
-      },
-    },
-    {
-      field: "Time",
-      headerName: "Time",
-      sortable: false,
-      width: 250,
-      renderCell: (cellValues) => {
-        return <p style={{ marginLeft: "20px" }}>{cellValues?.row?.time}</p>;
       },
     },
     {
@@ -151,8 +144,7 @@ function Standup() {
         return (
           <Tooltip title={cellValues?.row?.work_done_yesterday}>
             <p style={{ marginLeft: "21px" }}>
-              {" "}
-              {truncateString(cellValues?.row?.work_done_yesterday, 40)}
+              {truncateString(cellValues?.row?.work_done_yesterday, 25)}
             </p>
           </Tooltip>
         );
@@ -168,7 +160,7 @@ function Standup() {
           <Tooltip title={cellValues?.row?.work_to_do}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues?.row?.work_to_do, 40)}
+              {truncateString(cellValues?.row?.work_to_do, 25)}
             </p>
           </Tooltip>
         );
@@ -184,7 +176,7 @@ function Standup() {
           <Tooltip title={cellValues?.row?.blockers}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues?.row?.blockers, 40)}
+              {truncateString(cellValues?.row?.blockers, 25)}
             </p>
           </Tooltip>
         );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { LoadingButton } from "@mui/lab";
@@ -17,6 +17,7 @@ import * as yup from "yup";
 import crossIcon from "@src/assets/svgs/cross.svg";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import { timeOut } from "@src/helpers/constants/constants";
+import { teamTypes } from "@src/helpers/interfaces/employees-modal";
 import "@src/components/shared/popUps/createTeam/createTeam.scss";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -25,20 +26,31 @@ import { toastAPIError } from "@src/helpers/utils/utils";
 import {
   useGetEmployeesQuery,
   useCreateTeamMutation,
+  useGetTeamDataQuery,
+  useUpdateTeamMutation,
 } from "@src/store/reducers/employees-api";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  action: string;
+  teamId?: number;
 }
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const CreateTeamModal = ({ open, handleClose }: Props) => {
+const CreateTeamModal = ({ open, handleClose, teamId, action }: Props) => {
   const constantData: LocalizationInterface = localizedData();
   const [loading, setLoading] = useState(false);
   const { data: rows = [] } = useGetEmployeesQuery();
   const [createTeam] = useCreateTeamMutation();
+  const [updateTeam] = useUpdateTeamMutation();
+  const { data: teamData } = useGetTeamDataQuery(
+    {
+      id: Number(teamId || ""),
+    },
+    { skip: !Number(teamId || "") }
+  );
   const { cancelBtn, saveBtn } = constantData.Modals;
   const {
     CreateTeam,
@@ -47,6 +59,8 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
     Name,
     AddTeamMember,
     MemberRequired,
+    EditTeam,
+    EditTeamSubheading,
   } = constantData.Teams;
 
   const formik = useFormik({
@@ -60,14 +74,22 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
     }),
     validateOnChange: true,
     onSubmit: () => {
-      handleCreateTeam();
+      if (action === "edit") {
+        handleEditTeam();
+      } else {
+        handleCreateTeam();
+      }
     },
   });
+  useEffect(() => {
+    if (action === "edit") {
+      populateEditableData(teamData);
+    }
+  }, [action, teamData]);
   const resetForm = () => {
-    handleClose();
     formik.resetForm();
+    handleClose();
   };
-
   const handleCreateTeam = async () => {
     setLoading(true);
     const teamObj = getCreateTeamObject();
@@ -78,8 +100,7 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
           autoClose: timeOut,
           pauseOnHover: false,
         });
-        formik.resetForm();
-        handleClose();
+        resetForm();
         setLoading(false);
       })
       .catch((error) => {
@@ -87,8 +108,35 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
         toastAPIError("Something went wrong.", error.status, error.data);
       });
   };
+
+  const handleEditTeam = async () => {
+    setLoading(true);
+    const teamObj = getCreateTeamObject();
+    await updateTeam({ teamObject: teamObj, id: teamId })
+      .unwrap()
+      .then(async () => {
+        toast.success("Team successfully updated.", {
+          autoClose: timeOut,
+          pauseOnHover: false,
+        });
+        resetForm();
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toastAPIError("Something went wrong.", error.status, error.data);
+      });
+  };
+
+  const populateEditableData = (teamData: teamTypes | undefined) => {
+    formik.setValues({
+      name: teamData?.name || "",
+      members: teamData?.members || [],
+    });
+  };
+
   const getCreateTeamObject = () => {
-    const extractedIDS = formik.values.members.map((obj) => obj?.id);
+    const extractedIDS = formik.values.members.map((obj: teamTypes) => obj?.id);
     return {
       name: formik.values.name,
       members: extractedIDS,
@@ -100,9 +148,11 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
         <DialogTitle>
           <Box className="modal-header-cls">
             <Box className="heading-text-box">
-              <Typography className="heading-text">{CreateTeam}</Typography>
+              <Typography className="heading-text">
+                {action === "edit" ? EditTeam : CreateTeam}
+              </Typography>
               <Typography className="subheading-text">
-                {CreateTeamSubheading}
+                {action === "edit" ? EditTeamSubheading : CreateTeamSubheading}
               </Typography>
             </Box>
             <Box className="cross-icon-box" onClick={resetForm}>
@@ -131,7 +181,9 @@ const CreateTeamModal = ({ open, handleClose }: Props) => {
             <Autocomplete
               multiple
               options={rows}
+              value={formik.values.members}
               className="text-field-cls"
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               onChange={(e, value) =>
                 formik.setFieldValue("members", value || [])
               }

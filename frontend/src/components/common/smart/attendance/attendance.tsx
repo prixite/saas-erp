@@ -107,7 +107,9 @@ function Attendance() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.time_in).format("LT")}
+            {cellValues?.row?.time_in
+              ? moment(cellValues?.row?.time_in).format("LT")
+              : ""}
           </p>
         );
       },
@@ -120,7 +122,9 @@ function Attendance() {
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px" }}>
-            {moment(cellValues?.row?.time_out).format("LT")}
+            {cellValues?.row?.time_out
+              ? moment(cellValues?.row?.time_out).format("LT")
+              : ""}
           </p>
         );
       },
