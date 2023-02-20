@@ -240,7 +240,6 @@
     "Leavesubheading":"Please add comments while performing action.",
     "ShortDuration": "Short Duration",
     "LeaveRequests":"Leave Requests",
-    "CheckingTime":"Checking Time",
     "Action": "Action",
     "Accepted": "Accepted",
     "Rejected": "Rejected",
@@ -297,7 +296,9 @@
 
   },
   "Attendance":{
-    "attendance":"Attendance"
+    "attendance":"Attendance",
+    "CheckingTime":"Checking Time",
+    "ViewAll":"View All"
   },
   "Teams": {
     "Teams": "Teams",
