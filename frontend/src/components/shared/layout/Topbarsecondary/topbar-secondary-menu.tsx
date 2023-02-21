@@ -13,6 +13,8 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled, alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 import { useGetUserQuery } from "@src/store/reducers/employees-api";
 import "@src/components/shared/layout/Topbarsecondary/topbar-secondary-menu.scss";
 
@@ -62,6 +64,9 @@ const StyledMenu = styled((props: MenuProps) => (
 const TopbarSecondaryMenu = () => {
   const { data: userData } = useGetUserQuery();
   const navigate = useNavigate();
+  const constantData: LocalizationInterface = localizedData();
+  const { Edit, Profile, Archive, Logout, More, Duplicate } =
+    constantData.TopbarDropdown;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -102,29 +107,29 @@ const TopbarSecondaryMenu = () => {
       >
         <MenuItem onClick={handleProfileClick} disableRipple>
           <AccountCircleIcon />
-          Profile
+          {Profile}
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <EditIcon />
-          Edit
+          {Edit}
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <FileCopyIcon />
-          Duplicate
+          {Duplicate}
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleClose} disableRipple>
           <ArchiveIcon />
-          Archive
+          {Archive}
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
-          More
+          {More}
         </MenuItem>
         <a className="logout-link" href="/api/logout">
           <MenuItem disableRipple>
             <LogoutIcon />
-            Logout
+            {Logout}
           </MenuItem>
         </a>
       </StyledMenu>

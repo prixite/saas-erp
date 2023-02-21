@@ -154,6 +154,14 @@ export interface additionalInformationInterface {
   editBtn: string;
   deleteBtn: string;
 }
+export interface topbarDropdownInterface {
+  Edit: string;
+  Profile: string;
+  Duplicate: string;
+  Archive: string;
+  More: string;
+  Logout: string;
+}
 
 export interface profilePageInterface {
   basicInformationHeading: string;
@@ -395,6 +403,14 @@ export interface AttendanceData {
   CheckingTime: string;
   ViewAll: string;
 }
+export interface SettingPageInterface {
+  ViewDepertaments: string;
+  ViewEmployements: string;
+  ViewPrograms: string;
+  ViewInstitues: string;
+  ViewCompanies: string;
+  Setting: string;
+}
 export interface TeamsData {
   Teams: string;
   AddTeam: string;
@@ -429,6 +445,8 @@ export interface LocalizationInterface {
   Standup: standupData;
   Attendance: AttendanceData;
   Teams: TeamsData;
+  TopbarDropdown: topbarDropdownInterface;
+  SettingPage: SettingPageInterface;
 }
 
 export interface UserInterface {
