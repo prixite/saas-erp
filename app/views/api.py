@@ -3,6 +3,8 @@ from datetime import datetime
 
 import requests
 import slack
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -764,6 +766,16 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
             leave.leave_to,
             leave.hr_comment,
         )
+        user = employee.user.first_name
+        status = request.data["status"]
+        message = user + ", Your leave has been " + status
+        print(message)
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            user, {"type": "notification.send", "message": message}
+        )
+        notification = models.Notification(user=employee.user, message=message)
+        notification.save()
         return response
 
 
@@ -940,6 +952,27 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         return context
 
 
+class NotificationViewSet(ModelViewSet):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = models.Notification.objects.filter(user=user)
+        return queryset
+
+    def get_notification_count(self, request, *args, **kwargs):
+        user = self.request.user
+        count = models.Notification.objects.filter(user=user, is_seen=False).count()
+        return Response({"count": count})
+
+    def retrieve(self, request, pk=None):
+        notification = self.get_object()
+        notification.is_seen = True
+        notification.save()
+        serializer = self.get_serializer(notification)
+        return Response(serializer.data)
+
+
 class AvailabilityViewSet(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
@@ -1010,3 +1043,24 @@ class AwsDelteFileApiView(APIView):
         response = create_predesigned_url_delete(kwargs.get("key"))
         requests.delete(response)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class NotificationViewSet(ModelViewSet):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = models.Notification.objects.filter(user=user)
+        return queryset
+
+    def get_notification_count(self, request, *args, **kwargs):
+        user = self.request.user
+        count = models.Notification.objects.filter(employee=user, is_seen=False).count()
+        return Response({"count": count})
+
+    def retrieve(self, request, pk=None):
+        notification = self.get_object()
+        notification.is_seen = True
+        notification.save()
+        serializer = self.get_serializer(notification)
+        return Response(serializer.data)

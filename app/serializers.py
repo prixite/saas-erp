@@ -1188,3 +1188,9 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
         data["module"] = {"id": instance.module.id, "name": instance.module.name}
         data["role"] = {"id": instance.role.id, "name": instance.role.name}
         return data
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Notification
+        fields = "__all__"

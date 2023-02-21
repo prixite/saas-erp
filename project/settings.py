@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Internal Apps
@@ -124,7 +125,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "project.wsgi.application"
+# WSGI_APPLICATION = "project.wsgi.application"
+ASGI_APPLICATION = "project.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 
 # Database

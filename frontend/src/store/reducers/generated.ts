@@ -608,6 +608,24 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiNotificationList: build.query<
+      ApiNotificationListApiResponse,
+      ApiNotificationListApiArg
+    >({
+      query: () => ({ url: `/api/notification/` }),
+    }),
+    apiNotificationRetrieve: build.query<
+      ApiNotificationRetrieveApiResponse,
+      ApiNotificationRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/notification/${queryArg.id}/` }),
+    }),
+    apiNotificationCountRetrieve: build.query<
+      ApiNotificationCountRetrieveApiResponse,
+      ApiNotificationCountRetrieveApiArg
+    >({
+      query: () => ({ url: `/api/notification/count/` }),
+    }),
     apiOrganizationList: build.query<
       ApiOrganizationListApiResponse,
       ApiOrganizationListApiArg
@@ -1295,6 +1313,16 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+export type ApiNotificationListApiResponse = /** status 200  */ Notification[];
+export type ApiNotificationListApiArg = void;
+export type ApiNotificationRetrieveApiResponse =
+  /** status 200  */ Notification;
+export type ApiNotificationRetrieveApiArg = {
+  id: number;
+};
+export type ApiNotificationCountRetrieveApiResponse =
+  /** status 200  */ Notification;
+export type ApiNotificationCountRetrieveApiArg = void;
 export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
 export type ApiOrganizationListApiArg = void;
 export type ApiOrganizationCreateApiResponse = /** status 201  */ Organization;
@@ -1768,6 +1796,13 @@ export type Module = {
   created_at: string;
   updated_at: string;
 };
+export type Notification = {
+  id: number;
+  message: string;
+  is_seen?: boolean;
+  created_at: string;
+  user: number;
+};
 export type Organization = {
   id: number;
   name: string;
@@ -1939,6 +1974,9 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiNotificationListQuery,
+  useApiNotificationRetrieveQuery,
+  useApiNotificationCountRetrieveQuery,
   useApiOrganizationListQuery,
   useApiOrganizationCreateMutation,
   useApiOrganizationModuleListQuery,

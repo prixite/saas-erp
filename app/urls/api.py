@@ -394,5 +394,17 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "notification/",
+        api.NotificationViewSet.as_view({"get": "list"}),
+    ),
+    path(
+        "notification/<int:pk>/",
+        api.NotificationViewSet.as_view({"get": "retrieve"}),
+    ),
+    path(
+        "notification/count/",
+        api.NotificationViewSet.as_view({"get": "get_notification_count"}),
+    ),
     path("availability/", api.AvailabilityViewSet.as_view()),
 ]

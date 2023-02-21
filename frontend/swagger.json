@@ -2772,6 +2772,94 @@
                 }
             }
         },
+        "/api/notification/": {
+            "get": {
+                "operationId": "api_notification_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Notification"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/notification/{id}/": {
+            "get": {
+                "operationId": "api_notification_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notification"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/notification/count/": {
+            "get": {
+                "operationId": "api_notification_count_retrieve",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notification"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/organization/": {
             "get": {
                 "operationId": "api_organization_list",
@@ -5747,6 +5835,36 @@
                     "name",
                     "slug",
                     "updated_at"
+                ]
+            },
+            "Notification": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "is_seen": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "user": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "id",
+                    "message",
+                    "user"
                 ]
             },
             "NullEnum": {
