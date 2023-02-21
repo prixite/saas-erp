@@ -44,11 +44,26 @@
     "editBtn": "Edit",
     "deleteBtn": "Delete"
   },
+"TopbarDropdown":{
+  "Edit": "Edit",
+  "Profile":"Profile",
+  "Duplicate":"Duplicate",
+  "Archive":"Archive",
+  "More":"More",
+  "Logout":"Logout"
+},
   "MenuButtons": {
     "editBtn": "Edit",
     "deleteBtn": "Delete"
   },
-
+  "SettingPage": {
+    "Setting":"Settings",
+    "ViewDepertaments":"Departments",
+    "ViewEmployements":"Employement Types",
+    "ViewPrograms":"Programs",
+    "ViewInstitues":"Institutes",
+    "ViewCompanies":"Companies"
+  },
   "AdditionalInformation": {
     "additionalInformationHeading": "Additional Information",
     "department": "Department:",
