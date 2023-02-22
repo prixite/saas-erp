@@ -1,46 +1,33 @@
 import json
 
-from asgiref.sync import async_to_sync
-from channels.consumer import SyncConsumer
+from channels.db import database_sync_to_async
 from channels.exceptions import StopConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 from app import models
 
 
-class MySyncConsumer(SyncConsumer):
-    def websocket_connect(self, event):
-        print("Web socket connected", event)
+class MyAsyncWebSocketConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        print("Web socket connected")
         print("Channel layer ", self.channel_layer)
         print("Channel name", self.channel_name)
-        self.send({"type": "websocket.accept"})
-        group_name = models.User.objects.get(
+        await self.accept()
+        user = await database_sync_to_async(models.User.objects.get)(
             email=self.scope["user"].username
-        ).first_name
-        print(group_name)
-        async_to_sync(self.channel_layer.group_add)(group_name, self.channel_name)
-
-    def websocket_receive(self, event):
-        print("Web socket recieved", event["text"])
-        print(event["text"])
-        data = json.loads(event["text"])
-        user = data["user"]
-        message = data["notification"]
-        user_obj = models.User.objects.get(username=user)
-        notification = models.Notification(user=user_obj, message=message)
-        notification.save()
-        async_to_sync(self.channel_layer.group_send)(
-            user, {"type": "notification.send", "message": event["text"]}
         )
+        self.group_name = user.first_name
+        print(self.group_name)
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
 
-    # event handler, which is sending data to client
-    def notification_send(self, event):
-        print("Event...", event)
-        print(event["message"])
-        self.send({"type": "websocket.send", "text": event["message"]})
+    async def receive(self, text_data=None, bytes_data=None):
+        print("Message recieved from client...", text_data)
 
-    def websocket_disconnect(self, event):
-        print("Web socket disconnect", event)
-        async_to_sync(self.channel_layer.group_discard)(
-            "notification", self.channel_name
-        )
+    async def notification_send(self, event):
+        print(event)
+        await self.send(text_data=json.dumps({"msg": event["message"]}))
+
+    async def disconnect(self, close_code):
+        print("Web socket disconnect")
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
         raise StopConsumer()

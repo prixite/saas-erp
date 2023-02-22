@@ -29,14 +29,14 @@
     {% block js_includes %}{% endblock %}
     {% render_bundle 'main' 'js' %}
     <script>
-      var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+      var ws = new WebSocket('ws://127.0.0.1:8000/ws/awc/')
       ws.addEventListener('open',()=>{
           console.log("WebSocket connection open..")
       })
 
       ws.addEventListener('message',(event)=>{
           console.log("Message recieved from server..", event.data)
-          console.log(event.data)
+          //console.log(event.data)
       })
 
       ws.addEventListener('error',(event)=>{
