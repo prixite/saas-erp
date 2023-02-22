@@ -29,10 +29,10 @@ from waffle import get_waffle_switch_model
 
 from app import models, serializers
 from app.utils import (
+    create_predesigned_url_delete,
     create_presigned_url,
     send_email_forget_password,
     send_leave_email,
-    create_predesigned_url_delete,
 )
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
@@ -999,7 +999,7 @@ class AwsUploadFileApiView(APIView):
         return Response(
             {
                 "signedRequest": response,
-                "location": f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_DEFAULT_REGION}.amazonaws.com/{filename}",
+                "location": f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_DEFAULT_REGION}.amazonaws.com/{filename}",  # noqa
             },
             status=status.HTTP_200_OK,
         )
