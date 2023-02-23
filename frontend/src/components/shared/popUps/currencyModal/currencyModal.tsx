@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -47,7 +47,6 @@ const CurrencyModal = ({ currencyId, action, open, handleClose }: Props) => {
   );
 
   const [loading, setLoading] = useState(false);
-  const constantData: LocalizationInterface = localizedData();
 
   const populateEditableData = (
     currencyData: CurrencyInterface | undefined

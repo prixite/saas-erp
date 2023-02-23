@@ -2,7 +2,7 @@ from django.db import models
 
 from project.settings import AUTH_USER_MODEL
 
-from  .core import Currency
+from .core import Currency
 from .soft_delete import ActiveEmployeeModel, SoftDeleteModel
 
 

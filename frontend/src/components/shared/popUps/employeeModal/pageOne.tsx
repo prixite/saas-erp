@@ -23,6 +23,7 @@ import {
   Formik,
 } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
+import { useApiCurrencyListQuery } from "@src/store/api";
 import {
   useGetBenefitsQuery,
   useGetEmployeesQuery,
@@ -30,7 +31,6 @@ import {
   useGetRolesQuery,
   useGetDepartmentsQuery,
 } from "@src/store/reducers/employees-api";
-import { useApiCurrencyListQuery } from "@src/store/api";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 interface Props {
