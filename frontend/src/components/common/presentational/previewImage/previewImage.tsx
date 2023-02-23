@@ -5,8 +5,6 @@ interface Props {
   file: string;
 }
 const PreviewImage = ({ file }: Props) => {
-  // console.log("file coming from page one", file)
-
   const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const reader = new FileReader();
   reader.readAsDataURL(file);

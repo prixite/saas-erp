@@ -129,6 +129,8 @@ export interface modalsInterface {
   cancelBtn: string;
   saveBtn: string;
   updateBtn: string;
+  bigFileError: string;
+  invalidFormatError: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
@@ -271,7 +273,7 @@ export type EmployeeForm = {
   email: string;
   image?: string;
   contactNumber: string;
-  defaultRole?: number;
+  defaultRole: number;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];

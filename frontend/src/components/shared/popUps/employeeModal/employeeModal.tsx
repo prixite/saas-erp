@@ -39,6 +39,7 @@ import {
   nicRegex,
   toastAPIError,
   salaryRegex,
+  SUPPORTED_FORMATS,
 } from "@src/helpers/utils/utils";
 import {
   useCreateEmployeeMutation,
@@ -59,7 +60,7 @@ const employeeFormInitialState: EmployeeForm = {
   email: "",
   image: "",
   contactNumber: "",
-  defaultRole: null || undefined,
+  defaultRole: 0,
   degrees: [
     {
       program: "",
@@ -152,6 +153,8 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     phoneRegxError,
     nicRegxError,
     employeeImageError,
+    invalidFormatError,
+    bigFileError,
   } = constantData.Modals;
 
   const employeeFormValidationSchema = yup.object({
@@ -172,7 +175,23 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       .matches(emailRegX, emailrRegxError)
       .required(emailRequired),
     nic: yup.string().matches(nicRegex, nicRegxError).required(CnicRequired),
-    image: yup.string().required(employeeImageError),
+    image: yup
+      .mixed()
+      .required(employeeImageError)
+      .when({
+        is: (value) => typeof value === "object" && value !== null,
+        then: yup
+          .mixed()
+          .test("FILE_SIZE", bigFileError, (value) => {
+            return value && value.size < 1024 * 1024;
+          })
+          .test(
+            "FILE_TYPE",
+            invalidFormatError,
+            (value) => value && SUPPORTED_FORMATS.includes(value.type)
+          ),
+        otherwise: yup.mixed(),
+      }),
     dateOfJoining: yup.string().required(joiningDateRequired),
     designation: yup.string().required(DesignationRequired),
     emergencyContactNumber: yup
@@ -243,7 +262,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
   });
 
   useEffect(() => {
-    if (action === "edit") {
+    if (action === "edit" && employeeData) {
       populateEditableData(employeeData);
     }
   }, [action, employeeData]);

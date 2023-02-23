@@ -135,7 +135,8 @@ const PageOne = ({ formik, action }: Props) => {
                 src={formik.values.image}
                 alt="upload icon"
               />
-            ) : formik.values.image ? (
+            ) : formik.values.image &&
+              typeof formik.values.image === "object" ? (
               <PreviewImage file={formik.values.image} />
             ) : (
               <img className="upload-pic" src={UploadIcon} alt="upload icon" />
@@ -309,7 +310,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="manager"
               label={employeeManagerLabel}
               onChange={formik.handleChange}
-              value={formik.values.manager || ""}
+              value={formik.values.manager}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {employeetableData?.length ? (
@@ -339,7 +340,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="managing"
               label={employeeManagingLabel}
               onChange={formik.handleChange}
-              value={formik.values.managing || ""}
+              value={formik.values.managing}
               InputLabelProps={{ className: "textfield_label" }}
               SelectProps={{
                 multiple: true,
@@ -369,7 +370,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="salary"
               label={employeeSalaryLabel}
               onChange={formik.handleChange}
-              value={formik.values.salary || ""}
+              value={formik.values.salary}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.salary}</p>
@@ -385,7 +386,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="currency"
               label={employeeCurrencyLabel}
               onChange={formik.handleChange}
-              value={formik.values.currency || ""}
+              value={formik.values.currency}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {currencyData?.length ? (
@@ -415,7 +416,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="type"
               label={employeeEmployementLabel}
               onChange={formik.handleChange}
-              value={formik.values.type || ""}
+              value={formik.values.type}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {typesData?.length ? (
@@ -460,7 +461,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="department"
               label={departmentsLabel}
               onChange={formik.handleChange}
-              value={formik.values.department || ""}
+              value={formik.values.department}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {departmentData?.length ? (
@@ -488,7 +489,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="defaultRole"
               label={defaultRoleLabel}
               onChange={formik.handleChange}
-              value={formik.values.defaultRole || ""}
+              value={formik.values.defaultRole}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {rolesData?.length ? (

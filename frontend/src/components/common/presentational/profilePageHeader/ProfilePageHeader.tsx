@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import cameraIcon from "@src/assets/svgs/camera.svg";
 import emailIcon from "@src/assets/svgs/Email_Frame.svg";
 import phoneIcon from "@src/assets/svgs/Phone.svg";
@@ -55,6 +55,9 @@ function ProfilePageHeader({ formik }: Props) {
           >
             <img className="upload-pic" src={cameraIcon} alt="upload pic" />
           </Box>
+          <Typography sx={{ color: "red", fontSize: "0.8rem", mt: "10px" }}>
+            {formik.errors?.image}
+          </Typography>
         </div>
 
         <div className="employee-Header-Div-Two">

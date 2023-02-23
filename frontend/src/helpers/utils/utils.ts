@@ -28,7 +28,7 @@ export const onlyIntegerRegex = /^\d+\.?\d*$/;
 export const intRegex = /^\d+\.?\d*$/;
 export const nicRegex = /^(\d!*){10,}$/;
 /* eslint-enable */
-
+export const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 function iterateDeepObj(obj: unknown) {
   if (typeof obj === "string") {
     return obj;
