@@ -7,25 +7,25 @@ import DeleteIcon from "@src/assets/svgs/DeleteIcon.svg";
 import EditIcon from "@src/assets/svgs/Edit.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import RowSkeletonCard from "@src/components/shared/loaders/rowSkeletonCard/RowSkeletonCard";
-import CompanyModal from "@src/components/shared/popUps/companyModal/companyModal";
+import CurrencyModal from "@src/components/shared/popUps/currencyModal/currencyModal";
 import DeleteModal from "@src/components/shared/popUps/deleteModal/deleteModal";
 import { timeOut } from "@src/helpers/constants/constants";
-import { CompanyInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { CurrencyInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { toastAPIError } from "@src/helpers/utils/utils";
 import {
-  useApiCompaniesListQuery,
-  useApiCompaniesDestroyMutation,
+  useApiCurrencyListQuery,
+  useApiCurrencyDestroyMutation,
 } from "@src/store/api";
-import "@src/components/common/smart/company/company.scss";
+import "@src/components/common/smart/currnecy/currnecy.scss";
 
-function Company() {
-  const { data: rows = [], isLoading } = useApiCompaniesListQuery();
-  const [deleteCompany] = useApiCompaniesDestroyMutation();
+function Currency() {
+  const { data: rows = [], isLoading } = useApiCurrencyListQuery();
+  const [deleteCurrency] = useApiCurrencyDestroyMutation();
 
   const [action, setAction] = useState("add");
   const [dataLoading, setIsDataLoading] = useState(true);
   const [rowCellId, setRowCellId] = useState<number | undefined>(undefined);
-  const [companyData, setCompanyData] = useState<CompanyInterface[]>([]);
+  const [currencyData, setCurrencyData] = useState<CurrencyInterface[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -61,13 +61,13 @@ function Company() {
     setRowCellId(cellId);
     setOpenDeleteModal(true);
   };
-  const handleCompanyDelete = async () => {
-    await deleteCompany({
+  const handleCurrencyDelete = async () => {
+    await deleteCurrency({
       id: rowCellId,
     })
       .unwrap()
       .then(async () => {
-        toast.success("Company deleted successfully", {
+        toast.success("Currency deleted successfully", {
           autoClose: timeOut,
           pauseOnHover: false,
         });
@@ -93,34 +93,28 @@ function Company() {
       },
     },
     {
-      field: "name",
-      headerName: "Name",
+      field: "code",
+      headerName: "Code",
       sortable: false,
-      width: 300,
+      width: 200,
       renderCell: (cellValues) => {
         return (
-          <div
-            style={{
-              marginLeft: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-            }}
-          >
-            <img
-              style={{
-                height: "32px",
-                width: "32px",
-                left: "241px",
-                top: "154px",
-                marginRight: "8px",
-                borderRadius: "50%",
-              }}
-              src={`${cellValues.row.image}`}
-              alt="logo"
-            />
-            <p>{`${cellValues.row.name}`}</p>
-          </div>
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues.row.code}
+          </p>
+        );
+      },
+    },
+    {
+      field: "symbol",
+      headerName: "Symbol",
+      sortable: false,
+      width: 200,
+      renderCell: (cellValues) => {
+        return (
+          <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
+            {cellValues.row.symbol}
+          </p>
         );
       },
     },
@@ -161,21 +155,21 @@ function Company() {
   useEffect(() => {
     if (!isLoading) {
       if (rows.length) {
-        setCompanyData(rows);
+        setCurrencyData(rows);
       } else {
-        setCompanyData([]);
+        setCurrencyData([]);
       }
       setIsDataLoading(false);
     }
   }, [rows, isLoading]);
 
   return (
-    <Box className="companyDataGridTable-section">
+    <Box className="currencyDataGridTable-section">
       <Box
         className="top-bar-cls"
         sx={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Typography className="title-cls">{"Companies"}</Typography>
+        <Typography className="title-cls">{"Currencies"}</Typography>
         <Box
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
@@ -193,13 +187,13 @@ function Company() {
       </Box>
       {!dataLoading ? (
         <>
-          {companyData.length ? (
+          {currencyData.length ? (
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...companyData]}
+                rows={[...currencyData]}
                 columns={columns}
                 disableColumnFilter
                 disableSelectionOnClick
@@ -291,28 +285,28 @@ function Company() {
             <Box className="error-img">
               <img src={NotfoundIcon} alt="notfound" />
               <Typography className="error-msg">
-                {"No companies found!"}
+                {"No currencies found!"}
               </Typography>
             </Box>
           )}
         </>
       ) : (
         <>
-          <RowSkeletonCard pathString="companies" />
+          <RowSkeletonCard pathString="currencies" />
         </>
       )}
-      <CompanyModal
-        companyId={rowCellId}
+      <CurrencyModal
+        currencyId={rowCellId}
         action={action}
         open={openModal}
         handleClose={handleModalClose}
       />
       <DeleteModal
         open={openDeleteModal}
-        handleObjDelete={handleCompanyDelete}
+        handleObjDelete={handleCurrencyDelete}
         handleClose={handleDeleteModalClose}
       />
     </Box>
   );
 }
-export default Company;
+export default Currency;

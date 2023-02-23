@@ -50,6 +50,7 @@ export interface modalsInterface {
   employeeDesignationLabel: string;
   employeeSalaryLabel: string;
   employeeManagingLabel: string;
+  employeeCurrencyLabel: string;
   employeeEmployementLabel: string;
   employeeAssetLabel: string;
   employeeEmergencyContactLabel: string;
@@ -99,11 +100,13 @@ export interface modalsInterface {
   DegreeRequired: string;
   UniversityRequired: string;
   DepartmentRequired: string;
+  CurrencyRequired: string;
   DefaultRoleRequired: string;
   YearRequired: string;
   emailrRegxError: string;
   defaultRoleLabel: string;
   departmentsLabel: string;
+  salaryInvalid: string;
   firstNameRegxError: string;
   lastNameRegxError: string;
   nicRegxError: string;
@@ -281,6 +284,7 @@ export type EmployeeForm = {
   emergencyContactNumber: string;
   designation: string;
   salary?: number;
+  currency?: number;
   userAllowed?: boolean;
   department?: number;
   manager?: number;
@@ -497,4 +501,8 @@ export interface InstitueInterface {
 export interface CompanyInterface {
   name: string;
   image: string;
+}
+export interface CurrencyInterface {
+  code: string;
+  symbol: string;
 }

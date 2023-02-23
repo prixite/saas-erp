@@ -38,6 +38,7 @@ import {
   phoneRegex,
   nicRegex,
   toastAPIError,
+  salaryRegex,
 } from "@src/helpers/utils/utils";
 import {
   useCreateEmployeeMutation,
@@ -84,6 +85,7 @@ const employeeFormInitialState: EmployeeForm = {
   emergencyContactNumber: "",
   designation: "",
   salary: null || undefined,
+  currency: null || undefined,
   userAllowed: false,
   department: null || undefined,
   manager: null || undefined,
@@ -141,6 +143,8 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     UniversityRequired,
     DefaultRoleRequired,
     DepartmentRequired,
+    salaryInvalid,
+    CurrencyRequired,
     YearRequired,
     emailrRegxError,
     firstNameRegxError,
@@ -178,6 +182,12 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     type: yup.string().required(EmployementTypeRequired),
     defaultRole: yup.string().required(DefaultRoleRequired),
     department: yup.string().required(DepartmentRequired),
+    salary: yup.string().matches(salaryRegex, salaryInvalid),
+    currency: yup.string().when("salary", {
+      is: (salary: string) => salary && salary.trim().length > 0,
+      then: yup.string().required(CurrencyRequired),
+      otherwise: yup.string(),
+    }),
   });
   const employeeExperienceValidationSchema = yup.object().shape({
     experience: yup.array().of(
@@ -349,6 +359,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       emergencyContactNumber: employeeData?.emergency_contact_number || "",
       designation: employeeData?.designation || "",
       salary: employeeData?.salary,
+      currency: employeeData?.currency?.id,
       userAllowed: employeeData?.user_allowed as boolean,
       department: employeeData?.department?.id,
       manager: employeeData?.manager?.id,
@@ -375,6 +386,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
       emergency_contact_number: formik.values.emergencyContactNumber,
       designation: formik.values.designation,
       salary: formik.values.salary,
+      currency: formik.values.currency,
       user_allowed: formik.values.userAllowed,
       department: formik.values.department,
       manager: formik.values.manager,

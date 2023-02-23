@@ -30,6 +30,7 @@ import {
   useGetRolesQuery,
   useGetDepartmentsQuery,
 } from "@src/store/reducers/employees-api";
+import { useApiCurrencyListQuery } from "@src/store/api";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 interface Props {
@@ -43,6 +44,7 @@ const PageOne = ({ formik, action }: Props) => {
   const { data: Benefits = [] } = useGetBenefitsQuery();
   const { data: employeetableData } = useGetEmployeesQuery();
   const { data: typesData } = useGetEmployeementTypesQuery();
+  const { data: currencyData } = useApiCurrencyListQuery();
   const { data: rolesData } = useGetRolesQuery();
   const { data: departmentData } = useGetDepartmentsQuery();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -57,6 +59,7 @@ const PageOne = ({ formik, action }: Props) => {
     employeeDesignationLabel,
     employeeSalaryLabel,
     employeeManagingLabel,
+    employeeCurrencyLabel,
     employeeEmployementLabel,
     employeeAssetLabel,
     employeeEmergencyContactLabel,
@@ -358,7 +361,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorTexte">{formik.errors?.managing}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={3}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -370,6 +373,34 @@ const PageOne = ({ formik, action }: Props) => {
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.salary}</p>
+          </Box>
+        </Grid>
+        <Grid className="grid-item-cls" item xs={3}>
+          <Box className="text-field-box">
+            <TextField
+              className="text-field-cls"
+              select
+              required
+              fullWidth
+              name="currency"
+              label={employeeCurrencyLabel}
+              onChange={formik.handleChange}
+              value={formik.values.currency || ""}
+              InputLabelProps={{ className: "textfield_label" }}
+            >
+              {currencyData?.length ? (
+                currencyData?.map((currency) => {
+                  return (
+                    <MenuItem key={currency?.id} value={currency?.id}>
+                      {currency?.code}
+                    </MenuItem>
+                  );
+                })
+              ) : (
+                <Box></Box>
+              )}
+            </TextField>
+            <p className="errorText">{formik.errors?.currency}</p>
           </Box>
         </Grid>
       </Grid>

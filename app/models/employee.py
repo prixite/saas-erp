@@ -2,6 +2,7 @@ from django.db import models
 
 from project.settings import AUTH_USER_MODEL
 
+from  .core import Currency
 from .soft_delete import ActiveEmployeeModel, SoftDeleteModel
 
 
@@ -23,6 +24,9 @@ class Employee(SoftDeleteModel):
         null=True,
     )
     salary = models.PositiveIntegerField(null=True, blank=True)
+    currency = models.ForeignKey(
+        Currency, on_delete=models.PROTECT, null=True, blank=True
+    )
     slack_id = models.CharField(max_length=11, null=True, blank=True, unique=True)
     leave_count = models.IntegerField(default=0)
     user_allowed = models.BooleanField(default=False)
