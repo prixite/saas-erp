@@ -28,7 +28,12 @@ from slack.signature.verifier import SignatureVerifier
 from waffle import get_waffle_switch_model
 
 from app import models, serializers
-from app.utils import create_presigned_url, send_email_forget_password, send_leave_email
+from app.utils import (
+    create_predesigned_url_delete,
+    create_presigned_url,
+    send_email_forget_password,
+    send_leave_email,
+)
 from app.views import mixins
 from project.settings import SLACK_ATTENDACE_CHANNEL, SLACK_SIGNING_SECRET, SLACK_TOKEN
 
@@ -985,9 +990,23 @@ class AvailabilityViewSet(generics.GenericAPIView):
         return Response()
 
 
-class AwsApiView(APIView):
-    def get(self, request, *args, **kwargs):
-        response = create_presigned_url(
-            settings.AWS_STORAGE_BUCKET_NAME, settings.AWS_SECRET_ACCESS_KEY
+class AwsUploadFileApiView(APIView):
+    def post(self, request, *args, **kwargs):
+        filename = request.data.get("filename")
+        filetype = request.data.get("filetype")
+        response = create_presigned_url(filename, filetype)
+
+        return Response(
+            {
+                "signedRequest": response,
+                "location": f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_DEFAULT_REGION}.amazonaws.com/{filename}",  # noqa
+            },
+            status=status.HTTP_200_OK,
         )
-        return Response({"aws_url": response}, status=status.HTTP_200_OK)
+
+
+class AwsDelteFileApiView(APIView):
+    def delete(self, request, *args, **kwargs):
+        response = create_predesigned_url_delete(kwargs.get("key"))
+        requests.delete(response)
+        return Response(status=status.HTTP_204_NO_CONTENT)
