@@ -113,7 +113,7 @@ export const employeesApi = createApi({
       query: ({ updatedObj }) => {
         return {
           url: "/me/update/",
-          method: "PATCH",
+          method: "PUT",
           body: updatedObj,
         };
       },

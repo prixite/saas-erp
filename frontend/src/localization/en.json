@@ -205,7 +205,9 @@
     "canLogin": "Can Login?",
     "cancelBtn": "Cancel",
     "saveBtn": "Save",
-    "updateBtn":"Update"
+    "updateBtn":"Update",
+    "bigFileError":"File is too big!",
+    "invalidFormatError":"Invalid format!"
   },
   "AuthPages": {
     "saas": "SaaS",

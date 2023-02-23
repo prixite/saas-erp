@@ -21,9 +21,12 @@ import {
   nameRegex,
   phoneRegex,
   toastAPIError,
+  SUPPORTED_FORMATS,
 } from "@src/helpers/utils/utils";
-import { useApiMeUpdateUpdateMutation } from "@src/store/api";
-import { useGetUserQuery } from "@src/store/reducers/employees-api";
+import {
+  useUpdateOwnerProfileMutation,
+  useGetUserQuery,
+} from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/profile/profilePage.scss";
 
 const inputLabelColor = { color: "rgba(0, 0, 0, 0.8) !important" };
@@ -31,7 +34,8 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function ProfilePage() {
   const { data: userData, isSuccess } = useGetUserQuery();
   const [loading, setLoading] = useState(false);
-  const [updateProfile] = useApiMeUpdateUpdateMutation();
+  const [onChangeValidation, setOnChangeValidation] = useState(false);
+  const [updateProfile] = useUpdateOwnerProfileMutation();
 
   const constantData: LocalizationInterface = localizedData();
   const {
@@ -52,6 +56,7 @@ function ProfilePage() {
     phoneError,
     cancelBtn,
   } = constantData.ProfilePage;
+  const { invalidFormatError, bigFileError } = constantData.Modals;
 
   const formik = useFormik({
     initialValues: {
@@ -77,13 +82,26 @@ function ProfilePage() {
         .required(emailRequired),
       phone: yup.string().matches(phoneRegex, phoneError),
       headline: yup.string(),
+      image: yup.mixed().when({
+        is: (value) => typeof value === "object" && value !== null,
+        then: yup
+          .mixed()
+          .test("FILE_SIZE", bigFileError, (value) => {
+            return value && value.size < 1024 * 1024;
+          })
+          .test(
+            "FILE_TYPE",
+            invalidFormatError,
+            (value) => value && SUPPORTED_FORMATS.includes(value.type)
+          ),
+        otherwise: yup.mixed(),
+      }),
     }),
-    validateOnChange: true,
+    validateOnChange: onChangeValidation,
     onSubmit: () => {
       handleEditOwner();
     },
   });
-
   useEffect(() => {
     if (userData && isSuccess) {
       formik.setValues({
@@ -112,7 +130,7 @@ function ProfilePage() {
   };
   const performEditOwner = async (data: string) => {
     const updatedObj = getProfileObject(data);
-    await updateProfile({ meUpdate: updatedObj })
+    await updateProfile({ updatedObj: updatedObj })
       .unwrap()
       .then(async () => {
         toast.success("Profile successfully updated.", {
@@ -260,6 +278,7 @@ function ProfilePage() {
                 loading={loading}
                 className="btns__saveBtn"
                 onClick={() => {
+                  setOnChangeValidation(true);
                   formik.handleSubmit();
                 }}
               >

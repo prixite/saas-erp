@@ -132,7 +132,8 @@ const PageOne = ({ formik, action }: Props) => {
                 src={formik.values.image}
                 alt="upload icon"
               />
-            ) : formik.values.image ? (
+            ) : formik.values.image &&
+              typeof formik.values.image === "object" ? (
               <PreviewImage file={formik.values.image} />
             ) : (
               <img className="upload-pic" src={UploadIcon} alt="upload icon" />
@@ -180,7 +181,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="firstName"
               label={employeeFirstName}
               onChange={formik.handleChange}
-              value={formik.values.firstName}
+              value={formik.values.firstName || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.firstName}</p>
@@ -195,7 +196,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="lastName"
               label={employeeLastName}
               onChange={formik.handleChange}
-              value={formik.values.lastName}
+              value={formik.values.lastName || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.lastName}</p>
@@ -212,7 +213,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="contactNumber"
               label={employeePhoneLabel}
               onChange={formik.handleChange}
-              value={formik.values.contactNumber}
+              value={formik.values.contactNumber || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.contactNumber}</p>
@@ -228,7 +229,7 @@ const PageOne = ({ formik, action }: Props) => {
               disabled={action === "edit" ? true : false}
               label={employeeEmailLabel}
               onChange={formik.handleChange}
-              value={formik.values.email}
+              value={formik.values.email || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.email}</p>
@@ -242,7 +243,7 @@ const PageOne = ({ formik, action }: Props) => {
               <DatePicker
                 className="text-field-cls"
                 label={employeeDateLabel}
-                value={formik.values.dateOfJoining}
+                value={formik.values.dateOfJoining || ""}
                 disabled={action === "edit" ? true : false}
                 onChange={(newValue) => {
                   formik.setFieldValue("dateOfJoining", newValue);
@@ -274,7 +275,7 @@ const PageOne = ({ formik, action }: Props) => {
               disabled={action === "edit" ? true : false}
               label={employeeCnicLabel}
               onChange={formik.handleChange}
-              value={formik.values.nic}
+              value={formik.values.nic || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.nic}</p>
@@ -291,7 +292,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="designation"
               label={employeeDesignationLabel}
               onChange={formik.handleChange}
-              value={formik.values.designation}
+              value={formik.values.designation || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.designation}</p>
@@ -411,7 +412,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="emergencyContactNumber"
               label={employeeEmergencyContactLabel}
               onChange={formik.handleChange}
-              value={formik.values.emergencyContactNumber}
+              value={formik.values.emergencyContactNumber || ""}
               InputLabelProps={{ className: "textfield_label" }}
             />
             <p className="errorText">{formik.errors?.emergencyContactNumber}</p>
@@ -457,7 +458,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="defaultRole"
               label={defaultRoleLabel}
               onChange={formik.handleChange}
-              value={formik.values.defaultRole || ""}
+              value={formik.values.defaultRole}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {rolesData?.length ? (

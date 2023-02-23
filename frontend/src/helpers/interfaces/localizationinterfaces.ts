@@ -126,6 +126,8 @@ export interface modalsInterface {
   cancelBtn: string;
   saveBtn: string;
   updateBtn: string;
+  bigFileError: string;
+  invalidFormatError: string;
 }
 export interface payrollInterface {
   payrollHeading: string;
