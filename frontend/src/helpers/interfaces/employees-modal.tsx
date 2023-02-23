@@ -74,6 +74,10 @@ export interface EmployeeData {
   };
   org_id: string;
   salary: number;
+  currency: {
+    id: number;
+    code: string;
+  };
   user_allowed: boolean;
 }
 export interface Doc {

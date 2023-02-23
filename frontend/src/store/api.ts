@@ -11,6 +11,7 @@ const enhancedRtkApi = rtk.enhanceEndpoints({
     "Department",
     "Program",
     "Institute",
+    "Currency",
   ],
   endpoints: {
     apiUsersAccessList: {
@@ -147,6 +148,21 @@ const enhancedRtkApi = rtk.enhanceEndpoints({
     },
     apiInstituesDestroy: {
       invalidatesTags: ["Institute"],
+    },
+    apiCurrencyList: {
+      providesTags: ["Currency"],
+    },
+    apiCurrencyRetrieve: {
+      providesTags: ["Currency"],
+    },
+    apiCurrencyCreate: {
+      invalidatesTags: ["Currency"],
+    },
+    apiCurrencyUpdate: {
+      invalidatesTags: ["Currency"],
+    },
+    apiCurrencyDestroy: {
+      invalidatesTags: ["Currency"],
     },
   },
 });

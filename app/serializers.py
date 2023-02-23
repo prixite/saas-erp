@@ -589,6 +589,12 @@ class EmployeeSerializer(serializers.ModelSerializer):
             }
         if instance.type:
             data["type"] = {"id": instance.type.id, "title": instance.type.name}
+        if instance.currency:
+            data["currency"] = {
+                "id": instance.currency.id,
+                "code": instance.currency.code,
+                "symbol": instance.currency.symbol,
+            }
         if instance.benefits:
             data["benefits"] = BenefitSerializer(
                 instance.benefits.all(), many=True

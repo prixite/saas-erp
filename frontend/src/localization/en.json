@@ -44,25 +44,26 @@
     "editBtn": "Edit",
     "deleteBtn": "Delete"
   },
-"TopbarDropdown":{
-  "Edit": "Edit",
-  "Profile":"Profile",
-  "Duplicate":"Duplicate",
-  "Archive":"Archive",
-  "More":"More",
-  "Logout":"Logout"
-},
+  "TopbarDropdown": {
+    "Edit": "Edit",
+    "Profile": "Profile",
+    "Duplicate": "Duplicate",
+    "Archive": "Archive",
+    "More": "More",
+    "Logout": "Logout"
+  },
   "MenuButtons": {
     "editBtn": "Edit",
     "deleteBtn": "Delete"
   },
   "SettingPage": {
-    "Setting":"Settings",
-    "ViewDepertaments":"Departments",
-    "ViewEmployements":"Employement Types",
-    "ViewPrograms":"Programs",
-    "ViewInstitues":"Institutes",
-    "ViewCompanies":"Companies"
+    "Setting": "Settings",
+    "ViewDepertaments": "Departments",
+    "ViewEmployements": "Employement Types",
+    "ViewPrograms": "Programs",
+    "ViewInstitues": "Institutes",
+    "ViewCompanies": "Companies",
+    "ViewCurrencies": "Currency"
   },
   "AdditionalInformation": {
     "additionalInformationHeading": "Additional Information",
@@ -134,6 +135,7 @@
     "employeeDesignationLabel": "Designation",
     "employeeSalaryLabel": "Salary",
     "employeeManagingLabel": "Managing",
+    "employeeCurrencyLabel": "Currency",
     "employeeEmployementLabel": "Employment Type",
     "employeeAssetLabel": "Assets",
     "employeeEmergencyContactLabel": "Emergency Contact",
@@ -189,11 +191,13 @@
     "UniversityRequired": "University is required!",
     "YearRequired": "Year is required!",
     "DepartmentRequired": "Department is required!",
+    "CurrencyRequired": "Currency is required!",
     "DefaultRoleRequired": "Default role is required!",
     "emailrRegxError": "Invalid Email!",
     "firstNameRegxError": "Invalid first name!",
     "lastNameRegxError": "Invalid last name!",
     "nicRegxError": "Invalid nic!",
+    "salaryInvalid": "Invalid salary!",
     "phoneRegxError": "Invalid phone number!",
     "defaultRoleLabel": "Default Role",
     "departmentsLabel": "Department",
@@ -205,7 +209,7 @@
     "canLogin": "Can Login?",
     "cancelBtn": "Cancel",
     "saveBtn": "Save",
-    "updateBtn":"Update"
+    "updateBtn": "Update"
   },
   "AuthPages": {
     "saas": "SaaS",
@@ -242,7 +246,7 @@
   "BreadCrumbs": {
     "Home": "Home"
   },
-  "Leaves" : {
+  "Leaves": {
     "AnnualLeaves": "Annual Leaves",
     "CausalLeaves": "Causal Leaves",
     "SickLeaves": "Sick Leaves",
@@ -252,81 +256,79 @@
     "LateArrival": "Late Arrival",
     "Leaves": "Leaves",
     "Leave": "Leave Actions",
-    "Leavesubheading":"Please add comments while performing action.",
+    "Leavesubheading": "Please add comments while performing action.",
     "ShortDuration": "Short Duration",
-    "LeaveRequests":"Leave Requests",
+    "LeaveRequests": "Leave Requests",
     "Action": "Action",
     "Accepted": "Accepted",
     "Rejected": "Rejected",
-    "ViewAllLeaves":"View All Leaves",
+    "ViewAllLeaves": "View All Leaves",
     "ClockError": "Haven’t clock in Yet",
     "LeavesManagement": "Leaves Management",
     "LeaveTypeRequired": "Leave type is required!",
     "LeaveStatusRequired": "Leave status is required!",
     "LeaveHRCommentsRequired": "Hr comments is required!",
-    "Actions":"Actions",
-    "CasualLeave":"Casual Leave",
+    "Actions": "Actions",
+    "CasualLeave": "Casual Leave",
     "SickLeave": "Sick Leave",
-    "AnnualLeave":" Annual Leave",
-    "Pending":"Pending",
-    "Approved":"Approved",
-    "Denied":"Denied"
+    "AnnualLeave": " Annual Leave",
+    "Pending": "Pending",
+    "Approved": "Approved",
+    "Denied": "Denied"
   },
-  "Standup":{
+  "Standup": {
     "standup": "Standups",
     "createStandup": "Create Standup",
     "addStandup": "Standup Update",
-    "StandupSelection":"Standup Selection",
+    "StandupSelection": "Standup Selection",
     "EmployeeName": "Employee Name",
     "Status": "Status",
     "Date": "Date",
-    "WorkDoneYesterday":"Work done yesterday",
-    "TodayPlan":"Today's Plan",
+    "WorkDoneYesterday": "Work done yesterday",
+    "TodayPlan": "Today's Plan",
     "Blockers": "Blockers",
-    "AddStandupHeading":"Add Standup",
-    "AddStandupSubheading":"While adding compensation please do add comments",
-    "FullTime":"Full Time",
+    "AddStandupHeading": "Add Standup",
+    "AddStandupSubheading": "While adding compensation please do add comments",
+    "FullTime": "Full Time",
     "PartTime": "Part Time",
-    "StandupSelectionRequired":"Standup selection is required!",
+    "StandupSelectionRequired": "Standup selection is required!",
     "EmployeeNameRequired": "Employee name is required!",
     "StatusRequired": "Status is required!",
     "DateRequired": "Date is required!",
-    "WorkDoneYesterdayRequired":"Work done yesterday is required!",
-    "TodayPlanRequired":"Today's plan is required!",
+    "WorkDoneYesterdayRequired": "Work done yesterday is required!",
+    "TodayPlanRequired": "Today's plan is required!",
     "BlockersRequired": "Blockers is required!",
     "CreateStandupHeading": "Create Standup",
     "CreateStandupSubheading": "You can create a standup here.",
     "Team": "Team",
     "StandupName": "Standup Name",
-    "TeamRequired":"Team is required!",
-    "StandupNameRequired":"Standup name is required!",
-    "Frontend":"Frontend",
-    "Backend":"Backend",
-    "Marketing":"Marketing",
+    "TeamRequired": "Team is required!",
+    "StandupNameRequired": "Standup name is required!",
+    "Frontend": "Frontend",
+    "Backend": "Backend",
+    "Marketing": "Marketing",
     "Time": "Time",
-    "Joined":"Joined",
-    "Missed":"Missed",
-    "TimeRequired":"Time is required!",
-    "Leave":"Leave"
-
+    "Joined": "Joined",
+    "Missed": "Missed",
+    "TimeRequired": "Time is required!",
+    "Leave": "Leave"
   },
-  "Attendance":{
-    "attendance":"Attendance",
-    "CheckingTime":"Checking Time",
-    "ViewAll":"View All"
+  "Attendance": {
+    "attendance": "Attendance",
+    "CheckingTime": "Checking Time",
+    "ViewAll": "View All"
   },
   "Teams": {
     "Teams": "Teams",
-    "AddTeam":"Add Team",
-    "CreateTeam":"Create Team",
-    "CreateTeamSubheading":"You can create a team here.",
-    "NameRequired":"Name is required!",
-    "MemberRequired":"Team member is required!",
-    "Name":"Name",
-    "AddTeamMember":"Add Team Member",
+    "AddTeam": "Add Team",
+    "CreateTeam": "Create Team",
+    "CreateTeamSubheading": "You can create a team here.",
+    "NameRequired": "Name is required!",
+    "MemberRequired": "Team member is required!",
+    "Name": "Name",
+    "AddTeamMember": "Add Team Member",
     "TeamDeleteSuccess": "Team deleted successfully",
-    "EditTeam":"Edit Team",
-    "EditTeamSubheading":"You can edit a team here."
+    "EditTeam": "Edit Team",
+    "EditTeamSubheading": "You can edit a team here."
   }
-
 }

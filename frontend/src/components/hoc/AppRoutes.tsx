@@ -8,6 +8,7 @@ import Accounts from "@src/components/common/smart/accounts/accounts";
 import AdminSettings from "@src/components/common/smart/adminSettings/adminSettings";
 import Attendance from "@src/components/common/smart/attendance/attendance";
 import Company from "@src/components/common/smart/company/company";
+import Currency from "@src/components/common/smart/currnecy/currnecy";
 import Dashboard from "@src/components/common/smart/dashboard/dashboard";
 import Department from "@src/components/common/smart/department/department";
 import Employee from "@src/components/common/smart/employee/employee";
@@ -104,6 +105,7 @@ const AppRoutes = () => {
                 <Route path="settings/program" element={<Program />} />
                 <Route path="settings/institute" element={<Institute />} />
                 <Route path="settings/company" element={<Company />} />
+                <Route path="settings/currency" element={<Currency />} />
                 <Route path="settings/" element={<Settings />} />
               </>
             )}
