@@ -1,5 +1,11 @@
+from datetime import timedelta
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.permissions import SAFE_METHODS
 from rest_framework.views import status
@@ -128,3 +134,59 @@ class OrganizationMixin(CreateModelMixin, ListModelMixin):
 
     def perform_create(self, serializer):
         serializer.save(organization=self.request.user.organization)
+
+
+class FilterMixin(ListModelMixin):
+    def get_queryset(self):
+        emp_id_str = self.request.query_params.get("id")
+        id = int(emp_id_str) if emp_id_str else None
+        start_date_str = self.request.query_params.get("start_date")
+        start_date = (
+            timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
+            if start_date_str
+            else None
+        )
+        end_date_str = self.request.query_params.get("end_date")
+        end_date = (
+            timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
+            if end_date_str
+            else None
+        )
+
+        if start_date and end_date and start_date > end_date:
+            raise ValidationError("Start date must be before end date.")
+
+        if self.module in [x.slug for x in self.request.user.member_modules]:
+            emp = get_object_or_404(models.Employee, user=self.request.user)
+            if id is not None and id != emp.id:
+                raise PermissionDenied(
+                    detail="You cannot view attendance of another employee."
+                )
+            id = emp.id
+
+        else:
+            if not id:
+                raise ValidationError("id is required")
+
+        if not start_date and not end_date:
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=30)
+        elif not start_date:
+            start_date = end_date - timedelta(days=30)
+        elif not end_date:
+            end_date = start_date + timedelta(days=30)
+
+        if self.module == "employees":
+            queryset = self.queryset.filter(
+                Q(employee__id=id)
+                & (
+                    Q(time_in__date__range=[start_date, end_date])
+                    | Q(time_out__date__range=[start_date, end_date])
+                    | Q(time_in__date__lte=start_date, time_out__date__gte=end_date)
+                )
+            )
+        else:
+            queryset = self.queryset.filter(
+                Q(employee__id=id) & Q(created_at__date__range=(start_date, end_date))
+            )
+        return queryset

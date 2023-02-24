@@ -870,15 +870,14 @@ class RoleTestCase(BaseTestCase):
 class AttendaceTestCase(BaseTestCase):
     def test_programs_get(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/attendance/")
-
+        response = self.client.get("/api/attendance/?id=2")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class LeaveTesCase(BaseTestCase):
     def test_get_all_leaves(self):
         self.client.force_login(self.owner)
-        response = self.client.get("/api/attendance/")
+        response = self.client.get("/api/attendance/?id=2")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
