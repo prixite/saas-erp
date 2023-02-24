@@ -33,15 +33,38 @@ def send_invitation_mail(to_email, user, url):
 
 def send_leave_email(status, employee, updated_by, leave_from, leave_to, hr_comment):
     subject = f"Leave {status}"
-    employee_message = f"Hi {employee.user.get_full_name()}, your leave request from {leave_from} to {leave_to} have been {status} by {updated_by.get_full_name()} with remarks as {hr_comment}."  # noqa
+    data = {
+        "employee": employee,
+        "leave_from": leave_from,
+        "leave_to": leave_to,
+        "status": status,
+        "hr_comment": hr_comment,
+        "updated_by": updated_by.get_full_name(),
+    }
+    html_emplyee_message = render_to_string(
+        "app/email/leave_update.html",
+        data,
+    )
     email_from = settings.DEFAULT_FROM_EMAIL
-
     try:
-        send_mail(subject, employee_message, email_from, [employee.user.email])
+        send_mail(
+            subject,
+            "",
+            email_from,
+            [employee.user.email],
+            html_message=html_emplyee_message,
+        )
         if employee.manager:
-            maanger_message = f"Hi {employee.manager.user.get_full_name()}, we have successfully informed {employee.user.get_full_name()} that their leave request from {leave_from} to {leave_to} have been {status} by  {updated_by.get_full_name()} with remarks as {hr_comment}."  # noqa
+            html_manager_message = render_to_string(
+                "app/email/leaveupdate_manager.html",
+                data,
+            )
             send_mail(
-                subject, maanger_message, email_from, [employee.manager.user.email]
+                subject,
+                "",
+                email_from,
+                [employee.manager.user.email],
+                html_message=html_manager_message,
             )
     except Exception as e:
         return e
