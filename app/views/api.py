@@ -1,5 +1,5 @@
+import datetime
 import json
-from datetime import datetime
 
 import requests
 import slack
@@ -709,7 +709,9 @@ class SlackApiView(APIView):
         )
 
 
-class AttendanceViewSet(mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin):
+class AttendanceViewSet(
+    mixins.FilterMixin, mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin
+):
     serializer_class = serializers.AttendanceSerializer
     queryset = models.Attendance.objects.all()
     module = models.Module.ModuleType.EMPLOYEES
@@ -733,7 +735,9 @@ class MeUpdateNotificationViewSet(UpdateAPIView):
         return self.request.user
 
 
-class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
+class LeaveView(
+    mixins.FilterMixin, mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
     serializer_class = serializers.LeaveSerializer
     queryset = models.Leave.objects.all()
     module = models.Module.ModuleType.LEAVE
