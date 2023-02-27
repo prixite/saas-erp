@@ -237,9 +237,37 @@
                 }
             }
         },
-        "/api/aws/": {
-            "get": {
-                "operationId": "api_aws_retrieve",
+        "/api/aws_delete_file/{key}/": {
+            "delete": {
+                "operationId": "api_aws_delete_file_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "key",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/aws_upload_file/": {
+            "post": {
+                "operationId": "api_aws_upload_file_create",
                 "tags": [
                     "api"
                 ],
@@ -1594,6 +1622,190 @@
                 }
             }
         },
+        "/api/documents/": {
+            "get": {
+                "operationId": "api_documents_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Document"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_documents_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Document"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Document"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Document"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/documents/{id}/": {
+            "get": {
+                "operationId": "api_documents_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "api_documents_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDocument"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDocument"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedDocument"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "api_documents_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/employeement_type/": {
             "get": {
                 "operationId": "api_employeement_type_list",
@@ -2080,7 +2292,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Document"
+                                        "$ref": "#/components/schemas/EmployeeDocument"
                                     }
                                 }
                             }
@@ -2108,17 +2320,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Document"
+                                "$ref": "#/components/schemas/EmployeeDocument"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/Document"
+                                "$ref": "#/components/schemas/EmployeeDocument"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Document"
+                                "$ref": "#/components/schemas/EmployeeDocument"
                             }
                         }
                     },
@@ -2134,7 +2346,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Document"
+                                    "$ref": "#/components/schemas/EmployeeDocument"
                                 }
                             }
                         },
@@ -2156,6 +2368,190 @@
                 ],
                 "responses": {
                     "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/folders/": {
+            "get": {
+                "operationId": "api_folders_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Folder"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_folders_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Folder"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Folder"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Folder"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Folder"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/folders/{id}/": {
+            "get": {
+                "operationId": "api_folders_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FolderDetail"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "api_folders_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedFolder"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedFolder"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedFolder"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Folder"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "api_folders_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
                         "description": "No response body"
                     }
                 }
@@ -4755,14 +5151,10 @@
                     },
                     "max_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "expected_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "updated_at": {
@@ -4876,7 +5268,7 @@
                     },
                     "symbol": {
                         "type": "string",
-                        "maxLength": 1
+                        "maxLength": 3
                     },
                     "created_at": {
                         "type": "string",
@@ -4953,24 +5345,31 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "name": {
+                    "title": {
                         "type": "string",
-                        "maxLength": 128
+                        "maxLength": 255
                     },
-                    "type": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "folder": {
                         "type": "integer",
                         "nullable": true
                     },
-                    "document_url": {
+                    "document_link": {
                         "type": "string",
                         "format": "uri",
+                        "nullable": true,
                         "maxLength": 200
+                    },
+                    "created_by": {
+                        "type": "integer",
+                        "nullable": true
                     }
                 },
                 "required": [
-                    "document_url",
                     "id",
-                    "name"
+                    "text"
                 ]
             },
             "DocumentType": {
@@ -5064,14 +5463,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -5088,14 +5483,10 @@
                     },
                     "weekly_available_hours": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648,
                         "nullable": true
                     },
                     "monthly_available_hours": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648,
                         "nullable": true
                     },
                     "availability_last_msg": {
@@ -5124,6 +5515,10 @@
                         "type": "integer",
                         "nullable": true
                     },
+                    "currency": {
+                        "type": "integer",
+                        "nullable": true
+                    },
                     "benefits": {
                         "type": "array",
                         "items": {
@@ -5146,6 +5541,33 @@
                     "total_experience",
                     "updated_at",
                     "user"
+                ]
+            },
+            "EmployeeDocument": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128
+                    },
+                    "type": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "document_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 200
+                    }
+                },
+                "required": [
+                    "document_url",
+                    "id",
+                    "name"
                 ]
             },
             "EmployeeList": {
@@ -5252,14 +5674,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -5293,6 +5711,10 @@
                         "nullable": true
                     },
                     "type": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "currency": {
                         "type": "integer",
                         "nullable": true
                     },
@@ -5440,6 +5862,52 @@
                     "end_date",
                     "start_date",
                     "title"
+                ]
+            },
+            "Folder": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 30
+                    },
+                    "document_count": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "document_count",
+                    "id",
+                    "name"
+                ]
+            },
+            "FolderDetail": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 30
+                    },
+                    "documents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Document"
+                        }
+                    }
+                },
+                "required": [
+                    "documents",
+                    "id",
+                    "name"
                 ]
             },
             "Institue": {
@@ -5902,6 +6370,53 @@
                     "token",
                     "uidb64"
                 ]
+            },
+            "PatchedDocument": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "folder": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "document_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
+                    },
+                    "created_by": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                }
+            },
+            "PatchedFolder": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 30
+                    },
+                    "document_count": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
             },
             "PatchedLeaveUpdate": {
                 "type": "object",
