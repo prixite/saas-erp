@@ -1,5 +1,7 @@
 import boto3
+from asgiref.sync import async_to_sync
 from botocore.exceptions import ClientError
+from channels.layers import get_channel_layer
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -107,3 +109,10 @@ def create_predesigned_url_delete(key, expiration=300):
         return response
     except ClientError:
         return None
+
+
+def push_notification(message):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "notification", {"type": "push", "message": message}
+    )

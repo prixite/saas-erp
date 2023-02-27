@@ -75,12 +75,12 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "daphne",
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Internal Apps
@@ -132,7 +132,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [(env("REDIS_HOST"), env("REDIS_PORT"))],
         },
     },
 }

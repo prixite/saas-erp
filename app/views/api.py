@@ -3,8 +3,6 @@ from datetime import datetime
 
 import requests
 import slack
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -33,7 +31,10 @@ from app import models, serializers
 from app.utils import (
     create_predesigned_url_delete,
     create_presigned_url,
+    push_notification,
+   
     send_email_forget_password,
+   
     send_leave_email,
 )
 from app.views import mixins
@@ -769,11 +770,7 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
         user = employee.user.first_name
         status = request.data["status"]
         message = user + ", Your leave has been " + status
-        print(message)
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            user, {"type": "notification.send", "message": message}
-        )
+        push_notification(message)
         notification = models.Notification(user=employee.user, message=message)
         notification.save()
         return response

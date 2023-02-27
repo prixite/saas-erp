@@ -29,22 +29,25 @@
     {% block js_includes %}{% endblock %}
     {% render_bundle 'main' 'js' %}
     <script>
-      var ws = new WebSocket('ws://127.0.0.1:8000/ws/awc/')
-      ws.addEventListener('open',()=>{
-          console.log("WebSocket connection open..")
+      var ws = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/notifications/'
+      );
+      ws.addEventListener('open', () => {
+          console.log("WebSocket connection open..");
       })
 
-      ws.addEventListener('message',(event)=>{
-          console.log("Message recieved from server..", event.data)
-          //console.log(event.data)
+      ws.addEventListener('message', (event) => {
+          console.log("Message recieved from server..", JSON.parse(event.data));
       })
 
-      ws.addEventListener('error',(event)=>{
-          console.log("Websocket error occured..", event)
+      ws.addEventListener('error', (event) => {
+          console.log("Websocket error occured..", event);
       })
 
-      ws.addEventListener('close',(event)=>{
-          console.log("Websocket connection closed..", event)
+      ws.addEventListener('close', (event) => {
+          console.log("Websocket connection closed..", event);
       })
   </script>
   </body>
