@@ -28,6 +28,7 @@ services:
       - shm:/dev/shm
     depends_on:
       - db
+      - redis
 
   availability:
     build:
@@ -40,6 +41,17 @@ services:
     volumes:
       - shm:/dev/shm
     depends_on:
+      - app
+
+  daphne:
+    image: app
+    command: ./docker/scripts/run-daphne
+    env_file:
+      - ./.env
+    container_name: daphne-erp
+    depends_on:
+      - db
+      - redis
       - app
 
   nginx:
