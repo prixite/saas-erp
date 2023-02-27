@@ -68,17 +68,42 @@ def send_email_forget_password(data):
         return e
 
 
-def create_presigned_url(bucket_name, key, expiration=3600):
-    # Generate a presigned URL for the S3 object
-    s3_client = boto3.client("s3")
+def create_presigned_url(filename, filetype, expiration=300):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_DEFAULT_REGION,
+    )
     try:
         response = s3_client.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": bucket_name, "Key": key},
+            "put_object",
+            {
+                "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
+                "Key": filename,
+                "ContentType": filetype,
+                "ACL": "public-read",
+            },
             ExpiresIn=expiration,
         )
+        return response
     except ClientError:
-        raise
+        return None
 
-    # The response contains the presigned URL
-    return response
+
+def create_predesigned_url_delete(key, expiration=300):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_DEFAULT_REGION,
+    )
+    try:
+        response = s3_client.generate_presigned_url(
+            "delete_object",
+            {"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": key},
+            ExpiresIn=expiration,
+        )
+        return response
+    except ClientError:
+        return None

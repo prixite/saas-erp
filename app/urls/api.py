@@ -233,8 +233,12 @@ urlpatterns = [
         api.WaffleApiView.as_view(),
     ),
     path(
-        "aws/",
-        api.AwsApiView.as_view(),
+        "aws_upload_file/",
+        api.AwsUploadFileApiView.as_view(),
+    ),
+    path(
+        "aws_delete_file/<str:key>/",
+        api.AwsDelteFileApiView.as_view(),
     ),
     path(
         "attendance/",

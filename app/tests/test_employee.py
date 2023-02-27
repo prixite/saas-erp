@@ -88,6 +88,7 @@ class EmployeeTestCase(BaseTestCase):
                 "department",
                 "manager",
                 "type",
+                "currency",
                 "benefits",
                 "organization",
                 "manages",

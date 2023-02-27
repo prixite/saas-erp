@@ -254,7 +254,7 @@ class Currency(models.Model):
     """
 
     code = models.CharField(max_length=3)
-    symbol = models.CharField(max_length=1)
+    symbol = models.CharField(max_length=3)
     organization = models.ForeignKey("Organization", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

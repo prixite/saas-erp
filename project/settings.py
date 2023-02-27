@@ -39,6 +39,8 @@ env = environ.Env(
     SLACK_SIGNING_SECRET=(str, None),
     AWS_STORAGE_BUCKET_NAME=(str, None),
     AWS_SECRET_ACCESS_KEY=(str, None),
+    AWS_DEFAULT_REGION=(str, None),
+    AWS_ACCESS_KEY_ID=(str, None),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -66,6 +68,10 @@ SLACK_SIGNING_SECRET = env("SLACK_SIGNING_SECRET")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+
+AWS_DEFAULT_REGION = env("AWS_DEFAULT_REGION")
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 # Application definition
 
 INSTALLED_APPS = [
