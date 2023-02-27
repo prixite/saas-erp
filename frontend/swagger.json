@@ -237,9 +237,37 @@
                 }
             }
         },
-        "/api/aws/": {
-            "get": {
-                "operationId": "api_aws_retrieve",
+        "/api/aws_delete_file/{key}/": {
+            "delete": {
+                "operationId": "api_aws_delete_file_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "key",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/aws_upload_file/": {
+            "post": {
+                "operationId": "api_aws_upload_file_create",
                 "tags": [
                     "api"
                 ],
@@ -4960,7 +4988,7 @@
                     },
                     "symbol": {
                         "type": "string",
-                        "maxLength": 1
+                        "maxLength": 3
                     },
                     "created_at": {
                         "type": "string",
@@ -5200,6 +5228,10 @@
                         "type": "integer",
                         "nullable": true
                     },
+                    "currency": {
+                        "type": "integer",
+                        "nullable": true
+                    },
                     "benefits": {
                         "type": "array",
                         "items": {
@@ -5365,6 +5397,10 @@
                         "nullable": true
                     },
                     "type": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "currency": {
                         "type": "integer",
                         "nullable": true
                     },

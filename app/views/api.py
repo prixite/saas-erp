@@ -32,9 +32,7 @@ from app.utils import (
     create_predesigned_url_delete,
     create_presigned_url,
     push_notification,
-   
     send_email_forget_password,
-   
     send_leave_email,
 )
 from app.views import mixins
@@ -1040,24 +1038,3 @@ class AwsDelteFileApiView(APIView):
         response = create_predesigned_url_delete(kwargs.get("key"))
         requests.delete(response)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class NotificationViewSet(ModelViewSet):
-    serializer_class = serializers.NotificationSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        queryset = models.Notification.objects.filter(user=user)
-        return queryset
-
-    def get_notification_count(self, request, *args, **kwargs):
-        user = self.request.user
-        count = models.Notification.objects.filter(employee=user, is_seen=False).count()
-        return Response({"count": count})
-
-    def retrieve(self, request, pk=None):
-        notification = self.get_object()
-        notification.is_seen = True
-        notification.save()
-        serializer = self.get_serializer(notification)
-        return Response(serializer.data)

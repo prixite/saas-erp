@@ -41,6 +41,8 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, None),
     AWS_DEFAULT_REGION=(str, None),
     AWS_ACCESS_KEY_ID=(str, None),
+    REDIS_HOST=(str, "redis"),
+    REDIS_PORT=(int, 6379),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
