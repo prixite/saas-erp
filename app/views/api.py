@@ -765,11 +765,11 @@ class LeaveView(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
             leave.leave_to,
             leave.hr_comment,
         )
-        user = employee.user.first_name
+        user = employee.user
         status = request.data["status"]
-        message = user + ", Your leave has been " + status
-        push_notification(message)
-        notification = models.Notification(user=employee.user, message=message)
+        message = f"{user.get_full_name()}, Your leave has been {status}"
+        push_notification(user, message)
+        notification = models.Notification(user=user, message=message)
         notification.save()
         return response
 

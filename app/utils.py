@@ -111,8 +111,8 @@ def create_predesigned_url_delete(key, expiration=300):
         return None
 
 
-def push_notification(message):
+def push_notification(user, message):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        "notification", {"type": "push", "message": message}
+        f"{user.id}", {"type": "push", "message": message}
     )
