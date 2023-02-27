@@ -164,3 +164,6 @@ class BaseTestCase(TestCase):
             employee=self.employee,
             status="leave",
         )
+
+        self.folder = factories.FolderFactory()
+        self.document = factories.DocumentFactory()
