@@ -693,9 +693,9 @@ class CompensationSerializer(serializers.ModelSerializer):
         return data
 
 
-class DocumentSerializer(serializers.ModelSerializer):
+class EmployeeDocumentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Document
+        model = models.EmployeeDocument
         fields = [
             "id",
             "name",
@@ -1182,3 +1182,35 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
         data["module"] = {"id": instance.module.id, "name": instance.module.name}
         data["role"] = {"id": instance.role.id, "name": instance.role.name}
         return data
+
+
+class FolderSerializer(serializers.ModelSerializer):
+    document_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Folder
+        fields = ["id", "name", "document_count"]
+
+    def get_document_count(self, obj):
+        return obj.documents.count()
+
+
+class DocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Document
+        fields = [
+            "id",
+            "title",
+            "text",
+            "folder",
+            "document_link",
+            "created_by",
+        ]
+
+
+class FolderDetailSerializer(serializers.ModelSerializer):
+    documents = DocumentSerializer(many=True)
+
+    class Meta:
+        model = models.Folder
+        fields = ["id", "name", "documents"]

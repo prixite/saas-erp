@@ -359,6 +359,47 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiDocumentsList: build.query<
+      ApiDocumentsListApiResponse,
+      ApiDocumentsListApiArg
+    >({
+      query: () => ({ url: `/api/documents/` }),
+    }),
+    apiDocumentsCreate: build.mutation<
+      ApiDocumentsCreateApiResponse,
+      ApiDocumentsCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/documents/`,
+        method: "POST",
+        body: queryArg.document,
+      }),
+    }),
+    apiDocumentsRetrieve: build.query<
+      ApiDocumentsRetrieveApiResponse,
+      ApiDocumentsRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/documents/${queryArg.id}/` }),
+    }),
+    apiDocumentsPartialUpdate: build.mutation<
+      ApiDocumentsPartialUpdateApiResponse,
+      ApiDocumentsPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/documents/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedDocument,
+      }),
+    }),
+    apiDocumentsDestroy: build.mutation<
+      ApiDocumentsDestroyApiResponse,
+      ApiDocumentsDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/documents/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiEmployeementTypeList: build.query<
       ApiEmployeementTypeListApiResponse,
       ApiEmployeementTypeListApiArg
@@ -474,7 +515,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/employees/${queryArg.id}/documents/`,
         method: "POST",
-        body: queryArg.document,
+        body: queryArg.employeeDocument,
       }),
     }),
     apiFlagsRetrieve: build.query<
@@ -482,6 +523,47 @@ const injectedRtkApi = api.injectEndpoints({
       ApiFlagsRetrieveApiArg
     >({
       query: () => ({ url: `/api/flags/` }),
+    }),
+    apiFoldersList: build.query<
+      ApiFoldersListApiResponse,
+      ApiFoldersListApiArg
+    >({
+      query: () => ({ url: `/api/folders/` }),
+    }),
+    apiFoldersCreate: build.mutation<
+      ApiFoldersCreateApiResponse,
+      ApiFoldersCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/folders/`,
+        method: "POST",
+        body: queryArg.folder,
+      }),
+    }),
+    apiFoldersRetrieve: build.query<
+      ApiFoldersRetrieveApiResponse,
+      ApiFoldersRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/folders/${queryArg.id}/` }),
+    }),
+    apiFoldersPartialUpdate: build.mutation<
+      ApiFoldersPartialUpdateApiResponse,
+      ApiFoldersPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/folders/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedFolder,
+      }),
+    }),
+    apiFoldersDestroy: build.mutation<
+      ApiFoldersDestroyApiResponse,
+      ApiFoldersDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/folders/${queryArg.id}/`,
+        method: "DELETE",
+      }),
     }),
     apiInstituesList: build.query<
       ApiInstituesListApiResponse,
@@ -1169,6 +1251,25 @@ export type ApiDocumentTypeDestroyApiResponse = unknown;
 export type ApiDocumentTypeDestroyApiArg = {
   id: number;
 };
+export type ApiDocumentsListApiResponse = /** status 200  */ Document[];
+export type ApiDocumentsListApiArg = void;
+export type ApiDocumentsCreateApiResponse = /** status 201  */ Document;
+export type ApiDocumentsCreateApiArg = {
+  document: Document;
+};
+export type ApiDocumentsRetrieveApiResponse = /** status 200  */ Document;
+export type ApiDocumentsRetrieveApiArg = {
+  id: number;
+};
+export type ApiDocumentsPartialUpdateApiResponse = /** status 200  */ Document;
+export type ApiDocumentsPartialUpdateApiArg = {
+  id: number;
+  patchedDocument: PatchedDocument;
+};
+export type ApiDocumentsDestroyApiResponse = unknown;
+export type ApiDocumentsDestroyApiArg = {
+  id: number;
+};
 export type ApiEmployeementTypeListApiResponse =
   /** status 200  */ EmployeementType[];
 export type ApiEmployeementTypeListApiArg = void;
@@ -1223,18 +1324,37 @@ export type ApiEmployeesCompensationCreateApiArg = {
   compensation: Compensation;
 };
 export type ApiEmployeesDocumentsListApiResponse =
-  /** status 200  */ Document[];
+  /** status 200  */ EmployeeDocument[];
 export type ApiEmployeesDocumentsListApiArg = {
   id: number;
 };
 export type ApiEmployeesDocumentsCreateApiResponse =
-  /** status 201  */ Document;
+  /** status 201  */ EmployeeDocument;
 export type ApiEmployeesDocumentsCreateApiArg = {
   id: number;
-  document: Document;
+  employeeDocument: EmployeeDocument;
 };
 export type ApiFlagsRetrieveApiResponse = unknown;
 export type ApiFlagsRetrieveApiArg = void;
+export type ApiFoldersListApiResponse = /** status 200  */ Folder[];
+export type ApiFoldersListApiArg = void;
+export type ApiFoldersCreateApiResponse = /** status 201  */ Folder;
+export type ApiFoldersCreateApiArg = {
+  folder: Folder;
+};
+export type ApiFoldersRetrieveApiResponse = /** status 200  */ FolderDetail;
+export type ApiFoldersRetrieveApiArg = {
+  id: number;
+};
+export type ApiFoldersPartialUpdateApiResponse = /** status 200  */ Folder;
+export type ApiFoldersPartialUpdateApiArg = {
+  id: number;
+  patchedFolder: PatchedFolder;
+};
+export type ApiFoldersDestroyApiResponse = unknown;
+export type ApiFoldersDestroyApiArg = {
+  id: number;
+};
 export type ApiInstituesListApiResponse = /** status 200  */ Institue[];
 export type ApiInstituesListApiArg = void;
 export type ApiInstituesCreateApiResponse = /** status 201  */ Institue;
@@ -1562,6 +1682,22 @@ export type DocumentType = {
   created_at: string;
   updated_at: string;
 };
+export type Document = {
+  id: number;
+  title?: string;
+  text: string;
+  folder?: number | null;
+  document_link?: string | null;
+  created_by?: number | null;
+};
+export type PatchedDocument = {
+  id?: number;
+  title?: string;
+  text?: string;
+  folder?: number | null;
+  document_link?: string | null;
+  created_by?: number | null;
+};
 export type EmployeementType = {
   id: number;
   name: string;
@@ -1678,11 +1814,26 @@ export type Compensation = {
   compensation_schedule: number;
   currency: number;
 };
-export type Document = {
+export type EmployeeDocument = {
   id: number;
   name: string;
   type?: number | null;
   document_url: string;
+};
+export type Folder = {
+  id: number;
+  name: string;
+  document_count: string;
+};
+export type FolderDetail = {
+  id: number;
+  name: string;
+  documents: Document[];
+};
+export type PatchedFolder = {
+  id?: number;
+  name?: string;
+  document_count?: string;
 };
 export type Institue = {
   id: number;
@@ -1908,6 +2059,11 @@ export const {
   useApiDocumentTypeRetrieveQuery,
   useApiDocumentTypeUpdateMutation,
   useApiDocumentTypeDestroyMutation,
+  useApiDocumentsListQuery,
+  useApiDocumentsCreateMutation,
+  useApiDocumentsRetrieveQuery,
+  useApiDocumentsPartialUpdateMutation,
+  useApiDocumentsDestroyMutation,
   useApiEmployeementTypeListQuery,
   useApiEmployeementTypeCreateMutation,
   useApiEmployeementTypeRetrieveQuery,
@@ -1923,6 +2079,11 @@ export const {
   useApiEmployeesDocumentsListQuery,
   useApiEmployeesDocumentsCreateMutation,
   useApiFlagsRetrieveQuery,
+  useApiFoldersListQuery,
+  useApiFoldersCreateMutation,
+  useApiFoldersRetrieveQuery,
+  useApiFoldersPartialUpdateMutation,
+  useApiFoldersDestroyMutation,
   useApiInstituesListQuery,
   useApiInstituesCreateMutation,
   useApiInstituesRetrieveQuery,

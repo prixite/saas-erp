@@ -125,7 +125,7 @@ class ExperienceAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Document)
+@admin.register(models.EmployeeDocument)
 class DocuemntAdmin(admin.ModelAdmin):
     pass
 

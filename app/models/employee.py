@@ -45,7 +45,7 @@ class Employee(SoftDeleteModel):
         ordering = ["id"]
 
 
-class Document(ActiveEmployeeModel):
+class EmployeeDocument(ActiveEmployeeModel):
     """
     The documents will be uploaded to cloud storage. We will only store URL of
     the document in this model.
