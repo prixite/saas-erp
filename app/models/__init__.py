@@ -26,6 +26,7 @@ from app.models.employee import (
     Team,
 )
 from app.models.inventory import Asset, AssetType
+from app.models.notification import Notification
 from app.models.payroll import (
     Compensation,
     CompensationChange,
@@ -68,4 +69,5 @@ __all__ = [
     "Leave",
     "Standup",
     "StandupUpdate",
+    "Notification",
 ]

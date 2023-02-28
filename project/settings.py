@@ -41,6 +41,8 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, None),
     AWS_DEFAULT_REGION=(str, None),
     AWS_ACCESS_KEY_ID=(str, None),
+    REDIS_HOST=(str, "redis"),
+    REDIS_PORT=(int, 6379),
 )
 environ.Env.read_env(pathlib.Path(BASE_DIR).joinpath(".env"))
 
@@ -75,6 +77,7 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -124,7 +127,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "project.wsgi.application"
+# WSGI_APPLICATION = "project.wsgi.application"
+ASGI_APPLICATION = "project.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(env("REDIS_HOST"), env("REDIS_PORT"))],
+        },
+    },
+}
 
 
 # Database

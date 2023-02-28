@@ -31,6 +31,7 @@ from app import models, serializers
 from app.utils import (
     create_predesigned_url_delete,
     create_presigned_url,
+    push_notification,
     send_email_forget_password,
     send_leave_email,
 )
@@ -768,6 +769,12 @@ class LeaveView(
             leave.leave_to,
             leave.hr_comment,
         )
+        user = employee.user
+        status = request.data["status"]
+        message = f"{user.get_full_name()}, Your leave has been {status}"
+        push_notification(user, message)
+        notification = models.Notification(user=user, message=message)
+        notification.save()
         return response
 
 
@@ -942,6 +949,27 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         context.update({"request": self.request})
         context.update({"user_id": self.kwargs.get("pk")})
         return context
+
+
+class NotificationViewSet(ModelViewSet):
+    serializer_class = serializers.NotificationSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = models.Notification.objects.filter(user=user)
+        return queryset
+
+    def get_notification_count(self, request, *args, **kwargs):
+        user = self.request.user
+        count = models.Notification.objects.filter(user=user, is_seen=False).count()
+        return Response({"count": count})
+
+    def retrieve(self, request, pk=None):
+        notification = self.get_object()
+        notification.is_seen = True
+        notification.save()
+        serializer = self.get_serializer(notification)
+        return Response(serializer.data)
 
 
 class AvailabilityViewSet(generics.GenericAPIView):

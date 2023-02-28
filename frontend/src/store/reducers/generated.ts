@@ -54,11 +54,20 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/availability/`, method: "POST" }),
     }),
-    apiAwsRetrieve: build.query<
-      ApiAwsRetrieveApiResponse,
-      ApiAwsRetrieveApiArg
+    apiAwsDeleteFileDestroy: build.mutation<
+      ApiAwsDeleteFileDestroyApiResponse,
+      ApiAwsDeleteFileDestroyApiArg
     >({
-      query: () => ({ url: `/api/aws/` }),
+      query: (queryArg) => ({
+        url: `/api/aws_delete_file/${queryArg.key}/`,
+        method: "DELETE",
+      }),
+    }),
+    apiAwsUploadFileCreate: build.mutation<
+      ApiAwsUploadFileCreateApiResponse,
+      ApiAwsUploadFileCreateApiArg
+    >({
+      query: () => ({ url: `/api/aws_upload_file/`, method: "POST" }),
     }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
@@ -608,6 +617,24 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    apiNotificationList: build.query<
+      ApiNotificationListApiResponse,
+      ApiNotificationListApiArg
+    >({
+      query: () => ({ url: `/api/notification/` }),
+    }),
+    apiNotificationRetrieve: build.query<
+      ApiNotificationRetrieveApiResponse,
+      ApiNotificationRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/notification/${queryArg.id}/` }),
+    }),
+    apiNotificationCountRetrieve: build.query<
+      ApiNotificationCountRetrieveApiResponse,
+      ApiNotificationCountRetrieveApiArg
+    >({
+      query: () => ({ url: `/api/notification/count/` }),
+    }),
     apiOrganizationList: build.query<
       ApiOrganizationListApiResponse,
       ApiOrganizationListApiArg
@@ -1020,8 +1047,12 @@ export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
 export type ApiAvailabilityCreateApiResponse = unknown;
 export type ApiAvailabilityCreateApiArg = void;
-export type ApiAwsRetrieveApiResponse = unknown;
-export type ApiAwsRetrieveApiArg = void;
+export type ApiAwsDeleteFileDestroyApiResponse = unknown;
+export type ApiAwsDeleteFileDestroyApiArg = {
+  key: string;
+};
+export type ApiAwsUploadFileCreateApiResponse = unknown;
+export type ApiAwsUploadFileCreateApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1295,6 +1326,16 @@ export type ApiModuleDestroyApiResponse = unknown;
 export type ApiModuleDestroyApiArg = {
   id: number;
 };
+export type ApiNotificationListApiResponse = /** status 200  */ Notification[];
+export type ApiNotificationListApiArg = void;
+export type ApiNotificationRetrieveApiResponse =
+  /** status 200  */ Notification;
+export type ApiNotificationRetrieveApiArg = {
+  id: number;
+};
+export type ApiNotificationCountRetrieveApiResponse =
+  /** status 200  */ Notification;
+export type ApiNotificationCountRetrieveApiArg = void;
 export type ApiOrganizationListApiResponse = /** status 200  */ Organization[];
 export type ApiOrganizationListApiArg = void;
 export type ApiOrganizationCreateApiResponse = /** status 201  */ Organization;
@@ -1632,6 +1673,7 @@ export type Employee = {
   department?: number | null;
   manager?: number | null;
   type?: number | null;
+  currency?: number | null;
   benefits?: number[];
 };
 export type EmployeeUpdateUser = {
@@ -1665,6 +1707,7 @@ export type EmployeeUpdate = {
   department?: number | null;
   manager?: number | null;
   type?: number | null;
+  currency?: number | null;
   benefits?: number[];
 };
 export type Compensation = {
@@ -1767,6 +1810,13 @@ export type Module = {
   is_enabled?: boolean;
   created_at: string;
   updated_at: string;
+};
+export type Notification = {
+  id: number;
+  message: string;
+  is_seen?: boolean;
+  created_at: string;
+  user: number;
 };
 export type Organization = {
   id: number;
@@ -1871,7 +1921,8 @@ export const {
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
   useApiAvailabilityCreateMutation,
-  useApiAwsRetrieveQuery,
+  useApiAwsDeleteFileDestroyMutation,
+  useApiAwsUploadFileCreateMutation,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,
@@ -1939,6 +1990,9 @@ export const {
   useApiModuleRetrieveQuery,
   useApiModuleUpdateMutation,
   useApiModuleDestroyMutation,
+  useApiNotificationListQuery,
+  useApiNotificationRetrieveQuery,
+  useApiNotificationCountRetrieveQuery,
   useApiOrganizationListQuery,
   useApiOrganizationCreateMutation,
   useApiOrganizationModuleListQuery,

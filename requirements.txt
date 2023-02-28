@@ -1,5 +1,8 @@
 boto3==1.26.70
+channels==4.0.0
+channels-redis==4.0.0
 crispy-bootstrap5==0.7
+daphne==4.0.0
 dj-database-url==1.2.0
 Django==4.1.7
 django-crispy-forms==1.14.0
