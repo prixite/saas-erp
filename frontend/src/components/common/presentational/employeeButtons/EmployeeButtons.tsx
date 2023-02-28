@@ -4,6 +4,7 @@ import "./employeeButtons.scss";
 import { styled } from "@mui/material/styles";
 import MuiToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useLocation } from "react-router-dom";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 
@@ -25,7 +26,15 @@ const ToggleButton = styled(MuiToggleButton)(
 
 function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
   const constantData: LocalizationInterface = localizedData();
-  const { basicBtn, docsBtn, compBtn } = constantData.EmployeeButtons;
+  const location = useLocation();
+  const {
+    basicBtn,
+    docsBtn,
+    compBtn,
+    attendanceBtn,
+    availabilityBtn,
+    checkinBtn,
+  } = constantData.EmployeeButtons;
 
   const [alignment, setAlignment] = useState<string | null>("left");
 
@@ -39,14 +48,26 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
   };
 
   useEffect(() => {
-    if (alignment === "left") {
-      setButtonNameClicked("BASIC");
-    } else if (alignment === "center") {
-      setButtonNameClicked("DOCS");
-    } else if (alignment === "right") {
-      setButtonNameClicked("COMP");
+    if (location.pathname.includes("employees")) {
+      if (alignment === "left") {
+        setButtonNameClicked("BASIC");
+      } else if (alignment === "center") {
+        setButtonNameClicked("DOCS");
+      } else if (alignment === "right") {
+        setButtonNameClicked("COMP");
+      } else {
+        setButtonNameClicked("BASIC");
+      }
     } else {
-      setButtonNameClicked("BASIC");
+      if (alignment === "left") {
+        setButtonNameClicked("ATTENDANCE");
+      } else if (alignment === "center") {
+        setButtonNameClicked("AVAILABILITY");
+      } else if (alignment === "right") {
+        setButtonNameClicked("CHECKIN");
+      } else {
+        setButtonNameClicked("ATTENDANCE");
+      }
     }
   }, [alignment]);
 
@@ -69,7 +90,9 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-Basic__text"
               style={{ color: `${alignment === "left" ? "white" : "black"}` }}
             >
-              {basicBtn}
+              {location.pathname.includes("employees")
+                ? basicBtn
+                : attendanceBtn}
             </span>
           </ToggleButton>
 
@@ -83,7 +106,9 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-Docs__text"
               style={{ color: `${alignment === "center" ? "white" : "black"}` }}
             >
-              {docsBtn}
+              {location.pathname.includes("employees")
+                ? docsBtn
+                : availabilityBtn}
             </span>
           </ToggleButton>
 
@@ -97,7 +122,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
               className="button-Comp__text"
               style={{ color: `${alignment === "right" ? "white" : "black"}` }}
             >
-              {compBtn}
+              {location.pathname.includes("employees") ? compBtn : checkinBtn}
             </span>
           </ToggleButton>
         </ToggleButtonGroup>

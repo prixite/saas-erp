@@ -200,6 +200,9 @@ export interface employeeButtons {
   basicBtn: string;
   docsBtn: string;
   compBtn: string;
+  attendanceBtn: string;
+  availabilityBtn: string;
+  checkinBtn: string;
 }
 export interface menuButtons {
   editBtn: string;
@@ -430,6 +433,10 @@ export interface TeamsData {
   EditTeam: string;
   EditTeamSubheading: string;
 }
+export interface ReportsData {
+  Reports: string;
+  DownloadBtn: string;
+}
 export interface LocalizationInterface {
   Buttons: btnsInterface;
   Employee: employeeInterface;
@@ -451,6 +458,7 @@ export interface LocalizationInterface {
   Standup: standupData;
   Attendance: AttendanceData;
   Teams: TeamsData;
+  Reports: ReportsData;
   TopbarDropdown: topbarDropdownInterface;
   SettingPage: SettingPageInterface;
 }

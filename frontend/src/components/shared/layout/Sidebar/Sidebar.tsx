@@ -28,6 +28,8 @@ import leavesIcon from "@src/assets/svgs/Discovery.svg";
 import leavesRedIcon from "@src/assets/svgs/Discoveryred.svg";
 import attendanceIcon from "@src/assets/svgs/Leave.svg";
 import attendanceRedIcon from "@src/assets/svgs/leaveRed.svg";
+import reportsIcon from "@src/assets/svgs/reports.svg";
+import reportsRedIcon from "@src/assets/svgs/reportsred.svg";
 import settingIcon from "@src/assets/svgs/setting.svg";
 import settingIconRed from "@src/assets/svgs/settingRed.svg";
 import appIcon from "@src/assets/svgs/sidebar.svg";
@@ -295,6 +297,27 @@ const Sidebar = (props) => {
           ) : (
             ""
           )}
+          {userData?.allowed_modules.admin_modules.includes("employees") ||
+          userData?.allowed_modules.owner_modules.includes("employees") ? (
+            <ListItemButton
+              onClick={() => {
+                navigate("reports/");
+              }}
+              className="list-items-btn"
+            >
+              <ListItemIcon className="list-item-icon">
+                <img
+                  className="icon-img"
+                  src={
+                    currentPath === "/reports/" ? reportsRedIcon : reportsIcon
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItemButton>
+          ) : (
+            ""
+          )}
           <ListItemButton
             onClick={() => {
               navigate("settings/");
@@ -308,6 +331,7 @@ const Sidebar = (props) => {
                 }
               />
             </ListItemIcon>
+            <ListItemText primary="Settings" />
           </ListItemButton>
 
           <ListItemButton onClick={toggleDrawer} className="drawer-arrow-btn">
