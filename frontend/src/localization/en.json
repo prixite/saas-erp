@@ -104,7 +104,10 @@
   "EmployeeButtons": {
     "basicBtn": "Basic Information",
     "docsBtn": "Documents",
-    "compBtn": "Compensation and benefits"
+    "compBtn": "Compensation and benefits",
+    "attendanceBtn":"Attendance",
+    "availabilityBtn":"Availability",
+    "checkinBtn":"Checkin/Checkout"
   },
   "Modals": {
     "filterHeading": "Filter",
@@ -332,5 +335,9 @@
     "TeamDeleteSuccess": "Team deleted successfully",
     "EditTeam": "Edit Team",
     "EditTeamSubheading": "You can edit a team here."
+  },
+  "Reports": {
+    "Reports": "Reports",
+    "DownloadBtn":"Download"
   }
 }
