@@ -489,7 +489,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="defaultRole"
               label={defaultRoleLabel}
               onChange={formik.handleChange}
-              value={formik.values.defaultRole}
+              value={formik.values.defaultRole || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {rolesData?.length ? (

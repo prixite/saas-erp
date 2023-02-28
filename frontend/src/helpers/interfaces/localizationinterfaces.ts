@@ -276,7 +276,7 @@ export type EmployeeForm = {
   email: string;
   image?: string;
   contactNumber: string;
-  defaultRole: number;
+  defaultRole: number | undefined;
   degrees: Degree[];
   assets: Asset[];
   experience: Experirence[];

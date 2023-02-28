@@ -60,7 +60,7 @@ const employeeFormInitialState: EmployeeForm = {
   email: "",
   image: "",
   contactNumber: "",
-  defaultRole: 0,
+  defaultRole: null || undefined,
   degrees: [
     {
       program: "",
