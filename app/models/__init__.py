@@ -1,4 +1,5 @@
 from app.models.attendance import Attendance, Leave
+from app.models.availability import Availability
 from app.models.core import (
     Currency,
     Invitation,
@@ -68,4 +69,5 @@ __all__ = [
     "Leave",
     "Standup",
     "StandupUpdate",
+    "Availability",
 ]

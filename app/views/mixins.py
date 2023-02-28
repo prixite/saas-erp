@@ -176,17 +176,7 @@ class FilterMixin(ListModelMixin):
         elif not end_date:
             end_date = start_date + timedelta(days=30)
 
-        if self.module == "employees":
-            queryset = self.queryset.filter(
-                Q(employee__id=id)
-                & (
-                    Q(time_in__date__range=[start_date, end_date])
-                    | Q(time_out__date__range=[start_date, end_date])
-                    | Q(time_in__date__lte=start_date, time_out__date__gte=end_date)
-                )
-            )
-        else:
-            queryset = self.queryset.filter(
-                Q(employee__id=id) & Q(created_at__date__range=(start_date, end_date))
-            )
+        queryset = self.queryset.filter(
+            Q(employee__id=id) & Q(created_at__date__range=(start_date, end_date))
+        )
         return queryset

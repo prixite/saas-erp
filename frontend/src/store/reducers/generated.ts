@@ -48,17 +48,36 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/attendance/` }),
     }),
+    apiAvailabilityList: build.query<
+      ApiAvailabilityListApiResponse,
+      ApiAvailabilityListApiArg
+    >({
+      query: () => ({ url: `/api/availability/` }),
+    }),
     apiAvailabilityCreate: build.mutation<
       ApiAvailabilityCreateApiResponse,
       ApiAvailabilityCreateApiArg
     >({
-      query: () => ({ url: `/api/availability/`, method: "POST" }),
+      query: (queryArg) => ({
+        url: `/api/availability/`,
+        method: "POST",
+        body: queryArg.availability,
+      }),
     }),
-    apiAwsRetrieve: build.query<
-      ApiAwsRetrieveApiResponse,
-      ApiAwsRetrieveApiArg
+    apiAwsDeleteFileDestroy: build.mutation<
+      ApiAwsDeleteFileDestroyApiResponse,
+      ApiAwsDeleteFileDestroyApiArg
     >({
-      query: () => ({ url: `/api/aws/` }),
+      query: (queryArg) => ({
+        url: `/api/aws_delete_file/${queryArg.key}/`,
+        method: "DELETE",
+      }),
+    }),
+    apiAwsUploadFileCreate: build.mutation<
+      ApiAwsUploadFileCreateApiResponse,
+      ApiAwsUploadFileCreateApiArg
+    >({
+      query: () => ({ url: `/api/aws_upload_file/`, method: "POST" }),
     }),
     apiBenefitsList: build.query<
       ApiBenefitsListApiResponse,
@@ -1018,10 +1037,18 @@ export type ApiAssetTypeDestroyApiArg = {
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
-export type ApiAvailabilityCreateApiResponse = unknown;
-export type ApiAvailabilityCreateApiArg = void;
-export type ApiAwsRetrieveApiResponse = unknown;
-export type ApiAwsRetrieveApiArg = void;
+export type ApiAvailabilityListApiResponse = /** status 200  */ Availability[];
+export type ApiAvailabilityListApiArg = void;
+export type ApiAvailabilityCreateApiResponse = /** status 200  */ Availability;
+export type ApiAvailabilityCreateApiArg = {
+  availability: Availability;
+};
+export type ApiAwsDeleteFileDestroyApiResponse = unknown;
+export type ApiAwsDeleteFileDestroyApiArg = {
+  key: string;
+};
+export type ApiAwsUploadFileCreateApiResponse = unknown;
+export type ApiAwsUploadFileCreateApiArg = void;
 export type ApiBenefitsListApiResponse = /** status 200  */ Benefit[];
 export type ApiBenefitsListApiArg = void;
 export type ApiBenefitsCreateApiResponse = /** status 201  */ Benefit;
@@ -1505,6 +1532,10 @@ export type Attendance = {
   time_in: string;
   time_out?: string | null;
 };
+export type Availability = {
+  employee: number;
+  message: string;
+};
 export type Benefit = {
   id: number;
   name: string;
@@ -1632,6 +1663,7 @@ export type Employee = {
   department?: number | null;
   manager?: number | null;
   type?: number | null;
+  currency?: number | null;
   benefits?: number[];
 };
 export type EmployeeUpdateUser = {
@@ -1665,6 +1697,7 @@ export type EmployeeUpdate = {
   department?: number | null;
   manager?: number | null;
   type?: number | null;
+  currency?: number | null;
   benefits?: number[];
 };
 export type Compensation = {
@@ -1870,8 +1903,10 @@ export const {
   useApiAssetTypeUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
+  useApiAvailabilityListQuery,
   useApiAvailabilityCreateMutation,
-  useApiAwsRetrieveQuery,
+  useApiAwsDeleteFileDestroyMutation,
+  useApiAwsUploadFileCreateMutation,
   useApiBenefitsListQuery,
   useApiBenefitsCreateMutation,
   useApiBenefitsRetrieveQuery,

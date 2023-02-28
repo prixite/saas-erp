@@ -944,7 +944,10 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         return context
 
 
-class AvailabilityViewSet(generics.GenericAPIView):
+class AvailabilityViewSet(mixins.FilterMixin, generics.GenericAPIView):
+    queryset = models.Availability.objects.all()
+    serializer_class = serializers.AvailabilitySerializer
+    module = models.Module.ModuleType.AVAILABILITY_MESSAGES
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -992,6 +995,10 @@ class AvailabilityViewSet(generics.GenericAPIView):
         except Exception as e:
             print(e)
         return Response()
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.get_queryset(), many=True)
+        return Response(serializer.data)
 
 
 class AwsUploadFileApiView(APIView):

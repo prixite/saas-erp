@@ -219,8 +219,8 @@
             }
         },
         "/api/availability/": {
-            "post": {
-                "operationId": "api_availability_create",
+            "get": {
+                "operationId": "api_availability_list",
                 "tags": [
                     "api"
                 ],
@@ -232,14 +232,96 @@
                 ],
                 "responses": {
                     "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Availability"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "api_availability_create",
+                "tags": [
+                    "api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Availability"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Availability"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Availability"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Availability"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/aws_delete_file/{key}/": {
+            "delete": {
+                "operationId": "api_aws_delete_file_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "key",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
                         "description": "No response body"
                     }
                 }
             }
         },
-        "/api/aws/": {
-            "get": {
-                "operationId": "api_aws_retrieve",
+        "/api/aws_upload_file/": {
+            "post": {
+                "operationId": "api_aws_upload_file_create",
                 "tags": [
                     "api"
                 ],
@@ -4668,6 +4750,21 @@
                     "time_in"
                 ]
             },
+            "Availability": {
+                "type": "object",
+                "properties": {
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "employee",
+                    "message"
+                ]
+            },
             "Benefit": {
                 "type": "object",
                 "properties": {
@@ -4755,14 +4852,10 @@
                     },
                     "max_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "expected_hours_per_week": {
                         "type": "integer",
-                        "maximum": 32767,
-                        "minimum": -32768,
                         "nullable": true
                     },
                     "updated_at": {
@@ -4876,7 +4969,7 @@
                     },
                     "symbol": {
                         "type": "string",
-                        "maxLength": 1
+                        "maxLength": 3
                     },
                     "created_at": {
                         "type": "string",
@@ -5064,14 +5157,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -5088,14 +5177,10 @@
                     },
                     "weekly_available_hours": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648,
                         "nullable": true
                     },
                     "monthly_available_hours": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648,
                         "nullable": true
                     },
                     "availability_last_msg": {
@@ -5121,6 +5206,10 @@
                         "nullable": true
                     },
                     "type": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "currency": {
                         "type": "integer",
                         "nullable": true
                     },
@@ -5252,14 +5341,10 @@
                     },
                     "salary": {
                         "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": 0,
                         "nullable": true
                     },
                     "leave_count": {
-                        "type": "integer",
-                        "maximum": 2147483647,
-                        "minimum": -2147483648
+                        "type": "integer"
                     },
                     "user_allowed": {
                         "type": "boolean"
@@ -5293,6 +5378,10 @@
                         "nullable": true
                     },
                     "type": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "currency": {
                         "type": "integer",
                         "nullable": true
                     },
