@@ -944,10 +944,7 @@ class UserModuleRoleViewSet(mixins.PrivateApiMixin, ModelViewSet):
         return context
 
 
-class AvailabilityViewSet(mixins.FilterMixin, generics.GenericAPIView):
-    queryset = models.Availability.objects.all()
-    serializer_class = serializers.AvailabilitySerializer
-    module = models.Module.ModuleType.AVAILABILITY_MESSAGES
+class AvailabilityViewSet(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -996,10 +993,6 @@ class AvailabilityViewSet(mixins.FilterMixin, generics.GenericAPIView):
             print(e)
         return Response()
 
-    def get(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.get_queryset(), many=True)
-        return Response(serializer.data)
-
 
 class AwsUploadFileApiView(APIView):
     def post(self, request, *args, **kwargs):
@@ -1021,3 +1014,11 @@ class AwsDelteFileApiView(APIView):
         response = create_predesigned_url_delete(kwargs.get("key"))
         requests.delete(response)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AvailabilityListView(
+    mixins.FilterMixin, mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin
+):
+    queryset = models.Availability.objects.all()
+    serializer_class = serializers.AvailabilitySerializer
+    module = models.Module.ModuleType.AVAILABILITY_MESSAGES

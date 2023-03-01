@@ -219,8 +219,8 @@
             }
         },
         "/api/availability/": {
-            "get": {
-                "operationId": "api_availability_list",
+            "post": {
+                "operationId": "api_availability_create",
                 "tags": [
                     "api"
                 ],
@@ -229,6 +229,24 @@
                         "cookieAuth": []
                     },
                     {}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/availability_list/": {
+            "get": {
+                "operationId": "api_availability_list_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -239,50 +257,6 @@
                                     "items": {
                                         "$ref": "#/components/schemas/Availability"
                                     }
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            },
-            "post": {
-                "operationId": "api_availability_create",
-                "tags": [
-                    "api"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Availability"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Availability"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Availability"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Availability"
                                 }
                             }
                         },

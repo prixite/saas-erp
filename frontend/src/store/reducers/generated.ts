@@ -48,21 +48,17 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/attendance/` }),
     }),
-    apiAvailabilityList: build.query<
-      ApiAvailabilityListApiResponse,
-      ApiAvailabilityListApiArg
-    >({
-      query: () => ({ url: `/api/availability/` }),
-    }),
     apiAvailabilityCreate: build.mutation<
       ApiAvailabilityCreateApiResponse,
       ApiAvailabilityCreateApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/availability/`,
-        method: "POST",
-        body: queryArg.availability,
-      }),
+      query: () => ({ url: `/api/availability/`, method: "POST" }),
+    }),
+    apiAvailabilityListList: build.query<
+      ApiAvailabilityListListApiResponse,
+      ApiAvailabilityListListApiArg
+    >({
+      query: () => ({ url: `/api/availability_list/` }),
     }),
     apiAwsDeleteFileDestroy: build.mutation<
       ApiAwsDeleteFileDestroyApiResponse,
@@ -1037,12 +1033,11 @@ export type ApiAssetTypeDestroyApiArg = {
 };
 export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
-export type ApiAvailabilityListApiResponse = /** status 200  */ Availability[];
-export type ApiAvailabilityListApiArg = void;
-export type ApiAvailabilityCreateApiResponse = /** status 200  */ Availability;
-export type ApiAvailabilityCreateApiArg = {
-  availability: Availability;
-};
+export type ApiAvailabilityCreateApiResponse = unknown;
+export type ApiAvailabilityCreateApiArg = void;
+export type ApiAvailabilityListListApiResponse =
+  /** status 200  */ Availability[];
+export type ApiAvailabilityListListApiArg = void;
 export type ApiAwsDeleteFileDestroyApiResponse = unknown;
 export type ApiAwsDeleteFileDestroyApiArg = {
   key: string;
@@ -1903,8 +1898,8 @@ export const {
   useApiAssetTypeUpdateMutation,
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
-  useApiAvailabilityListQuery,
   useApiAvailabilityCreateMutation,
+  useApiAvailabilityListListQuery,
   useApiAwsDeleteFileDestroyMutation,
   useApiAwsUploadFileCreateMutation,
   useApiBenefitsListQuery,

@@ -140,18 +140,33 @@ class FilterMixin(ListModelMixin):
     def get_queryset(self):
         emp_id_str = self.request.query_params.get("id")
         id = int(emp_id_str) if emp_id_str else None
+        date = self.request.query_params.get("date")
         start_date_str = self.request.query_params.get("start_date")
-        start_date = (
-            timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
-            if start_date_str
-            else None
-        )
         end_date_str = self.request.query_params.get("end_date")
-        end_date = (
-            timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
-            if end_date_str
-            else None
-        )
+
+        if date == "weekly":
+            end_date_str = timezone.now().date()
+            start_date_str = end_date_str - timedelta(days=7)
+
+        if date == "monthly":
+            end_date_str = timezone.now().date()
+            start_date_str = end_date_str - timedelta(days=30)
+        if date == "yearly":
+            end_date_str = timezone.now().date()
+            start_date_str = end_date_str - timedelta(days=365)
+        start_date = ""
+        end_date = ""
+        if not date:
+            start_date = (
+                timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
+                if start_date_str
+                else None
+            )
+            end_date = (
+                timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
+                if end_date_str
+                else None
+            )
 
         if start_date and end_date and start_date > end_date:
             raise ValidationError("Start date must be before end date.")
