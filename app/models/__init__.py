@@ -14,9 +14,9 @@ from app.models.employee import (
     Company,
     Degree,
     Department,
-    Document,
     DocumentType,
     Employee,
+    EmployeeDocument,
     EmploymentType,
     Experience,
     Institute,
@@ -25,6 +25,7 @@ from app.models.employee import (
     StandupUpdate,
     Team,
 )
+from app.models.folder import Document, Folder
 from app.models.inventory import Asset, AssetType
 from app.models.payroll import (
     Compensation,
@@ -49,12 +50,14 @@ __all__ = [
     "Degree",
     "Department",
     "Document",
+    "EmployeeDocument",
     "DocumentType",
     "Employee",
     "EmploymentType",
     "Institute",
     "Invitation",
     "Module",
+    "Folder",
     "Organization",
     "OrganizationModule",
     "Program",

@@ -134,3 +134,13 @@ class StandupUpdateFactory(factory.django.DjangoModelFactory):
 class BenefitFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Benefit
+
+
+class FolderFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Folder
+
+
+class DocumentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Document
