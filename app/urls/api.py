@@ -51,7 +51,7 @@ urlpatterns = [
     ),
     path(
         "employees/<int:pk>/documents/",
-        api.DocumentViewSet.as_view(
+        api.EmployeeDocumentViewSet.as_view(
             {
                 "get": "list",
                 "post": "create",
@@ -396,4 +396,38 @@ urlpatterns = [
     ),
     path("availability/", api.AvailabilityViewSet.as_view()),
     path("availability_list/", api.AvailabilityListView.as_view()),
+    path(
+        "folders/",
+        api.FolderViewset.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "folders/<int:pk>/",
+        api.FolderViewset.as_view(
+            {
+                "get": "retrieve",
+                "delete": "destroy",
+                "patch": "partial_update",
+            }
+        ),
+    ),
+    path(
+        "documents/",
+        api.DocumentViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "documents/<int:pk>/",
+        api.DocumentViewSet.as_view(
+            {"delete": "destroy", "patch": "partial_update", "get": "retrieve"}
+        ),
+    ),
 ]

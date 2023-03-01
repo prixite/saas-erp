@@ -22,6 +22,7 @@ import Organization from "@src/components/common/smart/organizations/organizatio
 import Payroll from "@src/components/common/smart/payroll/payroll";
 import ProfilePage from "@src/components/common/smart/profile/profilePage";
 import Program from "@src/components/common/smart/program/program";
+import Reports from "@src/components/common/smart/reports/reports";
 import Settings from "@src/components/common/smart/settings/settings";
 import Standup from "@src/components/common/smart/standup/standup";
 import Teams from "@src/components/common/smart/teams/teams";
@@ -95,6 +96,7 @@ const AppRoutes = () => {
                 )}
                 <Route path="leaves/" element={<Leaves />} />
                 <Route path="teams/" element={<Teams />} />
+                <Route path="reports/" element={<Reports />} />
                 <Route path="attendance/" element={<Attendance />} />
                 <Route path="standups/" element={<Standup />} />
                 <Route path="settings/department" element={<Department />} />

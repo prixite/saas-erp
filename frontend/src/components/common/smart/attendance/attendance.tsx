@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import Input from "@src/components/shared/formControls/textInput/textInput";
@@ -17,6 +18,7 @@ import "@src/components/common/smart/attendance/attendance.scss";
 function Attendance() {
   const { data: rows = [], isLoading } = useGetAttendacneQuery();
   const constantData: LocalizationInterface = localizedData();
+  const location = useLocation();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
   const { notFound } = constantData.Employee;
@@ -157,35 +159,39 @@ function Attendance() {
 
   return (
     <Box className="attendanceDataGridTable-section">
-      <Box
-        className="top-bar-cls"
-        sx={{ display: "flex", justifyContent: "space-between" }}
-      >
-        <Typography className="title-cls">{attendance}</Typography>
+      {!location.pathname.includes("reports") ? (
         <Box
-          className="filter-section"
+          className="top-bar-cls"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Input setSearchText={setQuery} />
-          <Box className="filter-btn-cls">
-            <Button
-              className="filter-btn"
-              id="filter-btn-id"
-              variant="outlined"
-              startIcon={
-                <img
-                  className="profile-pic"
-                  src={FilterIcon}
-                  alt="profile pic"
-                />
-              }
-            >
-              {" "}
-              <p>{filterButton}</p>
-            </Button>
+          <Typography className="title-cls">{attendance}</Typography>
+          <Box
+            className="filter-section"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Input setSearchText={setQuery} />
+            <Box className="filter-btn-cls">
+              <Button
+                className="filter-btn"
+                id="filter-btn-id"
+                variant="outlined"
+                startIcon={
+                  <img
+                    className="profile-pic"
+                    src={FilterIcon}
+                    alt="profile pic"
+                  />
+                }
+              >
+                {" "}
+                <p>{filterButton}</p>
+              </Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      ) : (
+        ""
+      )}
       {!dataLoading ? (
         <>
           {attendanceData?.length ? (

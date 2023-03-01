@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import transaction
+from django.db.models import Count
 from django.db.models.deletion import ProtectedError
 from django.middleware import csrf
 from django.shortcuts import get_object_or_404
@@ -218,12 +219,14 @@ class CompensationViewSet(mixins.PrivateApiMixin, ModelViewSet):
         serializer.save(employee_id=self.kwargs["pk"])
 
 
-class DocumentViewSet(mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin):
-    serializer_class = serializers.DocumentSerializer
+class EmployeeDocumentViewSet(
+    mixins.PrivateApiMixin, ModelViewSet, mixins.OrganizationMixin
+):
+    serializer_class = serializers.EmployeeDocumentSerializer
     module = models.Module.ModuleType.EMPLOYEES
 
     def get_queryset(self):
-        return models.Document.objects.filter(
+        return models.EmployeeDocument.objects.filter(
             employee_id=self.kwargs["pk"],
             employee__organization=self.request.user.organization,
         )
@@ -1022,3 +1025,28 @@ class AvailabilityListView(
     queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
     module = models.Module.ModuleType.AVAILABILITY_MESSAGES
+
+
+class FolderViewset(ModelViewSet):
+    serializer_class = serializers.FolderSerializer
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return serializers.FolderDetailSerializer
+
+        return serializers.FolderSerializer
+
+    def get_queryset(self):
+        if self.action in ["destroy", "partial_update"]:
+            return models.Folder.objects.all()
+        return models.Folder.objects.all().annotate(no_of_documents=Count("documents"))
+
+
+class DocumentViewSet(ModelViewSet):
+    serializer_class = serializers.DocumentSerializer
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return models.Document.objects.none()
+
+        return models.Document.objects.all().order_by("-id")

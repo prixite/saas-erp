@@ -310,7 +310,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="manager"
               label={employeeManagerLabel}
               onChange={formik.handleChange}
-              value={formik.values.manager}
+              value={formik.values.manager || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {employeetableData?.length ? (
@@ -381,12 +381,11 @@ const PageOne = ({ formik, action }: Props) => {
             <TextField
               className="text-field-cls"
               select
-              required
               fullWidth
               name="currency"
               label={employeeCurrencyLabel}
               onChange={formik.handleChange}
-              value={formik.values.currency}
+              value={formik.values.currency || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {currencyData?.length ? (
@@ -416,7 +415,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="type"
               label={employeeEmployementLabel}
               onChange={formik.handleChange}
-              value={formik.values.type}
+              value={formik.values.type || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {typesData?.length ? (
@@ -461,7 +460,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="department"
               label={departmentsLabel}
               onChange={formik.handleChange}
-              value={formik.values.department}
+              value={formik.values.department || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {departmentData?.length ? (
@@ -489,7 +488,7 @@ const PageOne = ({ formik, action }: Props) => {
               name="defaultRole"
               label={defaultRoleLabel}
               onChange={formik.handleChange}
-              value={formik.values.defaultRole}
+              value={formik.values.defaultRole || ""}
               InputLabelProps={{ className: "textfield_label" }}
             >
               {rolesData?.length ? (
