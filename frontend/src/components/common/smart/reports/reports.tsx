@@ -59,11 +59,19 @@ function Reports() {
             className="text-field-cls"
             select
             fullWidth
+            defaultValue="Monthly"
             name="leave_type"
             sx={{
               width: 125,
             }}
-            InputProps={{ sx: { height: 44, borderRadius: "12px" } }}
+            InputProps={{
+              sx: {
+                height: 44,
+                borderRadius: "12px",
+                fontSize: "14px",
+                fontWeight: "400",
+              },
+            }}
             label="Duration"
             InputLabelProps={{
               className: "textfield_label",
@@ -74,13 +82,22 @@ function Reports() {
               },
             }}
           >
-            <MenuItem className="menu-item-cls" value="Monthly">
+            <MenuItem
+              sx={{ fontWeight: "400", fontSize: "14px" }}
+              value="Monthly"
+            >
               Monthly
             </MenuItem>
-            <MenuItem className="menu-item-cls" value="Weekly">
+            <MenuItem
+              sx={{ fontWeight: "400", fontSize: "14px" }}
+              value="Weekly"
+            >
               Weekly
             </MenuItem>
-            <MenuItem className="menu-item-cls" value="Yearly">
+            <MenuItem
+              sx={{ fontWeight: "400", fontSize: "14px" }}
+              value="Yearly"
+            >
               Yearly
             </MenuItem>
           </TextField>
