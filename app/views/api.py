@@ -985,6 +985,9 @@ class AvailabilityViewSet(generics.GenericAPIView):
                 )
                 employee.availability_last_msg = data.get("actions")[0].get("value")
                 employee.save()
+                models.Availability.objects.create(
+                    employee_id=user_id, message=data.get("actions")[0].get("value")
+                )
                 requests.post(
                     data.get("response_url"),
                     json={
@@ -1019,9 +1022,7 @@ class AwsDelteFileApiView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class AvailabilityListView(
-    mixins.FilterMixin, mixins.PrivateApiMixin, ListAPIView, mixins.OrganizationMixin
-):
+class AvailabilityListView(mixins.FilterMixin, ListAPIView):
     queryset = models.Availability.objects.all()
     serializer_class = serializers.AvailabilitySerializer
     module = models.Module.ModuleType.AVAILABILITY_MESSAGES

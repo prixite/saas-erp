@@ -1648,6 +1648,7 @@ export type Attendance = {
   time_out?: string | null;
 };
 export type Availability = {
+  id: number;
   employee: number;
   message: string;
 };

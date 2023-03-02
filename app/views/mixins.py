@@ -144,6 +144,10 @@ class FilterMixin(ListModelMixin):
         start_date_str = self.request.query_params.get("start_date")
         end_date_str = self.request.query_params.get("end_date")
 
+        if not emp_id_str and not date and not start_date_str or not end_date_str:
+            print("ok")
+            return self.queryset.all()
+
         if date == "weekly":
             end_date_str = timezone.now().date()
             start_date_str = end_date_str - timedelta(days=7)
@@ -154,6 +158,7 @@ class FilterMixin(ListModelMixin):
         if date == "yearly":
             end_date_str = timezone.now().date()
             start_date_str = end_date_str - timedelta(days=365)
+
         start_date = ""
         end_date = ""
         if not date:

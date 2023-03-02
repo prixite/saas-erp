@@ -1194,6 +1194,7 @@ class AvailabilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Availability
         fields = (
+            "id",
             "employee",
             "message",
         )

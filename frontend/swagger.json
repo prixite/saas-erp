@@ -5095,6 +5095,10 @@
             "Availability": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "employee": {
                         "type": "integer"
                     },
@@ -5104,6 +5108,7 @@
                 },
                 "required": [
                     "employee",
+                    "id",
                     "message"
                 ]
             },
