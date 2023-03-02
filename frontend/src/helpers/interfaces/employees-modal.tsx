@@ -180,8 +180,7 @@ export interface standupTypes {
 }
 export interface EmployeeBasic {
   id: number;
-  first_name: string;
-  last_name: string;
+  name: string;
   image: string;
   department: string;
 }

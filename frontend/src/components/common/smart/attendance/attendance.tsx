@@ -16,7 +16,7 @@ import { useGetAttendacneQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/attendance/attendance.scss";
 
 function Attendance() {
-  const { data: rows = [], isLoading } = useGetAttendacneQuery();
+  const { data: rows, isLoading } = useGetAttendacneQuery();
   const constantData: LocalizationInterface = localizedData();
   const location = useLocation();
   const [dataLoading, setIsDataLoading] = useState(true);
@@ -133,7 +133,7 @@ function Attendance() {
     },
   ];
   useEffect(() => {
-    if (!isLoading) {
+    if (rows && !isLoading) {
       if (rows.length) {
         setAttendanceData(rows);
       } else {
@@ -143,17 +143,19 @@ function Attendance() {
     }
   }, [rows, isLoading]);
   useEffect(() => {
-    if (debouncedSearchTerm.length >= 3) {
-      setAttendanceData(
-        rows.filter((userData: AttendanceTypes) => {
-          return userData?.employee?.name
-            .trim()
-            .toLowerCase()
-            .includes(debouncedSearchTerm.trim().toLowerCase());
-        })
-      );
-    } else {
-      setAttendanceData(rows);
+    if (rows) {
+      if (debouncedSearchTerm.length >= 3) {
+        setAttendanceData(
+          rows.filter((userData: AttendanceTypes) => {
+            return userData?.employee?.name
+              .trim()
+              .toLowerCase()
+              .includes(debouncedSearchTerm.trim().toLowerCase());
+          })
+        );
+      } else {
+        setAttendanceData(rows);
+      }
     }
   }, [debouncedSearchTerm, rows]);
 

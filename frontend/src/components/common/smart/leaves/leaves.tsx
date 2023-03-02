@@ -17,7 +17,7 @@ import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
 function Leaves() {
-  const { data: rows = [], isLoading } = useGetLeavesQuery();
+  const { data: rows, isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -229,7 +229,7 @@ function Leaves() {
   };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (rows && !isLoading) {
       if (rows.length) {
         setLeavesData(rows);
       } else {
@@ -239,17 +239,19 @@ function Leaves() {
     }
   }, [rows, isLoading]);
   useEffect(() => {
-    if (debouncedSearchTerm.length >= 3) {
-      setLeavesData(
-        rows.filter((userData: empLeaves) => {
-          return userData?.employee?.name
-            .trim()
-            .toLowerCase()
-            .includes(debouncedSearchTerm.trim().toLowerCase());
-        })
-      );
-    } else {
-      setLeavesData(rows);
+    if (rows) {
+      if (debouncedSearchTerm.length >= 3) {
+        setLeavesData(
+          rows.filter((userData: empLeaves) => {
+            return userData?.employee?.name
+              .trim()
+              .toLowerCase()
+              .includes(debouncedSearchTerm.trim().toLowerCase());
+          })
+        );
+      } else {
+        setLeavesData(rows);
+      }
     }
   }, [debouncedSearchTerm, rows]);
   return (
