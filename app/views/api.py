@@ -613,7 +613,7 @@ class SlackApiView(APIView):
                             attendance = models.Attendance.objects.filter(
                                 employee=employee
                             ).last()
-                            attendance.time_out = datetime.now()
+                            attendance.time_out = datetime.datetime.now()
                             attendance.save()
                         elif get_detail[0] == "help":
                             return Response(
