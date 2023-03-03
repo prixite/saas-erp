@@ -17,7 +17,7 @@ import "@src/components/common/smart/attendance/attendance.scss";
 const CheckingTime = () => {
   const constantData: LocalizationInterface = localizedData();
   const { CheckingTime, ViewAll } = constantData.Attendance;
-  const { data: rows = [], isLoading } = useGetAttendacneQuery();
+  const { data: rows, isLoading } = useGetAttendacneQuery();
   const navigate = useNavigate();
   const [dataLoading, setIsDataLoading] = useState(true);
   const { notFound } = constantData.Employee;
@@ -89,7 +89,7 @@ const CheckingTime = () => {
     },
   ];
   useEffect(() => {
-    if (!isLoading) {
+    if (rows && !isLoading) {
       if (rows.length) {
         setAttendanceData(rows.slice(0, 3));
       } else {

@@ -14,7 +14,7 @@ import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
 const LeaveRequests = () => {
-  const { data: rows = [], isLoading } = useGetLeavesQuery();
+  const { data: rows, isLoading } = useGetLeavesQuery();
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const { notFound } = constantData.Employee;
@@ -123,7 +123,7 @@ const LeaveRequests = () => {
   ];
 
   useEffect(() => {
-    if (!isLoading) {
+    if (rows && !isLoading) {
       if (rows.length) {
         setLeavesData(rows.slice(0, 3));
       } else {
