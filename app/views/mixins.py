@@ -1,4 +1,4 @@
-from datetime import timedelta
+import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -140,18 +140,41 @@ class FilterMixin(ListModelMixin):
     def get_queryset(self):
         emp_id_str = self.request.query_params.get("id")
         id = int(emp_id_str) if emp_id_str else None
+        interval = self.request.query_params.get("interval")
         start_date_str = self.request.query_params.get("start_date")
-        start_date = (
-            timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
-            if start_date_str
-            else None
-        )
         end_date_str = self.request.query_params.get("end_date")
-        end_date = (
-            timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
-            if end_date_str
-            else None
-        )
+
+        if not id and not start_date_str and not end_date_str and not interval:
+            return self.queryset.all()
+
+        if interval == "weekly":
+            some_day_last_week = timezone.now().date() - datetime.timedelta(days=7)
+            start_date_str = some_day_last_week - datetime.timedelta(
+                days=(some_day_last_week.isocalendar()[2] - 1)
+            )
+            end_date_str = start_date_str + datetime.timedelta(days=4)
+
+        if interval == "monthly":
+            end_date_str = timezone.now().date()
+            start_date_str = end_date_str.replace(day=1)
+
+        if interval == "yearly":
+            end_date_str = timezone.now().date()
+            start_date_str = end_date_str.replace(month=1, day=1)
+
+        start_date = ""
+        end_date = ""
+        if not interval:
+            start_date = (
+                timezone.datetime.strptime(start_date_str, "%Y-%m-%d").date()
+                if start_date_str
+                else None
+            )
+            end_date = (
+                timezone.datetime.strptime(end_date_str, "%Y-%m-%d").date()
+                if end_date_str
+                else None
+            )
 
         if start_date and end_date and start_date > end_date:
             raise ValidationError("Start date must be before end date.")
@@ -170,23 +193,13 @@ class FilterMixin(ListModelMixin):
 
         if not start_date and not end_date:
             end_date = timezone.now().date()
-            start_date = end_date - timedelta(days=30)
+            start_date = end_date - datetime.timedelta(days=30)
         elif not start_date:
-            start_date = end_date - timedelta(days=30)
+            start_date = end_date - datetime.timedelta(days=30)
         elif not end_date:
-            end_date = start_date + timedelta(days=30)
+            end_date = start_date + datetime.timedelta(days=30)
 
-        if self.module == "employees":
-            queryset = self.queryset.filter(
-                Q(employee__id=id)
-                & (
-                    Q(time_in__date__range=[start_date, end_date])
-                    | Q(time_out__date__range=[start_date, end_date])
-                    | Q(time_in__date__lte=start_date, time_out__date__gte=end_date)
-                )
-            )
-        else:
-            queryset = self.queryset.filter(
-                Q(employee__id=id) & Q(created_at__date__range=(start_date, end_date))
-            )
+        queryset = self.queryset.filter(
+            Q(employee__id=id) & Q(created_at__date__range=(start_date, end_date))
+        )
         return queryset

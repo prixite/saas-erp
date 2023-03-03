@@ -183,3 +183,8 @@ class StandupAdmin(admin.ModelAdmin):
 @admin.register(models.StandupUpdate)
 class StandupUpdateAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.Availability)
+class AvailabilityAdmin(admin.ModelAdmin):
+    pass

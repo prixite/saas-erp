@@ -237,6 +237,34 @@
                 }
             }
         },
+        "/api/availability_list/": {
+            "get": {
+                "operationId": "api_availability_list_list",
+                "tags": [
+                    "api"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Availability"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/aws_delete_file/{key}/": {
             "delete": {
                 "operationId": "api_aws_delete_file_destroy",
@@ -5062,6 +5090,26 @@
                     "employee",
                     "id",
                     "time_in"
+                ]
+            },
+            "Availability": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "employee": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "employee",
+                    "id",
+                    "message"
                 ]
             },
             "Benefit": {

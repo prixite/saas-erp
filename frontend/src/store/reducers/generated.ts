@@ -54,6 +54,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/availability/`, method: "POST" }),
     }),
+    apiAvailabilityListList: build.query<
+      ApiAvailabilityListListApiResponse,
+      ApiAvailabilityListListApiArg
+    >({
+      query: () => ({ url: `/api/availability_list/` }),
+    }),
     apiAwsDeleteFileDestroy: build.mutation<
       ApiAwsDeleteFileDestroyApiResponse,
       ApiAwsDeleteFileDestroyApiArg
@@ -1111,6 +1117,9 @@ export type ApiAttendanceListApiResponse = /** status 200  */ Attendance[];
 export type ApiAttendanceListApiArg = void;
 export type ApiAvailabilityCreateApiResponse = unknown;
 export type ApiAvailabilityCreateApiArg = void;
+export type ApiAvailabilityListListApiResponse =
+  /** status 200  */ Availability[];
+export type ApiAvailabilityListListApiArg = void;
 export type ApiAwsDeleteFileDestroyApiResponse = unknown;
 export type ApiAwsDeleteFileDestroyApiArg = {
   key: string;
@@ -1638,6 +1647,11 @@ export type Attendance = {
   time_in: string;
   time_out?: string | null;
 };
+export type Availability = {
+  id: number;
+  employee: number;
+  message: string;
+};
 export type Benefit = {
   id: number;
   name: string;
@@ -2037,6 +2051,7 @@ export const {
   useApiAssetTypeDestroyMutation,
   useApiAttendanceListQuery,
   useApiAvailabilityCreateMutation,
+  useApiAvailabilityListListQuery,
   useApiAwsDeleteFileDestroyMutation,
   useApiAwsUploadFileCreateMutation,
   useApiBenefitsListQuery,

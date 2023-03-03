@@ -395,6 +395,7 @@ urlpatterns = [
         ),
     ),
     path("availability/", api.AvailabilityViewSet.as_view()),
+    path("availability_list/", api.AvailabilityListView.as_view()),
     path(
         "folders/",
         api.FolderViewset.as_view(

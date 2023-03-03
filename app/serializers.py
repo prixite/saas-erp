@@ -1190,6 +1190,16 @@ class UserModuleRoleSerializer(serializers.ModelSerializer):
         return data
 
 
+class AvailabilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Availability
+        fields = (
+            "id",
+            "employee",
+            "message",
+        )
+
+
 class FolderSerializer(serializers.ModelSerializer):
     document_count = serializers.SerializerMethodField()
 
