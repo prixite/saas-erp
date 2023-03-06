@@ -1,4 +1,4 @@
-boto3==1.26.70
+boto3==1.26.85
 crispy-bootstrap5==0.7
 dj-database-url==1.2.0
 Django==4.1.7
