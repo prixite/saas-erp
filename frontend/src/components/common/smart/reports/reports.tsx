@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, TextField, MenuItem } from "@mui/material";
-import { addDays } from "date-fns";
+import moment from "moment";
 import downloadIcon from "@src/assets/svgs/download.svg";
 import reportsPic from "@src/assets/svgs/reportsBoard.svg";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
@@ -18,36 +18,62 @@ import "@src/components/common/smart/reports/reports.scss";
 
 function Reports() {
   const constantData: LocalizationInterface = localizedData();
-  const { Reports, DownloadBtn, ReportsError } = constantData.Reports;
+  const { Reports, DownloadBtn, ReportsError, Monthly, Weekly, Custom } =
+    constantData.Reports;
   const [employee, setEmployee] = useState<number>();
   const { data: employeetableData } = useGetEmployeesQuery();
   const [openModal, setOpenModal] = useState(false);
   const [selectValue, setSelectValue] = useState("Monthly");
   const [state, setState] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: null,
+      endDate: null,
       key: "selection",
     },
   ]);
   const [buttonNameClicked, setButtonNameClicked] =
     useState<string>("ATTENDANCE");
   const { data: rows, isLoading } = useGetAttendanceQuery(
-    { id: employee, interval: selectValue },
+    {
+      id: employee,
+      interval: selectValue,
+      start_date: state[0].startDate
+        ? moment(state[0].startDate).format("YYYY-MM-DD")
+        : "",
+      end_date: state[0].endDate
+        ? moment(state[0].endDate).format("YYYY-MM-DD")
+        : "",
+    },
     { skip: !employee || buttonNameClicked !== "ATTENDANCE" }
   );
   const { data: leavesRows, isLoading: isLeavesLoading } = useGetLeavesQuery(
-    { id: employee, interval: selectValue },
+    {
+      id: employee,
+      interval: selectValue,
+      start_date: state[0].startDate
+        ? moment(state[0].startDate).format("YYYY-MM-DD")
+        : "",
+      end_date: state[0].endDate
+        ? moment(state[0].endDate).format("YYYY-MM-DD")
+        : "",
+    },
     { skip: !employee || buttonNameClicked !== "LEAVES" }
   );
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === "Custom") {
       setOpenModal(true);
     }
+    setState([
+      {
+        startDate: null,
+        endDate: null,
+        key: "selection",
+      },
+    ]);
     setSelectValue(event.target.value as string);
   };
   const handleModalClose = () => {
-    setSelectValue("Monthly");
+    setSelectValue("");
     setOpenModal(false);
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +112,7 @@ function Reports() {
                 "&.MuiInputLabel-shrink": { top: 0 },
               },
             }}
-            value={employee}
+            value={employee || ""}
             onChange={handleChange}
           >
             {employeetableData?.length ? (
@@ -155,19 +181,19 @@ function Reports() {
               sx={{ fontWeight: "400", fontSize: "14px" }}
               value="Monthly"
             >
-              Monthly
+              {Monthly}
             </MenuItem>
             <MenuItem
               sx={{ fontWeight: "400", fontSize: "14px" }}
               value="Weekly"
             >
-              Weekly
+              {Weekly}
             </MenuItem>
             <MenuItem
               sx={{ fontWeight: "400", fontSize: "14px" }}
               value="Custom"
             >
-              Custom
+              {Custom}
             </MenuItem>
           </TextField>
         </Box>

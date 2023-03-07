@@ -339,6 +339,9 @@
   "Reports": {
     "Reports": "Reports",
     "DownloadBtn":"Download",
-    "ReportsError":"Select any employee to show reports"
+    "ReportsError":"Select any employee to show reports",
+    "Monthly":"Monthly",
+    "Weekly":"Weekly",
+    "Custom":"Custom"
   }
 }
