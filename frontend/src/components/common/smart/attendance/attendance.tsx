@@ -12,11 +12,17 @@ import { AttendanceTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
 import { useDebounce } from "@src/helpers/utils/utils";
-import { useGetAttendacneQuery } from "@src/store/reducers/employees-api";
+import { useGetAttendanceQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/attendance/attendance.scss";
 
-function Attendance() {
-  const { data: rows, isLoading } = useGetAttendacneQuery();
+interface Props {
+  reportsData?: AttendanceTypes[];
+  isReportsLoading: boolean;
+}
+function Attendance({ reportsData, isReportsLoading }: Props) {
+  const { data: rows, isLoading: isAttendanceLoading } = useGetAttendanceQuery(
+    {}
+  );
   const constantData: LocalizationInterface = localizedData();
   const location = useLocation();
   const [dataLoading, setIsDataLoading] = useState(true);
@@ -133,17 +139,28 @@ function Attendance() {
     },
   ];
   useEffect(() => {
-    if (rows && !isLoading) {
-      if (rows.length) {
-        setAttendanceData(rows);
-      } else {
-        setAttendanceData([]);
+    if (location.pathname.includes("attendance")) {
+      if (rows && !isAttendanceLoading) {
+        if (rows.length) {
+          setAttendanceData(rows);
+        } else {
+          setAttendanceData([]);
+        }
+        setIsDataLoading(false);
       }
-      setIsDataLoading(false);
+    } else {
+      if (reportsData && !isReportsLoading) {
+        if (reportsData.length) {
+          setAttendanceData(reportsData);
+        } else {
+          setAttendanceData([]);
+        }
+        setIsDataLoading(false);
+      }
     }
-  }, [rows, isLoading]);
+  }, [rows, isAttendanceLoading, reportsData, isReportsLoading]);
   useEffect(() => {
-    if (rows) {
+    if (rows && location.pathname.includes("attendance")) {
       if (debouncedSearchTerm.length >= 3) {
         setAttendanceData(
           rows.filter((userData: AttendanceTypes) => {
@@ -213,7 +230,11 @@ function Attendance() {
                 rowsPerPageOptions={[10, 13]}
                 pagination
                 density="standard"
-                loading={isLoading}
+                loading={
+                  location.pathname.includes("reports")
+                    ? isReportsLoading
+                    : isAttendanceLoading
+                }
                 sx={{
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",

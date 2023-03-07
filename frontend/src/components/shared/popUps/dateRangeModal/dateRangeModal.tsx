@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +5,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import submitIcon from "@src/assets/svgs/Frame.svg";
 import "@src/components/shared/popUps/dateRangeModal/dateRangeModal.scss";
@@ -16,25 +14,19 @@ import { localizedData } from "@src/helpers/utils/language";
 interface Props {
   open: boolean;
   handleClose: () => void;
+  setDate: (arg) => void;
+  state: unknown;
 }
 
-const DateRangeModal = ({ open, handleClose }: Props) => {
+const DateRangeModal = ({ open, handleClose, setDate, state }: Props) => {
   const constantData: LocalizationInterface = localizedData();
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
-
   const { cancelBtn, saveBtn } = constantData.Modals;
   return (
     <>
       <Dialog open={open} onClose={handleClose} className="dateRangeModal">
         <DialogContent className="dateRangeModal__Content">
           <DateRangePicker
-            onChange={(item) => setState([item.selection])}
+            onChange={(item) => setDate([item.selection])}
             showSelectionPreview={true}
             moveRangeOnFirstSelection={false}
             months={2}

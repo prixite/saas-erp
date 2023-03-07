@@ -64,7 +64,7 @@ function EmployeeButtons({ setButtonNameClicked }: EmployeeButtonType) {
       } else if (alignment === "center") {
         setButtonNameClicked("AVAILABILITY");
       } else if (alignment === "right") {
-        setButtonNameClicked("CHECKIN");
+        setButtonNameClicked("LEAVES");
       } else {
         setButtonNameClicked("ATTENDANCE");
       }

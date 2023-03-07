@@ -196,6 +196,13 @@ export interface AttendanceTypes {
   time_in: string;
   time_out: string;
 }
+
+export interface AttendanceQueryTypes {
+  id?: number;
+  interval?: string;
+  start_date?: string;
+  end_date?: string;
+}
 export interface standupTypesEmp {
   id: number;
   name: string;

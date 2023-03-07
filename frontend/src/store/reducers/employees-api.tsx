@@ -20,6 +20,7 @@ import {
   standupUpdatesTypes,
   AssetsTypes,
   AttendanceTypes,
+  AttendanceQueryTypes,
 } from "@src/helpers/interfaces/employees-modal";
 
 export const employeesApi = createApi({
@@ -128,8 +129,11 @@ export const employeesApi = createApi({
         };
       },
     }),
-    getLeaves: builder.query<empLeaves[], void>({
-      query: () => "/leave/",
+    getLeaves: builder.query<empLeaves[], AttendanceQueryTypes>({
+      query: (queryArg) => ({
+        url: "/leave/",
+        params: queryArg,
+      }),
       providesTags: (result = []) => [
         ...result.map(({ id }) => ({
           type: "Leaves" as const,
@@ -191,8 +195,13 @@ export const employeesApi = createApi({
     getAssetsTypes: builder.query<AssetsTypes[], void>({
       query: () => "/asset_type/",
     }),
-    getAttendacne: builder.query<AttendanceTypes[], void>({
-      query: () => "/attendance/",
+    getAttendance: builder.query<AttendanceTypes[], AttendanceQueryTypes>({
+      query: (queryArg) => {
+        return {
+          url: "/attendance/",
+          params: queryArg,
+        };
+      },
     }),
     createTeam: builder.mutation({
       query: ({ teamObject }) => {
@@ -257,7 +266,7 @@ export const {
   useGetTeamMembersQuery,
   useAddStandupMutation,
   useGetAssetsTypesQuery,
-  useGetAttendacneQuery,
+  useGetAttendanceQuery,
   useCreateTeamMutation,
   useDeleteTeamMutation,
   useUpdateTeamMutation,

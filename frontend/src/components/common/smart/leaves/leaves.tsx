@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography, Button, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
 import NotfoundIcon from "@src/assets/svgs/requestIcon.svg";
 import LeavesCountBar from "@src/components/common/presentational/leavesCountBar/leavesCountBar";
@@ -16,12 +17,17 @@ import { truncateString, useDebounce } from "@src/helpers/utils/utils";
 import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
 
-function Leaves() {
-  const { data: rows, isLoading } = useGetLeavesQuery();
+interface Props {
+  isLeavesData?: empLeaves[];
+  isLeavesLoading: boolean;
+}
+function Leaves({ isLeavesData, isLeavesLoading }: Props) {
+  const { data: rows, isLoading } = useGetLeavesQuery({});
   const constantData: LocalizationInterface = localizedData();
   const [dataLoading, setIsDataLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const location = useLocation();
   const { notFound } = constantData.Employee;
   const { LeavesManagement, Actions } = constantData.Leaves;
   const { filterButton } = constantData.Buttons;
@@ -229,17 +235,28 @@ function Leaves() {
   };
 
   useEffect(() => {
-    if (rows && !isLoading) {
-      if (rows.length) {
-        setLeavesData(rows);
-      } else {
-        setLeavesData([]);
+    if (location.pathname.includes("leaves")) {
+      if (rows && !isLoading) {
+        if (rows.length) {
+          setLeavesData(rows);
+        } else {
+          setLeavesData([]);
+        }
+        setIsDataLoading(false);
       }
-      setIsDataLoading(false);
+    } else {
+      if (isLeavesData && !isLeavesLoading) {
+        if (isLeavesData.length) {
+          setLeavesData(isLeavesData);
+        } else {
+          setLeavesData([]);
+        }
+        setIsDataLoading(false);
+      }
     }
-  }, [rows, isLoading]);
+  }, [rows, isLoading, isLeavesData, isLeavesLoading]);
   useEffect(() => {
-    if (rows) {
+    if (rows && location.pathname.includes("leaves")) {
       if (debouncedSearchTerm.length >= 3) {
         setLeavesData(
           rows.filter((userData: empLeaves) => {
@@ -256,36 +273,43 @@ function Leaves() {
   }, [debouncedSearchTerm, rows]);
   return (
     <Box className="leavesDataGridTable-section">
-      <Box
-        className="top-bar-cls"
-        sx={{ display: "flex", justifyContent: "space-between" }}
-      >
-        <Typography className="title-cls">{LeavesManagement}</Typography>
-        <Box
-          className="filter-section"
-          sx={{ display: "flex", justifyContent: "space-between" }}
-        >
-          <Input setSearchText={setQuery} />
-          <Box className="filter-btn-cls">
-            <Button
-              className="filter-btn"
-              id="filter-btn-id"
-              variant="outlined"
-              startIcon={
-                <img
-                  className="profile-pic"
-                  src={FilterIcon}
-                  alt="profile pic"
-                />
-              }
+      {!location.pathname.includes("reports") ? (
+        <>
+          <Box
+            className="top-bar-cls"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Typography className="title-cls">{LeavesManagement}</Typography>
+            <Box
+              className="filter-section"
+              sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              {" "}
-              <p>{filterButton}</p>
-            </Button>
+              <Input setSearchText={setQuery} />
+              <Box className="filter-btn-cls">
+                <Button
+                  className="filter-btn"
+                  id="filter-btn-id"
+                  variant="outlined"
+                  startIcon={
+                    <img
+                      className="profile-pic"
+                      src={FilterIcon}
+                      alt="profile pic"
+                    />
+                  }
+                >
+                  {" "}
+                  <p>{filterButton}</p>
+                </Button>
+              </Box>
+            </Box>
           </Box>
-        </Box>
-      </Box>
-      <LeavesCountBar employeeLeavesData={leavesData} />
+          <LeavesCountBar employeeLeavesData={leavesData} />
+        </>
+      ) : (
+        ""
+      )}
+
       {!dataLoading ? (
         <>
           {leavesData?.length ? (
@@ -305,7 +329,11 @@ function Leaves() {
                 rowsPerPageOptions={[10, 13]}
                 pagination
                 density="standard"
-                loading={isLoading}
+                loading={
+                  location.pathname.includes("reports")
+                    ? isLeavesLoading
+                    : isLoading
+                }
                 sx={{
                   "& renderCell-joiningDate MuiBox-root css-0:focus": {
                     outline: "none",

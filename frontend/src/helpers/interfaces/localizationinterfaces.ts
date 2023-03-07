@@ -436,6 +436,7 @@ export interface TeamsData {
 export interface ReportsData {
   Reports: string;
   DownloadBtn: string;
+  ReportsError: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
