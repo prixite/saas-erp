@@ -6,7 +6,6 @@ import reportsPic from "@src/assets/svgs/reportsBoard.svg";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
 import Attendance from "@src/components/common/smart/attendance/attendance";
 import Leaves from "@src/components/common/smart/leaves/leaves";
-import Input from "@src/components/shared/formControls/textInput/textInput";
 import DateRangeModal from "@src/components/shared/popUps/dateRangeModal/dateRangeModal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
@@ -61,7 +60,6 @@ function Reports() {
         <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       </Box>
       <Box className="filter-section">
-        <Input />
         <Box className="fields-cls" sx={{ mr: "15px" }}>
           <TextField
             className="text-field-cls"
