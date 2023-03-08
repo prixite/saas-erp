@@ -437,6 +437,9 @@ export interface ReportsData {
   Reports: string;
   DownloadBtn: string;
   ReportsError: string;
+  Monthly: string;
+  Weekly: string;
+  Custom: string;
 }
 export interface LocalizationInterface {
   Buttons: btnsInterface;
