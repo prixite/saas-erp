@@ -107,7 +107,7 @@
     "compBtn": "Compensation and benefits",
     "attendanceBtn":"Attendance",
     "availabilityBtn":"Availability",
-    "checkinBtn":"Checkin/Checkout"
+    "checkinBtn":"Leaves"
   },
   "Modals": {
     "filterHeading": "Filter",
@@ -338,6 +338,7 @@
   },
   "Reports": {
     "Reports": "Reports",
-    "DownloadBtn":"Download"
+    "DownloadBtn":"Download",
+    "ReportsError":"Select any employee to show reports"
   }
 }

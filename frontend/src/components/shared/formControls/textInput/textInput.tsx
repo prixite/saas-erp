@@ -3,7 +3,7 @@ import searchBox from "@src/assets/svgs/searchBox.svg";
 import "@src/components/shared/formControls/textInput/textInput.scss";
 
 interface FormInputProps {
-  setSearchText?: (arg: string) => void;
+  setSearchText: (arg: string) => void;
 }
 
 const Input = ({ setSearchText }: FormInputProps) => {

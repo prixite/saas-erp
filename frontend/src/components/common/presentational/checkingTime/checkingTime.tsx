@@ -11,13 +11,13 @@ import { employeeConstants } from "@src/helpers/constants/constants";
 import { AttendanceTypes } from "@src/helpers/interfaces/employees-modal";
 import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
 import { localizedData } from "@src/helpers/utils/language";
-import { useGetAttendacneQuery } from "@src/store/reducers/employees-api";
+import { useGetAttendanceQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/attendance/attendance.scss";
 
 const CheckingTime = () => {
   const constantData: LocalizationInterface = localizedData();
   const { CheckingTime, ViewAll } = constantData.Attendance;
-  const { data: rows, isLoading } = useGetAttendacneQuery();
+  const { data: rows, isLoading } = useGetAttendanceQuery({});
   const navigate = useNavigate();
   const [dataLoading, setIsDataLoading] = useState(true);
   const { notFound } = constantData.Employee;
