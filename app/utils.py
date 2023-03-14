@@ -1,8 +1,9 @@
 import boto3
 from botocore.exceptions import ClientError
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage, send_mail
 from django.template.loader import render_to_string
+from weasyprint import HTML
 
 
 def send_invitation_mail(to_email, user, url):
@@ -107,3 +108,44 @@ def create_predesigned_url_delete(key, expiration=300):
         return response
     except ClientError:
         return None
+
+
+def email_weekly_attandence(
+    total_working_hours, current_month_Leave, attendance, employee
+):
+    print(type(total_working_hours))
+    context = {
+        "total_working_hours": total_working_hours,
+        "missing_attendance": 5 - len(attendance),
+        "current_month_Leave": current_month_Leave,
+        "working_days": len(attendance),
+        "remaining_leaves": 20 - employee.leave_count,
+        "attendance": attendance,
+        "employee": employee,
+    }
+    html = render_to_string("app/email/attandence.html", context)
+
+    # Create a WeasyPrint HTML object from the HTML string
+    html = HTML(string=html)
+
+    # Generate the PDF file
+    pdf = html.write_pdf()
+    cc_mail = []
+    if employee.manager:
+        cc_mail.append(employee.manager.user)
+    if employee.organization:
+        cc_mail.append(employee.organization.owner)
+    print(cc_mail)
+    try:
+        email = EmailMessage(
+            "Week Attendance",
+            f"Dear {employee.user.first_name},\n Hope you are doing well.Your Attendance Summary is as follows:",  # noqa
+            settings.DEFAULT_FROM_EMAIL,
+            [employee.user],
+            cc=cc_mail,
+        )
+        email.attach("attandence.pdf", pdf, "application/pdf")
+        email.send()
+
+    except Exception as e:
+        return e
