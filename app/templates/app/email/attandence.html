@@ -28,7 +28,7 @@
             Total Working Hours
         </td>
         <td>
-            {{total_working_hours| time:"H:i"}}
+            {{total_working_hours | default:"00.00"}}
         </td>
     </tr>
     <tr>
@@ -101,7 +101,7 @@
             <td></td>
             <td></td>
             <td>Total Hours</td>
-            <td>{{total_working_hours}}</td>
+            <td>{{total_working_hours| default:"00.00"}}</td>
         </tr>
     </tbody>
 </table>

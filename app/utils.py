@@ -113,9 +113,11 @@ def create_predesigned_url_delete(key, expiration=300):
 def email_weekly_attandence(
     total_working_hours, current_month_Leave, attendance, employee
 ):
-    print(type(total_working_hours))
+    working_hours = ""
+    if total_working_hours is not None:
+        working_hours = f"{total_working_hours.seconds//3600}:{(total_working_hours.seconds//60)%60}"  # noqa
     context = {
-        "total_working_hours": total_working_hours,
+        "total_working_hours": working_hours,
         "missing_attendance": 5 - len(attendance),
         "current_month_Leave": current_month_Leave,
         "working_days": len(attendance),
@@ -132,10 +134,9 @@ def email_weekly_attandence(
     pdf = html.write_pdf()
     cc_mail = []
     if employee.manager:
-        cc_mail.append(employee.manager.user)
+        cc_mail.append(employee.manager.user.email)
     if employee.organization:
-        cc_mail.append(employee.organization.owner)
-    print(cc_mail)
+        cc_mail.append(employee.organization.owner.email)
     try:
         email = EmailMessage(
             "Week Attendance",
