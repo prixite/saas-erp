@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, TextField, MenuItem } from "@mui/material";
 import moment from "moment";
+import { CSVLink } from "react-csv";
 import downloadIcon from "@src/assets/svgs/download.svg";
 import reportsPic from "@src/assets/svgs/reportsBoard.svg";
 import EmployeeButtons from "@src/components/common/presentational/employeeButtons/EmployeeButtons";
@@ -22,6 +23,7 @@ function Reports() {
     constantData.Reports;
   const [employee, setEmployee] = useState<number>();
   const { data: employeetableData } = useGetEmployeesQuery();
+
   const [openModal, setOpenModal] = useState(false);
   const [selectValue, setSelectValue] = useState("Monthly");
   const [state, setState] = useState([
@@ -31,6 +33,7 @@ function Reports() {
       key: "selection",
     },
   ]);
+
   const [buttonNameClicked, setButtonNameClicked] =
     useState<string>("ATTENDANCE");
   const { data: rows, isLoading } = useGetAttendanceQuery(
@@ -79,6 +82,99 @@ function Reports() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmployee(parseInt(event.target.value));
   };
+  const leavData = [
+    {
+      name: "employe one",
+      reason: "urgent work",
+      hr_Comment: "",
+      id: 1,
+      leave_from: "2023-03-09",
+      leave_to: "2023-03-12",
+      leave_type: null,
+      organization: 3,
+      status: "approved",
+      updated_at: "2023-03-09T12:49:13.006037Z",
+      updated_by: null,
+    },
+  ];
+  //let arr = []
+  //arr.push(leavData);
+  //console.log(arr);
+
+  //function ret(leavData) {
+  //arr = []
+  //leavData.map((c) => {
+  // delete c.id
+  // c.name = c.employee.name;
+  // c.department = c.employee.department;
+  // delete c.employee
+  // arr.push(c)
+  //})
+  // return arr
+  // }
+  // console.log(ret(arr));
+
+  const data = [
+    {
+      name: "ali",
+      leaveType: "full time",
+      department: "cs",
+      leaveFrom: 25 - 10 - 23,
+      leaveTo: 28 - 10 - 2023,
+      reason: "annual",
+      hrComments: "ok",
+      status: "approved",
+      actions: "approve",
+    },
+  ];
+
+  const headers = [
+    {
+      label: "Name",
+      key: "name",
+    },
+    {
+      label: "Leave_Type",
+      key: "leave_type",
+    },
+    {
+      label: "Department",
+      key: "department",
+    },
+    {
+      label: "Leave_From",
+      key: "leave_from",
+    },
+    {
+      label: "Leave_To",
+      key: "leave_to",
+    },
+    {
+      label: "Reason",
+      key: "reason",
+    },
+    {
+      label: "Hr_Comment",
+      key: "hr_Comment",
+    },
+    {
+      label: "Status",
+      key: "status",
+    },
+    {
+      label: "Actions",
+      key: "actions",
+    },
+  ];
+
+  const csvLink = {
+    filename: "data.csv",
+    headers: headers,
+    data: leavData,
+  };
+  //console.log(leavesRows);
+  //console.log(data);
+
   return (
     <Box className="reports-section">
       <Box className="top-bar-cls">
@@ -130,23 +226,89 @@ function Reports() {
             )}
           </TextField>
         </Box>
-        <Box className="filter-btn-cls">
-          <Button
-            className="filter-btn"
-            id="filter-btn-id"
-            variant="outlined"
-            startIcon={
-              <img
-                className="profile-pic"
-                src={downloadIcon}
-                alt="profile pic"
-              />
-            }
-          >
-            {" "}
-            <p>{DownloadBtn}</p>
-          </Button>
-        </Box>
+
+        {employee ? (
+          buttonNameClicked === "ATTENDANCE" ? (
+            <Box className="filter-btn-cls">
+              <CSVLink data={data} headers={headers} filename="data.csv">
+                <Button
+                  className="filter-btn"
+                  id="filter-btn-id"
+                  variant="outlined"
+                  startIcon={
+                    <img
+                      className="profile-pic"
+                      src={downloadIcon}
+                      alt="profile pic"
+                    />
+                  }
+                >
+                  {" "}
+                  <p>{DownloadBtn}</p>
+                </Button>
+              </CSVLink>
+            </Box>
+          ) : buttonNameClicked === "AVAILABILITY" ? (
+            <Box className="filter-btn-cls">
+              <Button
+                className="filter-btn"
+                id="filter-btn-id"
+                variant="outlined"
+                startIcon={
+                  <img
+                    className="profile-pic"
+                    src={downloadIcon}
+                    alt="profile pic"
+                  />
+                }
+              >
+                {" "}
+                <p>{DownloadBtn}</p>
+              </Button>
+            </Box>
+          ) : buttonNameClicked === "LEAVES" ? (
+            <Box className="filter-btn-cls">
+              <CSVLink {...csvLink}>
+                <Button
+                  className="filter-btn"
+                  id="filter-btn-id"
+                  variant="outlined"
+                  startIcon={
+                    <img
+                      className="profile-pic"
+                      src={downloadIcon}
+                      alt="profile pic"
+                    />
+                  }
+                >
+                  {" "}
+                  <p>{DownloadBtn}</p>
+                </Button>
+              </CSVLink>
+            </Box>
+          ) : (
+            <></>
+          )
+        ) : (
+          <Box className="filter-btn-cls">
+            <Button
+              className="filter-btn"
+              id="filter-btn-id"
+              variant="outlined"
+              startIcon={
+                <img
+                  className="profile-pic"
+                  src={downloadIcon}
+                  alt="profile pic"
+                />
+              }
+            >
+              {" "}
+              <p>{DownloadBtn}</p>
+            </Button>
+          </Box>
+        )}
+
         <Box className="fields-cls">
           <TextField
             margin="normal"

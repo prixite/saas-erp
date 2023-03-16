@@ -271,6 +271,7 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       }
     }
   }, [debouncedSearchTerm, rows]);
+
   return (
     <Box className="leavesDataGridTable-section">
       {!location.pathname.includes("reports") ? (
