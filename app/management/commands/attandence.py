@@ -18,7 +18,7 @@ class Command(BaseCommand):
         for i in employee:
             attendance = (
                 models.Attendance.objects.filter(
-                    employee=i
+                    employee=i, created_at__date__range=[last_monday, last_friday]
                 )
                 .values(
                     "employee",

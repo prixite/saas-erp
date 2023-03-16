@@ -1,3 +1,4 @@
+{% load mathfilters %}
 <style>
     table {
       border: 1px solid black; /* sets a solid black border of 1 pixel width */
@@ -92,7 +93,8 @@
                 {{i.time_out|time:"H:i"}}
             </td>
             <td>
-                {{i.total_time}}
+                {{ i.total_time.seconds|intdiv:3600 }}:{{ i.total_time.seconds|intdiv:60 }}
+
             </td>
         </tr>
         {% endfor %}
