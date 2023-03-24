@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button, Tooltip } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import moment from "moment";
 import { useLocation } from "react-router-dom";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
@@ -21,6 +26,36 @@ interface Props {
   isLeavesData?: empLeaves[];
   isLeavesLoading: boolean;
 }
+const formatLeavesData = (leavesData) => {
+  const data = leavesData.map((value) => ({
+    id: value?.id,
+    leave_type: value?.leave_type,
+    leave_from: value?.leave_from,
+    leave_to: value?.leave_to,
+    emp_image: value?.employee?.image,
+    emp_department: value?.employee?.department,
+    emp_name: value?.employee?.name,
+    emp_reason: value?.description,
+    status: value?.status,
+    hr_comment: value?.hr_comment,
+  }));
+  return data;
+};
+
+function customToolBar() {
+  return (
+    <GridToolbarContainer sx={{ justifyContent: "flex-end" }}>
+      <GridToolbarExport
+        csvOptions={{
+          fileName: "EmployeeLeaveData",
+          allColumns: true,
+        }}
+        printOptions={{ disableToolbarButton: true }}
+      />
+    </GridToolbarContainer>
+  );
+}
+
 function Leaves({ isLeavesData, isLeavesLoading }: Props) {
   const { data: rows, isLoading } = useGetLeavesQuery({});
   const constantData: LocalizationInterface = localizedData();
@@ -38,10 +73,11 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
 
   const columns: GridColDef[] = [
     {
-      field: "name",
+      field: "emp_name",
       headerName: "Name",
       sortable: false,
       width: 300,
+
       renderCell: (cellValues) => {
         return (
           <div
@@ -62,16 +98,16 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row?.employee?.image}`}
+              src={`${cellValues.row?.emp_image}`}
               alt="profile pic"
             />
-            <p>{cellValues?.row?.employee?.name}</p>
+            <p>{cellValues?.row?.emp_name}</p>
           </div>
         );
       },
     },
     {
-      field: "Leave_Type",
+      field: "leave_type",
       headerName: "Leave Type",
       sortable: false,
       width: 300,
@@ -84,20 +120,20 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       },
     },
     {
-      field: "Department",
+      field: "emp_department",
       headerName: "Department",
       sortable: false,
       width: 200,
       renderCell: (cellValues) => {
         return (
           <p style={{ marginLeft: "20px", textTransform: "capitalize" }}>
-            {cellValues?.row?.employee?.department}
+            {cellValues?.row?.emp_department}
           </p>
         );
       },
     },
     {
-      field: "Leave_From",
+      field: "leave_from",
       headerName: "Leave From",
       sortable: false,
       width: 250,
@@ -110,7 +146,7 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       },
     },
     {
-      field: "Leave_To",
+      field: "leave_to",
       headerName: "Leave To",
       sortable: false,
       width: 250,
@@ -123,16 +159,16 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       },
     },
     {
-      field: "reason",
+      field: "emp_reason",
       headerName: "Reason",
       sortable: false,
       width: 400,
       renderCell: (cellValues) => {
         return (
-          <Tooltip title={cellValues?.row?.description}>
+          <Tooltip title={cellValues?.row?.emp_reason}>
             <p style={{ marginLeft: "21px" }}>
               {" "}
-              {truncateString(cellValues?.row?.description, 40)}
+              {truncateString(cellValues?.row?.emp_reason, 40)}
             </p>
           </Tooltip>
         );
@@ -140,7 +176,7 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
     },
 
     {
-      field: "Hr_Comments",
+      field: "hr_comment",
       headerName: "Hr Comments",
       sortable: false,
       width: 350,
@@ -155,10 +191,11 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       },
     },
     {
-      field: "Status",
+      field: "status",
       headerName: "Status",
       sortable: false,
       width: 300,
+
       renderCell: (cellValues) => {
         return (
           <Box
@@ -196,6 +233,7 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
       field: "actions",
       headerName: "Actions",
       width: 250,
+
       renderCell: (cellValues) => {
         return (
           <Box
@@ -317,10 +355,14 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
             <div className="dataGridTable-main">
               <DataGrid
                 className="dataGrid"
-                rowHeight={80}
                 autoHeight
-                rows={[...leavesData]}
+                rows={formatLeavesData(leavesData)}
                 columns={columns}
+                components={{
+                  Toolbar: customToolBar,
+                }}
+                rowHeight={80}
+                //slotProps={{ toolbar: { csvOptions: { allColumns: true } } }}
                 disableColumnFilter
                 disableSelectionOnClick
                 disableColumnMenu

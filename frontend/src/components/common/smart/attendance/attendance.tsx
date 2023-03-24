@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import moment from "moment";
 import { useLocation } from "react-router-dom";
 import FilterIcon from "@src/assets/svgs/filterButtonIcon.svg";
@@ -19,6 +24,20 @@ interface Props {
   reportsData?: AttendanceTypes[];
   isReportsLoading: boolean;
 }
+const formatAttendenceData = (attendanceData) => {
+  const data = attendanceData.map((value) => ({
+    id: value?.id,
+    time_in: value?.time_in,
+    date: value?.time_in,
+    time_out: value?.time_out,
+    emp_id: value?.employee?.id,
+    emp_image: value?.employee?.image,
+    emp_department: value?.employee?.department,
+    emp_name: value?.employee?.name,
+  }));
+  return data;
+};
+
 function Attendance({ reportsData, isReportsLoading }: Props) {
   const { data: rows, isLoading: isAttendanceLoading } = useGetAttendanceQuery(
     {}
@@ -34,6 +53,20 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
   const [attendanceData, setAttendanceData] = useState<AttendanceTypes[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
 
+  function customToolBar() {
+    return (
+      <GridToolbarContainer sx={{ justifyContent: "flex-end" }}>
+        <GridToolbarExport
+          csvOptions={{
+            fileName: "EmployeeAttendanceData",
+            allColumns: true,
+          }}
+          printOptions={{ disableToolbarButton: true }}
+        />
+      </GridToolbarContainer>
+    );
+  }
+
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -43,13 +76,13 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
       renderCell: (cellValues) => {
         return (
           <p className="para" style={{ marginLeft: "20px" }}>
-            {cellValues?.row?.employee?.id}
+            {cellValues?.row?.emp_id}
           </p>
         );
       },
     },
     {
-      field: "name",
+      field: "emp_name",
       headerName: "Name",
       sortable: false,
       width: 300,
@@ -73,16 +106,16 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
                 marginRight: "8px",
                 borderRadius: "50%",
               }}
-              src={`${cellValues.row?.employee?.image}`}
+              src={`${cellValues.row?.emp_image}`}
               alt="profile pic"
             />
-            <p>{cellValues?.row?.employee?.name}</p>
+            <p>{cellValues?.row?.emp_name}</p>
           </div>
         );
       },
     },
     {
-      field: "Department",
+      field: "emp_department",
       headerName: "Department",
       sortable: false,
       width: 200,
@@ -95,7 +128,7 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
       },
     },
     {
-      field: "Date",
+      field: "date",
       headerName: "Date",
       sortable: false,
       width: 250,
@@ -108,7 +141,7 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
       },
     },
     {
-      field: "Check In",
+      field: "time_in",
       headerName: "Check In",
       sortable: false,
       width: 300,
@@ -123,7 +156,7 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
       },
     },
     {
-      field: "Check Out",
+      field: "time_out",
       headerName: "Check Out",
       sortable: false,
       width: 300,
@@ -219,8 +252,11 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
                 className="dataGrid"
                 rowHeight={80}
                 autoHeight
-                rows={[...attendanceData]}
+                rows={formatAttendenceData(attendanceData)}
                 columns={columns}
+                components={{
+                  Toolbar: customToolBar,
+                }}
                 disableColumnFilter
                 disableSelectionOnClick
                 disableColumnMenu
