@@ -21,7 +21,7 @@ const Dashboard = () => {
         sx={{ mt: "22px" }}
         spacing={2}
       >
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={8}>
           {userData?.allowed_modules.admin_modules.includes("employees") ||
           userData?.allowed_modules.owner_modules.includes("employees") ? (
             <div className="x-4">
@@ -31,7 +31,7 @@ const Dashboard = () => {
             ""
           )}
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <CheckingTime />
         </Grid>
       </Grid>
