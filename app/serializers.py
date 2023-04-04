@@ -359,6 +359,12 @@ class CurrencySerializer(serializers.ModelSerializer):
         return data
 
 
+class PayrollSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Payroll
+        fields = "__all__"
+
+
 class DocumentTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.DocumentType

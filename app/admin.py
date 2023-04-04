@@ -188,3 +188,8 @@ class StandupUpdateAdmin(admin.ModelAdmin):
 @admin.register(models.Availability)
 class AvailabilityAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.Payroll)
+class PayrollAdmin(admin.ModelAdmin):
+    list_display = ["employee", "created_at", "updated_at"]

@@ -23,6 +23,7 @@ class Payroll(models.Model):
     Monthly payroll.
     """
 
+    employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
     amount = models.FloatField()
     currency = models.ForeignKey("Currency", on_delete=models.PROTECT)
     tax = models.FloatField()
