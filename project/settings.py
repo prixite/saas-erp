@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     "webpack_loader",
     "waffle",
     "django_extensions",
+    "mathfilters",
 ]
 
 MIDDLEWARE = [
