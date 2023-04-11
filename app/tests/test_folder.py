@@ -104,3 +104,16 @@ class DocumentTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.delete(f"/api/documents/{self.document.id}/")
         self.assertEqual(response.status_code, 204)
+
+
+class AWSTestCase(BaseTestCase):
+    def test_aws_upload_file(self):
+        self.client.force_login(self.owner)
+        data = {"filename": "test", "filetype": ".jpg"}
+        response = self.client.post("/api/aws_upload_file/", data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_aws_delete_upload_file(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete("/api/aws_delete_file/key/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

@@ -21,10 +21,35 @@ class UserTestCase(BaseTestCase):
         response = self.client.patch("/api/change_password/", data=user_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_user_reset_password(self):
+        data = {"email": "user@example.com"}
+        response = self.client.post("/api/password-reset/", data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_reset_password_negative(self):
+        data = {"email": "fake@example.com"}
+        response = self.client.post("/api/password-reset/", data=data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_login(self):
         login_data = {"email": "user@example.com", "password": "admin"}
         response = self.client.post("/api/login/", data=login_data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_login_invalid_credential(self):
+        login_data = {"email": "user@example.com", "password": "admin1"}
+        response = self.client.post("/api/login/", data=login_data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_delete_user(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/users/{self.org_user.id}/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_user_negative(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/users/{self.owner.id}/")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_onboarding(self):
         onboarding_data = {
@@ -48,4 +73,11 @@ class UserFilterTestCase(BaseTestCase):
     def test_get_user_filter_data(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/users/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class UserModuleRoleTestCase(BaseTestCase):
+    def test_get_user_list(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/users/{self.owner.id}/access/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
