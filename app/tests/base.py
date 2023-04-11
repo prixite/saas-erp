@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.test import TestCase
 
 from app import factories, models
@@ -37,6 +39,7 @@ class BaseTestCase(TestCase):
             is_default=True,
             organization=self.organization,
         )
+
         self.owner = factories.UserFactory(
             username="owner@example.com",
             email="owner@example.com",
@@ -167,3 +170,9 @@ class BaseTestCase(TestCase):
 
         self.folder = factories.FolderFactory()
         self.document = factories.DocumentFactory()
+        self.leave = factories.LeaveFactory(
+            employee=self.employee,
+            organization=self.organization,
+            leave_from=datetime.now(),
+            leave_to=datetime.now() + +timedelta(days=1),
+        )

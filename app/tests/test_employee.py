@@ -175,6 +175,12 @@ class EmployeeTestCase(BaseTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+    def test_employee_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/employees/{self.employee.id}/")
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
 
 class CompensationTestCase(BaseTestCase):
     def test_compensation_post(self):
@@ -879,6 +885,16 @@ class LeaveTesCase(BaseTestCase):
     def test_get_all_leaves(self):
         self.client.force_login(self.owner)
         response = self.client.get("/api/attendance/?id=2")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_leave_update(self):
+        self.client.force_login(self.owner)
+        data = {
+            "updated_by": self.owner.id,
+            "hr_comment": "leave approved.",
+            "status": "approved",
+        }
+        response = self.client.patch(f"/api/leave/{self.leave.id}/", data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
