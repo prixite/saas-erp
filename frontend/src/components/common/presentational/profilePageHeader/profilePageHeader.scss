@@ -226,3 +226,63 @@
     }
   }
 }
+@media (max-width: 390px) {
+  .profile-Header-main {
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    .icon-Container {
+      .profile-pic {
+        height: 70px;
+        width: 70;
+        border-radius: 50%;
+      }
+    }
+
+    .employee-Header-Div-Two {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+
+      .subContainer-row-one {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        margin-top: 15px;
+
+        .name {
+          width: auto;
+          height: 28px;
+          margin-right: auto;
+          margin-bottom: 5px;
+          font-size: 28px;
+        }
+      }
+
+      .subContainer-row-two {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+
+        .email {
+          height: 20px;
+
+          font-size: 22px;
+          font-weight: 700;
+          margin-right: 15rem;
+          margin-bottom: 10px;
+        }
+
+        .contact {
+          height: 20px;
+          font-size: 22px;
+          font-weight: 700;
+          margin-right: 26.2rem;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

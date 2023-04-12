@@ -1,24 +1,29 @@
-import * as React from "react";
+//import * as React from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
-import Sidebar from "@src/components/shared/layout/Sidebar/Sidebar";
-import Topbar from "@src/components/shared/layout/Topbar/Topbar";
+//import Sidebar from "@src/components/shared/layout/Sidebar/Sidebar";
+//import Topbar from "@src/components/shared/layout/Topbar/Topbar";
+import Drawers from "@src/components/shared/layout/Drawer/Drawers";
 
 const Layout = () => {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = () => {
+  /*const toggleDrawer = () => {
     setOpen(!open);
-  };
+  };*/
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Topbar open={open} />
-      <Sidebar open={open} toggleDrawer={toggleDrawer} />
+      <Drawers open={open} />
+
+      {/*
+     <Topbar open={open} />
+     <Sidebar open={open} toggleDrawer={toggleDrawer} />*/}
+
       <Box
         component="main"
         sx={{

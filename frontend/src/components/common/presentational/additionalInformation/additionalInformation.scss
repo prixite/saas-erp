@@ -62,7 +62,7 @@
         width: 180px;
         font-family: "Lato";
         font-style: normal;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 16px;
         line-height: 19px;
         letter-spacing: -0.011em;
@@ -200,55 +200,181 @@
           margin-right: 16px;
         }
       }
-      .cnic-text {
-        .text {
-          height: 19px;
-          font-family: "Lato";
-          font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 19px;
-          letter-spacing: -0.011em;
-          color: #000000;
-        }
-        width: 130px;
+      .cnic {
         display: flex;
-        justify-content: center;
-        .typo {
-          height: 19px;
-          font-family: "Lato";
-          font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 19px;
-          letter-spacing: -0.011em;
-          color: #000000;
+
+        .cnic-text {
+          // flex-direction: row;
+          .text {
+            height: 19px;
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
+          width: 130px;
+          display: flex;
+          justify-content: center;
+          .typo {
+            height: 19px;
+            font-family: "Lato";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
+          .typo1 {
+            height: 19px;
+            font-family: "Lato";
+            font-style: normal;
+            line-height: 0;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 44px;
+            letter-spacing: -0.011em;
+            color: #000000;
+          }
         }
-        .typo1 {
-          height: 19px;
-          font-family: "Lato";
-          font-style: normal;
-          line-height: 0;
-          font-weight: 700;
-          margin-bottom: 5px;
-          font-size: 44px;
-          letter-spacing: -0.011em;
-          color: #000000;
+        .cnic-photo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .btn-cls {
+            width: 5px;
+          }
+          .logo {
+            height: 19px;
+            width: 19px;
+            background: inherit;
+            padding: 0px;
+          }
         }
       }
-      .cnic-photo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    }
+  }
 
-        .btn-cls {
-          width: 5px;
+  @media (max-width: 390px) {
+    .CardOne {
+      .department-Heading-Container {
+        margin-bottom: 12px;
+
+        .department-title {
+          line-height: 28px;
         }
-        .logo {
-          height: 19px;
-          width: 19px;
-          background: inherit;
-          padding: 0px;
+        .department-text {
+          font-size: 18px;
+        }
+      }
+      .employee-Name-Container {
+        margin-bottom: 12px;
+
+        .employee-title {
+          line-height: 28px;
+        }
+        .employee-text {
+          font-size: 18px;
+        }
+      }
+      .experience-Container {
+        margin-bottom: 12px;
+
+        .experience-title {
+          line-height: 28px;
+        }
+        .experience-text {
+          font-size: 18px;
+        }
+      }
+      .data-Container {
+        margin-bottom: 12px;
+
+        .data-title {
+          line-height: 28px;
+        }
+        .data-text {
+          font-size: 18px;
+        }
+      }
+    }
+    .CardTwo {
+      margin-top: 3px;
+      .emergency-Container {
+        .emergency-title {
+          .text {
+            line-height: 0px;
+          }
+        }
+        .emergency-text {
+          .text {
+            font-size: 18px;
+            line-height: 0px;
+          }
+        }
+      }
+      .cnic-Container {
+        .cnic-title {
+          .text {
+            height: 19px;
+            line-height: 19px;
+            margin-right: 0px;
+          }
+        }
+        .cnic {
+          display: flex;
+
+          .cnic-text {
+            .text {
+              height: 19px;
+              font-size: 18px;
+              line-height: 19px;
+            }
+            width: 130px;
+            display: flex;
+            justify-content: center;
+            .typo {
+              height: 19px;
+              font-family: "Lato";
+              font-style: normal;
+              font-weight: 700;
+              font-size: 16px;
+              line-height: 19px;
+              letter-spacing: -0.011em;
+              color: #000000;
+            }
+            .typo1 {
+              height: 19px;
+              font-family: "Lato";
+              font-style: normal;
+              line-height: 0;
+              font-weight: 700;
+              margin-bottom: 5px;
+              font-size: 44px;
+              letter-spacing: -0.011em;
+              color: #000000;
+            }
+          }
+          .cnic-photo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // margin-right: 200px;
+
+            .btn-cls {
+              width: 5px;
+            }
+            .logo {
+              height: 19px;
+              width: 19px;
+              background: inherit;
+              padding: 0px;
+            }
+          }
         }
       }
     }

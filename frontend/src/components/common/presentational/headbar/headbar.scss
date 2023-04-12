@@ -28,21 +28,26 @@
     white-space: nowrap;
   }
 
-  .x-2 {
-    margin: 5px;
-    margin-right: 8px;
-    width: 40%;
+  /* .x-2 {
+     margin: 5px;
+     margin-right: 8px;
+     width: 40%;
     border: 1px solid white;
-    .MuiInputBase-root {
-      padding: 11px 16px 11px 16px;
-      border-radius: 12px;
-      height: 44px;
-      background: #ffffff;
-      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
-      border-radius: 12px;
-      border: 1px solid #ffffff;
-    }
-  }
+   // border: 1px solid #000000;
+     .MuiInputBase-root {
+       padding: 11px 16px 11px 16px;
+       border-radius: 12px;
+       margin: 20px;
+       height: 44px;
+      height: 20px;
+       background: #ffffff;
+       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+       border-radius: 12px;
+       border: 1px solid #ffffff;
+     }
+   }
+
+  */
 
   .x-3 {
     margin-left: auto;
@@ -70,8 +75,25 @@
       width: 108px;
       height: 44px;
       background: #ff2f2f;
-      border-radius: 12px;
       color: white;
+    }
+  }
+  .x-2 {
+    margin: 5px;
+    margin-right: 8px;
+    width: 40%;
+    border: 1px solid white;
+    // border: 1px solid #000000;
+    .MuiInputBase-root {
+      padding: 11px 16px 11px 16px;
+      border-radius: 12px;
+      margin: 20px;
+      height: 44px;
+      height: 20px;
+      background: #ffffff;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      border: 1px solid #ffffff;
     }
   }
 }
@@ -150,44 +172,103 @@
     }
   }
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 390px) {
   .x {
-    flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    //flex-wrap: wrap;
+    overflow-x: hidden;
+    margin-top: 17px;
+    overflow-y: hidden;
+    background-color: white;
 
-    .x-1 {
-      order: 2;
+    .d-hide {
+      visibility: hidden;
     }
 
-    .x-2 {
-      margin: 5px;
-      margin-left: 3rem;
-      min-width: 200px;
+    .x-1 {
+      height: 24px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #000000;
+      margin-right: 1rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
-      .MuiInputBase-root {
-        padding: 11px 16px 11px 16px;
+    /*.x-2 {
+
+    margin-right: 8px;
+    width: 40%;
+   border: 1px solid white;
+    .MuiInputBase-root {
+      padding: 11px 16px 11px 16px;
+      border-radius: 12px;
+      margin: 20px;
+      height: 44px;
+      background: #ffffff;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      border: 1px solid #ffffff;
+    }
+   }*/
+
+    .x-3 {
+      // margin-left: auto;
+      //margin-left: 5px;
+
+      .filter-btn {
+        margin-right: 10px;
+        height: 55px;
+        width: 30px;
+        background: #ffffff;
+        border: 1px solid #e7e7e7;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 12px;
+        color: black;
+        padding: 10px;
+        padding-right: 3px;
       }
     }
 
-    .x-3 {
-      order: 1;
-      align-items: flex-end;
-    }
-    .filter-btn {
-      height: 44px;
-      width: 98px;
-      margin-right: 15px;
-    }
-  }
+    .x-4 {
+      // justify-content: flex-end;
+      align-items: center;
+      justify-content: center;
 
-  .x-4 {
-    order: 2;
-
-    .create-btn {
-      width: 108px;
-      height: 44px;
-      padding: 16px 12px;
+      .create-btn {
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        width: 30px;
+        height: 55px;
+        background: #ff2f2f;
+        border-radius: 12px;
+        color: white;
+        padding: 10px;
+        padding-right: 3px;
+      }
+    }
+    .x-2 {
+      margin-right: 2px;
+      width: 40%;
+      border: 1px solid white;
+      .MuiInputBase-root {
+        padding: 3px;
+        border-radius: 16px;
+        margin: 5px;
+        height: 20px;
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #ffffff;
+      }
     }
   }
 }
