@@ -13,7 +13,7 @@
     "@mui/material": "^5.11.6",
     "@mui/x-data-grid": "^5.17.21",
     "@mui/x-date-pickers": "^5.0.16",
-    "@reduxjs/toolkit": "^1.9.1",
+    "@reduxjs/toolkit": "^1.9.4",
     "@rtk-query/codegen-openapi": "^1.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
