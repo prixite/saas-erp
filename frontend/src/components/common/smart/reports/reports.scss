@@ -52,3 +52,22 @@
     }
   }
 }
+@media (max-width: 390px) {
+  .reports-section {
+    .top-bar-cls {
+      margin-top: 30px;
+      .title-cls {
+        font-size: 22px;
+      }
+    }
+    .filter-section {
+      .filter-btn-cls {
+        margin-right: 8px;
+        .filter-btn {
+          font-size: 14px;
+          padding: 12px 12px;
+        }
+      }
+    }
+  }
+}

@@ -81,6 +81,7 @@
           padding: 12.5px 16px 12.5px 19.33px;
         }
       }
+
       .create-standup-btn {
         margin-left: 15px;
         .create-btn {
@@ -103,6 +104,32 @@
           background: #ff2f2f;
           border-radius: 12px;
           color: white;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 390px) {
+  .attendanceDataGridTable-section {
+    .top-bar-cls {
+      margin-top: 30px;
+      align-items: center;
+      justify-content: center;
+
+      .title-cls {
+        font-size: 20px;
+        // margin-right: 180px;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+      .filter-section {
+        .filter-btn-cls {
+          .filter-btn {
+            .btn {
+              display: none;
+            }
+          }
         }
       }
     }

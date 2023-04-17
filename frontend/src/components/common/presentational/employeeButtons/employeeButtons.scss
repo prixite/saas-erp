@@ -104,6 +104,8 @@
   .employeeButton-main {
     margin-top: 24px;
     margin-bottom: 24px;
+    margin-right: auto;
+    margin-left: auto;
     box-sizing: border-box;
 
     .toggleGroup {
@@ -112,7 +114,9 @@
         flex-direction: row;
         align-items: center;
         padding: 10px 16px;
+
         gap: 10px;
+        width: 39%;
         height: 37px;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
         border-radius: 8px;
@@ -145,6 +149,7 @@
         padding: 10px 16px;
         gap: 10px;
         height: 37px;
+        width: 39%;
         border: 1px solid #e7e7e7 !important;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
         border-radius: 8px;
@@ -175,8 +180,9 @@
         flex-direction: row;
         align-items: center;
         padding: 10px 16px;
-        gap: 0x;
+        gap: 10px;
         height: 37px;
+        width: 39%;
         border: 1px solid #e7e7e7 !important;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
         border-radius: 8px;
