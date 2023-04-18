@@ -22,6 +22,7 @@ function Reports() {
     constantData.Reports;
   const [employee, setEmployee] = useState<number>();
   const { data: employeetableData } = useGetEmployeesQuery();
+
   const [openModal, setOpenModal] = useState(false);
   const [selectValue, setSelectValue] = useState("Monthly");
   const [state, setState] = useState([
@@ -31,6 +32,7 @@ function Reports() {
       key: "selection",
     },
   ]);
+
   const [buttonNameClicked, setButtonNameClicked] =
     useState<string>("ATTENDANCE");
   const { data: rows, isLoading } = useGetAttendanceQuery(
@@ -130,6 +132,7 @@ function Reports() {
             )}
           </TextField>
         </Box>
+
         <Box className="filter-btn-cls">
           <Button
             className="filter-btn"
@@ -147,6 +150,7 @@ function Reports() {
             <p>{DownloadBtn}</p>
           </Button>
         </Box>
+
         <Box className="fields-cls">
           <TextField
             margin="normal"

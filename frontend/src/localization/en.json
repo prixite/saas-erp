@@ -339,7 +339,7 @@
   "Reports": {
     "Reports": "Reports",
     "DownloadBtn":"Download",
-    "ReportsError":"Select any employee to show reports",
+    "ReportsError":"Select any employee to show report",
     "Monthly":"Monthly",
     "Weekly":"Weekly",
     "Custom":"Custom"
