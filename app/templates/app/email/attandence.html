@@ -1,0 +1,114 @@
+{% load mathfilters %}
+<style>
+    table {
+      border: 1px solid black; /* sets a solid black border of 1 pixel width */
+      border-collapse: collapse; /* optional; merges adjacent borders into a single border */
+      font-size:12px;
+    }
+    th, td {
+      border: 1px solid black; /* sets a solid black border of 1 pixel width for all table cells */
+      padding: 5px;
+    }
+    th {
+      text-align: center;
+    }
+</style>
+<h2>Dear {{employee}},</h2>
+<p>Hope you are doing well.  Your Attendance Summary is as follows:</p>
+
+
+<table border="1" align="left" width="25%">
+<thead>
+    <tr style="background-color: #9BC2E6;">
+        <th colspan="2">SUMMARY</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>
+            Total Working Hours
+        </td>
+        <td>
+            {{total_working_hours | default:"00.00"}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Missing Attendance
+        </td>
+        <td>
+            {{missing_attendance}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            March Leaves
+        </td>
+        <td>
+            {{current_month_Leave}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Working Days
+        </td>
+        <td>
+            {{working_days}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Total Remaining Leaves
+        </td>
+        <td>
+            {{remaining_leaves}}
+        </td>
+    </tr>
+</tbody>
+</table>
+
+<table align="left" width="100%" style="margin-top: 15px;">
+    <thead>
+        <tr style="background-color: #9BC2E6;">
+            <th>Date</th>
+            <th>Day</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+            <th>Total Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in attendance %}
+        <tr>
+            <td>
+                {{ i.time_in|date:'Y-m-d' }}
+            </td>
+            <td>
+                {{ i.time_in|date:'l' }}
+            </td>
+            <td>
+                {{i.time_in|time:"H:i"}}
+            </td>
+            <td>
+                {{i.time_out|time:"H:i"}}
+            </td>
+            <td>
+                {{ i.total_time.seconds|intdiv:3600 }}:{{ i.total_time.seconds|intdiv:60 }}
+
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total Hours</td>
+            <td>{{total_working_hours| default:"00.00"}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Thank you.</p>
+<p>Regard,</p>
+<p>HR Department</p>
+<p>Prixite</p>
