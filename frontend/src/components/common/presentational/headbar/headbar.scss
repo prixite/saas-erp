@@ -172,6 +172,7 @@
     }
   }
 }
+
 @media only screen and (max-width: 390px) {
   .x {
     display: flex;
@@ -179,7 +180,6 @@
     justify-content: flex-start;
     flex-direction: row;
     flex-wrap: nowrap;
-    //flex-wrap: wrap;
     overflow-x: hidden;
     margin-top: 17px;
     overflow-y: hidden;
@@ -202,28 +202,7 @@
       overflow: hidden;
       white-space: nowrap;
     }
-
-    /*.x-2 {
-
-    margin-right: 8px;
-    width: 40%;
-   border: 1px solid white;
-    .MuiInputBase-root {
-      padding: 11px 16px 11px 16px;
-      border-radius: 12px;
-      margin: 20px;
-      height: 44px;
-      background: #ffffff;
-      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
-      border-radius: 12px;
-      border: 1px solid #ffffff;
-    }
-   }*/
-
     .x-3 {
-      // margin-left: auto;
-      //margin-left: 5px;
-
       .filter-btn {
         margin-right: 10px;
         height: 55px;
@@ -239,7 +218,6 @@
     }
 
     .x-4 {
-      // justify-content: flex-end;
       align-items: center;
       justify-content: center;
 
