@@ -9,7 +9,7 @@ import { Outlet } from "react-router-dom";
 import Drawers from "@src/components/shared/layout/Drawer/Drawers";
 
 const Layout = () => {
-  //const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
   /*const toggleDrawer = () => {
     setOpen(!open);
@@ -21,7 +21,6 @@ const Layout = () => {
       <Drawers open={open} />
 
       {/*
-      <Drawers open={open} />
      <Topbar open={open} />
      <Sidebar open={open} toggleDrawer={toggleDrawer} />*/}
 
