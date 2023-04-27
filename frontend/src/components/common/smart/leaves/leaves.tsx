@@ -21,7 +21,6 @@ import { localizedData } from "@src/helpers/utils/language";
 import { truncateString, useDebounce } from "@src/helpers/utils/utils";
 import { useGetLeavesQuery } from "@src/store/reducers/employees-api";
 import "@src/components/common/smart/leaves/leaves.scss";
-
 interface Props {
   isLeavesData?: empLeaves[];
   isLeavesLoading: boolean;
@@ -323,7 +322,9 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
               className="filter-section"
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Input setSearchText={setQuery} />
+              <Box className="search">
+                <Input setSearchText={setQuery} />
+              </Box>
               <Box className="filter-btn-cls">
                 <Button
                   className="filter-btn"
@@ -338,11 +339,15 @@ function Leaves({ isLeavesData, isLeavesLoading }: Props) {
                   }
                 >
                   {" "}
-                  <p>{filterButton}</p>
+                  <p className="btn">{filterButton}</p>
                 </Button>
               </Box>
             </Box>
           </Box>
+          <Box className="search1">
+            <Input setSearchText={setQuery} />
+          </Box>
+
           <LeavesCountBar employeeLeavesData={leavesData} />
         </>
       ) : (

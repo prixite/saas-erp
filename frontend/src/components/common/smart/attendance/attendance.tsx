@@ -236,7 +236,7 @@ function Attendance({ reportsData, isReportsLoading }: Props) {
                 }
               >
                 {" "}
-                <p>{filterButton}</p>
+                <p className="btn">{filterButton}</p>
               </Button>
             </Box>
           </Box>

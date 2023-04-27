@@ -116,3 +116,13 @@
     }
   }
 }
+@media only screen and (max-width: 390px) {
+  .currencyDataGridTable-section {
+    .top-bar-cls {
+      margin-top: 30px;
+      .title-cls {
+        font-size: 22px;
+      }
+    }
+  }
+}

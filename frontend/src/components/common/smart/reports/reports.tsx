@@ -88,7 +88,7 @@ function Reports() {
         <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       </Box>
       <Box className="filter-section">
-        <Box className="fields-cls" sx={{ mr: "15px" }}>
+        <Box className="fields-cls" sx={{ mr: "12px" }}>
           <TextField
             className="text-field-cls"
             select
@@ -96,7 +96,8 @@ function Reports() {
             name="employee"
             label="Select Employee"
             sx={{
-              width: 150,
+              // width: 150,
+              width: 140,
             }}
             InputProps={{
               sx: {
@@ -161,7 +162,8 @@ function Reports() {
             defaultValue={selectValue}
             onChange={handleValueChange}
             sx={{
-              width: 125,
+              //  width: 125,
+              width: 110,
             }}
             InputProps={{
               sx: {
