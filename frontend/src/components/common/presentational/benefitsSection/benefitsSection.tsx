@@ -82,7 +82,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
         <Box className="Menu_DropDown">
           <Menu
             PaperProps={{
-              sx: { width: "115px", height: "95px", overflow: "hidden" },
+              sx: { width: "115px", height: "115px", overflow: "hidden" },
             }}
             id="demo-positioned-menu"
             aria-labelledby="client-options-button"
@@ -128,7 +128,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
       </Box>
 
       <Grid container className="benefits-status-grid">
-        <Grid className="current-salary-box" item xs={3} sm={3}>
+        <Grid className="current-salary-box" item xs={6} sm={3}>
           <Box className="current-salary">
             <Typography className="heading-cls">
               {currentSalary}: {"\u00A0"}
@@ -138,7 +138,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
             </Typography>
           </Box>
         </Grid>
-        <Grid className="compensation-type-box" item xs={3} sm={3}>
+        <Grid className="compensation-type-box" item xs={6} sm={3}>
           <Box className="compensation-type">
             <Typography className="heading-cls">
               {compensationType}: {"\u00A0"}
@@ -148,7 +148,7 @@ const BenefitsSection = ({ employeeData }: benefitCompensationType) => {
             </Typography>
           </Box>
         </Grid>
-        <Grid className="compensation-schedule-box" item xs={3} sm={3}>
+        <Grid className="compensation-schedule-box" item xs={6} sm={3}>
           <Box className="comopensation-schdule">
             <Typography className="heading-cls">
               {compensationScheule}: {"\u00A0"}

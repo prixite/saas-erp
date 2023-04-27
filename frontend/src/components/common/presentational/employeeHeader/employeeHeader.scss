@@ -1,8 +1,10 @@
 .employee-Header-main {
   background-color: rgba(255, 205, 205, 0.2);
+
   border-radius: 12px;
-  height: 108px;
+  // height: 108px;
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -14,6 +16,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 10px;
+    margin-left: 15px;
+    margin-top: 20px;
     .profile-pic {
       height: 70px;
       width: 70px;
@@ -56,6 +61,20 @@
         flex-grow: 0;
         margin-right: 20px;
       }
+      .designation {
+        width: 161px;
+        height: 19px;
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: -0.011em;
+        color: #6c6c6c;
+        margin-right: 11px;
+        flex: none;
+        flex-grow: 0;
+      }
 
       .userID {
         display: flex;
@@ -86,6 +105,64 @@
         display: flex;
         flex-direction: row;
         flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        height: 22px;
+        background: #ffe5b3;
+        border: 1px solid #ffc397;
+        border-radius: 60px;
+        flex: none;
+        order: 1;
+        justify-content: center;
+        flex-grow: 0;
+        padding: 4px 12px 4px 12px;
+        .paragraph {
+          height: 14px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: -0.011em;
+          color: #970000;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+          margin: 0px;
+        }
+      }
+    }
+    .subContainer-row-three {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+      .userID {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        height: 22px;
+        background: #ededed;
+        border: 1px solid #d8d8d8;
+        border-radius: 60px;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+        justify-content: center;
+        margin-right: 12px;
+        padding: 4px 12px 4px 12px;
+        .paragraph {
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: -0.011em;
+          color: black;
+          margin: 0px;
+        }
+      }
+
+      .userStatus {
+        display: flex;
+        flex-direction: row;
         align-items: center;
         gap: 10px;
         height: 22px;
@@ -156,26 +233,26 @@
         flex: none;
         flex-grow: 0;
       }
-
-      .contact {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-        letter-spacing: -0.011em;
-        color: black;
-        font-family: "Lato";
-        flex: none;
-        flex-grow: 0;
-      }
+    }
+    .contact {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: -0.011em;
+      color: black;
+      font-family: "Lato";
+      flex: none;
+      flex-grow: 0;
     }
   }
+
   .employee-Header-Div-Three {
     display: flex;
     align-items: center;
@@ -226,6 +303,126 @@
     img {
       width: 50px;
       height: 50px;
+    }
+  }
+}
+
+@media (max-width: 390px) {
+  .employee-Header-main {
+    background-color: rgba(255, 205, 205, 0.2);
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+    .icon-Container {
+      margin-right: 10px;
+      margin-left: 15px;
+      margin-top: 20px;
+      .profile-pic {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+      }
+    }
+
+    .employee-Header-Div-Two {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+
+      .subContainer-row-one {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        // height: 28px;
+        margin-top: 15px;
+        // margin-bottom: 10px;
+
+        .name {
+          width: auto;
+          height: 28px;
+          margin-right: auto;
+          margin-bottom: 5px;
+        }
+        .designation {
+          width: 161px;
+          height: 19px;
+          font-size: 16px;
+          margin-right: auto;
+        }
+
+        .userID {
+          // margin-right: 270px;
+          .userStatus {
+            // margin-right: 400px;
+          }
+        }
+      }
+      .subContainer-row-three {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        .userID {
+          //margin-right: 270px;
+          .userStatus {
+            // margin-right: 400px;
+          }
+        }
+      }
+
+      .subContainer-row-two {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+
+        .designation {
+          // width: 161px;
+          //height: 19px;
+          font-size: 10px;
+        }
+
+        .email {
+          height: 20px;
+
+          font-size: 18px;
+          font-weight: 700;
+          margin-right: 18rem;
+          margin-bottom: 10px;
+        }
+
+        .contact {
+          height: 20px;
+          font-size: 18px;
+          font-weight: 700;
+          margin-right: 21rem;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .employee-Header-Div-Three {
+      display: flex;
+      // align-items: center;
+      // justify-content: center;
+      //flex-direction: row;
+      // flex-wrap: wrap;
+
+      .container-Icon {
+        display: flex;
+        height: 25px;
+        width: 25px;
+        background-color: rgba(255, 205, 205, 0.2);
+
+        margin-right: 180px;
+        margin-top: 10px;
+        margin-bottom: 50px;
+        .profile-pic {
+          height: 14px;
+          width: 14px;
+          border: none;
+        }
+      }
     }
   }
 }

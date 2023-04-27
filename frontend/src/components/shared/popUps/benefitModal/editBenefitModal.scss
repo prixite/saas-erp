@@ -233,3 +233,69 @@
     }
   }
 }
+@media (max-width: 390px) {
+  .editBenefitModal {
+    &__Content {
+      .firstDiv {
+        .textFieldContainer {
+          margin-bottom: 20px;
+        }
+      }
+
+      .secondGrid {
+        .scheduleContainer {
+          margin-bottom: 20px;
+        }
+      }
+    }
+    .toggle {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__icon {
+      }
+
+      &__textDiv {
+        .toggleHeading {
+          margin: 0px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          letter-spacing: -0.011em;
+
+          /* Primary/Black Primary */
+
+          color: #000000;
+        }
+      }
+    }
+
+    .editBenefitModal__Actions {
+      .cancelBtn {
+        margin-right: 5rem;
+        margin-left: 5px;
+        padding: 15px 45px;
+        width: 150px;
+        .cancel-img {
+          margin-right: 5px;
+          display: flex;
+        }
+      }
+
+      .submitBtn {
+        margin-right: 5px;
+        padding: 15px 45px;
+        width: 150px;
+
+        .submit-img {
+          margin-left: 5px;
+          display: flex;
+        }
+      }
+    }
+  }
+}

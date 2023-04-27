@@ -10,7 +10,7 @@ const Dashboard = () => {
   const { dashboardHeading } = constantData.Dashboard;
   const { data: userData } = useGetUserQuery();
   return (
-    <Box sx={{ mt: "17px" }}>
+    <Box sx={{ mt: "27px" }}>
       <Typography sx={{ fontSize: "20px", fontWeight: "700" }}>
         {dashboardHeading}
       </Typography>
@@ -24,7 +24,7 @@ const Dashboard = () => {
         <Grid item xs={12} sm={8}>
           {userData?.allowed_modules.admin_modules.includes("employees") ||
           userData?.allowed_modules.owner_modules.includes("employees") ? (
-            <div className="x-4">
+            <div>
               <LeaveRequests />
             </div>
           ) : (

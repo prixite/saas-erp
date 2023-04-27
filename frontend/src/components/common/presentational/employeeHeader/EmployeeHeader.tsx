@@ -83,12 +83,14 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
             alt="profile pic"
           />
         </div>
-
         <div className="employee-Header-Div-Two">
           <div className="subContainer-row-one">
             <div className="name">
               {employeeData?.user?.first_name} {employeeData?.user?.last_name}
             </div>
+            <div className="designation">{employeeData?.designation}</div>
+          </div>
+          <div className="subContainer-row-three">
             <div className="userID">
               <p className="paragraph">{employeeData?.org_id}</p>
             </div>
@@ -96,9 +98,25 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
               <p className="paragraph">{employeeData?.type?.title}</p>
             </div>
           </div>
+          {/*
+        <div className="employee-Header-Div-Two">
+          <div className="subContainer-row-one">
+            <div className="name">
+              {employeeData?.user?.first_name} {employeeData?.user?.last_name}
+            </div>
+            <div className="designation">{employeeData?.designation}</div>
+
+            <div className="userID">
+              <p className="paragraph">{employeeData?.org_id}</p>
+            </div>
+            <div className="userStatus">
+              <p className="paragraph">{employeeData?.type?.title}</p>
+            </div>
+          </div>
+          */}
 
           <div className="subContainer-row-two">
-            <div className="designation">{employeeData?.designation}</div>
+            {/*  <div className="designation">{employeeData?.designation}</div>*/}
             <div className="email">
               <img
                 className="profile-pic"
@@ -128,7 +146,6 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
             </div>
           </div>
         </div>
-
         <div className="employee-Header-Div-Three">
           <Box sx={{ cursor: "pointer" }} className="container-Icon">
             <img
@@ -139,7 +156,7 @@ function EmployeeHeader({ employeeData }: EmployeeHeaderType) {
             />
             <Menu
               PaperProps={{
-                sx: { width: "115px", height: "95px", overflow: "hidden" },
+                sx: { width: "115px", height: "115px", overflow: "hidden" },
               }}
               id="demo-positioned-menu"
               aria-labelledby="client-options-button"

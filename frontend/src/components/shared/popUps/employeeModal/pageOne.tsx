@@ -174,8 +174,8 @@ const PageOne = ({ formik, action }: Props) => {
           {formik.errors?.image}
         </Typography>
       </Box>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -190,7 +190,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.firstName}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -206,8 +206,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -222,7 +222,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.contactNumber}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -239,8 +239,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -268,7 +268,7 @@ const PageOne = ({ formik, action }: Props) => {
             </LocalizationProvider>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -285,8 +285,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -301,7 +301,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.designation}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -330,8 +330,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -362,7 +362,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorTexte">{formik.errors?.managing}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={3}>
+        <Grid className="grid-item-cls" item xs={6} sm={3}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -376,7 +376,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.salary}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={3}>
+        <Grid className="grid-item-cls" item xs={6} sm={3}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -404,8 +404,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -433,7 +433,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.type}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -449,8 +449,8 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
-        <Grid className="grid-item-cls" item xs={6}>
+      <Grid className="grid-container-cls" container spacing={1}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -478,7 +478,7 @@ const PageOne = ({ formik, action }: Props) => {
             <p className="errorText">{formik.errors?.department}</p>
           </Box>
         </Grid>
-        <Grid className="grid-item-cls" item xs={6}>
+        <Grid className="grid-item-cls" item xs={12} sm={6}>
           <Box className="text-field-box">
             <TextField
               className="text-field-cls"
@@ -507,7 +507,7 @@ const PageOne = ({ formik, action }: Props) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid className="grid-container-cls" container spacing={2}>
+      <Grid className="grid-container-cls" container spacing={1}>
         <Grid className="grid-item-cls " item xs={12}>
           <Box className="text-field-box">
             <Autocomplete

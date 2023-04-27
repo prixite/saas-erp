@@ -25,6 +25,7 @@
   }
   .benefits-status-grid {
     margin-top: 12px;
+    margin-bottom: 12px;
     .heading-cls {
       font-size: 16px;
       font-weight: 400;
@@ -100,6 +101,56 @@
           margin-top: 0px;
           margin-right: 6px;
           border-color: #ffcdcd;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 390px) {
+  .benefits-main {
+    .benefits-status-grid {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      .heading-cls {
+        font-size: 15px;
+        font-weight: 400;
+      }
+      .txt-cls {
+        font-weight: 900;
+        font-size: 14px;
+      }
+      .current-salary-box {
+        margin-bottom: 10px;
+        .current-salary {
+          flex-direction: column;
+          flex-wrap: wrap;
+        }
+      }
+      .compensation-type-box {
+        margin-bottom: 10px;
+        .compensation-type {
+          flex-direction: column;
+        }
+      }
+      .compensation-schedule-box {
+        margin-bottom: 10px;
+        .comopensation-schdule {
+          flex-direction: column;
+        }
+      }
+    }
+
+    .perks-activity-section {
+      .perks-activity-box {
+        .activity-description {
+          .date-cls {
+            margin-bottom: 10px;
+          }
+          .description-cls {
+            font-size: 16px;
+            font-weight: 400;
+            color: #6c6c6c;
+          }
         }
       }
     }

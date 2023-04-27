@@ -6,28 +6,34 @@
     box-shadow: unset;
     border-radius: 12px;
   }
+
   .MuiDialogTitle-root + .MuiDialogContent-root {
     padding-bottom: 0px;
   }
+
   .MuiDialogTitle-root {
     width: 100%;
     padding-bottom: 0px;
+
     .modal-header-cls {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
       .heading-text-box {
         .heading-text {
           font-weight: 600;
           font-size: 20px;
           color: #000;
         }
+
         .subheading-text {
           font-weight: 400;
           font-size: 14px;
           color: #6c6c6c;
         }
       }
+
       .cross-icon-box {
         cursor: pointer;
         height: 42px;
@@ -40,21 +46,27 @@
         background: #f5f5f5;
       }
     }
+
     .steps-btns-cls {
       margin-top: 32px;
       display: flex;
+
       .step-box {
         width: 232px;
+        margin-left: 3px;
+
         .step-cls {
           font-weight: 400;
           font-size: 12px;
           color: #6c6c6c;
         }
+
         .step-value-cls {
           font-weight: 700;
           font-size: 16px;
           color: #6c6c6c;
         }
+
         .divider-cls {
           color: #ff2f2f;
           width: 97%;
@@ -63,6 +75,7 @@
       }
     }
   }
+
   &__Content {
     display: flex;
     height: auto;
@@ -70,10 +83,12 @@
     flex-direction: column;
     width: 100%;
   }
+
   &__Actions {
     width: 100%;
     margin-bottom: 20px;
     margin-top: 20px;
+
     .resetBtn {
       color: black;
       background: white;
@@ -85,19 +100,22 @@
       border: 1px solid #e7e7e7;
       text-transform: capitalize;
       border-radius: 12px;
+
       &:hover {
         background: white;
         color: grey;
       }
+
       .reset-img {
         margin-right: 10px;
         display: flex;
       }
     }
+
     .submitBtn {
       color: white;
       background: #ff2f2f;
-      width: 123px;
+      width: 123;
       height: 48px;
       margin-right: 20px;
       padding: 13px 20px;
@@ -105,26 +123,31 @@
       font-weight: 400;
       border-radius: 12px;
       text-transform: capitalize;
+
       &:hover {
         background: #ffcdcd;
         color: white;
       }
+
       .submit-img {
         margin-left: 10px;
         display: flex;
         margin-top: 4px;
       }
+
       .MuiLoadingButton-loadingIndicator {
         color: white;
       }
     }
+
     .actions-btns-wrapper {
       width: 100%;
-      display: flex;
+      //display: flex;
       justify-content: space-between;
+
       .add-new-sec {
         .upload-btn {
-          display: flex;
+          //display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 12px;
@@ -134,12 +157,57 @@
           font-size: 16px;
           font-weight: 500;
           width: 100%;
+          flex: 1;
+
           .upload-img {
             height: 20px;
             width: 20px;
             margin-right: 10px;
             display: flex;
           }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 390px) {
+    .MuiDialogTitle-root {
+      .steps-btns-cls {
+        .step-box {
+          width: 350px;
+          margin-left: 3px;
+
+          .step-cls {
+            font-size: 14px;
+          }
+          .step-value-cls {
+            font-size: 0.72rem;
+          }
+        }
+      }
+    }
+    &__Actions {
+      .resetBtn {
+        margin-right: 4rem;
+        margin-left: 10px;
+      }
+      .actions-btns-wrapper {
+        .add-new-sec {
+          display: flex;
+
+          .upload-btn {
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+          }
+        }
+        .resetBtn {
+          margin-right: 5rem;
+          margin-left: 5px;
+        }
+        .submitBtn {
+          margin-right: 5px;
         }
       }
     }

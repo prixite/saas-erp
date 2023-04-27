@@ -28,35 +28,35 @@ const AttendanceSummary = () => {
         </Box>
       </Box>
       <Grid container className="stack-cls">
-        <Grid item xs={2} className="section-item-cls">
+        <Grid item xs={6} sm={2} className="section-item-cls">
           <img src={greenLine} />
           <Box className="item-detail-cls">
             <Typography className="item-detail">{Present}</Typography>
             <Typography className="item-count">02</Typography>
           </Box>
         </Grid>
-        <Grid item xs={2} className="section-item-cls">
+        <Grid item xs={6} sm={2} className="section-item-cls">
           <img src={redLine} />
           <Box className="item-detail-cls">
             <Typography className="item-detail">{Absent}</Typography>
             <Typography className="item-count">05</Typography>
           </Box>
         </Grid>
-        <Grid item xs={2} className="section-item-cls">
+        <Grid item xs={6} sm={2} className="section-item-cls">
           <img src={orangeLine} />
           <Box className="item-detail-cls">
             <Typography className="item-detail">{LateArrival}</Typography>
             <Typography className="item-count">08</Typography>
           </Box>
         </Grid>
-        <Grid item xs={2} className="section-item-cls">
+        <Grid item xs={6} sm={2} className="section-item-cls">
           <img src={purpleLine} />
           <Box className="item-detail-cls">
             <Typography className="item-detail">{Leaves}</Typography>
             <Typography className="item-count">12</Typography>
           </Box>
         </Grid>
-        <Grid item xs={2} className="section-item-cls">
+        <Grid item xs={6} sm={2} className="section-item-cls">
           <img src={blueLine} />
           <Box className="item-detail-cls">
             <Typography className="item-detail">{ShortDuration}</Typography>

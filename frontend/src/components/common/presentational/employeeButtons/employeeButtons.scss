@@ -99,3 +99,106 @@
     }
   }
 }
+
+@media (max-width: 390px) {
+  .employeeButton-main {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+
+    .toggleGroup {
+      .button-Basic {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 10px;
+        height: 37px;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 8px;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+        cursor: pointer;
+        text-transform: none;
+
+        &__text {
+          height: 17px;
+
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: -0.011em;
+          color: #ffffff;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
+      }
+
+      .button-Docs {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 10px;
+        height: 37px;
+        border: 1px solid #e7e7e7 !important;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 8px;
+        flex: none;
+        flex-grow: 0;
+        cursor: pointer;
+        text-transform: none;
+
+        &__text {
+          height: 17px;
+
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
+      }
+
+      .button-Comp {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 16px;
+        gap: 0x;
+        height: 37px;
+        border: 1px solid #e7e7e7 !important;
+        box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+        border-radius: 8px;
+        flex: none;
+        order: 2;
+        flex-grow: 0;
+        cursor: pointer;
+        text-transform: none;
+        &__text {
+          height: 17px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: -0.011em;
+          color: #000000;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+        }
+      }
+    }
+  }
+}
