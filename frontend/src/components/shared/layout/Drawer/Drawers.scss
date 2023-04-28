@@ -1,32 +1,39 @@
-.app-bar-cls {
-  position: absolute;
-  border-bottom: none;
-  background-color: white;
-  .toolbar-cls {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
+.app-bar-cls1 {
+  visibility: hidden;
+}
 
-    .appbar-toolbar-cls {
-      min-height: 80px;
-      padding: 0px;
-      margin-left: auto;
-      .search-icon-box {
-        margin-right: 3px;
+@media (max-width: 390px) {
+  .app-bar-cls1 {
+    visibility: visible;
+    position: absolute;
+    border-bottom: none;
+    background-color: white;
+    .toolbar-cls {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+
+      .appbar-toolbar-cls {
+        min-height: 80px;
+        padding: 0px;
+        margin-left: auto;
+        .search-icon-box {
+          margin-right: 3px;
+        }
       }
     }
   }
-}
-.list-items-btn {
-  margin-top: 25px;
-  .list-item-icon {
-    .icon-img {
-      height: 24px;
-      width: 24px;
-    }
-    .img {
-      height: 2px;
-      width: 2px;
+  .list-items-btn {
+    margin-top: 25px;
+    .list-item-icon {
+      .icon-img {
+        height: 24px;
+        width: 24px;
+      }
+      .img {
+        height: 2px;
+        width: 2px;
+      }
     }
   }
 }

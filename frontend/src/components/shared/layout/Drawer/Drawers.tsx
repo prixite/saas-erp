@@ -113,7 +113,7 @@ export default function Drawers() {
   return (
     <>
       <AppBar
-        className="app-bar-cls"
+        className="app-bar-cls1"
         elevation={0}
         position="absolute"
         open={open}

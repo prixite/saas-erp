@@ -30,6 +30,48 @@ function HeadBar({ setSearchText }: Props) {
         <div className="x-1">
           <span>Employees Module</span>
         </div>
+        <div className={`x-2 ${!allFlags.show_search_module && "d-hide"}`}>
+          <TextField
+            className="searchbox"
+            id="search-headbox"
+            // value={searchText}
+            variant="outlined"
+            onChange={handleInput}
+            placeholder="Search Employee here"
+            sx={{
+              "& label.Mui-focused": {
+                color: "#999999",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "#E7E7E7",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#E7E7E7",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#999999",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#999999",
+                },
+              },
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {/* SearchBoxSVG */}
+                  <img
+                    className="profile-pic"
+                    src={searchBox}
+                    alt="profile pic"
+                  />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+
         <div className={`x-3 ${!allFlags.show_employee_filter || "d-hide"}`}>
           <FilterButton />
         </div>
@@ -42,8 +84,7 @@ function HeadBar({ setSearchText }: Props) {
           ""
         )}
       </div>
-
-      <div className={`x-2 ${!allFlags.show_search_module && "d-hide"}`}>
+      <div className={`x-5 ${!allFlags.show_search_module && "d-hide"}`}>
         <TextField
           className="searchbox"
           id="search-headbox"
@@ -85,8 +126,7 @@ function HeadBar({ setSearchText }: Props) {
         />
       </div>
 
-      {/*
-      <div className="x">
+      {/*  <div className="x">
         <div className="x-1">
           <span>{employeeHeading}</span>
         </div>

@@ -28,26 +28,22 @@
     white-space: nowrap;
   }
 
-  /* .x-2 {
-     margin: 5px;
-     margin-right: 8px;
-     width: 40%;
+  .x-2 {
+    margin: 5px;
+    margin-right: 8px;
+    width: 20%;
     border: 1px solid white;
-   // border: 1px solid #000000;
-     .MuiInputBase-root {
-       padding: 11px 16px 11px 16px;
-       border-radius: 12px;
-       margin: 20px;
-       height: 44px;
-      height: 20px;
-       background: #ffffff;
-       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
-       border-radius: 12px;
-       border: 1px solid #ffffff;
-     }
-   }
-
-  */
+    .MuiInputBase-root {
+      padding: 11px 16px 11px 16px;
+      border-radius: 12px;
+      margin: 20px;
+      height: 44px;
+      background: #ffffff;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      border: 1px solid #ffffff;
+    }
+  }
 
   .x-3 {
     margin-left: auto;
@@ -78,24 +74,10 @@
       color: white;
     }
   }
-  .x-2 {
-    margin: 5px;
-    margin-right: 8px;
-    width: 40%;
-    border: 1px solid white;
-    // border: 1px solid #000000;
-    .MuiInputBase-root {
-      padding: 11px 16px 11px 16px;
-      border-radius: 12px;
-      margin: 20px;
-      height: 44px;
-      height: 20px;
-      background: #ffffff;
-      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
-      border-radius: 12px;
-      border: 1px solid #ffffff;
-    }
-  }
+}
+
+.x-5 {
+  visibility: hidden;
 }
 
 @media only screen and (max-width: 600px) {
@@ -120,6 +102,9 @@
       line-height: 24px;
       overflow: hidden;
       color: #000000;
+    }
+    .x-5 {
+      visibility: visible;
     }
 
     .x-2 {
@@ -202,6 +187,11 @@
       overflow: hidden;
       white-space: nowrap;
     }
+    .x-2 {
+      visibility: hidden;
+      display: none;
+    }
+
     .x-3 {
       .filter-btn {
         margin-right: 10px;
@@ -213,7 +203,10 @@
         border-radius: 12px;
         color: black;
         padding: 10px;
-        padding-right: 3px;
+        padding-left: 50px;
+        .f-btn {
+          visibility: hidden;
+        }
       }
     }
 
@@ -231,22 +224,28 @@
         border-radius: 12px;
         color: white;
         padding: 10px;
-        padding-right: 3px;
+        padding-left: 60px;
+        #create-btn-text {
+          visibility: hidden;
+        }
       }
     }
-    .x-2 {
-      margin-right: 2px;
-      width: 40%;
-      border: 1px solid white;
-      .MuiInputBase-root {
-        padding: 3px;
-        border-radius: 16px;
-        margin: 5px;
-        height: 20px;
-        background: #ffffff;
-        border-radius: 16px;
-        border: 1px solid #ffffff;
-      }
+  }
+
+  .x-5 {
+    visibility: visible;
+    margin-right: 2px;
+    width: 100%;
+    border: 1px solid white;
+    .MuiInputBase-root {
+      padding: 5px;
+      padding-left: 15px;
+      border-radius: 16px;
+      margin: 5px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #ffffff;
     }
   }
 }
