@@ -18,13 +18,10 @@ const Layout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Drawers open={open} />
+
       <Topbar open={open} />
       <Sidebar open={open} toggleDrawer={toggleDrawer} />
-
-      {/*
-     <Topbar open={open} />
-     <Sidebar open={open} toggleDrawer={toggleDrawer} />*/}
+      <Drawers open={open} />
 
       <Box
         component="main"
