@@ -2,13 +2,13 @@ import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Box } from "@mui/material";
 import EmployeeModal from "@src/components/shared/popUps/employeeModal/employeeModal";
-//import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
-//import { localizedData } from "@src/helpers/utils/language";
+import { LocalizationInterface } from "@src/helpers/interfaces/localizationinterfaces";
+import { localizedData } from "@src/helpers/utils/language";
 
 function CreateButton() {
-  // const constantData: LocalizationInterface = localizedData();
+  const constantData: LocalizationInterface = localizedData();
   const [openModal, setOpenModal] = useState(false);
-  // const { createButton } = constantData.Buttons;
+  const { createButton } = constantData.Buttons;
   const handleModalOpen = () => {
     setOpenModal(true);
   };
@@ -25,7 +25,7 @@ function CreateButton() {
         onClick={handleModalOpen}
       >
         {" "}
-        <p id="create-btn-text">{/*{createButton}*/}</p>
+        <p id="create-btn-text">{createButton}</p>
       </Button>
       <EmployeeModal open={openModal} handleClose={handleModalClose} />
     </Box>
