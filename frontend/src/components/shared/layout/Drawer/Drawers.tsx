@@ -106,9 +106,6 @@ export default function Drawers() {
   const handleProfileClick = () => {
     navigate("/profile");
   };
-  const handleloginClick = () => {
-    navigate("/login");
-  };
 
   return (
     <>
@@ -121,14 +118,14 @@ export default function Drawers() {
       >
         <CssBaseline />
 
-        <Toolbar className="toolbar-cls">
+        <Toolbar className="toolbar-cls1">
           <img src={appIcon} className="app logo" />
 
           <Toolbar
             sx={{
               borderBottom: "none",
             }}
-            className="appbar-toolbar-cls"
+            className="appbar-toolbar-cls1"
           >
             <Box className="search-icon-box">
               <IconButton sx={{ color: "#130F26" }}>
@@ -420,12 +417,14 @@ export default function Drawers() {
             <ListItemText primary="Profile" />
           </ListItemButton>
 
-          <ListItemButton sx={{ marginTop: "8rem" }} onClick={handleloginClick}>
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Log Out" />
-          </ListItemButton>
+          <a className="logout-link" href="/api/logout">
+            <ListItemButton sx={{ marginTop: "8rem" }}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Log Out" />
+            </ListItemButton>
+          </a>
         </List>
       </Drawer>
     </>
