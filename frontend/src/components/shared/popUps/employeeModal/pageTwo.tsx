@@ -28,8 +28,8 @@ const PageTwo = ({ formik }: Props) => {
     dateEnd,
     CurrentlyWorking,
     uploadExperienceLetter,
-    uploadfileDescription,
-    imgSize,
+    // uploadfileDescription,
+    // imgSize,
   } = constantData.Modals;
   return (
     <FormikProvider value={formik}>
@@ -43,8 +43,8 @@ const PageTwo = ({ formik }: Props) => {
                     <Box className="cross-icon" onClick={() => remove(index)}>
                       <img src={crossIcon} className="cross-btn" />
                     </Box>
-                    <Grid className="grid-container-cls" container spacing={2}>
-                      <Grid className="grid-item-cls" item xs={6}>
+                    <Grid className="grid-container-cls" container spacing={1}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box">
                           <TextField
                             className="text-field-cls"
@@ -61,7 +61,7 @@ const PageTwo = ({ formik }: Props) => {
                           </p>
                         </Box>
                       </Grid>
-                      <Grid className="grid-item-cls" item xs={6}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box" sx={{ minWidth: 120 }}>
                           <TextField
                             className="text-field-cls"
@@ -100,8 +100,8 @@ const PageTwo = ({ formik }: Props) => {
                         </Box>
                       </Grid>
                     </Grid>
-                    <Grid className="grid-container-cls" container spacing={2}>
-                      <Grid className="grid-item-cls" item xs={6}>
+                    <Grid className="grid-container-cls" container spacing={1}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
@@ -138,7 +138,7 @@ const PageTwo = ({ formik }: Props) => {
                           </LocalizationProvider>
                         </Box>
                       </Grid>
-                      <Grid className="grid-item-cls" item xs={6}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
@@ -205,12 +205,13 @@ const PageTwo = ({ formik }: Props) => {
                             {uploadExperienceLetter}
                           </Typography>
                         </Box>
-                        <Box className="upload-img-sec">
+
+                        {/* <Box className="upload-img-sec">
                           <Typography className="upload-exp-des">
                             {uploadfileDescription}
                           </Typography>
                           {imgSize}
-                        </Box>
+                        </Box>*/}
                       </Box>
                     </Box>
                   </Box>

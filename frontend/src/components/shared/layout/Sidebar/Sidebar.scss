@@ -44,3 +44,9 @@
     }
   }
 }
+
+@media (max-width: 390px) {
+  .sidebar-cls {
+    display: none;
+  }
+}

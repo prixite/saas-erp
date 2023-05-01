@@ -50,4 +50,9 @@
       box-shadow: none;
     }
   }
+  @media (max-width: 390px) {
+    .btn {
+      margin-bottom: 11.5rem;
+    }
+  }
 }

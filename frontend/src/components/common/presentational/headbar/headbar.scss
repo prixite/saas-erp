@@ -4,6 +4,7 @@
   justify-content: flex-start;
   flex-direction: row;
   flex-wrap: nowrap;
+  //flex-wrap: wrap;
   overflow-x: hidden;
   margin-top: 17px;
   overflow-y: hidden;
@@ -30,11 +31,12 @@
   .x-2 {
     margin: 5px;
     margin-right: 8px;
-    width: 40%;
+    width: 20%;
     border: 1px solid white;
     .MuiInputBase-root {
       padding: 11px 16px 11px 16px;
       border-radius: 12px;
+      margin: 20px;
       height: 44px;
       background: #ffffff;
       box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
@@ -61,6 +63,7 @@
 
   .x-4 {
     margin: 5px;
+    justify-content: flex-end;
 
     .create-btn {
       text-transform: none;
@@ -68,10 +71,13 @@
       width: 108px;
       height: 44px;
       background: #ff2f2f;
-      border-radius: 12px;
       color: white;
     }
   }
+}
+
+.x-5 {
+  visibility: hidden;
 }
 
 @media only screen and (max-width: 600px) {
@@ -97,6 +103,9 @@
       overflow: hidden;
       color: #000000;
     }
+    .x-5 {
+      visibility: visible;
+    }
 
     .x-2 {
       margin: 5px;
@@ -119,33 +128,124 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .filter-btn {
+      height: 44px;
+      width: 98px;
+      background: #ffffff;
+      border: 1px solid #e7e7e7;
+      box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+      border-radius: 12px;
+      padding: 16px 12px;
+    }
+  }
 
+  .x-4 {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .create-btn {
+      border-radius: 12px;
+      width: 108px;
+      height: 44px;
+      background: #ff2f2f;
+      border-radius: 12px;
+      color: white;
+      padding: 16px 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .x {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    margin-top: 17px;
+    overflow-y: hidden;
+    background-color: white;
+
+    .d-hide {
+      visibility: hidden;
+    }
+
+    .x-1 {
+      height: 24px;
+      font-family: "Lato";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #000000;
+      margin-right: 1rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .x-2 {
+      visibility: hidden;
+      display: none;
+    }
+
+    .x-3 {
       .filter-btn {
-        height: 44px;
-        width: 98px;
+        margin-right: 10px;
+        height: 55px;
+        width: 30px;
         background: #ffffff;
         border: 1px solid #e7e7e7;
         box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
         border-radius: 12px;
-        padding: 16px 12px;
+        color: black;
+        padding: 10px;
+        padding-left: 50px;
+        .f-btn {
+          visibility: hidden;
+        }
       }
     }
 
     .x-4 {
-      margin: 5px;
-      display: flex;
       align-items: center;
       justify-content: center;
 
       .create-btn {
+        justify-content: center;
+        align-items: center;
         border-radius: 12px;
-        width: 108px;
-        height: 44px;
+        width: 30px;
+        height: 55px;
         background: #ff2f2f;
         border-radius: 12px;
         color: white;
-        padding: 16px 12px;
+        padding: 10px;
+        padding-left: 60px;
+        #create-btn-text {
+          visibility: hidden;
+        }
       }
+    }
+  }
+
+  .x-5 {
+    visibility: visible;
+    margin-right: 2px;
+    width: 100%;
+    border: 1px solid white;
+    .MuiInputBase-root {
+      padding: 5px;
+      padding-left: 15px;
+      border-radius: 16px;
+      margin: 5px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #ffffff;
     }
   }
 }

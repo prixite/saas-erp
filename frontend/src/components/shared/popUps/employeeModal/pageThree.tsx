@@ -32,8 +32,8 @@ const PageThree = ({ formik }: Props) => {
     year,
     CurrentlyProgress,
     uploadReleventDegree,
-    uploadfileDescription,
-    imgSize,
+    //uploadfileDescription,
+    //imgSize,
   } = constantData.Modals;
   return (
     <FormikProvider value={formik}>
@@ -47,8 +47,8 @@ const PageThree = ({ formik }: Props) => {
                     <Box className="cross-icon" onClick={() => remove(index)}>
                       <img src={crossIcon} className="cross-btn" />
                     </Box>
-                    <Grid className="grid-container-cls" container spacing={2}>
-                      <Grid className="grid-item-cls" item xs={6}>
+                    <Grid className="grid-container-cls" container spacing={1}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box" sx={{ minWidth: 120 }}>
                           <TextField
                             className="text-field-cls"
@@ -82,7 +82,7 @@ const PageThree = ({ formik }: Props) => {
                           </p>
                         </Box>
                       </Grid>
-                      <Grid className="grid-item-cls" item xs={6}>
+                      <Grid className="grid-item-cls" item xs={12} sm={6}>
                         <Box className="text-field-box">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
@@ -117,8 +117,8 @@ const PageThree = ({ formik }: Props) => {
                         </Box>
                       </Grid>
                     </Grid>
-                    <Grid className="grid-container-cls" container spacing={2}>
-                      <Grid className="grid-item-cls " item xs={6}>
+                    <Grid className="grid-container-cls" container spacing={1}>
+                      <Grid className="grid-item-cls " item xs={12} sm={6}>
                         <Box className="text-field-box" sx={{ minWidth: 120 }}>
                           <TextField
                             className="text-field-cls"
@@ -186,12 +186,12 @@ const PageThree = ({ formik }: Props) => {
                             {uploadReleventDegree}
                           </Typography>
                         </Box>
-                        <Box className="upload-img-sec">
+                        {/*  <Box className="upload-img-sec">
                           <Typography className="upload-exp-des">
                             {uploadfileDescription}
                           </Typography>
                           {imgSize}
-                        </Box>
+                        </Box>*/}
                       </Box>
                     </Box>
                   </Box>

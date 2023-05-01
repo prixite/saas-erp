@@ -19,3 +19,28 @@
     }
   }
 }
+@media (max-width: 390px) {
+  .stack-cls {
+    margin-top: 25px;
+    .leave-cls {
+      //height: 51px;
+      height: 70px;
+      width: 32%;
+      background: #f5f5f5;
+      padding: 12px 12px;
+      display: flex;
+      border-radius: 4px;
+      justify-content: space-between;
+      .title-cls {
+        font-size: 16px;
+        font-weight: 400;
+        color: #6c6c6c;
+        margin-right: 8px;
+      }
+      .value-cls {
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
+  }
+}

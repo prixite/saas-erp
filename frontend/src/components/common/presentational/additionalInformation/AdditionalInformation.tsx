@@ -61,7 +61,7 @@ function AdditionalInformation() {
             container
             item
             className="department-Heading-Container"
-            xs={3}
+            xs={6}
             sm={3}
           >
             <Typography variant="body1" className="department-title">
@@ -77,7 +77,7 @@ function AdditionalInformation() {
             container
             item
             className="employee-Name-Container"
-            xs={3}
+            xs={6}
             sm={3}
           >
             <Typography variant="body1" className="employee-title">
@@ -89,7 +89,7 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
 
-          <Grid container item className="experience-Container" xs={3} sm={3}>
+          <Grid container item className="experience-Container" xs={6} sm={3}>
             <Typography variant="body1" className="experience-title">
               {totalExperience}
             </Typography>
@@ -99,7 +99,7 @@ function AdditionalInformation() {
             </Typography>
           </Grid>
 
-          <Grid container item className="data-Container" xs={3} sm={3}>
+          <Grid container item className="data-Container" xs={6} sm={3}>
             <Typography variant="body1" className="data-title">
               {joiningDate}
             </Typography>
@@ -130,26 +130,27 @@ function AdditionalInformation() {
                 {cnic}
               </Typography>
             </Grid>
-
-            <Grid className="cnic-text" item>
-              {showResults ? (
-                <Typography className="typo" variant="body1">
-                  {employeeData?.nic}
-                </Typography>
-              ) : (
-                <Typography className="typo1" variant="body1">
-                  {Array(employeeData?.nic.length).join(".")}
-                </Typography>
-              )}
-            </Grid>
-            <Grid className="cnic-photo" item>
-              <Button onClick={() => setShowResults(!showResults)}>
-                <img
-                  className="logo"
-                  src={showResults ? showIcon : HideIcon}
-                  alt="eye"
-                />
-              </Button>
+            <Grid className="cnic">
+              <Grid className="cnic-text" item>
+                {showResults ? (
+                  <Typography className="typo" variant="body1">
+                    {employeeData?.nic}
+                  </Typography>
+                ) : (
+                  <Typography className="typo1" variant="body1">
+                    {Array(employeeData?.nic.length).join(".")}
+                  </Typography>
+                )}
+              </Grid>
+              <Grid className="cnic-photo" item>
+                <Button onClick={() => setShowResults(!showResults)}>
+                  <img
+                    className="logo"
+                    src={showResults ? showIcon : HideIcon}
+                    alt="eye"
+                  />
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

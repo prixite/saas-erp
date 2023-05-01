@@ -22,6 +22,7 @@ function Reports() {
     constantData.Reports;
   const [employee, setEmployee] = useState<number>();
   const { data: employeetableData } = useGetEmployeesQuery();
+
   const [openModal, setOpenModal] = useState(false);
   const [selectValue, setSelectValue] = useState("Monthly");
   const [state, setState] = useState([
@@ -31,6 +32,7 @@ function Reports() {
       key: "selection",
     },
   ]);
+
   const [buttonNameClicked, setButtonNameClicked] =
     useState<string>("ATTENDANCE");
   const { data: rows, isLoading } = useGetAttendanceQuery(
@@ -86,7 +88,7 @@ function Reports() {
         <EmployeeButtons setButtonNameClicked={setButtonNameClicked} />
       </Box>
       <Box className="filter-section">
-        <Box className="fields-cls" sx={{ mr: "15px" }}>
+        <Box className="fields-cls" sx={{ mr: "12px" }}>
           <TextField
             className="text-field-cls"
             select
@@ -94,7 +96,8 @@ function Reports() {
             name="employee"
             label="Select Employee"
             sx={{
-              width: 150,
+              // width: 150,
+              width: 140,
             }}
             InputProps={{
               sx: {
@@ -130,6 +133,7 @@ function Reports() {
             )}
           </TextField>
         </Box>
+
         <Box className="filter-btn-cls">
           <Button
             className="filter-btn"
@@ -147,6 +151,7 @@ function Reports() {
             <p>{DownloadBtn}</p>
           </Button>
         </Box>
+
         <Box className="fields-cls">
           <TextField
             margin="normal"
@@ -157,7 +162,8 @@ function Reports() {
             defaultValue={selectValue}
             onChange={handleValueChange}
             sx={{
-              width: 125,
+              //  width: 125,
+              width: 110,
             }}
             InputProps={{
               sx: {

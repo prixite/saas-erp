@@ -116,7 +116,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
     createEmployeeSubheading,
     updateEmployeeHeading,
     updateEmployeeSubheading,
-    createEmployeeClose,
+    //createEmployeeClose,
     createEmployeeNext,
     stepOne,
     stepTwo,
@@ -493,6 +493,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
                 alt="line"
               />
             </Box>
+
             <Box className="step-box">
               <Typography
                 style={{ color: page === "2" ? "black" : "#6C6C6C" }}
@@ -535,6 +536,8 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
         </DialogTitle>
         <DialogContent className="FilterModal__Content">
           <Box className="content-cls">
+            {page === "1" ? <PageOne formik={formik} action={action} /> : <></>}
+
             {page === "1" ? (
               <PageOne formik={formik} action={action} />
             ) : page === "2" ? (
@@ -554,7 +557,7 @@ const EmployeeModal = ({ open, handleClose, action, empId }: Props) => {
                   {" "}
                   <img className="reset-img" src={crossIcon} alt="reset" />
                 </span>{" "}
-                {createEmployeeClose}
+                Cancel
               </Button>
               <Button
                 onClick={moveToNextPage}

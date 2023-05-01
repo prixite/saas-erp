@@ -83,4 +83,47 @@
       }
     }
   }
+  .search1 {
+    // display: none;
+    visibility: hidden;
+  }
+}
+@media (max-width: 390px) {
+  .leavesDataGridTable-section {
+    .top-bar-cls {
+      margin-top: 30px;
+      align-items: center;
+
+      .title-cls {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .filter-section {
+        .search {
+          display: none;
+        }
+        .filter-btn-cls {
+          .filter-btn {
+            text-transform: none;
+            height: 44px;
+            background: #ffffff;
+            border: 1px solid #e7e7e7;
+            box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+            border-radius: 12px;
+            color: black;
+            padding: 12.5px 16px 12.5px 19.33px;
+          }
+          .btn {
+            display: none;
+          }
+        }
+      }
+    }
+    .search1 {
+      visibility: visible;
+      margin-top: 10px;
+      margin-left: 7px;
+      width: 100%;
+    }
+  }
 }

@@ -96,7 +96,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
               columnSpacing={2}
               marginBottom={2}
             >
-              <Grid className="textFieldContainer" item sm={6} md={6}>
+              <Grid className="textFieldContainer" item xs={12} sm={6} md={6}>
                 <TextField
                   className="textFieldContainer__currentSalary"
                   id="email-id"
@@ -110,7 +110,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
                   }}
                 />
               </Grid>
-              <Grid className="compTypeContainer" item sm={6} md={6}>
+              <Grid className="compTypeContainer" item xs={12} sm={6} md={6}>
                 <FormControl fullWidth className="compTypeContainer__compType">
                   <InputLabel id="demo-simple-select-label">
                     Compensation Type
@@ -140,7 +140,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
               columnSpacing={2}
               marginBottom={2}
             >
-              <Grid className="scheduleContainer" item sm={6} md={6}>
+              <Grid className="scheduleContainer" item xs={12} sm={6} md={6}>
                 <FormControl fullWidth className="scheduleContainer__textField">
                   <InputLabel id="demo-simple-select-label">
                     Compensation Schedule
@@ -162,7 +162,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid className="dataContainer" item sm={6} md={6}>
+              <Grid className="dataContainer" item xs={12} sm={6} md={6}>
                 <FormControl fullWidth className="dataContainer__textField">
                   <InputLabel id="demo-simple-select-label">Date:</InputLabel>
                   <Select
@@ -185,10 +185,10 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
             </Grid>
 
             <Grid container className="toggle">
-              <Grid className="toggle__icon" item sm={1} md={1}>
+              <Grid className="toggle__icon" item xs={4} sm={1} md={1}>
                 <RedToggleSwitch size="small" {...label} defaultChecked />
               </Grid>
-              <Grid className="toggle__textDiv" item sm={11} md={11}>
+              <Grid className="toggle__textDiv" item xs={8} sm={11} md={11}>
                 <Typography className="toggleHeading">
                   {CompensationAndHeading}
                 </Typography>
@@ -223,7 +223,7 @@ const EditBenefitModal = ({ open, handleClose }: Props) => {
             </Grid>
 
             <Grid className="comment" container>
-              <Grid item sm={12} md={12}>
+              <Grid item xs={12} sm={12} md={12}>
                 <TextField
                   className="comment__commentsField"
                   id="email-id"

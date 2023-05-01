@@ -27,7 +27,7 @@ function FilterButton() {
         onClick={handleModalOpen}
       >
         {" "}
-        <p>{filterButton}</p>
+        <p className="f-btn">{filterButton}</p>
       </Button>
       <FilterModal open={openModal} handleClose={handleModalClose} />
     </Box>

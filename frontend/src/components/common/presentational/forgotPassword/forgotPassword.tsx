@@ -83,6 +83,7 @@ const ForgotPassword = () => {
                 <TextField
                   {...field}
                   label={email_text}
+                  className="input"
                   sx={{ width: "455px" }}
                   variant="outlined"
                   margin="normal"

@@ -173,7 +173,6 @@ function ProfilePage() {
               {basicInformationHeading}
             </Typography>
           </div>
-
           <div className="basicInfo__namesAndEmails">
             <div className="firstName">
               <TextField
@@ -343,7 +342,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1"></Typography>
+                  <Typography variant="subtitle1">{emailSub}</Typography>
                 </div>
 
                 <div className="B__checkBoxContainer__two">
@@ -356,7 +355,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1"></Typography>
+                  <Typography variant="subtitle1">{phoneSub}</Typography>
                 </div>
               </div>
             </div>
@@ -374,7 +373,7 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1"></Typography>
+                  <Typography variant="subtitle1">{emailSub}</Typography>
                 </div>
 
                 <div className="C__checkBoxContainer__two">
@@ -387,11 +386,33 @@ function ProfilePage() {
                       },
                     }}
                   />
-                  <Typography variant="subtitle1"></Typography>
+                  <Typography variant="subtitle1">{phoneSub}</Typography>
                 </div>
               </div>
             </div>
           </Grid>
+          <div className="btns1">
+            <Stack spacing={2} direction="row">
+              <Button
+                onClick={resetForm}
+                className="btns__cancelBtn"
+                style={{ backgroundColor: "transparent" }}
+                variant="contained"
+              >
+                <span className="btns__cancelBtn__btnText">{cancelBtn}</span>
+              </Button>
+              <LoadingButton
+                loading={loading}
+                className="btns__saveBtn"
+                onClick={() => {
+                  setOnChangeValidation(true);
+                  formik.handleSubmit();
+                }}
+              >
+                <span className="btns__saveBtn__btnText">{saveBtn}</span>
+              </LoadingButton>
+            </Stack>
+          </div>
         </div>
       </div>
     </>

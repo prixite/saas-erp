@@ -4,6 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
+import Drawers from "@src/components/shared/layout/Drawer/Drawers";
 import Sidebar from "@src/components/shared/layout/Sidebar/Sidebar";
 import Topbar from "@src/components/shared/layout/Topbar/Topbar";
 
@@ -17,8 +18,11 @@ const Layout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+
       <Topbar open={open} />
       <Sidebar open={open} toggleDrawer={toggleDrawer} />
+      <Drawers open={open} />
+
       <Box
         component="main"
         sx={{
