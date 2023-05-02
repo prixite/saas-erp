@@ -835,6 +835,47 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.passwordResetConfirm,
       }),
     }),
+    apiPayrollList: build.query<
+      ApiPayrollListApiResponse,
+      ApiPayrollListApiArg
+    >({
+      query: () => ({ url: `/api/payroll/` }),
+    }),
+    apiPayrollCreate: build.mutation<
+      ApiPayrollCreateApiResponse,
+      ApiPayrollCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/payroll/`,
+        method: "POST",
+        body: queryArg.payroll,
+      }),
+    }),
+    apiPayrollRetrieve: build.query<
+      ApiPayrollRetrieveApiResponse,
+      ApiPayrollRetrieveApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/payroll/${queryArg.id}/` }),
+    }),
+    apiPayrollPartialUpdate: build.mutation<
+      ApiPayrollPartialUpdateApiResponse,
+      ApiPayrollPartialUpdateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/payroll/${queryArg.id}/`,
+        method: "PATCH",
+        body: queryArg.patchedPayroll,
+      }),
+    }),
+    apiPayrollDestroy: build.mutation<
+      ApiPayrollDestroyApiResponse,
+      ApiPayrollDestroyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/payroll/${queryArg.id}/`,
+        method: "DELETE",
+      }),
+    }),
     apiProgramsList: build.query<
       ApiProgramsListApiResponse,
       ApiProgramsListApiArg
@@ -1502,6 +1543,25 @@ export type ApiPasswordResetConfirmCreateApiResponse =
 export type ApiPasswordResetConfirmCreateApiArg = {
   passwordResetConfirm: PasswordResetConfirm;
 };
+export type ApiPayrollListApiResponse = /** status 200  */ Payroll[];
+export type ApiPayrollListApiArg = void;
+export type ApiPayrollCreateApiResponse = /** status 201  */ Payroll;
+export type ApiPayrollCreateApiArg = {
+  payroll: Payroll;
+};
+export type ApiPayrollRetrieveApiResponse = /** status 200  */ Payroll;
+export type ApiPayrollRetrieveApiArg = {
+  id: number;
+};
+export type ApiPayrollPartialUpdateApiResponse = /** status 200  */ Payroll;
+export type ApiPayrollPartialUpdateApiArg = {
+  id: number;
+  patchedPayroll: PatchedPayroll;
+};
+export type ApiPayrollDestroyApiResponse = unknown;
+export type ApiPayrollDestroyApiArg = {
+  id: number;
+};
 export type ApiProgramsListApiResponse = /** status 200  */ Program[];
 export type ApiProgramsListApiArg = void;
 export type ApiProgramsCreateApiResponse = /** status 201  */ Program;
@@ -1986,6 +2046,30 @@ export type PasswordResetConfirm = {
   uidb64: string;
   token: string;
 };
+export type Payroll = {
+  id: number;
+  amount: number;
+  tax: number;
+  currency_convesion_rates: {
+    [key: string]: any;
+  };
+  created_at: string;
+  updated_at: string;
+  employee: number;
+  currency: number;
+};
+export type PatchedPayroll = {
+  id?: number;
+  amount?: number;
+  tax?: number;
+  currency_convesion_rates?: {
+    [key: string]: any;
+  };
+  created_at?: string;
+  updated_at?: string;
+  employee?: number;
+  currency?: number;
+};
 export type Program = {
   id: number;
   name: string;
@@ -2146,6 +2230,11 @@ export const {
   useApiPasswordResetCreateMutation,
   useApiPasswordResetCompleteCreateMutation,
   useApiPasswordResetConfirmCreateMutation,
+  useApiPayrollListQuery,
+  useApiPayrollCreateMutation,
+  useApiPayrollRetrieveQuery,
+  useApiPayrollPartialUpdateMutation,
+  useApiPayrollDestroyMutation,
   useApiProgramsListQuery,
   useApiProgramsCreateMutation,
   useApiProgramsRetrieveQuery,

@@ -1091,3 +1091,76 @@ class TeamTestCase(BaseTestCase):
         self.client.force_login(self.owner)
         response = self.client.delete(f"/api/team/{self.team.id}/")
         self.assertEqual(response.status_code, 204)
+
+
+class PayrollTestCase(BaseTestCase):
+    def test_payroll_post(self):
+        self.client.force_login(self.owner)
+        payroll_data = {
+            "employee": self.employee.id,
+            "amount": 100,
+            "currency": self.currency.id,
+            "tax": 10.0,
+            "currency_convesion_rates": 280,
+        }
+        response = self.client.post("/api/payroll/", data=payroll_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            models.Payroll.objects.filter(employee=payroll_data["employee"]).exists()
+        )
+
+    def test_payroll_get(self):
+        self.client.force_login(self.owner)
+        response = self.client.get("/api/payroll/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(
+            sorted(list(response.json()[0].keys())),
+            sorted(
+                [
+                    "id",
+                    "employee",
+                    "amount",
+                    "currency",
+                    "tax",
+                    "currency_convesion_rates",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
+
+    def test_payroll_detail(self):
+        self.client.force_login(self.owner)
+        response = self.client.get(f"/api/payroll/{self.payroll.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            sorted(list(response.json().keys())),
+            sorted(
+                [
+                    "id",
+                    "employee",
+                    "amount",
+                    "currency",
+                    "tax",
+                    "currency_convesion_rates",
+                    "created_at",
+                    "updated_at",
+                ]
+            ),
+        )
+
+    def test_payroll_put(self):
+        self.client.force_login(self.owner)
+        payroll_data = {
+            "amount": 150,
+        }
+        response = self.client.patch(
+            f"/api/payroll/{self.payroll.id}/", data=payroll_data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_payroll_delete(self):
+        self.client.force_login(self.owner)
+        response = self.client.delete(f"/api/payroll/{self.payroll.id}/")
+        self.assertEqual(response.status_code, 204)
