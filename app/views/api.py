@@ -1053,8 +1053,9 @@ class DocumentViewSet(ModelViewSet):
         return models.Document.objects.all().order_by("-id")
 
 
-class PayrollViewSet(ModelViewSet):
+class PayrollViewSet(mixins.PrivateViewMixin, ModelViewSet):
     serializer_class = serializers.PayrollSerializer
+    module = models.Module.ModuleType.PAYROLL
 
     def get_queryset(self):
         if getattr(self, "swagger_fake_view", False):

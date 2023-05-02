@@ -3781,6 +3781,7 @@
         "/api/payroll/": {
             "get": {
                 "operationId": "api_payroll_list",
+                "description": "Verify that the current user is authenticated.",
                 "tags": [
                     "api"
                 ],
@@ -3807,6 +3808,7 @@
             },
             "post": {
                 "operationId": "api_payroll_create",
+                "description": "Verify that the current user is authenticated.",
                 "tags": [
                     "api"
                 ],
@@ -3852,6 +3854,7 @@
         "/api/payroll/{id}/": {
             "get": {
                 "operationId": "api_payroll_retrieve",
+                "description": "Verify that the current user is authenticated.",
                 "parameters": [
                     {
                         "in": "path",
@@ -3885,6 +3888,7 @@
             },
             "patch": {
                 "operationId": "api_payroll_partial_update",
+                "description": "Verify that the current user is authenticated.",
                 "parameters": [
                     {
                         "in": "path",
@@ -3937,6 +3941,7 @@
             },
             "delete": {
                 "operationId": "api_payroll_destroy",
+                "description": "Verify that the current user is authenticated.",
                 "parameters": [
                     {
                         "in": "path",

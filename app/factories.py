@@ -144,3 +144,8 @@ class FolderFactory(factory.django.DjangoModelFactory):
 class DocumentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Document
+
+
+class PayrollFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Payroll
