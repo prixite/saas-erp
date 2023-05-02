@@ -5,7 +5,6 @@
   .appbar-toolbar-cls {
     min-height: 80px;
     padding: 0px;
-
     .icon-btn-cls {
       margin-top: 5px;
     }
@@ -22,6 +21,7 @@
     }
   }
 }
+
 @media only screen and (max-width: 600px) {
   .app-bar-cls {
     .toolbar-cls {
@@ -38,13 +38,5 @@
 @media only screen and (max-width: 390px) {
   .app-bar-cls {
     visibility: hidden;
-    .toolbar-cls {
-      .icon-btn-cls {
-        padding-left: 13px;
-      }
-      .divider-cls {
-        margin-left: 11px;
-      }
-    }
   }
 }

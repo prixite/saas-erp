@@ -1,19 +1,21 @@
 .app-bar-cls1 {
-  visibility: hidden;
+  //visibility: hidden;
+  display: none;
 }
 
 @media (max-width: 390px) {
   .app-bar-cls1 {
-    visibility: visible;
+    //visibility: visible;
+    display: contents;
     position: absolute;
     border-bottom: none;
     background-color: white;
-    .toolbar-cls {
+    .toolbar-cls1 {
       display: flex;
       flex-direction: row;
       flex-grow: 1;
 
-      .appbar-toolbar-cls {
+      .appbar-toolbar-cls1 {
         min-height: 80px;
         padding: 0px;
         margin-left: auto;
@@ -35,5 +37,9 @@
         width: 2px;
       }
     }
+  }
+  .logout-link {
+    text-decoration: none !important;
+    color: inherit !important;
   }
 }

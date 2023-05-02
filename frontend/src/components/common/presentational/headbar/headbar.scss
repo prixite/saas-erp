@@ -77,7 +77,8 @@
 }
 
 .x-5 {
-  visibility: hidden;
+  //visibility: hidden;
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -233,7 +234,7 @@
   }
 
   .x-5 {
-    visibility: visible;
+    display: contents;
     margin-right: 2px;
     width: 100%;
     border: 1px solid white;
