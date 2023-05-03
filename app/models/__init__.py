@@ -35,6 +35,7 @@ from app.models.payroll import (
     CompensationHistory,
     CompensationSchedule,
     CompensationType,
+    Payroll,
 )
 
 __all__ = [
@@ -73,4 +74,5 @@ __all__ = [
     "Standup",
     "StandupUpdate",
     "Availability",
+    "Payroll",
 ]

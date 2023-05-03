@@ -55,6 +55,9 @@ class BaseTestCase(TestCase):
         self.standup_module = factories.ModuleFactory(
             name="Standup", slug=models.Module.ModuleType.STANDUP, is_enabled=True
         )
+        self.payroll_module = factories.ModuleFactory(
+            name="Payroll", slug=models.Module.ModuleType.PAYROLL, is_enabled=True
+        )
 
         self.employee_org_module = factories.OrganizationModuleFactory(
             module=self.employee_module, organization=self.organization, is_enabled=True
@@ -67,6 +70,9 @@ class BaseTestCase(TestCase):
         )
         self.standup_org_module = factories.OrganizationModuleFactory(
             module=self.standup_module, organization=self.organization, is_enabled=True
+        )
+        self.payroll_org_module = factories.OrganizationModuleFactory(
+            module=self.payroll_module, organization=self.organization, is_enabled=True
         )
         self.org_user = factories.UserFactory(
             username="user@example.com",
@@ -167,3 +173,10 @@ class BaseTestCase(TestCase):
 
         self.folder = factories.FolderFactory()
         self.document = factories.DocumentFactory()
+        self.payroll = factories.PayrollFactory(
+            employee=self.employee,
+            amount=100,
+            currency=self.currency,
+            tax=10,
+            currency_convesion_rates=280,
+        )

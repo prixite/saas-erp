@@ -430,4 +430,19 @@ urlpatterns = [
             {"delete": "destroy", "patch": "partial_update", "get": "retrieve"}
         ),
     ),
+    path(
+        "payroll/",
+        api.PayrollViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "payroll/<int:pk>/",
+        api.PayrollViewSet.as_view(
+            {"delete": "destroy", "patch": "partial_update", "get": "retrieve"}
+        ),
+    ),
 ]
