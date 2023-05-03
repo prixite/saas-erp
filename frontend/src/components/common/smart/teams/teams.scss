@@ -107,4 +107,124 @@
       }
     }
   }
+  .search1 {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 390px) {
+  .teamsDataGridTable-section {
+    .dataGridTable-main {
+      width: 100%;
+      background-color: white;
+      margin-top: 25px;
+      overflow-x: auto;
+      overflow-y: auto;
+      .dataGrid {
+        .MuiDataGrid-columnHeaders {
+          background-color: rgba(207, 207, 207, 0.2);
+          border-radius: 12px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: -0.011em;
+          border-bottom: none;
+          color: #6c6c6c;
+          margin-right: 4px;
+          margin-left: 4px;
+          &:focus {
+            outline: white;
+          }
+          .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
+            display: none;
+          }
+        }
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        border: white;
+
+        .renderCell-joiningDate {
+          .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+            &:hover {
+              background-color: #cfcfcf;
+            }
+          }
+        }
+      }
+    }
+
+    .top-bar-cls {
+      margin-top: 30px;
+      align-items: center;
+
+      .title-cls {
+        margin-left: 10px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .filter-section {
+        .search {
+          display: none;
+        }
+        .filter-btn-cls {
+          .filter-btn {
+            text-transform: none;
+            height: 55px;
+            width: 30px;
+            background: #ffffff;
+            border: 1px solid #e7e7e7;
+            box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+            border-radius: 12px;
+            color: black;
+            padding: 10px;
+            padding-left: 20px;
+            .filter {
+              display: none;
+            }
+          }
+        }
+        .create-standup-btn {
+          margin-left: 10px;
+          .create-btn {
+            text-transform: none;
+            border-radius: 12px;
+            width: 169px;
+            height: 44px;
+            background: #ff2f2f;
+            border-radius: 12px;
+            color: white;
+          }
+        }
+        .add-standup-btn {
+          margin-left: 10px;
+          margin-bottom: 10px;
+          margin-right: 5px;
+          .add-btn {
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 55px;
+            padding: 10px;
+            padding-left: 20px;
+            .team {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    .search1 {
+      visibility: visible;
+      border-radius: 20px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
 }

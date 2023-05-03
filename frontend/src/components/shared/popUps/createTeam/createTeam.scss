@@ -150,3 +150,27 @@
     }
   }
 }
+@media (max-width: 390px) {
+  .createTeamModal {
+    .MuiDialog-paper {
+      padding: 12px 12px 0px 12px;
+      height: 480px;
+      width: 404px;
+      align-items: center;
+      box-shadow: unset;
+      border-radius: 12px;
+    }
+
+    &__Actions {
+      padding: 0px;
+      .resetBtn {
+        width: 100%;
+        padding: 6.5px 10px;
+      }
+      .submitBtn {
+        width: 100%;
+        padding: 6.5px 10px;
+      }
+    }
+  }
+}

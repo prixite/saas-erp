@@ -224,7 +224,9 @@ function Standup() {
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Input setSearchText={setQuery} />
+          <Box className="search">
+            <Input setSearchText={setQuery} />
+          </Box>
           <Box className="filter-btn-cls">
             <Button
               className="filter-btn"
@@ -239,7 +241,7 @@ function Standup() {
               }
             >
               {" "}
-              <p>{filterButton}</p>
+              <p className="filter">{filterButton}</p>
             </Button>
           </Box>
           {userData?.allowed_modules.admin_modules.includes("standup") ||
@@ -255,7 +257,7 @@ function Standup() {
                 }}
               >
                 {" "}
-                <Typography>{createStandup}</Typography>
+                <Typography className="standup">{createStandup}</Typography>
               </Button>
             </Box>
           ) : (
@@ -275,13 +277,16 @@ function Standup() {
                 }}
               >
                 {" "}
-                <Typography>{addStandup}</Typography>
+                <Typography className="standup">{addStandup}</Typography>
               </Button>
             </Box>
           ) : (
             ""
           )}
         </Box>
+      </Box>
+      <Box className="search1">
+        <Input setSearchText={setQuery} />
       </Box>
       {!dataLoading ? (
         <>

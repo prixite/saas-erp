@@ -137,8 +137,8 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
           </Box>
         </DialogTitle>
         <DialogContent className="addStandupModal__Content">
-          <Grid container className="container-cls" spacing={2}>
-            <Grid item xs={6} className="grid-item-cls">
+          <Grid container className="container-cls" spacing={1}>
+            <Grid item xs={12} sm={6} className="grid-item-cls">
               <Box className="fields-cls" sx={{ height: "85px !important" }}>
                 <TextField
                   margin="normal"
@@ -170,7 +170,7 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6} className="grid-item-cls">
+            <Grid item xs={12} sm={6} className="grid-item-cls">
               <Box className="fields-cls">
                 <TextField
                   margin="normal"
@@ -215,7 +215,7 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
               </Box>
             </Grid>
           </Grid>
-          <Grid container className="container-cls" spacing={2}>
+          <Grid container className="container-cls" spacing={1}>
             <Grid item xs={12} className="grid-item-cls">
               <Box className="fields-cls" sx={{ height: "85px !important" }}>
                 <TextField
@@ -246,8 +246,8 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
               </Box>
             </Grid>
           </Grid>
-          <Grid container className="container-cls" spacing={2}>
-            <Grid item xs={6} className="grid-item-cls">
+          <Grid container className="container-cls" spacing={1}>
+            <Grid item xs={12} sm={6} className="grid-item-cls">
               <Box
                 className="multi-fields-cls"
                 sx={{ height: "120px !important" }}
@@ -270,7 +270,7 @@ const AddStandupModal = ({ open, handleClose }: Props) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={6} className="grid-item-cls">
+            <Grid item xs={12} sm={6} className="grid-item-cls">
               <Box
                 className="multi-fields-cls"
                 sx={{ height: "120px !important" }}
