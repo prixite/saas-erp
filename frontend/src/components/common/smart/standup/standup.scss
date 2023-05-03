@@ -5,6 +5,7 @@
     margin-top: 25px;
     overflow-x: auto;
     overflow-y: auto;
+
     .dataGrid {
       .MuiDataGrid-columnHeaders {
         background-color: rgba(207, 207, 207, 0.2);
@@ -17,13 +18,16 @@
         letter-spacing: -0.011em;
         border-bottom: none;
         color: #6c6c6c;
+
         &:focus {
           outline: white;
         }
+
         .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
           display: none;
         }
       }
+
       font-family: "Lato";
       font-style: normal;
       font-weight: 400;
@@ -35,6 +39,7 @@
 
       .renderCell-joiningDate {
         margin-right: auto;
+
         .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
           &:hover {
             background-color: #cfcfcf;
@@ -43,6 +48,7 @@
       }
     }
   }
+
   .error-img {
     display: flex;
     justify-content: center;
@@ -51,23 +57,28 @@
     margin-top: 200px;
 
     color: #000000;
+
     .error-msg {
       font-family: "Lato";
       font-style: normal;
       font-weight: 600;
       font-size: 20px;
     }
+
     img {
       width: 100px;
       height: 100px;
     }
   }
+
   .top-bar-cls {
     margin-top: 17px;
+
     .title-cls {
       font-size: 20px;
       font-weight: 700;
     }
+
     .filter-section {
       .filter-btn-cls {
         .filter-btn {
@@ -81,8 +92,10 @@
           padding: 12.5px 16px 12.5px 19.33px;
         }
       }
+
       .create-standup-btn {
         margin-left: 15px;
+
         .create-btn {
           text-transform: none;
           border-radius: 12px;
@@ -93,8 +106,10 @@
           color: white;
         }
       }
+
       .add-standup-btn {
         margin-left: 15px;
+
         .add-btn {
           text-transform: none;
           border-radius: 12px;
@@ -105,6 +120,175 @@
           color: white;
         }
       }
+    }
+  }
+
+  .search1 {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 390px) {
+  .standupDataGridTable-section {
+    .dataGridTable-main {
+      width: 100%;
+      background-color: white;
+      margin-top: 25px;
+      overflow-x: auto;
+      overflow-y: auto;
+
+      .dataGrid {
+        .MuiDataGrid-columnHeaders {
+          background-color: rgba(207, 207, 207, 0.2);
+          border-radius: 12px;
+          font-family: "Lato";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: -0.011em;
+          border-bottom: none;
+          color: #6c6c6c;
+          margin-left: 4px;
+          margin-right: 4px;
+
+          &:focus {
+            outline: white;
+          }
+
+          .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
+            display: none;
+          }
+        }
+
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: -0.011em;
+        color: #000000;
+        border: white;
+
+        .renderCell-joiningDate {
+          margin-right: auto;
+
+          .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+            &:hover {
+              background-color: #cfcfcf;
+            }
+          }
+        }
+      }
+    }
+
+    .error-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 200px;
+      color: #000000;
+
+      .error-msg {
+        font-family: "Lato";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .top-bar-cls {
+      margin-top: 30px;
+      align-items: center;
+
+      .title-cls {
+        font-size: 22px;
+        font-weight: 700;
+        margin-left: 10px;
+      }
+
+      .filter-section {
+        .search {
+          display: none;
+        }
+
+        .filter-btn-cls {
+          .filter-btn {
+            text-transform: none;
+            width: 30px;
+            height: 55px;
+            background: #ffffff;
+            border: 1px solid #e7e7e7;
+            box-shadow: 10px 10px 24px 1px rgba(221, 221, 221, 0.15);
+            border-radius: 12px;
+            color: black;
+            padding: 10px;
+            padding-left: 20px;
+
+            .filter {
+              display: none;
+            }
+          }
+        }
+
+        .create-standup-btn {
+          margin-left: 10px;
+
+          .create-btn {
+            justify-content: center;
+            align-items: center;
+            text-transform: none;
+            border-radius: 12px;
+            width: 30px;
+            height: 55px;
+            background: #ff2f2f;
+            border-radius: 12px;
+            color: white;
+            padding: 10px;
+            padding-left: 20px;
+
+            .standup {
+              display: none;
+            }
+          }
+        }
+
+        .add-standup-btn {
+          margin-left: 10px;
+          margin-right: 5px;
+
+          .add-btn {
+            justify-content: center;
+            align-items: center;
+            text-transform: none;
+            border-radius: 12px;
+            width: 30px;
+            height: 55px;
+            background: #ff2f2f;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 10px;
+            padding: 10px;
+            padding-left: 20px;
+
+            .standup {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .search1 {
+      visibility: visible;
+      margin-left: 4px;
+      margin-right: 4px;
     }
   }
 }

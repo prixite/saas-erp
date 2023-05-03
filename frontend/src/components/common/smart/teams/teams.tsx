@@ -291,7 +291,9 @@ function Teams() {
           className="filter-section"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Input setSearchText={setQuery} />
+          <Box className="search">
+            <Input setSearchText={setQuery} />
+          </Box>
           <Box className="filter-btn-cls">
             <Button
               className="filter-btn"
@@ -306,7 +308,7 @@ function Teams() {
               }
             >
               {" "}
-              <p>{filterButton}</p>
+              <p className="filter">{filterButton}</p>
             </Button>
           </Box>
           {userData?.allowed_modules.admin_modules.includes("standup") ||
@@ -323,7 +325,7 @@ function Teams() {
                 }}
               >
                 {" "}
-                <Typography>{AddTeam}</Typography>
+                <Typography className="team">{AddTeam}</Typography>
               </Button>
             </Box>
           ) : (
@@ -331,6 +333,10 @@ function Teams() {
           )}
         </Box>
       </Box>
+      <Box className="search1">
+        <Input setSearchText={setQuery} />
+      </Box>
+
       {!dataLoading ? (
         <>
           {teamsData?.length ? (
