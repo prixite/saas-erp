@@ -64,7 +64,7 @@ class ModuleTestCase(BaseTestCase):
         self.client.force_login(self.super_user)
         response = self.client.get("/api/module/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 4)
+        self.assertEqual(len(response.json()), 5)
         self.assertEqual(
             list(response.json()[0].keys()),
             [
@@ -127,7 +127,7 @@ class OrganizationModuleTestCase(BaseTestCase):
         self.client.force_login(self.super_user)
         response = self.client.get("/api/organization-module/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 4)
+        self.assertEqual(len(response.json()), 5)
         self.assertEqual(
             sorted(list(response.json()[0].keys())),
             sorted(
