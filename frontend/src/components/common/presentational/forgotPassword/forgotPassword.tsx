@@ -16,7 +16,6 @@ import "@src/components/common/presentational/forgotPassword/forgotPassword.scss
 import { localizedData } from "@src/helpers/utils/language";
 import { emailRegX } from "@src/helpers/utils/utils";
 import { useApiPasswordResetCreateMutation } from "@src/store/api";
-import { useGetUserQuery } from "@src/store/reducers/employees-api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const ForgotPassword = () => {
   } = constantData.AuthPages;
 
   const [sendEmail, { isLoading }] = useApiPasswordResetCreateMutation();
-  const { data: userData } = useGetUserQuery();
 
   return (
     <Box className="forgot-container">
@@ -48,7 +46,7 @@ const ForgotPassword = () => {
         {forgot_password_desc}
       </Typography>
       <Formik
-        initialValues={{ email: userData?.email, password: "" }}
+        initialValues={{ email: "", password: "" }}
         validate={(values) => {
           const errors = {};
           if (!values.email) {
